@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% load cal_tags %}
+{% block add_css %}
+    <link href="/site_media/stylesheets/cal.css" media="screen" rel="Stylesheet" type="text/css" />
+{% endblock %}
+{% block title %}{{HOS_NAME}} - Calendar{% endblock %}
+
+{% block hos_content %}
+<div id="header">
+	<div id="branding">
+		<h1 id="site-name">{{HOS_NAME}} Calendar: Events by {{events_by}}</h1>
+	</div>
+
+{% include 'cal/overview_event_navigation.inc'  %}
+
+</div>
+
+  {% for object in object_list %}
+      <p> <b>{{object.name}}</b> / {{object.description}}</p>
+  
+ 
+     {% events_by_type object  %}
+     {% with "True" as edit_disabled %} {# switch to disable "create event" link for every location, because the link doesnt work for every location correctly,see issue #}
+       {% include 'cal/calendar.inc' %}
+      {% endwith %}
+ 
+
+  {% endfor %}
+
+{% endblock hos_content %}

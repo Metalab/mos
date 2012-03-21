@@ -1,0 +1,76 @@
+body { 
+ margin:0;
+ padding:0;
+ width:315px;
+ overflow-x: hidden;
+
+ /* from global.css */
+ font: 76% "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif; 
+ color: #444;
+ line-height: 1.3em;
+
+
+}
+
+
+
+
+
+/* text formating from global.cs */
+h1, h2, h3 { line-height: 1em;}
+h1 { font-size: 1.5em; color: #4F5C7F; margin:  0 0 1em 0;}
+h2 { font-size: 1.1em; color: #4F5C7F; margin: 1.5em 0 1em 0;}
+h3 { font-size: 1.2em; color: #4F5C7F; margin: 1.5em 0 1em 0;}
+p { margin: 1em 0;}
+a {     text-decoration: none; color: #5D5EA2;}
+a:hover { color: #ffffff; background: #8c9ce9;}
+img { border:none;}
+
+
+div.imagecontainer { padding-bottom: 5px;}
+
+
+div.post_quote, div.post_regular, div.post_link, div.description { 
+ padding: 0 4px 0 4px; 
+}
+
+
+div.post_quote cite {margin-left:50px}
+div.post_quote span.quote {text-style:italic} 
+div.post_quote blockquote {
+ font-style: italic;
+ font-weight:bold;
+ font-size:1.4em;
+} 
+
+
+
+
+
+
+div.meta, #headercontainer {
+ display:none;
+}
+
+
+div.post {
+  
+ border-bottom:4px groove black;
+ padding-bottom:15px;
+ margin-bottom:45px;
+}
+
+
+
+
+
+/* Quotes schaun auf der startseite ganz mies aus
+span.quote{display:none;}
+div.post_quote blockquote {
+font-size:1.0em;
+font-style:normal;
+font-weight:normal;
+padding:0;
+margin:0;
+}
+*/

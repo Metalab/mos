@@ -1,0 +1,12 @@
+.project .hoverHidden {
+    visibility: hidden;
+}
+
+.project:hover .hoverHidden {
+    visibility: visible;
+    opacity: 0.6;
+}
+
+.project:hover .hoverHidden:hover {
+    opacity: 1.0;
+}

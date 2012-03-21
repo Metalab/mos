@@ -1,0 +1,56 @@
+/* -------------------------
+	    Metalab CSS
+	    
+	    Version 1.0
+ ---------------------------*/
+
+html { height: 100%;}
+
+body { 
+	font: 76% "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif; 
+	color: #444;
+	line-height: 1.3em;
+	}
+
+/* text formating */
+h1, h2, h3 { line-height: 1em;}
+
+h1 { font-size: 1.5em; color: #4F5C7F; margin:  0 0 1em 0;}
+
+h2 { font-size: 1.1em; color: #4F5C7F; margin: 1.5em 0 1em 0;}
+
+h3 { font-size: 1em; color: #4F5C7F; margin: 1.5em 0 1em 0;}
+
+p { margin: 1em 0;}
+
+a {	text-decoration: none; color: #5D5EA2;}
+
+a:hover { color: #ffffff; background: #8c9ce9;}
+
+img { border: none;}
+
+strong { font-weight: bold;}
+
+small { font-size: 0.9em;}
+
+/* global classes */
+.ir { text-indent: -100em; overflow: hidden;} /* image replacement - hides text from browsers with css on */
+
+/* form classes */
+.tf { border: 1px solid #ccc}
+
+
+/* table styles */
+td { background: #FFF; padding: 3px 5px; vertical-align: top; }
+
+.thumb_with_text {margin-top:3px;}
+
+#table_user_details td{padding:3px;text-valign:top;}
+
+#table_user_list td {padding:10px 2px;text-valign:top;}
+
+tr.even td {background-color:#EEEEEE;}
+tr.odd td {background-color:white;}
+
+.flattrbtn { display: inline-block; height: 13px; }
+

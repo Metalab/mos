@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>You are not my homebase dude..</title>
+    
+    <link href="/site_media/stylesheets/cellardoor.css" media="screen" rel="Stylesheet" type="text/css" />
+
+<script>
+//<![CDATA[        
+var reloadInterval = 1000*60*30; //30 minutes
+var reloadIntervalAfterError = 1000*60*10; //10 minutes
+
+// reloads the page via http request and replaces the body element on success
+// if an error occurs we gracefully retry
+function startReload()
+{
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == 4) {
+
+            if (xhr.status != 200)
+                window.setTimeout(startReload, reloadIntervalAfterError);
+            else {
+                replaceBody(xhr.responseText);
+                window.setTimeout(startReload, reloadInterval);
+            }
+            
+            updateStatus(xhr.status);
+        }
+    };
+    
+    xhr.open('GET', window.location.href, true);
+    xhr.send(null);
+}
+
+//replaces the body of the current document with the body from the given document
+function replaceBody(newDoc) {
+    var begin = newDoc.indexOf('<b'+'ody'), end, body, script;
+
+    begin = newDoc.indexOf('>', begin);
+    end = newDoc.indexOf('</b'+'ody>');
+    body = newDoc.substring(begin + 1, end);
+    document.getElementsByTagName('body')[0].innerHTML = body;
+
+    script = document.getElementById('afterReloadScript');
+    if (script) {
+        eval(script.innerHTML);
+    }
+}
+
+function twoDigit(num) { if (num < 10) return '0' + num; return num; }
+
+function updateStatus(reqStat) {
+    var statusDiv = document.getElementById('statusInfo');
+    if (statusDiv == null) return;
+    var now = new Date();
+    statusDiv.innerHTML = now.getFullYear() + '-' + (now.getMonth()+1) + '-' + now.getDate() + 
+        ' ' + twoDigit(now.getHours()) + ':' + twoDigit(now.getMinutes());
+    if (reqStat != 200)
+        statusDiv.innerHTML += ' (' + reqStat +')';
+}
+
+
+// start the reload timeout
+window.setTimeout(startReload, reloadInterval);
+
+//]]>
+</script>
+
+</head>
+<body>
+<div id="container">
+<div id="page">
+<div id="eventliste">
+
+<div id="calendar-content">
+<div id="event_anounce">
+ <div class='bg'>Was passiert denn hier?</div>
+ <div class='fg'>Was passiert denn hier?</div>
+</div>
+
+    <ul>
+                {% include "cal/calendar.inc" %}
+    </ul>
+</div>
+<div id="statusInfo">init</div>
+
+</div>
+</div> 
+</div>
+</body>
+</html>

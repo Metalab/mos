@@ -1,0 +1,122 @@
+/* styling */
+#calendar-content {
+	margin-bottom: 0.5em;
+}
+
+#calendar-content ul {
+	border: 1px solid #ddd;
+}
+
+#calendar-content li {
+	display: block;
+/* width:100%;  broken on IE7 :(*/
+	width: 329px;
+}
+
+#calendar-content div {
+	padding: 1px 0 0 1px;
+}
+
+#calendar-content li p {
+	margin: 0;
+	padding: 0.5em 1em;
+}
+/*
+#calendar-content li .odd {
+	background: #C2C3F2;
+}
+*/
+#calendar-content li .event {
+	background: #C8D8FF;	
+}
+
+#calendar-content li .past_event {
+	background: #e3e3e3;
+}
+
+#calendar-content .event_date, p.event .event_date {
+	font-weight: bold;
+	border-right: 1px solid #666;
+	padding-right: 5px;
+	margin-right: 5px;
+}
+
+/* action */
+.invisible {
+    display: none;
+}
+
+.visible {
+    display: block;
+}
+
+.event .hoverHidden {
+    opacity: 0;
+}
+.event:hover .hoverHidden {
+    opacity: 0.6;
+}
+
+.event:hover .hoverHidden:hover {
+    opacity: 1;
+}
+
+
+/* new stuff */
+
+table.month {
+    border-collapse: collapse;
+}
+
+table.month th {
+    text-align: center;
+    font-weight: bold;
+    background-color: #c0c0c0;
+    border: 1px solid white;
+}
+
+table.month th.month {
+    background-color: inherit;
+    font-size: 20pt;
+    padding: 4px;
+    color: #aaa;
+    text-align: right;
+}
+
+table.month td {
+    border: 1px solid white;
+    background-color: #ddd;
+    width: 14%;
+    height: 110px;
+    color: #999;
+}
+
+table.month td:nth-last-child(-n+2) {
+    background-color: #d0d0d0;
+}
+
+table.month td.noday {
+    background-color: inherit;
+}
+
+table.month td li {
+    margin-top: 5px;
+    padding-bottom: 5px;
+    border-bottom: 1px #d0d0d0 solid;
+}
+
+table.month td:nth-last-child(-n+2) li {
+    border-bottom: 1px #c0c0c0 solid;
+}
+
+table.month td li:last-child {
+    border-bottom-width: 0px;
+    margin-bottom: 0px;
+}
+
+table.month td.today {
+    background-color: #c0c0ff; 
+    color:white;
+    font-weight:bold;
+}
+

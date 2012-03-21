@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block hos_content %}
+<h1>Metalab Announcer</h1>
+
+<p>
+  Die Nachricht wurde versendet.
+</p>
+
+<p>
+Thema: {{ form.cleaned_data.subject }}
+</p>
+
+<p>
+{{ form.cleaned_data.body }}
+</p>
+
+<p>
+a: {{ a }}
+</p>
+
+<ol>
+  {% for u in users %}
+     <li>{{u.email}}</li>
+  {% endfor %}
+</ol>
+
+<hr />
+<a href="">Neue Nachricht</a>.
+
+{% endblock %}
