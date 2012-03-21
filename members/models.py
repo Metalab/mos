@@ -46,7 +46,7 @@ class ContactInfo(models.Model):
 
     user = models.ForeignKey(User, unique=True)
 
-    last_email_ok = models.BooleanField(null=True)
+    last_email_ok = models.NullBooleanField(null=True)
     has_active_key = models.BooleanField(null=False)
     key_id = models.CharField(max_length=100, blank=True, null=True)
 
