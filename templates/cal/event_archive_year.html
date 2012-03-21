@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}{{ HOS_NAME }} - Calendar for {{year}}{% endblock %}
+
+{% block add_css %}
+    <link href="/site_media/stylesheets/cal.css" media="screen" rel="Stylesheet" type="text/css" />
+{% endblock %}
+
+{% block hos_content %}
+<div id="header">
+	<div id="branding">
+		<h1 id="site-name">{{HOS_NAME}} Calendar: {{year}}</h1>
+	</div>
+</div>
+{% include 'cal/overview_event_navigation.inc'  %}
+
+
+{% if type %}
+   <p>  {{ type }}
+     {% if title %}
+       / <b>{{ title }}</b>  /
+     {% endif %}
+   
+{% endif %}
+{% if description %}
+   {{ description.description }}</p>
+{% endif %}
+
+<ul>{% for date in date_list %}
+  <li style="display:inline;"><a href="{% url cal_archive_month year=date.year month=date|date:"b" %}">
+      {{date|date:"F"}}</a></li>
+  {% endfor %}</ul>
+
+
+{% with object_list as latestevents %}
+
+    {% if type %}
+      {% with "True" as edit_disabled %}
+        {% with "True" as all_events %}   {# variable for switching more link ind calendar.inc #}
+	  {% include "cal/calendar.inc" %}
+        {% endwith %}
+      {% endwith %}
+    {% else %}
+       {% with "True" as all_events %}   {# variable for switching more link ind calendar.inc #}
+	  {% include "cal/calendar.inc" %}
+        {% endwith %}
+    {% endif %}
+{% endwith %}
+
+<script type="text/javascript">
+    var calendarUpdateURL = '/calendar/ajax/list/';
+</script>
+{% endblock %}

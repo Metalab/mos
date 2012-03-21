@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block hos_content %}
+<h2> Change your userpic </h2>
+<table border="0">
+<form  method="post" action="/member/{{user.username}}/update/userpic/" enctype="multipart/form-data">
+   {{form.as_table}}
+   <tr>
+     <td></td><td><input type="submit"/></td>
+</form>
+</table>
+{% endblock hos_content %}

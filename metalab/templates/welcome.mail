@@ -1,0 +1,14 @@
+Hello {{ user.first_name }},
+
+Wir haben dir einen User auf der neuen Metalab-Webseite angelegt.
+
+Zugangsdaten: http://metalab.at/login/ l/p: {{ user.username }}/{{newpass}}
+
+Dort kannst du Events und Projekte bearbeiten, und dein Member-Profil einsehen.
+
+Weitere Features folgen in Kürze!
+
+Dein MOS-Team
+
+P.S. Bei Problemen und für Anregungen nutze bitte diesen Support Link: http://getsatisfaction.com/metalab
+

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block add_css %}
+    <link href="/site_media/stylesheets/members.css" media="screen" rel="Stylesheet" type="text/css" />
+{% endblock %}
+
+{% block hos_content %}
+
+{% if list %}
+  <h2>{{ HOS_MAME }} member history</h2>
+  <table>
+    <tr><td colspan="4"><hr/></td></tr>
+    <tr>
+        <td align="center"><p><b>month</b></p></td>
+        <td align="center" colspan="2"><p><b>number of member</b></p></td>
+        <td align="center"><p><b>+</b></p></td>
+        <td align="center"><p><b>-</b></p></td>
+    </tr>
+    {% for l in list %}
+        <tr>
+            <td><p>{{ l.month.month }}/{{ l.month.year }}</p></td>
+            <td><p>{{ l.num_member }}</p></td>
+            <td><img src="/media/images/pixel_blue.png" height="15px" width="{{ l.num_member }}px"/></td>
+            <td><p>{{ l.new_member }}</p></td>
+            <td><p>{{ l.resigned_member }}</p></td>
+        </tr>
+    {% endfor %}
+  </table>
+{% else %}
+    <p>no member in database</p>
+{% endif %}
+
+{% endblock %}

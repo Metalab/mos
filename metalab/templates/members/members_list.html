@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+
+{% block add_css %}
+    <link href="/site_media/stylesheets/members.css" media="screen" rel="Stylesheet" type="text/css" />
+{% endblock %}
+
+{% block hos_content %}
+
+  <h2>all members</h2>
+  <br/>
+  <table>
+  {% if info_list %}
+    {% for info_dict in info_list %}
+    <tr>
+        <td>{{ info_dict.member.membership_number }}</td>
+        <td><a href="{{ info_dict.user.username }}/">{{ info_dict.user }}</a></td>
+        <td>{{ info_dict.member.begin_of_membership }}</td>
+        <td>{{ info_dict.kind }}</td>
+    </tr>
+    {% endfor %}
+  {% endif %}
+  </table>
+
+{% endblock %}

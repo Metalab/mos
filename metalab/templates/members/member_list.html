@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+{% block hos_content %}
+    {% if user.is_superuser %}
+		{% include 'members/member_list_superuser.inc' %}	
+	{% else %}
+    	{% include 'members/member_list.inc' %}
+	{% endif %}
+{% endblock %}

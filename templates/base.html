@@ -1,0 +1,82 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <title>{% block title %}{{ HOS_NAME }}{% endblock %}</title>
+    
+    <script src="/site_media/javascripts/prototype.js" type="text/javascript"></script>
+    
+    {% block add_css %} {% endblock add_css%}    
+    
+    <link href="/site_media/stylesheets/base.css" media="screen" rel="Stylesheet" type="text/css" />
+    
+    {% if custom_style %}
+      <link href="/site_media/stylesheets/{{custom_style}}.css" media="screen" rel="Stylesheet" type="text/css" />
+    {% endif %}
+    
+    <script src="/admin/jsi18n/" type="text/javascript"></script>    
+    <script src="/admin_media/js/core.js" type="text/javascript"></script> 
+    <script src="/admin_media/js/calendar.js" type="text/javascript"></script>
+    <script src="/site_media/javascripts/DateTimeShortcuts.js" type="text/javascript"></script>
+    
+    <script src="/site_media/javascripts/ml-ajaxtools.js" type="text/javascript"></script> 
+    
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds/events" />
+ 
+
+  </head>
+
+  <body>
+    <div id="container">
+      <div id="page">
+	<div id="main">
+	  <div id="header">
+            <div id="logo">
+              <a href="/" title="Hackerspace OS"><img src="/site_media/images/{% if custom_style %}{{custom_style}}.png{%else%}hackerspace_logo.png{%endif%}" width="180" height="62" alt="hackerspace os Logo" /></a>
+            </div>
+	    
+	    {% ifequal custom_style 'ccc_linz' %}
+            <div id="navbar">
+	      <br />
+	      <ul id="tabmenue">
+		<li><a href="/wikipage/">Wiki</a></li>
+		<li><a href="/member/">Members</a></li>
+		<li><a href="/calendar/">Kalender</a></li>
+		<li><a href="#">Kontakt</a></li>
+	      </ul>
+	      <div id="subtitle"> Hos ! </div>
+	      {% else %}
+              <ul id="header-nav">
+		<li><a href="/example/" title="Wiki">Example Link</a></li>
+		{% comment %}
+		<li><a href="/wiki/" title="Wiki">Wiki</a></li>
+		<li><a href="/wiki/Info_Folder" title="About">About</a></li>
+		<li><a href="/wiki/Lage" title="Anreise">Location</a></li>
+		<li><a href="/wiki/Sponsoren" title="Sponsoren">Sponsoren</a></li>
+		<li><a href="/wiki/Impressum" title="Impressum">Impressum</a></li>
+		{% endcomment %}
+	      </ul>
+	      {% endifequal %}
+	      
+              <div id="login">
+		{% if not user.is_authenticated %} <a href="/member/login/">Login</a> {% else %} Hi <a href="/member/{{user}}">{{user}}</a>! {% if user.is_superuser %}| <a href="/admin/">Manage</a> {% endif %} |  <a href="/member/logout/">Logout</a>{% endif %}
+              </div>
+	    </div>
+	  </div>
+	  
+	  <div id="content">
+            {% block hos_content %}
+            {% endblock %}
+	  </div>
+	  
+	  <div id="footer"> <hr />
+	    &copy; 2008 hackerspace OS - <!-- footer_stats --> 
+	  </div>
+	</div>
+      </div>
+    </div>
+  </body>
+</html>

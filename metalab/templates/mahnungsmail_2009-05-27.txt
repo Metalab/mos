@@ -1,0 +1,34 @@
+Hallo {{name}},
+
+nach unserer letzten Durchsicht haben wir festgestellt, dass von Dir noch Mitgliedsbeitraege ausstaendig sind. 
+Damit Du eine Uebersicht ueber Deine getaetigten Einzahlungen und aktuellen Mitgliederdaten bekommst, folge diesem Link (funktioniert nur wenn du eingeloggt bist):
+
+--> http://metalab.at/member/{{username}}/
+
+
+(Falls Du Dein Metalab-OS-Passwort vergessen hast schreib an core@metalab.at)
+
+
+Ueberpruefe bitte Deine Daten und Zahlungseingaenge und falls Du Fragen hast, wende Dich an: 
+
+E-Mail: fex@sil.at
+Jabber: feli_x@jabber.metalab.at
+Phone:  0699/81975177
+
+oder persoenlich: 
+am 30. Mai 2009 von 17:30 - 19:30 (_vor_ der Generalversammlung)
+
+
+Du hast eine 14-taegige Zahlungsfrist bzw. bei Einwaenden 14 Tage Zeit ein Veto einzulegen. Sollten wir innerhalb dieser Frist keine Rueckmeldung von Dir bekommen, gilt diese Erinnerung als 1. Mahnung.
+
+Kontoverbindung Metalab: http://metalab.at/wiki/Impressum#Kontoverbindung
+
+
+Schoene Gruesse,
+Felicitas 
+für den Metalab-Vorstand
+
+P.S.:
+Zusaetzlich moechten wir anmerken, dass nur zahlende Mitglieder bei der Generalversammlung stimmberechtigt sind. 
+P.P.S: 
+Nach der 2. Mahnung ist der Ausschluss durch den Vorstand moeglich.

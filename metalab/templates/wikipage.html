@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+
+{% block title %}Metalab{% endblock %}
+
+{% block content %}
+<style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "/site_media/stylesheets/wikipage.css"; /*]]>*/</style>
+
+		<link rel="stylesheet" type="text/css" media="print" href="/wiki/skins/common/commonPrint.css?63" />
+		<link rel="stylesheet" type="text/css" media="handheld" href="/wiki/skins/monobook/handheld.css?63" />
+		<!--[if lt IE 5.5000]><style type="text/css">@import "/wiki/skins/monobook/IE50Fixes.css?63";</style><![endif]-->
+		<!--[if IE 5.5000]><style type="text/css">@import "/wiki/skins/monobook/IE55Fixes.css?63";</style><![endif]-->
+		<!--[if IE 6]><style type="text/css">@import "/wiki/skins/monobook/IE60Fixes.css?63";</style><![endif]-->
+		<!--[if IE 7]><style type="text/css">@import "/wiki/skins/monobook/IE70Fixes.css?63";</style><![endif]-->
+		<!--[if lt IE 7]><script type="text/javascript" src="/wiki/skins/common/IEFixes.js?63"></script>
+		<meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+
+		<script type= "text/javascript">/*<![CDATA[*/
+var skin = "monobook";
+var stylepath = "/wiki/skins";
+var wgArticlePath = "/wiki/$1";
+var wgScriptPath = "/wiki";
+var wgServer = "http://metalab.at";
+var wgCanonicalNamespace = "";
+var wgCanonicalSpecialPageName = false;
+var wgNamespaceNumber = 0;
+var wgPageName = "Lage";
+var wgTitle = "Lage";
+var wgAction = "view";
+var wgArticleId = "1687";
+var wgIsArticle = true;
+var wgUserName = null;
+var wgUserGroups = null;
+var wgUserLanguage = "de";
+var wgContentLanguage = "de";
+var wgBreakFrames = false;
+var wgCurRevisionId = "14210";
+/*]]>*/</script>
+
+
+		<script type="text/javascript" src="/wiki/skins/common/wikibits.js?63"><!-- wikibits js --></script>
+		<script type="text/javascript" src="/wiki/index.php?title=-&amp;action=raw&amp;gen=js"><!-- site js --></script>
+		<style type="text/css">/*<![CDATA[*/
+@import "/wiki/index.php?title=MediaWiki:Common.css&usemsgcache=yes&action=raw&ctype=text/css&smaxage=18000";
+/*
+@import "/site_media/stylesheets/monobook.css";
+*/
+@import "/wiki/index.php?title=-&action=raw&gen=css&maxage=18000";
+/*]]>*/</style>
+
+{{ file|safe }}
+
+
+{% endblock %}

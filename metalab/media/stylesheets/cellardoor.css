@@ -1,0 +1,117 @@
+body {
+ margin:0;
+ padding:0;
+ background-image:url(metanight.png);
+ background-repeat:no-repeat;
+ background-color:#00174D;
+ font-family:sans-serif;
+ overflow:hidden;
+}
+
+
+#container {
+ width:1024px;
+ height:768 px;
+ overflow:hidden;
+}
+
+#eventliste {
+ width:400px;
+ /*height:600px;*/
+ position:absolute;
+ top:60px;
+ left:635px;
+}
+
+#event_anounce {
+ display:none;
+ font-size:32px;
+ font-family: Times;
+ padding-left:90px;
+ height:35px;
+}
+
+#event_anounce .fg {
+ color:#F36523;
+ position:relative;
+ top:-37px;
+ right:1px;
+}
+#event_anounce .bg {positon:relative;}
+
+
+a {
+color:#000;
+text-decoration:none;
+font-size:21px;
+}
+
+
+/* styling */
+
+#calendar-content #calendar-content { 
+    background-color: #003151;
+    padding:10px 20px 7px 10px;
+    -moz-border-radius: 10px;
+}
+
+#calendar-content ul {
+    list-style-position: inline;
+    padding:0;
+}
+
+#calendar-content li {
+        display: block;
+}
+
+
+
+#calendar-content li p {
+        margin: 0;
+        padding: 0.5em 1em;
+        line-height:1.15em;
+}
+
+
+#calendar-content li .event {
+        /*background: #A7B9C3;*/
+        background: #fff;
+
+        margin-bottom:3px;
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+
+
+}
+
+#statusInfo { display: none; }
+
+#calendar-content li .past_event {
+/*        background: #F36523; */
+    background:#fa6232;
+    color:#fff;
+}
+#calendar-content li .past_event a { color:#fff; }
+
+#calendar-content .event_date, p.event 
+{
+        font-weight: bold;
+        padding-right: 5px;
+        margin-right: 5px;
+}
+
+
+span.teaser {
+display:block;
+padding-top:2px; 
+}
+
+span.event_date {
+ font-size:14px;
+ font-weight:normal;
+ display:block;
+ margin-bottom:0.4em;
+}
+
+
+#calender_morelink, span.location, span.category, .invisible, a.hoverHidden, div#calendarcontainer {display:none}

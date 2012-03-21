@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block add_css %}
+    <link href="/site_media/stylesheets/members.css" media="screen" rel="Stylesheet" type="text/css" />
+{% endblock %}
+
+
+
+{% block hos_content %}
+	<h1>User profile: {{ item }}</h1>
+	{% if user.is_superuser %}
+		{% include 'members/members_details.inc' %}	
+	{% else %}
+		{% ifequal user.id item.id %}
+			{% include 'members/members_details.inc' %}
+		{% else %}
+			{% include 'members/members_details_error.inc' %}	
+		{% endifequal %}
+	{% endif %}
+{% endblock %}
