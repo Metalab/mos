@@ -28,12 +28,12 @@ urlpatterns = patterns('',
     (r'^site_media/(?P<path>.*)$',
      'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
 
-    (r'^admin/calendar/(.*)', calendar_admin.root),
-    (r'^admin/projects/(.*)', project_admin.root),
-    (r'^admin/members/(.*)', member_admin.root),
-    (r'^admin/scrooge/(.*)', scrooge_admin.root),
-    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
-    (r'^admin/(.*)', admin.site.root),
+    (r'^admin/calendar/?', include(calendar_admin.urls)),
+    (r'^admin/projects/?', include(project_admin.urls)),
+    (r'^admin/members/?', include(member_admin.urls)),
+    (r'^admin/scrooge/?', include(scrooge_admin.urls)),
+    (r'^admin/doc/?', include('django.contrib.admindocs.urls')),
+    (r'^admin/?', include(admin.site.urls)),
 
     (r'^member/', include('mos.members.urls')),
 
