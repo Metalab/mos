@@ -1,0 +1,6 @@
+* Python 2.5+
+* Django 1.3
+* docutils
+* icalendar
+* dateutil
+* possibly more
