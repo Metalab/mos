@@ -9,7 +9,7 @@ sys.path.append(os.path.join(_DIRNAME, '..'))
 # FIXME: this has to be set somehow but not version tracked.
 SECRET_KEY = ''
 
-DEBUG = False
+DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
@@ -22,9 +22,9 @@ sys.path.append(os.path.join(_DIRNAME, 'support'))
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'mysql' # 'postgresql_psycopg2', 'postgresql', 'mysql',
+DATABASE_ENGINE = 'sqlite3' # 'postgresql_psycopg2', 'postgresql', 'mysql',
                           # 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'meta'
+DATABASE_NAME = 'meta.db'
 DATABASE_USER = 'mos'
 DATABASE_PASSWORD = ''
 DATABASE_HOST = ''       #Set to empty string for localhost.
@@ -132,3 +132,10 @@ HOS_PROJECTS = True
 HOS_RECENT_CHANGES = True
 
 HOS_WIKI_CHANGE_URL = 'https://metalab.at/wiki/index.php?title=Spezial:Letzte_%C3%84nderungen&feed=atom'
+
+
+try:
+    from settings_prod import *
+except ImportError, e:
+    import sys
+    print >> sys.stderr, 'create settings_prod.py with productive settings'

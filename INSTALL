@@ -1,0 +1,17 @@
+
+Installing MOS
+
+
+For testing / development
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+./manage.py syncdb
+./manage.py runserver
+
+
+
+For deployment
+~~~~~~~~~~~~~~
+
+# create settings_prod.py with useful settings (eg database)
+# see https://docs.djangoproject.com/en/dev/howto/deployment/
