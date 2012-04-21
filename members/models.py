@@ -29,7 +29,7 @@ class ContactInfo(models.Model):
     def get_image_path(self, filename):
         name, ext = filename.rsplit('.', 1)
         return 'userpics/%s.%s' %(self.user.username, ext)
-    
+
     on_intern_list = models.BooleanField(default=True)
     intern_list_email = models.EmailField(blank=True)
 
@@ -46,7 +46,7 @@ class ContactInfo(models.Model):
 
     user = models.ForeignKey(User, unique=True)
 
-    last_email_ok = models.BooleanField(null=True)
+    last_email_ok = models.NullBooleanField(null=True)
     has_active_key = models.BooleanField(null=False)
     key_id = models.CharField(max_length=100, blank=True, null=True)
 
@@ -123,7 +123,7 @@ class ContactInfo(models.Model):
 	wikiname = self.wiki_name
         if not wikiname:
             wikiname = self.user.username
-            
+
 	return u'%sBenutzer:%s' % (settings.HOS_WIKI_URL, wikiname)
 
 
@@ -165,9 +165,9 @@ def get_active_membership_months_until(date):
             res[kind] += nrMonths
         else:
             res[kind] = nrMonths
-    
+
     return res
-    
+
 def get_months(date):
     return date.month + 12*date.year
 
@@ -236,7 +236,7 @@ class KindOfMembership(models.Model):
 class PaymentManager(models.Manager):
     def import_smallfile(self, filename, date):
         import csv
-        
+
         f = open(filename, 'r')
         r = csv.reader(f, delimiter=";")
 
@@ -249,7 +249,7 @@ class PaymentManager(models.Manager):
             except User.DoesNotExist:
                 print line
                 continue
-            
+
             sum = line[5]
             try:
                 Payment.objects.create(date=date, user=u, amount=sum, method=PaymentMethod.objects.get(name='bank collection'), original_file=filename, original_line=str(line))
@@ -290,7 +290,7 @@ class PaymentManager(models.Manager):
             sum = line[5] if line[5] else '-'+line[4] if line[4] else '0'
 
             sum = sum.replace(',', '.')
-            
+
             try:
                 sum = Decimal(sum) / len(list)
             except Exception, e:
@@ -327,7 +327,7 @@ class PaymentManager(models.Manager):
 
                     if fragments[1] == 'Eckhardt':
                         fragments[1] = 'Eckardt'
-                    
+
                     if fragments[1] == 'Grenzfurtner':
                         fragments[1] = 'Grenzfurthner'
 

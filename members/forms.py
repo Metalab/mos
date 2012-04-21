@@ -24,7 +24,7 @@ class UserEmailForm(ModelForm):
 
     class Meta:
         model = User
-        fields = ('email')
+        fields = ('email', )
 
 
 class UserAdressForm(ModelForm):
@@ -38,4 +38,4 @@ class UserImageForm(ModelForm):
 
     class Meta:
         model = ContactInfo
-        fields = ('image')
+        fields = ('image', )

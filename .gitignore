@@ -1,1 +1,3 @@
 *.pyc
+settings_prod.py
+meta.db
