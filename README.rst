@@ -26,4 +26,5 @@ been left out unfairly, please contact us.
 - angelol
 - markus
 - stereotype
+- Stefan Kögl <stefan@skoegl.net>
 
