@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from mos import settings
+from django.conf import settings
 from mos.cal.models import Event
 from mos.core.context_processors import custom_settings_main
 from mos.members.models import get_active_members
@@ -52,7 +52,7 @@ def display_main_page(request):
                                                             .order_by('?')[:7])
     herelist = get_herelist()
 
-    path = os.path.join(settings._DIRNAME, "media/gallerypics/")
+    path = settings.MEDIA_ROOT.child("gallerypics")
     image_urls = gallery_images(path)
     random.shuffle(image_urls)
     image_urls = image_urls[:2]

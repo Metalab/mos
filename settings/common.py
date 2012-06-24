@@ -1,9 +1,8 @@
 # Django settings for hos
-import os
-import sys
-_DIRNAME = os.path.dirname(globals()["__file__"])
 
-sys.path.append(os.path.join(_DIRNAME, '..'))
+from unipath import FSPath as Path
+ 
+PROJECT_DIR = Path(__file__).absolute().ancestor(2)
 
 # Make this unique, and don't share it with anybody.
 # FIXME: this has to be set somehow but not version tracked.
@@ -15,10 +14,6 @@ TEMPLATE_DEBUG = DEBUG
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
 )
-
-_DIRNAME = os.path.dirname(globals()["__file__"])
-
-sys.path.append(os.path.join(_DIRNAME, 'support'))
 
 MANAGERS = ADMINS
 
@@ -45,7 +40,7 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = os.path.join(_DIRNAME, "metalab/media")
+MEDIA_ROOT = PROJECT_DIR.child("metalab", "media")
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -79,7 +74,8 @@ TEMPLATE_DIRS = (
     # or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(_DIRNAME, "metalab/templates"))
+    PROJECT_DIR.child("metalab", "templates"),
+)
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.auth',

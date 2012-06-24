@@ -2,7 +2,6 @@ from django.http import HttpResponse
 from django.utils.html import escape
 from django.conf import settings
 from mos.usbherelist.models import Usbhereitem
-import os
 import os.path
 import time
 import django.template as template
@@ -31,12 +30,14 @@ def serve_herelist(request, template):
 
 
 def get_herelist():
-    filename = os.path.join(settings.MEDIA_ROOT, 'usbherelist', 'herelist.txt')
+    filename = settings.MEDIA_ROOT.child('usbherelist', 'herelist.txt')
 
-    logfile = os.path.join(settings.MEDIA_ROOT, 'test.log')
+    logfile = settings.MEDIA_ROOT.child('test.log')
 
     herelist = list()
 
+    if not os.path.exists(filename):
+        return None
     # a) empty file
     if os.path.getsize(filename) <= 0:
         return None
