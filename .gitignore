@@ -1,1 +1,3 @@
 *.pyc
+*.sqlite
+settings/local*
