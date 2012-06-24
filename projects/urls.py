@@ -1,5 +1,4 @@
 from django.conf.urls.defaults import *
-from mos import settings
 
 from mos.projects.models import Project
 
