@@ -1,3 +1,6 @@
 *.pyc
 *.sqlite
+
 settings/local*
+settings/secret_key.*
+

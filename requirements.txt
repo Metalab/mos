@@ -3,3 +3,4 @@ PIL==1.1.7
 icalendar==3.0.1b2
 pytz==2012c
 Unipath==0.2.1
+django-extensions==0.9
