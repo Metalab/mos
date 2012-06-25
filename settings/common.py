@@ -5,8 +5,12 @@ from unipath import FSPath as Path
 PROJECT_DIR = Path(__file__).absolute().ancestor(2)
 
 # Make this unique, and don't share it with anybody.
-# FIXME: this has to be set somehow but not version tracked.
-SECRET_KEY = ''
+try:
+    from secret_key import *
+except ImportError:
+    from django_extensions.management.commands import generate_secret_key
+    cmd = generate_secret_key.Command()
+    SECRET_KEY = cmd.handle_noargs()
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
@@ -86,6 +90,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 INSTALLED_APPS = (
+    'django_extensions',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
