@@ -13,10 +13,10 @@ from mos.scrooge.models import *
 from django.contrib.auth import authenticate
 from django.views.decorators.http import require_POST
 
-import simplejson
+import json
 
 def json_response(obj):
-    return HttpResponse(unicode(simplejson.dumps(obj)), content_type='application/json')
+    return HttpResponse(unicode(json.dumps(obj)), content_type='application/json')
 
 #@login_required
 @require_POST
@@ -24,7 +24,7 @@ def buy(request):
     if request.META['REMOTE_ADDR'] <> "127.0.0.1": raise Http404()
     #if not request.user.is_superuser: raise Http404('this resource does not exist (for your)')
 
-    buy_request = simplejson.loads(request.raw_post_data)
+    buy_request = json.loads(request.raw_post_data)
     button_id = buy_request["buttonId"]
 
     #get account and products, returning errors if not found
@@ -72,7 +72,7 @@ def get_account_info(request, button_id):
 def load_credits(request):
     if request.META['REMOTE_ADDR'] <> "127.0.0.1": raise Http404()
     
-    load_request = simplejson.loads(request.raw_post_data)
+    load_request = json.loads(request.raw_post_data)
     
     try:
         authorizer = Account.objects.get(credentialId=load_request["buttonIdAuthorization"])
