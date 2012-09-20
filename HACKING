@@ -1,0 +1,23 @@
+
+======================================================================
+HOW TO SET UP A LOCAL INSTALLATION OF METALAB OS TO CONTRIBUTE PATCHES
+======================================================================
+
+Assumption: Using a Debian-based system and not using virtualenv. When using
+another system (or virtualenv), see the file "requirements.txt".
+
+1. git clone git://github.com/Metalab/mos.git
+
+2. apt-get install python-django python-unipath python-django-extensions \
+                   python-pip
+3. pip install icalendar
+
+4. Optional: Install the locale packages for de_DE.UTF-8
+5. python manage.py syncdb
+6. Say yes to create a superuser account (and create one)
+7. python manage.py runserver
+8. Point your browser to http://127.0.0.1:8000/
+9. Login with your freshly-created user account
+10. ...
+11. PROFIT!
+
