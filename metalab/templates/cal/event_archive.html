@@ -24,9 +24,12 @@
    {{ description.description }}</p>
 {% endif %}
 
-<ul>{% for date in date_list %}
-  <li style="display:inline;"><a href="{% url cal_archive_year year=date.year %}">{{date.year}}</a></li>
-{% endfor %}</ul>
+<div class="years" style="text-align: center;">
+{% for date in date_list %}
+    {% if not forloop.first %}&middot;{% endif %}
+    <a href="{% url cal_archive_year year=date.year %}">{{date.year}}</a>
+{% endfor %}
+</div>
 
     {% if type %}
       {% with "True" as edit_disabled %}
