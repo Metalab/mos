@@ -1,4 +1,5 @@
-# Create your views here.
+# -*- coding: utf-8 -*-
+
 from dateutil.parser import *
 
 from icalendar import Calendar as icalCalendar
@@ -53,11 +54,31 @@ class EventCalendar(HTMLCalendar):
 
     def formatmonth(self, year, month, withyear=False):
         self.year, self.month = year, month
-        
-        d = date(int(year), int(month), 1)
-        prev = d - relativedelta.relativedelta(months=1)
-        next = d + relativedelta.relativedelta(months=1)
-        head = u'<a href="/calendar/%04d/%02d/">&lt;</a> <a href="/calendar/%04d/%02d/">&gt;</a>'% (prev.year, prev.month, next.year, next.month)
+
+        # FIXME: This should go into a template ;)
+
+        def month_link(date, diff):
+            then = date + relativedelta.relativedelta(months=diff)
+
+            if then.year == date.year:
+                label = then.strftime('%B')
+            else:
+                label = then.strftime('%B %Y')
+
+            link = '/calendar/%04d/%02d/' % (then.year, then.month)
+            cls = 'monthdiff-%d' % (abs(diff),)
+            return u'<a class="%s" href="%s">%s</a>' % (cls, link, label)
+
+        this_month = date(int(year), int(month), 1)
+
+        head = u'<h2 class="calendar">%s</h2>' % ' &middot; '.join((
+            month_link(this_month, -2),
+            month_link(this_month, -1),
+            '<strong>%s</strong>' % this_month.strftime('%B %Y'),
+            month_link(this_month, +1),
+            month_link(this_month, +2),
+        ))
+
         return head.encode('utf-8')+super(EventCalendar, self).formatmonth(year, month, withyear)
 
     def group_by_day(self, events):

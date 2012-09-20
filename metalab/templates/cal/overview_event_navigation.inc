@@ -1,1 +1,1 @@
-<p align="right"><a href="/calendar/">ALL Events </a> | <a href="/calendar/locations/">ALL Locations / Events </a> | <a href="/calendar/categories/">ALL Categories / Events </a> </p>
+<p align="right"><a href="/calendar/">Go to Today</a> &middot; <a href="/calendar/categories/">Events by Category</a></p>

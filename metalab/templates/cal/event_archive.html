@@ -7,11 +7,9 @@
 {% endblock %}
 
 {% block hos_content %}
-<div id="header">
-	<div id="branding">
-		<h1 id="site-name">{{HOS_NAME}} Calendar</h1>
-	</div>
-</div>
+
+<div class="metalab_month_calendar">
+
 {% include 'cal/overview_event_navigation.inc'  %}
 
 
@@ -44,4 +42,6 @@
 <script type="text/javascript">
     var calendarUpdateURL = '/calendar/ajax/list/';
 </script>
+</div>
+
 {% endblock %}
