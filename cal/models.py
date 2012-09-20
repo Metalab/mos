@@ -13,8 +13,19 @@ from django.db.models import permalink, Q
 from mos.core.models import Category, Location
 from mos.cal import create_calendar
 import urllib
+import sys
 
-locale.setlocale(locale.LC_ALL, 'de_DE.UTF-8')
+# We want our calendar to be displayed using the German locale
+DESIRED_LOCALE = 'de_DE.UTF-8'
+
+try:
+    locale.setlocale(locale.LC_ALL, DESIRED_LOCALE)
+except locale.Error:
+    fallback_locale = locale.setlocale(locale.LC_ALL, '')
+    print >>sys.stderr, """
+    WARNING: Locale not found: %s
+             Falling back to:  %s
+    """ % (DESIRED_LOCALE, fallback_locale)
 
 
 class EventManager(models.Manager):
