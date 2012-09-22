@@ -3,40 +3,67 @@
 	margin-bottom: 0.5em;
 }
 
-#calendar-content ul {
-	border: 1px solid #ddd;
+#calendar-content table {
+    border-collapse: collapse;
 }
 
-#calendar-content li {
-	display: block;
-/* width:100%;  broken on IE7 :(*/
-	width: 329px;
+#calendar-content table th, #calendar-content table td {
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 6px;
+    padding-bottom: 6px;
 }
 
-#calendar-content div {
-	padding: 1px 0 0 1px;
+#calendar-content table th {
+    padding-top: 15px;
+    text-align: right;
+    font-weight: bold;
 }
 
-#calendar-content li p {
-	margin: 0;
-	padding: 0.5em 1em;
-}
-/*
-#calendar-content li .odd {
-	background: #C2C3F2;
-}
-*/
-#calendar-content li .event {
-	background: #C8D8FF;	
+#calendar-content table .event:nth-child(even) td {
+    background-color: #e7e7e7;
 }
 
-#calendar-content li .past_event {
-	background: #e3e3e3;
+#calendar-content table .event:nth-child(odd) td {
+    background-color: #f0f0f0;
+}
+
+#calendar-content table .past_event td {
+    background-color: #f7f7f7;
+}
+
+#calendar-content .detail_link {
+    font-size: small;
+    color: #666;
+}
+
+#calendar-content .detail_link a {
+    color: #666;
+}
+
+#calendar-content small {
+    color: #666;
+}
+
+#calendar-content table th {
+    white-space: nowrap;
+}
+
+#calendar-content table tr {
+    border-bottom: 1px #ccc solid;
+}
+
+#calendar-content table tr.event {
+    border-left: 1px #ccc solid;
+    border-right: 1px #ccc solid;
+}
+
+#calendar-content table tr.past_event {
+    border: 1px #f0f0f0 solid;
 }
 
 #calendar-content .event_date, p.event .event_date {
 	font-weight: bold;
-	border-right: 1px solid #666;
 	padding-right: 5px;
 	margin-right: 5px;
 }
