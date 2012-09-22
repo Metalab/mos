@@ -8,16 +8,30 @@ another system (or virtualenv), see the file "requirements.txt".
 
 1. git clone git://github.com/Metalab/mos.git
 
-2. apt-get install python-django python-unipath python-django-extensions \
-                   python-pip
-3. pip install icalendar
+2. On a Debian-based system:
+     apt-get install python-virtualenv
 
-4. Optional: Install the locale packages for de_DE.UTF-8
-5. python manage.py syncdb
-6. Say yes to create a superuser account (and create one)
-7. python manage.py runserver
-8. Point your browser to http://127.0.0.1:8000/
-9. Login with your freshly-created user account
-10. ...
-11. PROFIT!
+   On any other system:
+     easy_install pip
+     pip install virtualenv
+
+3. Create the virtualenv (call it "devel"): virtualenv devel
+4. Acivate the "devel" virtualenv: source devel/bin/activate
+5. Install dependencies: pip install -r requirements.txt
+6. Optional: Install the locale packages for de_DE.UTF-8
+7. python manage.py syncdb
+8. Say yes to create a superuser account (and create one)
+
+9. Load example data (optional, but recommended):
+     python manage.py loaddata events_2012-09-20
+
+9. python manage.py runserver
+10. Point your browser to http://127.0.0.1:8000/
+11. Login with your freshly-created user account
+
+
+Further Reading
+===============
+
+Virtualenv/Pip Basics: http://jontourage.com/2011/02/09/virtualenv-pip-basics/
 
