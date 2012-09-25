@@ -128,6 +128,15 @@ def members_key_list(request):
     text = '\r\n'.join([x.contactinfo_set.all()[0].key_id for x in members_with_keys])
     return HttpResponse(text, mimetype='text/plain')
 
+def members_lazzzor_list(request):
+    """
+    Returns key ids and usernames of members with lazzzor privileges as
+    comma separated list."""
+    members_with_privs = get_active_members().filter(
+                             contactinfo__has_lazzzor_privileges=True)
+    result = ['%s,%s' % (m.contactinfo_set.all()[0].key_id, m.username)
+                  for m in members_with_privs]
+    return HttpResponse('\r\n'.join(result), mimetype='text/plain')
 
 def members_update_userpic(request, user_username):
     if not request.user.username == user_username:
