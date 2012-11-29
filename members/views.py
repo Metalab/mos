@@ -134,7 +134,8 @@ def members_lazzzor_list(request):
     comma separated list."""
     members_with_privs = get_active_members().filter(
                              contactinfo__has_lazzzor_privileges=True)
-    result = ['%s,%s' % (m.contactinfo_set.all()[0].key_id, m.username)
+    result = ['%s,%s,%s' % (m.contactinfo_set.all()[0].key_id, m.username,
+                            m.contactinfo_set.all()[0].lazzzor_rate)
                   for m in members_with_privs]
     return HttpResponse('\r\n'.join(result), mimetype='text/plain')
 

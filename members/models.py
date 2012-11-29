@@ -25,6 +25,10 @@ class PaymentInfo(models.Model):
 
 
 class ContactInfo(models.Model):
+    LAZZZOR_RATE_CHOICES = (
+        ('1.00', "Standard Rate (1.00)"),
+        ('0.50', "Backer's Rate (0.50)"),
+    )
 
     def get_image_path(self, filename):
         name, ext = filename.rsplit('.', 1)
@@ -51,7 +55,8 @@ class ContactInfo(models.Model):
     has_lazzzor_privileges = models.BooleanField(null=False)
     key_id = models.CharField(max_length=100, blank=True, null=True)
 
-
+    lazzzor_rate = models.DecimalField(choices=LAZZZOR_RATE_CHOICES, default='1.00',
+                                       max_digits=3, decimal_places=2)
     remark = models.TextField(null=True, blank=True)
 
 
