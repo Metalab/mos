@@ -10,17 +10,16 @@ body {
 
 
 #container {
- width:1024px;
- height:768 px;
+ width:1280px;
+ height:800px;
  overflow:hidden;
 }
 
 #eventliste {
  width:400px;
- /*height:600px;*/
  position:absolute;
  top:60px;
- left:635px;
+ left:891px;
 }
 
 #event_anounce {
