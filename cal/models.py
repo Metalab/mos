@@ -123,34 +123,13 @@ class Event(models.Model):
 
         super(Event, self).save()
 
+    def start_end_date_eq(self):
+        return self.startDate.date() == self.endDate.date()
+
     def delete(self):
         self.deleted = True
 
-    def start_day(self):
-        return self.startDate.strftime('%a %d.%m.%Y')
 
-    def format_duration(self):
-        start_time = self.startDate.strftime('%H:%M')
-        if not self.endDate:
-            # No end date: 19:00
-            return start_time
-
-        end_date = self.endDate.strftime('%a %d.%m.')
-        end_time = self.endDate.strftime('%H:%M')
-
-        days_between = (self.startDate - self.endDate).days
-        if days_between < 2:
-            # Same day: 10:00-14:00
-            # Two consecutive days: 18:00-01:00
-            #      that's next day's time ^^^^^
-            return '%s-%s' % (start_time, end_time)
-        else:
-            # Multiple days: 18:00-01:00 (Sat 22.09.)
-            return '%s-%s (%s)' % (start_time, end_time, end_date)
-
-    def get_edit_url(self):
-        # TODO: Make an event edit page + link it here
-        return '#fixme'
 
     def get_icalendar_event(self):
         domain = Site.objects.get_current().domain

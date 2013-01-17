@@ -1,44 +1,20 @@
 
-<tr class="{% if event.past %}past_event{% else %}event{% endif %}">
-    <td style="text-align: right;">
-        {{ event.format_duration }}
-    </td>
-    <td>
-        {% if event.wikiPage %}
-            <a href="/wiki/{{event.wikiPage}}">{{ event.name }}</a>
-        {% else %}
-            {{ event.name }}
-        {% endif %}
+<div id="calendarcontainer{{event.id|default_if_none:""}}">
 
-        {% if user.is_authenticated and not edit_disabled %}
-            <span class="detail_link">(<a href="{{event.get_edit_url}}">edit</a>)</span>
-        {% endif %}
+<p class="event {% if event.past %}past_event{% else %}event{% endif %}" id="calendar-view-{{event.id|default_if_none:""}}">
+    {% if not new %}
+       <span class="event_date">{{ event.startDate|date:"D d.m.Y H:i" }} {% if event.endDate %} - {% if event.start_end_date_eq %} {{ event.endDate|date:"H:i" }} {% else %} {{ event.endDate|date:"D d.m.Y H:i" }} {% endif %} {% endif %}</span>       
+      		{% if event.wikiPage %}<a href="/wiki/{{event.wikiPage}}"> {% endif %}{{ event.name }}{% if event.wikiPage %}</a>{% endif %}
+		{% if event.teaser %}<span class="teaser">{{ event.teaser }}</span>{% endif %}
+		{% if event.category %}<span class="category"> | <a href="/calendar/special/Category/{{ event.category }}/">{{ event.category }}</a></span>{% endif %}
+		{% if event.location%}<span class="location"> | <a href="/calendar/special/Location/{{ event.location }}/">{{ event.location }}</a></span>{% endif %}
 
-        <span class="detail_link">(<a href="{{event.get_icalendar_url}}">ics</a>)</span>
 
-        {% if event.teaser or event.location %}
-            <small><br>
-
-            {% if event.teaser %}
-                {{ event.teaser }}
-            {% endif %}
-
-            {% if event.teaser and event.location %}
-                |
-            {% endif %}
-
-            {% if event.location %}
-                <a href="/calendar/special/Location/{{ event.location }}/">{{ event.location }}</a>
-            {% endif %}
-
-            </small>
-        {% endif %}
-        <!-- XXX: Re-add category: event.category -->
-    </td>
-</tr>
-
-<!-- XXX: Refactor this to a separate edit event page
-
+ {% endif %}
+	{% if user.is_authenticated and not edit_disabled %}
+        <a href='#' class="{%if not new %}hoverHidden{%endif%}" onclick="toggleView('calendar', '{% if not new %}{{event.id|default_if_none:""}}{% endif %}', 1); return false;">{%if not new %}Edit{%else%}Create New Event{%endif%}</a> {% endif %}
+ 	<a class="hoverHidden" href="{% if not new %}{{event.get_icalendar_url}}{% else %}{% url mos.cal.views.complete_ical %}{%endif %}">ical</a> 
+	</p>
 	{% if user.is_authenticated %}
 
     <div class="{% if not event_has_error %}invisible {%endif%}edit" id='calendar-edit-{% if not new %}{{event.id|default_if_none:""}}{% endif %}'>
@@ -107,7 +83,4 @@
 		</form>
 	</div>
 	{% endif %}
-
--->
-
 </div>
