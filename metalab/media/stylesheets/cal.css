@@ -64,50 +64,23 @@
 
 /* new stuff */
 
-
-/* Hide the <hr> at the end of the generated calendar */
-.metalab_month_calendar hr {
-    display: none;
-}
-
-h2.calendar {
-    text-align: center;
-    font-size: 15pt;
-    padding: 10px;
-    margin: 0px;
-}
-
-h2.calendar a {
-    padding: 3px;
-}
-
-h2.calendar strong {
-    color: black;
-}
-
-h2.calendar .monthdiff-1 {
-    font-size: 13pt;
-}
-
-h2.calendar .monthdiff-2 {
-    font-size: 11pt;
-}
-
 table.month {
     border-collapse: collapse;
-    width: 100%;
 }
 
 table.month th {
     text-align: center;
     font-weight: bold;
-    padding: 3px;
     background-color: #c0c0c0;
     border: 1px solid white;
 }
 
 table.month th.month {
-    display: none;
+    background-color: inherit;
+    font-size: 20pt;
+    padding: 4px;
+    color: #aaa;
+    text-align: right;
 }
 
 table.month td {
