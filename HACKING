@@ -1,0 +1,37 @@
+
+======================================================================
+HOW TO SET UP A LOCAL INSTALLATION OF METALAB OS TO CONTRIBUTE PATCHES
+======================================================================
+
+Assumption: Using a Debian-based system and not using virtualenv. When using
+another system (or virtualenv), see the file "requirements.txt".
+
+1. git clone git://github.com/Metalab/mos.git
+
+2. On a Debian-based system:
+     apt-get install python-virtualenv
+
+   On any other system:
+     easy_install pip
+     pip install virtualenv
+
+3. Create the virtualenv (call it "devel"): virtualenv devel
+4. Acivate the "devel" virtualenv: source devel/bin/activate
+5. Install dependencies: pip install -r requirements.txt
+6. Optional: Install the locale packages for de_DE.UTF-8
+7. python manage.py syncdb
+8. Say yes to create a superuser account (and create one)
+
+9. Load example data (optional, but recommended):
+     python manage.py loaddata events_2012-09-20
+
+9. python manage.py runserver
+10. Point your browser to http://127.0.0.1:8000/
+11. Login with your freshly-created user account
+
+
+Further Reading
+===============
+
+Virtualenv/Pip Basics: http://jontourage.com/2011/02/09/virtualenv-pip-basics/
+
