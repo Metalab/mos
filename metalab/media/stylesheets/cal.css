@@ -142,11 +142,8 @@ table.month td li:last-child {
 }
 
 table.month td.today {
-    background-color: #b0b0b0;
-    color: black;
-}
-
-table.month td.today a {
-    color: #1D1E62;
+    background-color: #c0c0ff; 
+    color:white;
+    font-weight:bold;
 }
 
