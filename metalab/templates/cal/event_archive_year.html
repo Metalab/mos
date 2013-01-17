@@ -7,6 +7,11 @@
 {% endblock %}
 
 {% block hos_content %}
+<div id="header">
+	<div id="branding">
+		<h1 id="site-name">{{HOS_NAME}} Calendar: {{year}}</h1>
+	</div>
+</div>
 {% include 'cal/overview_event_navigation.inc'  %}
 
 
@@ -21,14 +26,10 @@
    {{ description.description }}</p>
 {% endif %}
 
-<div style="text-align: center; padding: 5px;">
-    <strong>{{ year }}:</strong>
-{% for date in date_list %}
-    {% if not forloop.first %}&middot;{% endif %}
-    <a href="/calendar/{{date.year}}/{{date.month|stringformat:"02d"}}/">
-      {{date|date:"F"}}</a>
-{% endfor %}</ul>
-</div>
+<ul>{% for date in date_list %}
+  <li style="display:inline;"><a href="/calendar/{{date.year}}/{{date.month|stringformat:"02d"}}/">
+      {{date|date:"F"}}</a></li>
+  {% endfor %}</ul>
 
 
 {% with object_list as latestevents %}
