@@ -317,7 +317,7 @@
 	{% for p in item.payment_set.all %}
 		<tr>
 			<td>{{ p.amount }} Euro</td>
-			<td>payed on {{ p.date|date:"d.m.Y" }} ({{ p.comment }} {{ p.method }})</td>
+			<td>paid on {{ p.date|date:"d.m.Y" }} ({{ p.comment }} {{ p.method }})</td>
 		</tr>
 	{% endfor %}
 	<tr>
