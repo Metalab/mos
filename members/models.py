@@ -126,11 +126,11 @@ class ContactInfo(models.Model):
         return not self.key_id is None and self.has_active_key
 
     def get_wikilink(self):
-	wikiname = self.wiki_name
+        wikiname = self.wiki_name
         if not wikiname:
             wikiname = self.user.username
             
-	return u'%sBenutzer:%s' % (settings.HOS_WIKI_URL, wikiname)
+        return u'%sBenutzer:%s' % (settings.HOS_WIKI_URL, wikiname)
 
 
 def get_active_members():
@@ -262,12 +262,42 @@ class PaymentManager(models.Manager):
             except ValueError, e:
                 print line
 
+    #used to import generic payments, including date and payment type (as opposed to import_smallfile)
+    def import_generic(self, filename):
+        import csv
+        
+        f = open(filename, 'r')
+        r = csv.reader(f, delimiter=";")
+
+        nr_imported = 0
+
+        for line in r:
+            if len(line)<9:
+                print 'malformed: ' + repr(line)
+                continue
+            try:
+                u = User.objects.get(first_name=smart_unicode(line[0]), last_name=smart_unicode(line[1]))
+            except User.DoesNotExist:
+                print 'user not found: ' + repr(line)
+                continue
+            
+            sum, date, method = (line[5], line[7], line[8])
+            try:
+                p = Payment.objects.filter(date=date, amount=sum, user=u)
+                if len(p) != 0:
+                   print 'payment already present: ' + repr(line)
+                   continue
+                Payment.objects.create(date=date, user=u, amount=sum, method=PaymentMethod.objects.get(name=method), original_file=filename, original_line=str(line))
+                print 'created: ' + repr(line)
+            except ValueError, e:
+                print 'error creating payment: ' + repr(line)	
+
 
     def import_hugefile(self, filename):
         import csv
         from decimal import Decimal
 
-	f = open(filename, 'r')
+        f = open(filename, 'r')
         r = csv.reader(f, delimiter=";")
 
         i=0
