@@ -52,5 +52,5 @@ td { background: #FFF; padding: 3px 5px; vertical-align: top; }
 tr.even td {background-color:#EEEEEE;}
 tr.odd td {background-color:white;}
 
-.flattrbtn { display: inline-block; height: 13px; }
+.flattrbtn { display: inline-block; vertical-align: middle; }
 
