@@ -50,7 +50,7 @@ def announce(request):
             ci.last_email_ok = True
             ci.save()
         except smtplib.SMTPException, instance:
-            f = open('/announcelog.log', 'a')
+            f = open(settings.HOS_ANNOUNCE_LOG, 'a')
             f.write('\n\n'+user.email)
             f.write('\n'+repr(instance))
             ci.last_email_ok = False
