@@ -121,7 +121,7 @@ def members_bankcollection_list(request):
 
 def members_key_list(request):
     #get active members with active keys
-    members_with_keys = get_active_members().filter(contactinfo__has_active_key=True)
+    members_with_keys = get_active_and_future_members().filter(contactinfo__has_active_key=True)
     #return HttpResponse("blah", mimetype='text/plain')
 
     #just output keys one line per key
@@ -132,7 +132,7 @@ def members_lazzzor_list(request):
     """
     Returns key ids and usernames of members with lazzzor privileges as
     comma separated list."""
-    members_with_privs = get_active_members().filter(
+    members_with_privs = get_active_and_future_members().filter(
                              contactinfo__has_lazzzor_privileges=True)
     result = ['%s,%s,%s' % (m.contactinfo_set.all()[0].key_id, m.username,
                             m.contactinfo_set.all()[0].lazzzor_rate)
