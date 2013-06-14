@@ -8,14 +8,13 @@ from mos.cal.feeds import EventFeed
 
 
 feeds = {
-        'events': EventFeed,
-        }
+    'events': EventFeed,
+}
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
-   (r'^feeds/(?P<url>.*)/$',
-      'django.contrib.syndication.views.Feed', {'feed_dict': feeds}),
+   (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.Feed', {'feed_dict': feeds}),
 
     (r'^calendar/', include('mos.cal.urls')),
     (r'^rss/', include('mos.rss.urls')),

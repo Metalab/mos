@@ -2,6 +2,7 @@ import csv
 import codecs
 import cStringIO
 
+
 class UnicodeWriter:
     """
     A CSV writer which will write rows to CSV file "f",
