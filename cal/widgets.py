@@ -13,7 +13,7 @@ class DateTimeCombiWidget(forms.MultiWidget):
         super(DateTimeCombiWidget, self).__init__(widgets, attrs)
 
     def decompress(self, value):
-        
+
         if value:
             return [value.date(), value.time()]
         return ['', '']

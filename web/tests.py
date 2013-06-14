@@ -17,7 +17,7 @@ class PerformanceMainPageTest(TestCase):
             end = time.time()
             load_time = end - start
 
-            log_str = 'MainPage :  %f \n ' %(load_time)
+            log_str = 'MainPage :  %f \n ' % (load_time)
             print log_str
 
             log_file = open('web/performance.log', 'a+')

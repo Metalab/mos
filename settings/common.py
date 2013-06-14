@@ -1,7 +1,7 @@
 # Django settings for hos
 
 from unipath import FSPath as Path
- 
+
 PROJECT_DIR = Path(__file__).absolute().ancestor(2)
 
 # Make this unique, and don't share it with anybody.
@@ -21,12 +21,12 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'mysql' # 'postgresql_psycopg2', 'postgresql', 'mysql',
-                          # 'sqlite3' or 'oracle'.
+DATABASE_ENGINE = 'mysql'  # 'postgresql_psycopg2', 'postgresql', 'mysql',
+                           # 'sqlite3' or 'oracle'.
 DATABASE_NAME = 'meta'
 DATABASE_USER = 'mos'
 DATABASE_PASSWORD = ''
-DATABASE_HOST = ''       #Set to empty string for localhost.
+DATABASE_HOST = ''       # Set to empty string for localhost.
 DATABASE_PORT = ''       # Set to empty string for default.
 
 # Local timezone
@@ -59,7 +59,7 @@ ADMIN_MEDIA_PREFIX = '/admin_media/'
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader', 
+    'django.template.loaders.app_directories.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -68,8 +68,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.doc.XViewMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'mos.core.middleware.SetStatFooter', # remove this row to disable
-                                         #footer stats
+    'mos.core.middleware.SetStatFooter',  # remove this row to disable
+                                          #footer stats
 )
 
 ROOT_URLCONF = 'mos.urls'
@@ -124,7 +124,7 @@ HOS_ANNOUNCE_FROM = 'core@metalab.at'
 HOS_WIKI_CHANGE_URL = ''
 
 # ----------------- Style ---------------------
-HOS_CUSTOM_STYLE = '' # name of the custom style, blank for default
+HOS_CUSTOM_STYLE = ''  # name of the custom style, blank for default
 HOS_METASENSE = True
 HOS_LOCATION_GALLERY = True
 HOS_MEMBER_GALLERY = True
