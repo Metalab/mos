@@ -17,7 +17,7 @@ archive_index_dict.update(
     num_latest=100,
     template_object_name='latestevents',
     allow_empty=True,
-    )
+)
 
 event_detail_dict = date_dict.copy()
 event_detail_dict.update(template_object_name='event')
@@ -29,14 +29,14 @@ info_dict = {
 
 info_dict_locations = {
     'queryset': Location.objects.all(),
- #   'template_object_name': 'locations',
+    # 'template_object_name': 'locations',
     'template_name': 'cal/event_special_list.html',
     'extra_context': {'events_by': ' Locations'}
 }
 
 info_dict_categories = {
     'queryset': Category.objects.all(),
- #   'template_object_name': 'locations',
+    # 'template_object_name': 'locations',
     'template_name': 'cal/event_special_list.html',
     'extra_context': {'events_by': ' Categories'}
 }

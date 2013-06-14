@@ -2,7 +2,6 @@ from django.conf.urls.defaults import *
 from mos import settings
 
 from models import Change
-import datetime
 
 date_dict = {
     'queryset': Change.objects.all(),

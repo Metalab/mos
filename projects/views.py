@@ -33,7 +33,7 @@ def update_project(request, new, object_id=None):
                 project = Project.objects.get(id=project_data.id)
             else:
                 project_data.save()
-        
+
         else:
             project_error_id = project.id
     else:

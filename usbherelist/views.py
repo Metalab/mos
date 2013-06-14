@@ -13,8 +13,7 @@ def update_herelist(request):
     if request.FILES:
         for k, v in request.FILES.items():
             if v['content-type'] == 'text/plain' and k == 'herelist':
-                fd = open(os.path.join(settings.MEDIA_ROOT, 'usbherelist',\
-                                       'herelist.txt'), 'wb')
+                fd = open(os.path.join(settings.MEDIA_ROOT, 'usbherelist', 'herelist.txt'), 'wb')
                 fd.write(v['content'])
                 fd.close()
                 r.write('accepted update')
@@ -42,7 +41,7 @@ def get_herelist():
     if os.path.getsize(filename) <= 0:
         return None
     # b) too old file: > 45 minutes
-    if time.time() - os.path.getmtime(filename) > 60*45:
+    if time.time() - os.path.getmtime(filename) > 60 * 45:
         return None
     # c) print it
     fd = open(filename, 'rb')

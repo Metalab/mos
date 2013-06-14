@@ -1,10 +1,7 @@
 from django import template
 from django.template import Variable
-from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth.models import User
 
 from mos.cal.models import Event
-from mos.core.models import Location, Category
 
 
 register = template.Library()
@@ -25,9 +22,9 @@ class EventsByTypeNode(template.Node):
         self.obj = Variable(name)
 
     def render(self, context):
-        kw = self.obj.resolve(context).__class__.__name__.lower() + '__name' 
+        kw = self.obj.resolve(context).__class__.__name__.lower() + '__name'
         filter_arg = {str(kw): self.obj.resolve(context).name}
-        obj_sub_list = Event.objects.filter(**filter_arg)     
+        obj_sub_list = Event.objects.filter(**filter_arg)
         context['latestevents'] = obj_sub_list
         return ''
 
