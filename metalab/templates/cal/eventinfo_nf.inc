@@ -4,7 +4,7 @@
 
 <p class="event {% if event.past %}past_event{% else %}event{% endif %}" id="calendar-view-{{event.id|default_if_none:""}}">
     {% if not new %}
-       <span class="event_date">{{ event.startDate|date:"D d.m.Y H:i" }} {% if event.endDate %} - {% if event.start_end_date_eq %} {{ event.endDate|date:"H:i" }} {% else %} {{ event.endDate|date:"D d.m.Y H:i" }} {% endif %} {% endif %}</span>       
+       <span class="event_date">{{ event.startDate|date:"D d.m.Y H:i" }} {% if event.endDate %} - {% if event.start_end_date_eq %} {{ event.endDate|date:"H:i" }} {% else %} {{ event.endDate|date:"D d.m.Y H:i" }} {% endif %} {% endif %}</span>
       		{% if event.wikiPage %}<a href="/wiki/{{event.wikiPage}}"> {% endif %}{{ event.name }}{% if event.wikiPage %}</a>{% endif %}
 		{% if event.teaser %}<span class="teaser">{{ event.teaser }}</span>{% endif %}
 		{% if event.category %}<span class="category"> | <a href="/calendar/special/Category/{{ event.category }}/">{{ event.category }}</a></span>{% endif %}
@@ -36,7 +36,7 @@
 			{% if event_form.wikiPage.errors %}
 			   <dd> {{ event_form.wikiPage.errors }} </dd>
 			{% endif %}
-		
+
 			<dt><label><b>Start</b>:*</label></dt>
 			<dd> {{ event_form.startDate }} </dd>
 			{% if event_form.startDate.errors %}
@@ -71,8 +71,8 @@
 			{% if not new %}
 
 				<input type="button" value="Update" onclick="submit_event('{{event.id|default_if_none:""}}');">
-				<input type="button" value="Delete" onclick="delete_event('{{event.id|default_if_none:""}}');"> 
-			
+				<input type="button" value="Delete" onclick="delete_event('{{event.id|default_if_none:""}}');">
+
             {% else %}
 				<input type="button" value="Create" onclick="submit_event('{{event.id|default_if_none:""}}');">
             {% endif %}

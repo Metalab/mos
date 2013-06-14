@@ -7,7 +7,7 @@
 	{% if user.is_authenticated %}
 	<div class="edit {% ifnotequal project_error_id project_form.instance.id %}invisible{% endifnotequal%}" id="project-edit-{{project_form.instance.id|default_if_none:""}}">
 		<form id="project-form-{{project_form.instance.id|default_if_none:""}}" method="post" action="/project/{% if new %}new{%else%}{{project.id}}/update{%endif%}/" onsubmit="return false;" onKeyPress="
-		if(enter_pressed(event)) { submit_form($('project-form-{{project_form.instance.id|default_if_none:""}}'), $('projects-content')); }"> 
+		if(enter_pressed(event)) { submit_form($('project-form-{{project_form.instance.id|default_if_none:""}}'), $('projects-content')); }">
 
 			<dl>
 			<dt><label>Name (*):</label></dt>
@@ -15,13 +15,13 @@
 			   <dt>{{ project_form.name.errors }}</dt>
 			{% endif %}
 			<dd>{{ project_form.name }}</dd>
-			
+
 			<dt><label>Teaser:</label></dt>
 			<dd>{{project_form.teaser}}</dd>
-		
+
 			<dt><label>Wiki Page</label></dt>
 			<dd>{{project_form.wikiPage}}</dd>
-		
+
 			<dt><label>Finished:</label></dt>
             <dd>{{project_form.finished_at}}</dd>
 			<dt>* -> required field</dt>
@@ -32,11 +32,11 @@
 				<input type="button" value="Delete" class="btn-delete" onclick="delete_entry('project', '{{project_form.instance.id|default_if_none:""}}');/">
 			{% else %}
 				<input type="button" class="btn-create" value="Create" onclick="submit_form('project', '{{project_form.instance.id|default_if_none:""}}');">
-				
+
 			{% endif %}
 
 				<a href="#" class="toggled btn-cancel" onclick="toggleView('project', '{% if not new %}{{project_form.instance.id|default_if_none:""}}{% endif %}', 0); return false;">Cancel</a>
-			</dd>		
+			</dd>
 			</dl>
 		</form>
 	</div>
