@@ -10,7 +10,7 @@
 			{% if item.contactinfo_set.all.0.image %}
 				<img class="thumb_with_text" src="{{ item.contactinfo_set.all.0.image.url }}"/>
 			{% else %}
-				<img src="/site_media/images/default_avatar.png"/>
+				<img src="{{ STATIC_URL }}images/default_avatar.png"/>
 			{% endif %}
 		</td>
 		<td width="150px"><b>Info</b></td>
@@ -21,7 +21,7 @@
         <td>{{ item.first_name }} {{ item.last_name }} </td><td>{% if ea%}<a align="right" href='#'  onclick="set_visible($('member-edit-name')); return false;">Edit</a>{% endif %}</td>
     </tr>
     <tr>
-         <td colspan="3">  
+         <td colspan="3">
             {% if ea %}
             <div class="edit {% ifequal error_type "name" %} visible {% else %} invisible {% endifequal %}" id='member-edit-name' style="border: 1px solid black; padding: 5px;">
                 <form id='membmer-form-name' method="post" action="/member/{{user.username}}/update/name/" onsubmit="return false;" onKeyPress="
@@ -40,15 +40,15 @@
                         <input name='first_name' id="member-first_name" type="text" value='{{item.first_name}}'/>  - 
                         <input name='last_name' id="member-last_name" type="text" value='{{item.last_name}}'/>
                     </dd>
-                  {% endifequal %}                    
+                  {% endifequal %}
                     <dt style="visibility: hidden">Submit:</dt>
                     <dd style="text-align: left">
                         <input type="button" value="Update" class="btn-update" onclick="
                         new Ajax.Updater( $('container'), $('membmer-form-name').readAttribute('action'), {
                           parameters: $('membmer-form-name').serialize(true),
                         });
-                        "/>	
-                    
+                        "/>
+
                         <a href="#" class="toggled btn-cancel" onclick="set_invisible($('member-edit-name')); return false;">Cancel</a></dd>
 
                 </form>
@@ -56,7 +56,7 @@
             {% endif %}
         </td>
 	</tr>
-    
+
 
 	<tr>
 		<td>Member since:</td>
@@ -73,7 +73,7 @@
     </tr>
    <tr><td colspan="3"><hr/></td></tr>
 {% endif %}
-    
+
 	<tr>
 		<td><br></td>
 		<td></td>
@@ -86,8 +86,8 @@
 		<td>Email:</td>
 		<td>{{ item.email }}</td><td> {% if ea%}<a href='#'  onclick="set_visible($('member-edit-email')); return	false;">Edit</a>{% endif %}</td>
 	</tr>
-    <tr>    
-         <td colspan="3">  
+    <tr>
+         <td colspan="3">
             {% if ea %}
             <div class="edit {% ifequal error_type "email" %} visible {% else %} invisible {% endifequal %}" id='member-edit-email' style="border: 1px solid black; padding: 5px; width:100%;">
                 <form id='membmer-form-email' method="post" action="/member/{{user.username}}/update/email/" onsubmit="return false;" onKeyPress="
@@ -105,15 +105,15 @@
                     <dt>New Email </dt>
                     <dd><input name='email' id="member-email" type="text" value='{{item.email}}' size="40"/></dd>
                   {% endifequal %}
-            
+
                     <dt style="visibility: hidden">Submit:</dt>
                     <dd style="text-align: left">
                         <input type="button" value="Update" class="btn-update" onclick="
                         new Ajax.Updater( $('container'), $('membmer-form-email').readAttribute('action'), {
                           parameters: $('membmer-form-email').serialize(true),
                         });
-                        "/>	
-                    
+                        "/>
+
                         <a href="#" class="toggled btn-cancel" onclick="set_invisible($('member-edit-email')); return false;">Cancel</a>
 
                 </form>
@@ -125,7 +125,7 @@
 		<td>Adress:</td>
 		<td>{{ item.contactinfo_set.all.0.street }}; {{ item.contactinfo_set.all.0.postcode }} {{ item.contactinfo_set.all.0.city }}; {{ item.contactinfo_set.all.0.country }}</td><td> {% if ea%}<a href='#'  onclick="set_visible($('member-edit-adress')); return	false;">Edit</a>{% endif %}</td>
 	</tr>
-    
+
     <tr>
         <td colspan="3">
             {% if ea %}
@@ -164,15 +164,15 @@
                         new Ajax.Updater( $('container'), $('membmer-form-adress').readAttribute('action'), {
                           parameters: $('membmer-form-adress').serialize(true),
                         });
-                        "/>	
-                    
+                        "/>
+
                         <a href="#" class="toggled btn-cancel" onclick="set_invisible($('member-edit-adress')); return false;">Cancel</a>
                 </form>
             </div>
             {% endif %}
         </td>
     </tr>
-    
+
 	<tr>
 		<td>On intern list</td>
 		{% if item.contactinfo_set.all.0.on_intern_list %}
@@ -183,8 +183,8 @@
                 <td> {% if ea%}<a href='#'  onclick="set_visible($('member-edit-intern-list')); return false;">Edit</a>{% endif %}</td>
 
 	</tr>
-    <tr>    
-         <td colspan="3">  
+    <tr>
+         <td colspan="3">
             {% if ea %}
             <div class="edit {% ifequal error_type "internlist" %} visible {% else %} invisible {% endifequal %}" id='member-edit-intern-list' style="border: 1px solid black; padding: 5px; width:100%;">
                 <form id='membmer-form-internlist' method="post" action="/member/{{user.username}}/update/internlist/" onsubmit="return false;" onKeyPress="
@@ -203,15 +203,15 @@
                         <input name='intern_list_email' id="member-intern_list_email" type="text" value="{{ item.contactinfo_set.all.0.intern_list_email }}" size="40"/>
                     </dd>
                   {% endifequal %}
-            
+
                     <dt style="visibility: hidden">Submit:</dt>
                     <dd style="text-align: left">
                         <input type="button" value="Update" class="btn-update" onclick="
                         new Ajax.Updater( $('container'), $('membmer-form-internlist').readAttribute('action'), {
                           parameters: $('membmer-form-internlist').serialize(true),
                         });
-                        "/>	
-                    
+                        "/>
+
                         <a href="#" class="toggled btn-cancel" onclick="set_invisible($('member-edit-internlist')); return false;">Cancel</a>
 
                 </form>
@@ -219,44 +219,44 @@
             {% endif %}
         </td>
     </tr>
-	
+
     <tr><td></td></tr>
-    
+
     <tr>
 		<td>Wiki name:</td>
 		<td>{{ item.contactinfo_set.all.0.wiki_name }}</td>
 	</tr>
-	
+
     <tr><td></td></tr>
-    
+
     <tr>
 		<td>Phone number:</td>
 		<td>{{ item.contactinfo_set.all.0.phone_number }}</td>
 	</tr>
-	
+
     <tr><td></td></tr>
-    
+
     <tr>
 		<td>Birthday:</td>
 		<td>{{ item.contactinfo_set.all.0.birthday }}</td>
 	</tr>
-	
+
     <tr><td></td></tr>
-    
+
     <tr>
 		<td><br></td>
 		<td></td>
 	</tr>
-	
+
     <tr><td></td></tr>
-    
+
     <tr>
 		<td><b>Bank data</b></td>
 		<td></td>
 	</tr>
-	
+
     <tr><td></td></tr>
-    
+
     <tr>
 		<td>Bank collection allowed:</td>
 		{% if item.paymentinfo_set.all.0.bank_collection_allowed %}
@@ -265,28 +265,28 @@
 			<td>no</td>
 		{% endif %}
 	</tr>
-	
+
     <tr><td></td></tr>
-    
+
     <tr>
 		<td>Bank account owner:</td>
 		<td>{{ item.paymentinfo_set.all.0.bank_account_owner }}</td>
 	</tr>
-	
+
     <tr><td></td></tr>
-    
+
     <tr>
 		<td>Bank account number:</td>
 		<td>{{ item.paymentinfo_set.all.0.bank_account_number }}</td>
 	</tr>
-    
+
     <tr><td></td></tr>
-    
+
 	<tr>
 		<td>Bank name:</td>
 		<td>{{ item.paymentinfo_set.all.0.bank_name }}</td>
 	</tr>
-    
+
     <tr><td></td></tr>
 
 	<tr>
