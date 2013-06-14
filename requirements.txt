@@ -1,7 +1,9 @@
-Django<=1.5
+Django<=1.4.5
 PIL
 icalendar
 pytz
 Unipath
 django-extensions
 python-dateutil
+factory_boy
+python-faker
