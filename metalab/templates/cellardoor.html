@@ -5,11 +5,11 @@
 <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>You are not my homebase dude..</title>
-    
-    <link href="/site_media/stylesheets/cellardoor.css" media="screen" rel="Stylesheet" type="text/css" />
+
+    <link href="{{ STATIC_URL }}stylesheets/cellardoor.css" media="screen" rel="Stylesheet" type="text/css" />
 
 <script>
-//<![CDATA[        
+//<![CDATA[
 var reloadInterval = 1000*60*30; //30 minutes
 var reloadIntervalAfterError = 1000*60*10; //10 minutes
 
@@ -27,11 +27,11 @@ function startReload()
                 replaceBody(xhr.responseText);
                 window.setTimeout(startReload, reloadInterval);
             }
-            
+
             updateStatus(xhr.status);
         }
     };
-    
+
     xhr.open('GET', window.location.href, true);
     xhr.send(null);
 }
@@ -57,7 +57,7 @@ function updateStatus(reqStat) {
     var statusDiv = document.getElementById('statusInfo');
     if (statusDiv == null) return;
     var now = new Date();
-    statusDiv.innerHTML = now.getFullYear() + '-' + (now.getMonth()+1) + '-' + now.getDate() + 
+    statusDiv.innerHTML = now.getFullYear() + '-' + (now.getMonth()+1) + '-' + now.getDate() +
         ' ' + twoDigit(now.getHours()) + ':' + twoDigit(now.getMinutes());
     if (reqStat != 200)
         statusDiv.innerHTML += ' (' + reqStat +')';
@@ -89,7 +89,7 @@ window.setTimeout(startReload, reloadInterval);
 <div id="statusInfo">init</div>
 
 </div>
-</div> 
+</div>
 </div>
 </body>
 </html>

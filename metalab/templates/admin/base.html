@@ -6,10 +6,10 @@
 
 {% block add_css %}
 
-    <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% load adminmedia %}{% admin_media_prefix %}css/base.css{% endblock %}" />    
-    <link href="/admin_media/css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}admin/css/base.css" />
+    <link href="{{ STATIC_URL }}admin/css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
     {% if custom_style %}
-    <link href="/site_media/stylesheets/{{custom_style}}_admin.css" media="screen" rel="Stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}stylesheets/{{custom_style}}_admin.css" media="screen" rel="Stylesheet" type="text/css" />
     {% endif %}
 {% endblock add_css %}
 

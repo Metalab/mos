@@ -8,7 +8,7 @@
 
                 <h1><a href="http://metalab.soup.io" target="metalab_soup">Aktueller Content</a></h1>
                 <div id="metalab_gallery">
-                  <div id='souplink_overlay'><a href="http://metalab.soup.io" target="metalab_soup"><img src='site_media/images/pixel.gif' id="soup_pixel" /></a></div>
+                  <div id='souplink_overlay'><a href="http://metalab.soup.io" target="metalab_soup"><img src="{{ STATIC_URL }}images/pixel.gif" id="soup_pixel" /></a></div>
                   <div id='soup_iframe_wrapper'><iframe border=0 frameborder=0 id="soup_iframe" src='http://metalab.soup.io/mini/315/3/?css=http://www.metalab.at/media/stylesheets/soup_startpage.css'></iframe></div>
                 </div>
 <div id='soup_credits'>managed with <a href='http://metalab.at/wiki/Soup'>soup.io</a></div>
@@ -41,28 +41,28 @@
 	</div>
 	<!--<div id="announcement">
 	</div>-->
-	<!--<div id="announcement"> 
-		We grieve deeply over the tragic loss of our beloved friend and distinguished metalab-member Florian Hufsky, also known as "oneup".<br /><br /> 
-		Our condolences and heartfelt sympathy go out to his family and close friends.<br /><br /> 
- 
-		You will be remembered.<br /> 
-<br /> 
-		<span id='extrasmall'><a href="http://florianhufsky.soup.io" target="_blank">condolence blog</a></span><br /> 
-		<small>Vienna, 17.12.2009</small> 
+	<!--<div id="announcement">
+		We grieve deeply over the tragic loss of our beloved friend and distinguished metalab-member Florian Hufsky, also known as "oneup".<br /><br />
+		Our condolences and heartfelt sympathy go out to his family and close friends.<br /><br />
+
+		You will be remembered.<br />
+<br />
+		<span id='extrasmall'><a href="http://florianhufsky.soup.io" target="_blank">condolence blog</a></span><br />
+		<small>Vienna, 17.12.2009</small>
 	</div>-->
 	<div id="project_list">
 		<h1><a href="/project/" title="Projekte">Projekte</a></h1>
 		{% include "projects/overview.inc" %}
     </div>
- 
+
 	   <div id="recent_changes">
-		{% include "rss/recentchanges.inc" %} 
+		{% include "rss/recentchanges.inc" %}
 	  </div>
 
           <div id="issue_tracker">
               <h2><a href="https://metalab.at/issues/">Issue Tracker</a></h2>
           </div>
-    
+
     <script type="text/javascript">
         var calendarUpdateURL = '/calendar/ajax/list/5/';
     </script>
