@@ -5,16 +5,14 @@ from dateutil.rrule import *
 
 
 def get_date_of_entry(user):
-    mp_list = MembershipPeriod.objects.filter(user__exact=user)\
-              .order_by('begin')[:1]
+    mp_list = MembershipPeriod.objects.filter(user__exact=user).order_by('begin')[:1]
     if len(mp_list) < 1:
         return None
     return mp_list[0].begin
 
 
 def get_date_of_exit(user):
-    mp_list = MembershipPeriod.objects.filter(user__exact=user)\
-              .order_by('-begin')[:1]
+    mp_list = MembershipPeriod.objects.filter(user__exact=user).order_by('-begin')[:1]
     if len(mp_list) < 1:
         return None
     return mp_list[0].end
