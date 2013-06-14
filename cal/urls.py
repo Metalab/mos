@@ -42,9 +42,9 @@ info_dict_categories = {
 }
 
 
-urlpatterns = patterns('django.views.generic.date_based',
+urlpatterns = patterns('django.views.generic.dates',
   (r'^(?P<year>\d{4})/$',
-   'archive_year', archive_year_dict, 'cal_archive_year'),
+   'YearArchiveView', archive_year_dict, 'cal_archive_year'),
 )
 
 urlpatterns += patterns('',
@@ -55,7 +55,7 @@ urlpatterns += patterns('',
     (r'^special/(?P<typ>\w+)/(?P<name>\w+)/$',
      'mos.cal.views.display_special_events'),
     (r'^event/(?P<object_id>\d+)/$',
-     'django.views.generic.list_detail.object_detail', info_dict, 'cal_event_detail'),
+     'django.views.generic.detail.DetailView', info_dict, 'cal_event_detail'),
     (r'^event/(?P<object_id>\d+)/update/$',
      'mos.cal.views.update_event', {'new': False}),
     (r'^(?P<object_id>\d+)/update/$',
@@ -68,8 +68,8 @@ urlpatterns += patterns('',
     (r'^event/new/$', 'mos.cal.views.update_event', {'new': True}),
     (r'^new/$', 'mos.cal.views.update_event', {'new': True}),
     (r'^locations/$',
-     'django.views.generic.list_detail.object_list', info_dict_locations),
+     'django.views.generic.list.ListView', info_dict_locations),
     (r'^categories/$',
-     'django.views.generic.list_detail.object_list', info_dict_categories),
+     'django.views.generic.list.ListView', info_dict_categories),
     (r'^ajax/list/(?P<number>\d*)/?$', 'mos.cal.views.event_list'),
 )

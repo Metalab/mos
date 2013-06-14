@@ -892,7 +892,7 @@ input.searchButton {
 		background-color: transparent;
 	}
 	/* the icon in front of the user name, single quotes
-	in bg url to hide it from iemac */
+	in bg url "to" hide it from iemac */
 	li#pt-userpage,
 	li#pt-anonuserpage,
 	li#pt-login {

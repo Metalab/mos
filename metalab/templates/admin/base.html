@@ -2,11 +2,9 @@
 
 {% load i18n %}
 
-
-
 {% block add_css %}
 
-    <link rel="stylesheet" type="text/css" href="{% block stylesheet %}{% load adminmedia %}{% admin_media_prefix %}css/base.css{% endblock %}" />    
+    <link rel="stylesheet" type="text/css" href="/admin_media/css/base.css" />    
     <link href="/admin_media/css/dashboard.css" media="screen" rel="stylesheet" type="text/css" />
     {% if custom_style %}
     <link href="/site_media/stylesheets/{{custom_style}}_admin.css" media="screen" rel="Stylesheet" type="text/css" />

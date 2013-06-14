@@ -14,15 +14,15 @@ info_dict = {
 }
 
 
-urlpatterns = patterns('django.views.generic.date_based',
-                       (r'^$', 'archive_index', date_dict),
+urlpatterns = patterns('django.views.generic.dates',
+                       (r'^$', 'ArchiveIndexView', date_dict),
 )
 
 urlpatterns += patterns('',
                         (r'^(?P<object_id>\d+)/delete/$',
                          'mos.projects.views.delete_project'),
                         (r'^(?P<object_id>\d+)/$',
-                         'django.views.generic.list_detail.object_detail',
+                         'django.views.generic.detail.DetailView',
                          info_dict),
                         (r'^(?P<object_id>\d+)/update/$',
                          'mos.projects.views.update_project', {'new': False}),

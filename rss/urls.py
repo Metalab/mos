@@ -13,7 +13,7 @@ date_dict = {
     'template_object_name': 'latestchanges',
 }
 
-urlpatterns = patterns('django.views.generic.date_based',
+urlpatterns = patterns('django.views.generic.dates',
 #(r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<day>\w{1,2})/(?P<slug>[-\w]+)/$',
 # 'object_detail', date_dict),
 #(r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/(?P<day>\w{1,2})/$',
@@ -21,5 +21,5 @@ urlpatterns = patterns('django.views.generic.date_based',
 #(r'^(?P<year>\d{4})/(?P<month>[a-z]{3})/$',
 #'archive_month', date_dict),
 #(r'^(?P<year>\d{4})/$', archive_year',  date_dict),
-    (r'^$', 'archive_index', date_dict),
+    (r'^$', 'ArchiveIndexView', date_dict),
 )
