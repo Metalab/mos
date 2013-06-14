@@ -6,19 +6,19 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <title>{% block title %}{{HOS_NAME}}{% endblock %}</title>
     
-    <script src="/site_media/javascripts/prototype.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}javascripts/prototype.js" type="text/javascript"></script>
     
-    <link href="/site_media/stylesheets/projects.css" media="screen" rel="Stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}stylesheets/projects.css" media="screen" rel="Stylesheet" type="text/css" />
     
-    <link href="/site_media/stylesheets/base.css" media="screen" rel="Stylesheet" type="text/css" />
-    <link href="/site_media/stylesheets/members.css" media="screen" rel="Stylesheet" type="text/css" />
-    <link href="/site_media/stylesheets/cal.css" media="screen" rel="Stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}stylesheets/base.css" media="screen" rel="Stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}stylesheets/members.css" media="screen" rel="Stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}stylesheets/cal.css" media="screen" rel="Stylesheet" type="text/css" />
     
-    <script src="/site_media/javascripts/ml-ajaxtools.js" type="text/javascript"></script> 
+    <script src="{{ STATIC_URL }}javascripts/ml-ajaxtools.js" type="text/javascript"></script> 
     <!-- <script src="/admin/jsi18n" type="text/javascript"></script>     -->
-    <script src="/admin_media/js/core.js" type="text/javascript"></script> 
-    <script src="/admin_media/js/calendar.js" type="text/javascript"></script>
-    <script src="/site_media/javascripts/DateTimeShortcuts.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}admin/js/core.js" type="text/javascript"></script> 
+    <script src="{{ STATIC_URL }}admin/js/calendar.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}javascripts/DateTimeShortcuts.js" type="text/javascript"></script>
     
     
     <link rel="alternate" type="application/rss+xml" title="RSS" href="/feeds/events" />
@@ -44,7 +44,7 @@
     <div id="main">
     <div class="header">
         <div id="logo">
-            <a href="/" title="{{HOS_NAME}}"><img src="/site_media/images/logo.png" width="180" height="62" alt="metalab Logo" /></a>
+            <a href="/" title="{{HOS_NAME}}"><img src="{{ STATIC_URL }}images/logo.png" width="180" height="62" alt="metalab Logo" /></a>
         </div>
         <ul id="header-nav">
             <li><a href="/wiki/" title="Wiki">Wiki</a></li>
@@ -57,20 +57,20 @@
         
         <div id="presence_closed" class="invisible">
             <a href="/wiki/Metasense">
-            <img src="/site_media/images/metasense_off.gif" class="metasense_image" width="16" height="15" alt="derzeit ist niemand im metalab!" />
+            <img src="{{ STATIC_URL }}images/metasense_off.gif" class="metasense_image" width="16" height="15" alt="derzeit ist niemand im metalab!" />
              geschlossen
             </a>
         
         </div>
         <div id="presence_open" class="invisible">
             <a href="/wiki/Metasense">
-            <img src="/site_media/images/metasense_on.gif" class="metasense_image"  width="16" height="15" alt="metalab ist geöffnet!" />
+            <img src="{{ STATIC_URL }}images/metasense_on.gif" class="metasense_image"  width="16" height="15" alt="metalab ist geöffnet!" />
              offen
             </a>
         </div>
         <div id="presence_defunct" class="invisible">
             <a href="/wiki/Metasense">
-            <!-- <img src="/site_media/images/metasense_on.gif" class="metasense_image"  width="16" height="15" alt="metalab ist geöffnet!" /> -->
+            <!-- <img src="{{ STATIC_URL }}images/metasense_on.gif" class="metasense_image"  width="16" height="15" alt="metalab ist geöffnet!" /> -->
              Sensor down
             </a>
         </div>

@@ -24,7 +24,7 @@ var DateTimeShortcuts = {
             if (scripts[i].src.match(/DateTimeShortcuts/)) {
                 var idx = scripts[i].src.indexOf('js/admin/DateTimeShortcuts');
                 //DateTimeShortcuts.admin_media_prefix = scripts[i].src.substring(0, idx);
-                DateTimeShortcuts.admin_media_prefix = '/admin_media/';
+                DateTimeShortcuts.admin_media_prefix = '/static/admin/';
                 break;
             }
         }

@@ -6,7 +6,7 @@
 			{% if item.contactinfo_set.all.0.image %}
 				<a href="../member/{{ item }}"><img class="thumb_with_text" src="{{ item.contactinfo_set.all.0.get_image_url }}"/></a>
 			{% else %}
-				<a href="../member/{{ item }}"><img src="/site_media/images/default_avatar.png"/></a>
+				<a href="../member/{{ item }}"><img src="{{ STATIC_URL }}images/default_avatar.png"/></a>
 			{% endif %}
 		</td>
 		<td>

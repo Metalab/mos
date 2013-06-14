@@ -23,7 +23,8 @@ def gallery_images(top):
         pathname = os.path.join(top, f)
         mode = os.stat(pathname)[ST_MODE]
         if S_ISREG(mode):
-            path = "site_media/gallerypics/%s" % os.path.basename(pathname)
+            path = "%sgallerypics/%s" % (settings.STATIC_URL,
+                                         os.path.basename(pathname))
             if pathname.find(".jpg") != -1:
                 imgs.append(path)
     return imgs

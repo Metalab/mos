@@ -25,9 +25,6 @@ urlpatterns = patterns('',
 
     (r'^$', 'mos.web.views.display_main_page'),
 
-    (r'^site_media/(?P<path>.*)$',
-     'django.views.static.serve', {'document_root': settings.MEDIA_ROOT}),
-
     (r'^admin/calendar/', include(calendar_admin.urls)),
     (r'^admin/projects/', include(project_admin.urls)),
     (r'^admin/members/', include(member_admin.urls)),

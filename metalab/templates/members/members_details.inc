@@ -10,7 +10,7 @@
 			{% if item.contactinfo_set.all.0.image %}
 				<img class="thumb_with_text" src="{{ item.contactinfo_set.all.0.image.url }}"/>
 			{% else %}
-				<img src="/site_media/images/default_avatar.png"/>
+				<img src="{{ STATIC_URL }}images/default_avatar.png"/>
 			{% endif %}
 		</td>
 		<td width="150px"><b>Info</b></td>

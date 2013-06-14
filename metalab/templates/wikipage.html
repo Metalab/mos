@@ -4,7 +4,7 @@
 {% block title %}Metalab{% endblock %}
 
 {% block content %}
-<style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "/site_media/stylesheets/wikipage.css"; /*]]>*/</style>
+<style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "{{ STATIC_URL }}stylesheets/wikipage.css"; /*]]>*/</style>
 
 		<link rel="stylesheet" type="text/css" media="print" href="/wiki/skins/common/commonPrint.css?63" />
 		<link rel="stylesheet" type="text/css" media="handheld" href="/wiki/skins/monobook/handheld.css?63" />
@@ -43,7 +43,7 @@ var wgCurRevisionId = "14210";
 		<style type="text/css">/*<![CDATA[*/
 @import "/wiki/index.php?title=MediaWiki:Common.css&usemsgcache=yes&action=raw&ctype=text/css&smaxage=18000";
 /*
-@import "/site_media/stylesheets/monobook.css";
+@import "{{ STATIC_URL }}stylesheets/monobook.css";
 */
 @import "/wiki/index.php?title=-&action=raw&gen=css&maxage=18000";
 /*]]>*/</style>
