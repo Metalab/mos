@@ -17,13 +17,13 @@
 			<dl>
 			<dt><label>Name (*):</label></dt>
 			<dd><input name='name' id="project-name-{{project.id}}" type="text" value='{{ project.name }}'/></dd>
-			
+
 			<dt><label>Teaser:</label></dt>
 			<dd><input name='teaser' id="project-teaser-{{project.id}}" type="text" value='{{ project.teaser }}'/></dd>
-		
+
 			<dt><label>Wiki Page</label></dt>
 			<dd><input name='wikiPage' id="project-wikiPage-{{project.id}}" type="text" value='{{ project.wikiPage }}'/></dd>
-		
+
 			<dt><label>Finished:</label></dt>
             <dd><input name='finished_at' class='vDateField' id="project-finishedDate-{{project.id}}" type='text' value='{% if project.finished_at %}{{ project.finished_at }}{% endif %}' /></dd>
 			<dt>* -> required field</dt>
@@ -34,7 +34,7 @@
 				new Ajax.Updater( $('projects-content'), myform.readAttribute('action'), {
 				  parameters: myform.serialize(true),
 				});
-				"/>	
+				"/>
 				<input type="button" value="Delete" class="btn-delete" onclick="myform = $('project-form-{{project.id}}');
 				new Ajax.Updater( $('projects-content'), '/project/{{project.id}}/delete/', {
 				  parameters: myform.serialize(true),
@@ -49,7 +49,7 @@
 			{% endif %}
 
 				<a href="#" class="toggled btn-cancel" onclick='toggleView("project", "{{project.id}}", 0); return false;'>Cancel</a>
-			</dd>		
+			</dd>
 			</dl>
 		</form>
 	</div>
