@@ -1,7 +1,7 @@
-import sys
 from django import template
 
 register = template.Library()
+
 
 @register.tag(name="makeform")
 def do_makeform(parser, token):
@@ -12,7 +12,7 @@ def do_makeform(parser, token):
         raise template.TemplateSyntaxError, "%r tag requires two arguments" % token.contents.split()[0]
 
     try:
-        modulename, classname = form_path.rsplit('.',1)
+        modulename, classname = form_path.rsplit('.', 1)
         module = __import__(modulename, fromlist=[classname])
     except:
         raise template.TemplateSyntaxError, "the path to form class (%s) should be import-able! %r" % (form_path.rsplit('.', 1)[0], token.contents.split()[0])
@@ -20,6 +20,7 @@ def do_makeform(parser, token):
     cls = getattr(module, classname)
 
     return MakeFormNode(context_var, cls, target_name)
+
 
 class MakeFormNode(template.Node):
     def __init__(self, context_var, cls, target_name):
@@ -35,8 +36,8 @@ class MakeFormNode(template.Node):
                 raise template.TemplateSyntaxError, 'MakeFormNode cannot resolve variable'
 
         if not self.context_var:
-            context[self.target_name]=self.cls()
+            context[self.target_name] = self.cls()
         else:
-            context[self.target_name]=self.cls(instance=actual_var)
+            context[self.target_name] = self.cls(instance=actual_var)
 
         return ''

@@ -2,7 +2,6 @@ from django.db import models
 
 
 class Usbhereitem:
-
     def __init__(self, nick=""):
         self.nick = nick
 
