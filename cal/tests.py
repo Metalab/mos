@@ -75,15 +75,15 @@ class EventViewsTest(TestCase):
     def testAddNewEvent(self):
         """ Adds a new event via the view """
 
-        response = self.c.post('/cal/new/',  # adds a new event via
-                               correct_data) # the view update_event
+        response = self.c.post('/cal/new/',   # adds a new event via
+                               correct_data)  # the view update_event
         self.assertContains(response, 'TestEvent1', count=None,
                             status_code=200)
         self.assertContains(response, '06.06.2008 15:00', count=None,
                             status_code=200)
 
-        response = self.c.post('/cal/new/',           # adds a new  event via
-                               self.minimal_data_set) # the view update_event
+        response = self.c.post('/cal/new/',            # adds a new  event via
+                               self.minimal_data_set)  # the view update_event
         self.assertContains(response, 'TestEvent1', count=None,
                             status_code=200)
         self.assertContains(response, '06.06.2008 15:00', count=None,

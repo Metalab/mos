@@ -13,8 +13,8 @@ from datetime import *
 
 class AnnouncementForm(forms.Form):
     subject = forms.CharField(required=True, label="Thema", max_length=40)
-    body = forms.CharField(required=True, label="Mitteilung",widget=forms.Textarea,)
-    to = forms.ChoiceField(required=True, label="An", choices=(('all','all'), ('collection','collection'),))
+    body = forms.CharField(required=True, label="Mitteilung", widget=forms.Textarea,)
+    to = forms.ChoiceField(required=True, label="An", choices=(('all', 'all'), ('collection', 'collection'),))
 
 
 @user_passes_test(lambda u: (u.is_staff and u.is_authenticated()))
@@ -22,16 +22,16 @@ def announce(request):
     print 'wtf:' + repr(request.user)
     form = AnnouncementForm(request.POST or None)
     if not request.POST or not form.is_valid():
-        return render_to_response('announce/write_message.html',
-                                  {
-                                   'form': form,
-                                   'user': request.user,
-                                  })
+        return render_to_response('announce/write_message.html', {
+            'form': form,
+            'user': request.user,
+        })
+
     # Valid message: send it!
     s = ''
 
     users = get_active_members()
-    if form.cleaned_data['to']!='all':
+    if form.cleaned_data['to'] != 'all':
         users = users.filter(paymentinfo__bank_collection_allowed=True)\
                      .filter(paymentinfo__bank_collection_mode__id=4)
         for u in users:
@@ -51,15 +51,14 @@ def announce(request):
             ci.save()
         except smtplib.SMTPException, instance:
             f = open('/announcelog.log', 'a')
-            f.write('\n\n'+user.email)
-            f.write('\n'+repr(instance))
+            f.write('\n\n' + user.email)
+            f.write('\n' + repr(instance))
             ci.last_email_ok = False
             ci.save()
             f.close()
 
-    return render_to_response('announce/message_sent.html',
-                              {
-                               'form': form,
-                               'user': request.user,
-                               'users': users,
-                               })
+    return render_to_response('announce/message_sent.html', {
+        'form': form,
+        'user': request.user,
+        'users': users,
+    })
