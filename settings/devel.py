@@ -15,7 +15,7 @@ DATABASES = {
     }
 }
 
-LOGGING['loggers']['django']['handlers'] = ['file', 'console']
+LOGGING['loggers']['django']['handlers'] = ['file', ]
 LOGGING['loggers']['django']['level'] = 'INFO'
-LOGGING['loggers']['django.request']['handlers'] = ['file', 'console']
+LOGGING['loggers']['django.request']['handlers'] = ['file', ]
 LOGGING['loggers']['django.request']['level'] = 'INFO'
