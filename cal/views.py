@@ -4,6 +4,7 @@ from dateutil.parser import *
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 
 from mos.cal.forms import EventForm
@@ -131,7 +132,7 @@ def delete_event(request, object_id=None):
     if not request.method == 'POST' or not request.user.is_authenticated():
         return
 
-    event = Event.all.get(id=object_id)
+    event = get_object_or_404(Event, id=object_id)
 
     event.delete()
     event.save()
@@ -146,7 +147,7 @@ def update_event(request, new, object_id=None):
         pass
 
     if not new:
-        event = Event.all.get(id=object_id)
+        event = get_object_or_404(Event, id=object_id)
     else:
         event = Event()
 
