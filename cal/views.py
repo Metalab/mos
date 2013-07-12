@@ -194,7 +194,7 @@ def event_list(request, number=0):
 def event_icalendar(request, object_id):
     event = get_object_or_404(Event, pk=object_id)
 
-    response = HttpResponse(event.get_icalendar().as_string(),
+    response = HttpResponse(event.get_icalendar().to_ical(),
                         mimetype='text/calendar; charset=utf-8')
 
     response['Content-Disposition'] = (u'filename="' + unicode(event.startDate.strftime('%Y-%m-%d')) + u' - ' + unicode(event.name) + u'.ics"').encode('ascii', 'ignore')
@@ -209,5 +209,5 @@ def complete_ical(request, number=0):
         events = events.reverse()
 
     calendar = create_calendar([x.get_icalendar_event() for x in events])
-    return HttpResponse(calendar.as_string(), mimetype='text/calendar; charset=utf-8')
+    return HttpResponse(calendar.to_ical(), mimetype='text/calendar; charset=utf-8')
 
