@@ -1,4 +1,5 @@
 from django.conf.urls.defaults import *
+from django.views.generic.list import ListView
 
 from mos.members.models import *
 
@@ -14,7 +15,7 @@ urlpatterns = patterns('',
     (r'^logout/?$', 'django.contrib.auth.views.logout',),
     (r'^valid_user/?$', 'mos.members.views.valid_user',),
 
-    (r'^$', 'django.views.generic.detail.DetailView', info_dict),
+    (r'^$', ListView.as_view(queryset=get_active_members(), template_name='members/member_list.html')),
     (r'^history/$', 'mos.members.views.members_history'),
     (r'^change_password/$', 'django.contrib.auth.views.password_change',
      {'template_name': 'members/member_update_password.html'}),
