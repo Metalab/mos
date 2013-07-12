@@ -21,13 +21,14 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'mysql'  # 'postgresql_psycopg2', 'postgresql', 'mysql',
-                           # 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'meta'
-DATABASE_USER = 'mos'
-DATABASE_PASSWORD = ''
-DATABASE_HOST = ''       # Set to empty string for localhost.
-DATABASE_PORT = ''       # Set to empty string for default.
+DATABASES = {
+    'default': {
+        'NAME': 'meta',
+        'ENGINE': 'django.db.backends.mysql',
+        'USER': 'mos',
+        'PASSWORD': ''
+    },
+}
 
 # Local timezone
 TIME_ZONE = 'Europe/Vienna'
