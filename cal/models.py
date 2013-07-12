@@ -127,15 +127,15 @@ class Event(models.Model):
         rv.add('uid', u'%d@%s' % (self.id, domain))
         
         rv.add('summary', unicode(self.name))
-        rv.add('dtstart', vDatetime(self.startDate).ical(), encode=0)
-        rv.add('dtstamp', vDatetime(self.created_at).ical(), encode=0)
+        rv.add('dtstart', vDatetime(self.startDate).to_ical(), encode=0)
+        rv.add('dtstamp', vDatetime(self.created_at).to_ical(), encode=0)
         rv.add('url', urllib.quote((u'http://%s/wiki/%s' % (domain, unicode(self.wikiPage))).encode('utf-8')) )
 
         if self.teaser:
             rv.add('description', unicode(self.teaser))
 
         if self.endDate:
-            rv.add('dtend', vDatetime(self.endDate).ical(), encode=0)
+            rv.add('dtend', vDatetime(self.endDate).to_ical(), encode=0)
 
         if self.who:
             rv.add('organizer', unicode(self.who))
