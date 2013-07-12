@@ -14,3 +14,8 @@ DATABASES = {
         'PORT': '',
     }
 }
+
+LOGGING['loggers']['django']['handlers'] = ['file', 'console']
+LOGGING['loggers']['django']['level'] = 'DEBUG'
+LOGGING['loggers']['django.request']['handlers'] = ['file', 'console']
+LOGGING['loggers']['django.request']['level'] = 'DEBUG'
