@@ -14,12 +14,13 @@
  {% endif %}
 	{% if user.is_authenticated and not edit_disabled %}
         <a href='#' class="{%if not new %}hoverHidden{%endif%}" onclick="toggleView('calendar', '{% if not new %}{{event.id|default_if_none:""}}{% endif %}', 1); return false;">{%if not new %}Edit{%else%}Create New Event{%endif%}</a> {% endif %}
- 	<a class="hoverHidden" href="{% if not new %}{{event.get_icalendar_url}}{% else %}{% url "mos.cal.views.complete_ical" %}{%endif %}">ical</a> 
+ 	<a class="hoverHidden" href="{% if not new %}{{event.get_icalendar_url}}{% else %}{% url "mos.cal.views.complete_ical" %}{%endif %}">ical</a>
 	</p>
 	{% if user.is_authenticated %}
 
     <div class="{% if not event_has_error %}invisible {%endif%}edit" id='calendar-edit-{% if not new %}{{event.id|default_if_none:""}}{% endif %}'>
 		<form id='calendar-form-{{event.id|default_if_none:""}}' method="post" action="/calendar/{% if new %}new{%else%}{{event.id|default_if_none:""}}/update{%endif%}/" onsubmit="return false;" onKeyPress="if(enter_pressed(event)){ submit_form($('calendar-form-{{event.id|default_if_none:""}}'), $('eventcontainer{{event.id|default_if_none:""}}')); }">
+		{% csrf_token %}
             <dl>
 
 			<dt><label><b>Event Name</b>:* - Teaser:</label></dt>
