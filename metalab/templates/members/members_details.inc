@@ -32,6 +32,7 @@
                     });
                 }
                 ">
+		{% csrf_token %}
                     <dt><label>First Name</label> - <label>Last Name</label></dt>
 		  {%  ifequal error_type "name" %}
 		    <dd>{{ error_form.first_name.errors.0 }}  {{ error_form.first_name }} - {{ error_form.last_name.errors.0 }}  {{ error_form.last_name }}</dd>
@@ -98,6 +99,7 @@
                     });
                 }
                 ">
+		{% csrf_token %}
 		  {% ifequal error_type "email" %}
 		    <dt>New Email</dt>
 		    <dd>{{ error_form.email.errors.0 }}   {{ error_form.email }} </dd>
@@ -138,6 +140,7 @@
                     });
                 }
                 ">
+		{% csrf_token %}
                     <dt><label>Street</label> - <label>Postcode</label></dt>
 		  {% ifequal error_type "adress" %}
 		    <dd>{{ error_form.street.errors.0 }}  {{ error_form.street }} - {{ error_form.postcode.errors.0 }}  {{ error_form.postcode }}</dd>
@@ -195,6 +198,7 @@
                     });
                 }
                 ">
+		{% csrf_token %}
                     <dt>On intern list </dt>
 		  {% ifequal error_type "internlist" %}
 		    <dd>{{ error_form.intern_list_email.errors.0 }}   {{ error_form.intern_list_email }} {{ error_form.on_intern_list }} </dd>
