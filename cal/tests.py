@@ -4,6 +4,7 @@ from django.test.client import Client
 
 from mos.cal.forms import EventForm
 from mos.cal.models import Event
+from mos.cal.factories import EventFactory
 
 
 correct_data = {'name': 'TestEvent1',
@@ -14,6 +15,11 @@ correct_data = {'name': 'TestEvent1',
                 'endDate_0': '2009-04-02',
                 'endDate_1': '14:00'}
 
+class EventFactoriesTest(TestCase):
+
+    def testEventFactory(self):
+        event = EventFactory()
+        self.assertTrue(isinstance(event, Event))
 
 class EventFormTest(TestCase):
     fixtures = ['initial_user.json']

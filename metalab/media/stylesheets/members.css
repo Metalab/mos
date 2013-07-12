@@ -32,3 +32,5 @@ h2 {
 td.changepwd {
     text-align: center;
 }
+
+img.thumb_with_text { max-width:32px; max-height:32px; }

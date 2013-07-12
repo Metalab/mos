@@ -3,11 +3,8 @@
     by Wilson Miner wilson@lawrence.com
 */
 
-/* Block IE 5 */
-@import "null.css?\"\{";
-
 /* Import other styles */
-@import url('/site_media/stylesheets/reset.css');
-@import url('/site_media/stylesheets/global.css');
-@import url('/site_media/stylesheets/layout.css');
+@import url('reset.css');
+@import url('global.css');
+@import url('layout.css');
 
