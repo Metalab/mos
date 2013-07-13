@@ -44,11 +44,6 @@ function toggleView(type, id, onoff) {
         set_visible(view);
         set_invisible(edit);    
     }    
-    /*  Add 'Now' and 'Today' buttons to each field via javascript
-     *  Django normally does this onload but then it does not change dynamically added fields,
-     *  so we're doing this every time user clicks on 'Edit'
-     */
-    DateTimeShortcuts.init();
 }
 
 function set_visible(obj) {
@@ -65,7 +60,6 @@ function set_invisible(obj){
 function do_on_load()
 {
     update_metasense();
-    DateTimeShortcuts.init();
 }
 
 function enter_pressed(e){
