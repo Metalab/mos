@@ -29,6 +29,18 @@ another system (or virtualenv), see the file "requirements.txt".
 10. Point your browser to http://127.0.0.1:8000/
 11. Login with your freshly-created user account
 
+Testing
+=======
+After you've made some changes to the code, rerun the test suite to check
+that everything still works. You can do this from the project root by issuing:
+
+    ./manage.py test
+
+If you have a test failing, you can rerun only the app responsible to iterate
+faster. E.g. if you have an error somewhere inside the cal package, do:
+
+    ./manage.py test cal
+
 
 Further Reading
 ===============
