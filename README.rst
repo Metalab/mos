@@ -27,4 +27,5 @@ been left out unfairly, please contact us.
 - markus
 - stereotype
 - Stefan Kögl <stefan@skoegl.net>
+- Dražen Lučanin <kermit666@gmail.com>
 
