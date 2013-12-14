@@ -13,7 +13,7 @@
 			});
 		}
 		">
-
+            {% csrf_token %}
 			<dl>
 			<dt><label>Name (*):</label></dt>
 			<dd><input name='name' id="project-name-{{project.id}}" type="text" value='{{ project.name }}'/></dd>

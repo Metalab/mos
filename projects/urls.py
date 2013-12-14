@@ -1,13 +1,7 @@
 from django.conf.urls.defaults import *
+from django.views.generic import ListView
 
 from mos.projects.models import Project
-
-date_dict = {
-    'queryset': Project.all.all(), # finished_at__exact=None),
-    'date_field': 'created_at',
-    'num_latest': 5,
-    'template_object_name': 'latestprojects',
-}
 
 info_dict = {
     'queryset': Project.all.all(),
@@ -15,7 +9,10 @@ info_dict = {
 
 
 urlpatterns = patterns('django.views.generic.dates',
-        (r'^$', 'ArchiveIndexView', date_dict),
+        (r'^$', 
+         ListView.as_view(queryset=Project.all.all().order_by('-created_at')[:5],
+                          context_object_name="latestprojects",
+                          template_name="projects/project_archive.html")),
 )
 
 urlpatterns += patterns('',
