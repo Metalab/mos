@@ -14,7 +14,7 @@ from datetime import *
 class AnnouncementForm(forms.Form):
     subject = forms.CharField(required=True, label="Thema", max_length=40)
     body = forms.CharField(required=True, label="Mitteilung",widget=forms.Textarea,)
-    to = forms.ChoiceField(required=True, label="An", choices=(('all','all'), ('collection','collection'),))
+    to = forms.ChoiceField(required=True, label="An", choices=(('collection','collection'), ('all','all'),))
 
 
 @user_passes_test(lambda u: (u.is_staff and u.is_authenticated()))
