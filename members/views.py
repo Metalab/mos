@@ -106,14 +106,18 @@ def members_bankcollection_list(request):
                                            pmi.bank_code,
                                            pmi.bank_account_owner,
                                            str(debt),
-                                           'Mitgliedsbeitrag %d/%d;'
+                                           'Mitgliedsbeitrag %d/%d'
                                            %(date.today().year, date.today()\
-                                                                .month)])
+                                                                .month),
+                                           pmi.bank_account_iban or '',
+                                           pmi.bank_account_bic or '',
+                                           pmi.bank_account_mandate_reference or ''
+                                           ])
 
         #format as csv and return it
         csv = '\r\n'.join([';'.join(x) for x in collection_records])
 
-        return HttpResponse(csv, mimetype='text/plain')
+        return HttpResponse(csv, mimetype='text/plain; charset=utf-8')
 
 
     else:
