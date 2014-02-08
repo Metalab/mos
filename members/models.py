@@ -20,6 +20,9 @@ class PaymentInfo(models.Model):
     bank_account_number = models.CharField(max_length=20, blank=True)
     bank_name = models.CharField(max_length=100, blank=True)
     bank_code = models.CharField(max_length=20, blank=True)
+    bank_account_iban = models.CharField(max_length=34, blank=True)
+    bank_account_bic = models.CharField(max_length=11, blank=True)
+    bank_account_mandate_reference = models.CharField(max_length=35, blank=True)
 
     user = models.ForeignKey(User, unique=True)
 

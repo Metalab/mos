@@ -291,6 +291,27 @@
     <tr><td></td></tr>
 
 	<tr>
+		<td>Bank IBAN:</td>
+		<td>{{ item.paymentinfo_set.all.0.bank_account_iban }}</td>
+	</tr>
+
+    <tr><td></td></tr>
+
+	<tr>
+		<td>Bank BIC:</td>
+		<td>{{ item.paymentinfo_set.all.0.bank_account_bic }}</td>
+	</tr>
+
+    <tr><td></td></tr>
+
+	<tr>
+		<td>Bank mandate reference:</td>
+		<td>{{ item.paymentinfo_set.all.0.bank_account_mandate_reference }}</td>
+	</tr>
+
+    <tr><td></td></tr>
+
+	<tr>
 		<td>Mode:</td>
 		<td>{{ item.paymentinfo_set.all.0.bank_collection_mode }}</td>
 	</tr>
