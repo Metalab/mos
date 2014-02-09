@@ -6,7 +6,7 @@
    </tr>
 {% endifequal %}
 	<tr>
-		<td rowspan="40" width="100px" style="text-align:center">
+		<td rowspan="46" width="100px" style="text-align:center">
 			{% if item.contactinfo_set.all.0.image %}
 				<img class="thumb_with_text" src="{{ item.contactinfo_set.all.0.image.url }}"/>
 			{% else %}
@@ -296,6 +296,27 @@
 	<tr>
 		<td>Bank code:</td>
 		<td>{{ item.paymentinfo_set.all.0.bank_code }}</td>
+	</tr>
+    
+    <tr><td></td></tr>
+
+	<tr>
+		<td>Bank IBAN:</td>
+		<td>{{ item.paymentinfo_set.all.0.bank_account_iban }}</td>
+	</tr>
+    
+    <tr><td></td></tr>
+
+	<tr>
+		<td>Bank BIC:</td>
+		<td>{{ item.paymentinfo_set.all.0.bank_account_bic }}</td>
+	</tr>
+    
+    <tr><td></td></tr>
+
+	<tr>
+		<td>Bank mandat reference:</td>
+		<td>{{ item.paymentinfo_set.all.0.bank_account_mandate_reference }}</td>
 	</tr>
 
     <tr><td></td></tr>

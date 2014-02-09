@@ -8,7 +8,8 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 
-from mos.members.forms import UserEmailForm, UserNameForm, UserAdressForm, UserImageForm, UserInternListForm
+from mos.members.forms import UserEmailForm, UserNameForm, UserAdressForm,\
+                              UserImageForm, UserInternListForm
 from mos.members.models import *
 from mos.members.util import *
 from django.contrib.auth import authenticate
@@ -26,7 +27,6 @@ def members_history(request):
                               {'list': history_list},
                               context_instance=RequestContext(request))
 
-
 def valid_user(request):
     #tyrsystem
     if not request.is_secure():
@@ -41,7 +41,7 @@ def members_details(request, user_username, errors="", update_type=""):
     editable = False
     if request.user.username == user_username:
         editable = True
-    user = get_object_or_404(User, username=user_username)
+    user = get_object_or_404(User, username = user_username)
     return render_to_response('members/members_details.html',
                               {'item': user,
                                'ea': editable,
@@ -54,7 +54,7 @@ def members_update(request, user_username, update_type):
     if not request.POST or not request.user.username == user_username:
         return members_details(request, user_username,
                                "no permission to edit settings", "permission")
-    user = get_object_or_404(User, username=user_username)
+    user = get_object_or_404(User, username = user_username)
 
     error_form = False
     error_type = False
@@ -86,8 +86,11 @@ def members_update(request, user_username, update_type):
 def members_bankcollection_list(request):
     if request.user.is_superuser:
         # get members that are active and have monthly collection activated
-        members_to_collect_from = get_active_members().filter(paymentinfo__bank_collection_allowed=True).filter(paymentinfo__bank_collection_mode__id=4)
+        members_to_collect_from = get_active_members()\
+                                  .filter(paymentinfo__bank_collection_allowed=True)\
+                                  .filter(paymentinfo__bank_collection_mode__id=4)
                                     # 4 = monthly
+
 
         # build a list of collection records with name, bank data, amount
         # and a description
@@ -103,16 +106,22 @@ def members_bankcollection_list(request):
                                            pmi.bank_code,
                                            pmi.bank_account_owner,
                                            str(debt),
-                                           'Mitgliedsbeitrag %d/%d;' % (date.today().year, date.today().month)])
+                                           'Mitgliedsbeitrag %d/%d'
+                                           %(date.today().year, date.today()\
+                                                                .month),
+                                           pmi.bank_account_iban or '',
+                                           pmi.bank_account_bic or '',
+                                           pmi.bank_account_mandate_reference or ''
+                                           ])
 
         #format as csv and return it
         csv = '\r\n'.join([';'.join(x) for x in collection_records])
 
-        return HttpResponse(csv, mimetype='text/plain')
+        return HttpResponse(csv, mimetype='text/plain; charset=utf-8')
+
 
     else:
         return HttpResponseNotAllowed('you are not allowed to use this method')
-
 
 def members_key_list(request):
     #get active members with active keys
@@ -140,9 +149,9 @@ def members_update_userpic(request, user_username):
                                "no permission to edit settings", "permission")
 
     if request.method == "POST":
-        user = get_object_or_404(User, username=user_username)
+        user = get_object_or_404(User, username = user_username)
         contact_info = get_object_or_404(ContactInfo, user=user)
-        image_form = UserImageForm(request.POST, request.FILES,
+        image_form=UserImageForm(request.POST, request.FILES,
                                  instance=contact_info)
         if image_form.is_valid():
             image_data = image_form.save()
@@ -150,8 +159,8 @@ def members_update_userpic(request, user_username):
             #return to userpage if upload was successfull
             return members_details(request, user_username)
     else:
-        image_form = UserImageForm()
+        image_form=UserImageForm()
 
     return render_to_response('members/member_update_userpic.html',
                               {'form': image_form},
-                              context_instance=RequestContext(request))
+                               context_instance=RequestContext(request))
