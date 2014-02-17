@@ -23,36 +23,11 @@
 #      - name: reconfigure locales
 #        command: free_form='DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales'
 
+#      sudo DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
+
       - name: syncdb
         django_manage: app_path=/mos
                        command=syncdb
 
       - lineinfile: dest=/home/vagrant/.bashrc
                     line='cd /mos'
- 
-# TODO:  sudo DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
-
-      #apt-get install virtualenvwrapper
-      #export PIP_REQUIRE_VIRTUALENV=true
-      ## dann wirft pip eine warnung wenn man nicht in einem virtualenv ist und pip install irgendwas macht
-      #export PROJECT_HOME=<projects_folder_for_virtualenvwrapper>
-      #export WORKON_HOME=<virtualenvs_folder>
-      #mkproject mos # creates project folder + virtualenv for mos project
-
-      #git clone https://github.com/Metalab/mos.git -b django_1_4_compatibility
-
-      #sudo apt-get install python-dev build-essential
-      #sudo pip install -r requirements
-      ## ...
-      #sudo pip install -r requirements.txt --upgrade # after changing some versions in requirements.txt
-      #workon mos # to work on virtualenvwrapper-project "mos"
-
-      ## export DJANGO_SETTINGS_MODULE=mos.settings.devel
-      ## not necessary (currently being set in manage.py)d
-
-      #./manage.py syncdb
-      #./manage.py runserver
-
-                       # ln -s /vagrant /mos
-                       # /etc/locale.gen (de_AT.UTF8, de_DE.UTF8)
-                       # sudo DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
