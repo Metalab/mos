@@ -2,6 +2,7 @@
 # vim: set fileencoding=utf-8
 
 import datetime
+from decimal import Decimal
 
 from django.db import models
 from django.conf import settings
@@ -29,8 +30,8 @@ class PaymentInfo(models.Model):
 
 class ContactInfo(models.Model):
     LAZZZOR_RATE_CHOICES = (
-        ('1.00', "Standard Rate (1.00)"),
-        ('0.50', "Backer's Rate (0.50)"),
+        (Decimal('1.00'), "Standard Rate (1.00)"),
+        (Decimal('0.50'), "Backer's Rate (0.50)"),
     )
 
     def get_image_path(self, filename):
