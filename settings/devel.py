@@ -14,8 +14,3 @@ DATABASES = {
         'PORT': '',
     }
 }
-
-LOGGING['loggers']['django']['handlers'] = ['file', ]
-LOGGING['loggers']['django']['level'] = 'INFO'
-LOGGING['loggers']['django.request']['handlers'] = ['file', ]
-LOGGING['loggers']['django.request']['level'] = 'INFO'
