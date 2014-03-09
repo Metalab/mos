@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import *
 from mos.usbherelist.views import get_herelist, serve_herelist
 
 info_dict = {
