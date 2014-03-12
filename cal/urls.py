@@ -1,5 +1,7 @@
 from django.conf.urls import *
 
+from django.views.generic.dates import YearArchiveView
+
 from mos.cal.models import Event, Location, Category
 from mos.cal.views import SpecialListView
 
@@ -9,9 +11,6 @@ date_dict = {
     'date_field': 'startDate',
     'allow_future': True,
 }
-
-archive_year_dict = date_dict.copy()
-archive_year_dict.update(make_object_list=True)
 
 archive_index_dict = date_dict.copy()
 archive_index_dict.update(
@@ -29,14 +28,15 @@ info_dict = {
 }
 
 
-urlpatterns = patterns('django.views.generic.dates',
-  (r'^(?P<year>\d{4})/$',
-   'YearArchiveView', archive_year_dict, 'cal_archive_year'),
-)
-
-urlpatterns += patterns('',
+urlpatterns = patterns('',
     (r'^$',
      'mos.cal.views.index', {}, 'cal_index'),
+    (r'^(?P<year>\d{4})/$', YearArchiveView.as_view(
+        queryset=Event.all.all(),
+        date_field="startDate",
+        allow_future=True,
+        make_object_list=True
+    ), {}, "cal_archive_year"),
     (r'^(?P<year>\d{4})/(?P<month>\d{2})/$',
      'mos.cal.views.monthly',),
     (r'^special/(?P<typ>\w+)/(?P<name>\w+)/$',
