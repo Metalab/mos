@@ -6,6 +6,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
+from django.views.generic import ListView
 
 from mos.cal.forms import EventForm
 from mos.cal.models import Event, Category, Location
@@ -212,3 +213,13 @@ def complete_ical(request, number=0):
     calendar = create_calendar([x.get_icalendar_event() for x in events])
     return HttpResponse(calendar.to_ical(), mimetype='text/calendar; charset=utf-8')
 
+class SpecialListView(ListView):
+    template_name = "cal/event_special_list.html"
+    events_by = None
+
+    def get_context_data(self, **kwargs):
+        context = super(SpecialListView, self).get_context_data(**kwargs)
+        context.update({
+            'events_by': self.events_by,
+        })
+        return context

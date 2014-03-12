@@ -1,6 +1,7 @@
 from django.conf.urls import *
 
 from mos.cal.models import Event, Location, Category
+from mos.cal.views import SpecialListView
 
 
 date_dict = {
@@ -25,20 +26,6 @@ event_detail_dict.update(template_object_name='event')
 info_dict = {
     'queryset': Event.all.all(),
     'template_object_name': 'event',
-}
-
-info_dict_locations = {
-    'queryset': Location.objects.all(),
-    # 'template_object_name': 'locations',
-    'template_name': 'cal/event_special_list.html',
-    'extra_context': {'events_by': ' Locations'}
-}
-
-info_dict_categories = {
-    'queryset': Category.objects.all(),
-    # 'template_object_name': 'locations',
-    'template_name': 'cal/event_special_list.html',
-    'extra_context': {'events_by': ' Categories'}
 }
 
 
@@ -67,9 +54,11 @@ urlpatterns += patterns('',
     (r'^export/ical/$', 'mos.cal.views.complete_ical', {}, 'full_ical'),
     (r'^event/new/$', 'mos.cal.views.update_event', {'new': True}),
     (r'^new/$', 'mos.cal.views.update_event', {'new': True}),
-    (r'^locations/$',
-     'django.views.generic.list.ListView', info_dict_locations),
-    (r'^categories/$',
-     'django.views.generic.list.ListView', info_dict_categories),
+    (r'^locations/$', SpecialListView.as_view(
+                            queryset=Location.objects.all(),
+                            events_by="Locations")),
+    (r'^categories/$', SpecialListView.as_view(
+                            queryset=Category.objects.all(),
+                            events_by="Categories")),
     (r'^ajax/list/(?P<number>\d*)/?$', 'mos.cal.views.event_list'),
 )
