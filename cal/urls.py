@@ -1,6 +1,7 @@
 from django.conf.urls import *
 
 from django.views.generic.dates import YearArchiveView
+from django.views.generic.detail import DetailView
 
 from mos.cal.models import Event, Location, Category
 from mos.cal.views import SpecialListView
@@ -22,11 +23,6 @@ archive_index_dict.update(
 event_detail_dict = date_dict.copy()
 event_detail_dict.update(template_object_name='event')
 
-info_dict = {
-    'queryset': Event.all.all(),
-    'template_object_name': 'event',
-}
-
 
 urlpatterns = patterns('',
     (r'^$',
@@ -41,8 +37,10 @@ urlpatterns = patterns('',
      'mos.cal.views.monthly',),
     (r'^special/(?P<typ>\w+)/(?P<name>\w+)/$',
      'mos.cal.views.display_special_events'),
-    (r'^event/(?P<object_id>\d+)/$',
-     'django.views.generic.detail.DetailView', info_dict, 'cal_event_detail'),
+    (r'^event/(?P<pk>\d+)/$', DetailView.as_view(
+        queryset=Event.all.all(),
+        context_object_name='event'
+    ), {}, 'cal_event_detail'),
     (r'^event/(?P<object_id>\d+)/update/$',
      'mos.cal.views.update_event', {'new': False}),
     (r'^(?P<object_id>\d+)/update/$',
