@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from django.conf import settings
 
 from mos.members.forms import UserEmailForm, UserNameForm, UserAdressForm,\
                               UserImageForm, UserInternListForm
@@ -111,7 +112,9 @@ def members_bankcollection_list(request):
                                                                 .month),
                                            pmi.bank_account_iban or '',
                                            pmi.bank_account_bic or '',
-                                           pmi.bank_account_mandate_reference or ''
+                                           pmi.bank_account_mandate_reference or '',
+                                           'RCUR', # FIXME: should be "FRST" on initial run
+                                           settings.HOS_SEPA_CREDITOR_ID,
                                            ])
 
         #format as csv and return it
