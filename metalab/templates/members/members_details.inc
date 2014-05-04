@@ -254,6 +254,7 @@
 
     <tr><td></td></tr>
 
+    {# FIXME: don't list all the attributes manually #}
     <tr>
 		<td><b>Bank data</b></td>
 		<td></td>
@@ -263,11 +264,7 @@
 
     <tr>
 		<td>Bank collection allowed:</td>
-		{% if item.paymentinfo_set.all.0.bank_collection_allowed %}
-			<td>yes</td>
-		{% else %}
-			<td>no</td>
-		{% endif %}
+		<td>{{ item.paymentinfo_set.all.0.bank_collection_allowed|yesno }}</td>
 	</tr>
 
     <tr><td></td></tr>
@@ -315,9 +312,16 @@
     <tr><td></td></tr>
 
 	<tr>
-		<td>Bank mandat reference:</td>
+		<td>Bank mandate reference:</td>
 		<td>{{ item.paymentinfo_set.all.0.bank_account_mandate_reference }}</td>
 	</tr>
+
+    <tr><td></td></tr>
+
+    <tr>
+        <td>Date of sigining:</td>
+        <td>{{ item.paymentinfo_set.all.0.bank_account_date_of_signing }}</td>
+    </tr>
 
     <tr><td></td></tr>
 
