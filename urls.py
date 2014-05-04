@@ -6,16 +6,12 @@ from django.contrib import admin
 from mos.cal.feeds import EventFeed
 
 
-feeds = {
-    'events': EventFeed,
-}
-
 admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
 
-    (r'^feeds/(?P<url>.*)/$', 'django.contrib.syndication.views.Feed', {'feed_dict': feeds}),
+    (r'^feeds/events/$', EventFeed()),
 
     (r'^calendar/', include('mos.cal.urls')),
     (r'^rss/', include('mos.rss.urls')),
