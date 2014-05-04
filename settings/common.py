@@ -144,6 +144,7 @@ HOS_HOME_EVENT_NUM = 5
 HOS_WIKI_URL = '/wiki/'
 HOS_ANNOUNCE_FROM = 'core@metalab.at'
 HOS_WIKI_CHANGE_URL = ''
+HOS_SEPA_CREDITOR_ID = 'AT12ZZZ00000000001'
 
 # ----------------- Style ---------------------
 HOS_CUSTOM_STYLE = ''  # name of the custom style, blank for default

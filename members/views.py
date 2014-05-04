@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from django.conf import settings
 
 from mos.members.forms import UserEmailForm, UserNameForm, UserAdressForm,\
                               UserImageForm, UserInternListForm
@@ -100,6 +101,10 @@ def members_bankcollection_list(request):
             debt = m.contactinfo_set.all()[0].get_debt_for_month(date.today())
             if debt != 0:
                 pmi = m.paymentinfo_set.all()[0]
+                # on the first debit initiation, set the mandate signing date
+                if not pmi.bank_account_date_of_signing:
+                    pmi.bank_account_date_of_signing = date.today()
+                    pmi.save()
                 ci = m.contactinfo_set.all()[0]
                 collection_records.append([m.first_name, m.last_name,
                                            pmi.bank_account_number,
@@ -111,7 +116,10 @@ def members_bankcollection_list(request):
                                                                 .month),
                                            pmi.bank_account_iban or '',
                                            pmi.bank_account_bic or '',
-                                           pmi.bank_account_mandate_reference or ''
+                                           pmi.bank_account_mandate_reference or '',
+                                           pmi.bank_account_date_of_signing.isoformat(),
+                                           'RCUR', # FIXME: should be "FRST" on initial run
+                                           settings.HOS_SEPA_CREDITOR_ID,
                                            ])
 
         #format as csv and return it
