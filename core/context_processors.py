@@ -26,7 +26,6 @@ def custom_settings_main(request):
 
     return {'introduction_text': settings.HOS_INTRODUCTION,
             'members': settings.HOS_MEMBER_GALLERY,
-            'gallery': settings.HOS_LOCATION_GALLERY,
             'openlab': settings.HOS_OPENLAB,
             'calendar': settings.HOS_CALENDAR,
             'projects': settings.HOS_PROJECTS,

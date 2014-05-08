@@ -94,21 +94,10 @@
 }
 
 
-
-#metalab_gallery {
-  position:relative;
-  b!order:1px solid red;
-  width:338px;
-  height:263px;
-  overflow:hidden;
-}
-
-
-
 #soup_credits { 
- m!argin-left:200px;
  font-size:0.8em;
  text-align:right;
+ margin-top:-255px;
 }
 
 
@@ -143,12 +132,10 @@ display:none;
 
 
 #souplink_overlay {
- b!ackground-color:red;
  width:315px;
  height:255px;
  z-index:100;
  position:relative;
- t!op:-255px;
  left:2px;
  overflow:hidden;
 
@@ -165,52 +152,15 @@ display:none;
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* =description */
-#gallery {
+#soup {
 	float: left;
 	width: 100%;
         height:290px;
-/*	height:13em; */
-	b!order-bottom: 1px solid #D7D7D7;
 	margin-bottom: 2em;
 	padding-bottom: 1em;
 }
 
-
-/*
-#metalab_gallery .pic {
-	float: left;
-	border: 1px solid #ddd;
-	margin: 0 5px 5px 0;
-	padding: 1px 1px 0 1px;
-}
-
-#metalab_gallery .last {
-	float: left;
-	margin-right: 0;
-}
-
-#metalab_gallery .pic a {
-	display: block;
-	line-height: 1em;
-}
-
-*/
 
 /* =project */
 #project_list {
