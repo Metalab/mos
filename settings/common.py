@@ -49,7 +49,7 @@ STATIC_URL = "/static/"
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    PROJECT_DIR.child("metalab", "media"),
+    PROJECT_DIR.child("static"),
 )
 
 # List of finder classes that know how to find static files in
@@ -59,10 +59,6 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
 )
-
-# Absolute path to the directory that holds media.
-# Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = PROJECT_DIR.child("metalab", "media")
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -96,7 +92,7 @@ TEMPLATE_DIRS = (
     # or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    PROJECT_DIR.child("metalab", "templates"),
+    PROJECT_DIR.child("templates"),
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

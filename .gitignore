@@ -5,5 +5,6 @@ settings/local*
 settings/secret_key.*
 
 logs/
+media/
 
 .vagrant
