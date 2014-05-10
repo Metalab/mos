@@ -38,17 +38,19 @@ def get_list_of_history_entries():
     user_list = User.objects.all()
     for u in user_list:
         entry = get_date_of_entry(u)
-        entry = date(entry.year, entry.month, 1)
-        num = he_list[entry].new_member
-        num += 1
-        he_list[entry].new_member = num
-
-        end = get_date_of_exit(u)
-        if end is not None:
-            end = date(end.year, end.month, 1)
-            num = he_list[end].resigned_member
+        if entry is not None:
+            entry = date(entry.year, entry.month, 1)
+            num = he_list[entry].new_member
             num += 1
-            he_list[end].resigned_member = num
+            he_list[entry].new_member = num
+
+            end = get_date_of_exit(u)
+            if end is not None:
+                end = date(end.year, end.month, 1)
+                if end <= date.today():
+                    num = he_list[end].resigned_member
+                    num += 1
+                    he_list[end].resigned_member = num
 
     num = 0
     for month in month_list:
