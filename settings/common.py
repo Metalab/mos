@@ -124,7 +124,6 @@ INSTALLED_APPS = (
     'mos.rss',
     'mos.announce',
     'mos.core',
-    'mos.scrooge',
 )
 
 

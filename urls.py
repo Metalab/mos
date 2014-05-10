@@ -18,7 +18,6 @@ urlpatterns = patterns('',
     (r'^rss/', include('mos.rss.urls')),
 
     (r'^project/', include('mos.projects.urls')),
-    (r'^scrooge/', include('mos.scrooge.urls')),
 
     (r'^$', 'mos.web.views.display_main_page'),
 
