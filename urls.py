@@ -24,8 +24,6 @@ urlpatterns = patterns('',
 
     (r'^member/', include('mos.members.urls')),
 
-    (r'^wiki/.*$', 'mos.web.views.wikipage'),
-
     (r'^announce/$', include('mos.announce.urls')),
 
     (r'^cellardoor/', 'mos.web.views.display_cellardoor'),

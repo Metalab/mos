@@ -26,25 +26,6 @@ def display_main_page(request):
         'randommembers': randommembers,
     }, context_instance=RequestContext(request, processors=[custom_settings_main]))
 
-
-def wikipage(request):
-
-    path = request.path[10:-1]
-    url = "%s/%s" % (settings.HOS_WIKI_URL, path)
-    page = urllib2.urlopen(url).read()
-
-    start = page.find('<!-- start content -->')
-    end = page.find('<!-- end content -->')
-    page = page[start:end]
-
-    page = re.compile('href="\/wiki').sub("href=\"%s" % settings.HOS_WIKI_URL, page)
-    page = re.compile('src="\/wiki').sub("src=\"%s" % settings.HOS_WIKI_URL, page)
-
-    return render_to_response('wikipage.html', {
-        'file': page,
-    }, context_instance=RequestContext(request))
-
-
 def display_cellardoor(request):
     events = Event.future.all()
     return render_to_response('cellardoor.html', {'latestevents': events}, context_instance=RequestContext(request, processors=[custom_settings_main]))

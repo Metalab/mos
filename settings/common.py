@@ -139,7 +139,7 @@ HOS_NAME = 'Metalab OS'
 HOS_HOME_EVENT_NUM = 5
 HOS_WIKI_URL = '/wiki/'
 HOS_ANNOUNCE_FROM = 'core@metalab.at'
-HOS_WIKI_CHANGE_URL = ''
+HOS_WIKI_CHANGE_URL = 'https://metalab.at/wiki/index.php?title=Spezial:Letzte_%C3%84nderungen&feed=atom'
 HOS_SEPA_CREDITOR_ID = 'AT12ZZZ00000000001'
 
 # ----------------- Style ---------------------
@@ -151,5 +151,3 @@ HOS_OPENLAB = True
 HOS_INTRODUCTION = True
 HOS_PROJECTS = True
 HOS_RECENT_CHANGES = True
-
-HOS_WIKI_CHANGE_URL = 'https://metalab.at/wiki/index.php?title=Spezial:Letzte_%C3%84nderungen&feed=atom'
