@@ -1,9 +1,8 @@
-__version__ = "$Revision$"
-
 from datetime import *
 
 from dateutil.rrule import *
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
@@ -28,14 +27,21 @@ def members_history(request):
                               {'list': history_list},
                               context_instance=RequestContext(request))
 
+@csrf_exempt
 def valid_user(request):
-    #tyrsystem
+    # #tyrsystem
+    # I'm no sure what this comment means... "Tuer-System"? I've found entries
+    # in Apache's log file no younger than a year. Probably this is not used
+    # anymore.
     if not request.is_secure():
         raise Http404()
-    user_cache = authenticate(username=request.POST['user'], password=request.POST['pass'])
+    user_cache = authenticate(
+            username=request.POST.get('user'),
+            password=request.POST.get('pass')
+        )
     if user_cache and user_cache.is_active:
         return HttpResponse('OK')
-    return HttpResponse('DeineMudder', status=403)
+    return HttpResponse('FAIL', status=403)
 
 
 def members_details(request, user_username, errors="", update_type=""):
