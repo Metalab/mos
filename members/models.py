@@ -105,9 +105,11 @@ class ContactInfo(models.Model):
     def get_date_of_entry(self):
         # FIXME: the order here is wrong, didn't change it since i don't have time to check all implications
         #                    sf - 2010 07 27
-        mp = MembershipPeriod.objects.filter(user=self.user)\
-            .order_by('-begin')[0]
-        return mp.begin
+        mp = MembershipPeriod.objects.filter(user=self.user).order_by('-begin')
+        if mp:
+            return mp[0].begin
+        else:
+            return None
 
     def get_current_membership_period(self):
         # FIXME: the order here is wrong, didn't change it since i don't have time to check all implications
