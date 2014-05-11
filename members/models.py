@@ -200,7 +200,7 @@ class MembershipPeriod(models.Model):
         return u"%s" % self.user.username
 
     def get_duration_in_month(self):
-        if self.end is None:
+        if self.end is None or self.end > datetime.date.today():
             end = datetime.date.today()
         else:
             end = self.end
