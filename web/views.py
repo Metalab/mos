@@ -10,11 +10,11 @@ from mos.cal.models import Event
 from mos.core.context_processors import custom_settings_main
 from mos.members.models import get_active_members
 from mos.projects.models import Project
-from mos.rss.models import Change
+from mos.sources.models import WikiChange
 
 def display_main_page(request):
     events = Event.future.get_n(5)
-    changes = Change.objects.order_by('-updated')[:5]
+    changes = WikiChange.objects.order_by('-updated')[:5]
     projects = Project.all.order_by('-created_at')[:5]
     randommembers = list(get_active_members().exclude(contactinfo__image="").order_by('?')[:7])
 

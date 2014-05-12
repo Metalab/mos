@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Change(models.Model):
+class WikiChange(models.Model):
     title = models.CharField(max_length=200)
     link = models.CharField(max_length=300)
     author = models.CharField(max_length=300)

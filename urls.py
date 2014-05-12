@@ -14,7 +14,6 @@ urlpatterns = patterns('',
     (r'^admin/', include(admin.site.urls)),
 
     (r'^feeds/events/$', EventFeed()),
-    (r'^rss/', include('mos.rss.urls')),
 
     (r'^calendar/', include('mos.cal.urls')),
     (r'^project/', include('mos.projects.urls')),

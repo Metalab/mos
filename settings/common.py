@@ -121,7 +121,7 @@ INSTALLED_APPS = (
     'mos.projects',
     'mos.cal',
     'mos.members',
-    'mos.rss',
+    'mos.sources',
     'mos.announce',
     'mos.core',
 )
@@ -131,15 +131,15 @@ LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
 
 #---  Custom Options ----------------------------------------------------------
-
-
 HOS_URL_PREFIX = '/'
 HOS_NAME = 'Metalab OS'
 HOS_HOME_EVENT_NUM = 5
 HOS_WIKI_URL = '/wiki/'
 HOS_ANNOUNCE_FROM = 'core@metalab.at'
-HOS_WIKI_CHANGE_URL = 'https://metalab.at/wiki/index.php?title=Spezial:Letzte_%C3%84nderungen&feed=atom'
 HOS_SEPA_CREDITOR_ID = 'AT12ZZZ00000000001'
+
+MOS_WIKI_CHANGE_URL = 'https://metalab.at/wiki/index.php?title=Spezial:Letzte_%C3%84nderungen&feed=atom'
+MOS_WIKI_KEEP = 5
 
 # ----------------- Style ---------------------
 HOS_CUSTOM_STYLE = ''  # name of the custom style, blank for default
