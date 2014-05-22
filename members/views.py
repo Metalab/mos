@@ -15,7 +15,6 @@ from mos.members.util import *
 from django.contrib.auth import authenticate
 
 
-@login_required
 def members_history(request):
     history_entry_list = get_list_of_history_entries()
     history_list = []
