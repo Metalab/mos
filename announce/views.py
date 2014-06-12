@@ -2,6 +2,7 @@
 # Views for issueing announcements to all active members.
 #
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
 import django.forms as forms
@@ -26,7 +27,7 @@ def announce(request):
                                   {
                                    'form': form,
                                    'user': request.user,
-                                  })
+                                  }, context_instance=RequestContext(request))
     # Valid message: send it!
     s = ''
 
@@ -62,4 +63,4 @@ def announce(request):
                                'form': form,
                                'user': request.user,
                                'users': users,
-                               })
+                               }, context_instance=RequestContext(request))
