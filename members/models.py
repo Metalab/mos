@@ -258,7 +258,11 @@ class PaymentManager(models.Manager):
             except User.DoesNotExist:
                 print line
                 continue
-            
+            except:
+                print "exception on line:"
+                print line
+                raise
+
             sum = line[5]
             try:
                 Payment.objects.create(date=date, user=u, amount=sum, method=PaymentMethod.objects.get(name='bank collection'), original_file=filename, original_line=str(line))
