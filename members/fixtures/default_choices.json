@@ -1,0 +1,271 @@
+[
+{
+  "pk": 1, 
+  "model": "members.bankcollectionmode", 
+  "fields": {
+    "name": "j\u00e4hrlich", 
+    "num_month": 12
+  }
+},
+{
+  "pk": 2, 
+  "model": "members.bankcollectionmode", 
+  "fields": {
+    "name": "halbj\u00e4hrlich", 
+    "num_month": 6
+  }
+},
+{
+  "pk": 3, 
+  "model": "members.bankcollectionmode", 
+  "fields": {
+    "name": "viertelj\u00e4hrlich", 
+    "num_month": 3
+  }
+},
+{
+  "pk": 4, 
+  "model": "members.bankcollectionmode", 
+  "fields": {
+    "name": "monatlich", 
+    "num_month": 1
+  }
+},
+{
+  "pk": 5, 
+  "model": "members.bankcollectionmode", 
+  "fields": {
+    "name": "unbekannt", 
+    "num_month": 0
+  }
+},
+{
+  "pk": 1, 
+  "model": "members.membershipfee", 
+  "fields": {
+    "start": "2006-04-01", 
+    "amount": 20, 
+    "end": null, 
+    "kind_of_membership": 1
+  }
+},
+{
+  "pk": 2, 
+  "model": "members.membershipfee", 
+  "fields": {
+    "start": "2006-04-01", 
+    "amount": 0, 
+    "end": null, 
+    "kind_of_membership": 2
+  }
+},
+{
+  "pk": 3, 
+  "model": "members.membershipfee", 
+  "fields": {
+    "start": "2010-01-01", 
+    "amount": 30, 
+    "end": null, 
+    "kind_of_membership": 3
+  }
+},
+{
+  "pk": 4, 
+  "model": "members.membershipfee", 
+  "fields": {
+    "start": "2012-01-01", 
+    "amount": 30, 
+    "end": null, 
+    "kind_of_membership": 4
+  }
+},
+{
+  "pk": 5, 
+  "model": "members.membershipfee", 
+  "fields": {
+    "start": "2012-01-01", 
+    "amount": 40, 
+    "end": null, 
+    "kind_of_membership": 5
+  }
+},
+{
+  "pk": 6, 
+  "model": "members.membershipfee", 
+  "fields": {
+    "start": "2012-01-01", 
+    "amount": 50, 
+    "end": null, 
+    "kind_of_membership": 6
+  }
+},
+{
+  "pk": 7, 
+  "model": "members.membershipfee", 
+  "fields": {
+    "start": "2013-04-01", 
+    "amount": 25, 
+    "end": null, 
+    "kind_of_membership": 8
+  }
+},
+{
+  "pk": 8, 
+  "model": "members.membershipfee", 
+  "fields": {
+    "start": "2013-04-05", 
+    "amount": 28, 
+    "end": null, 
+    "kind_of_membership": 9
+  }
+},
+{
+  "pk": 9, 
+  "model": "members.membershipfee", 
+  "fields": {
+    "start": "2013-04-05", 
+    "amount": 36, 
+    "end": null, 
+    "kind_of_membership": 10
+  }
+},
+{
+  "pk": 10, 
+  "model": "members.membershipfee", 
+  "fields": {
+    "start": "2013-04-05", 
+    "amount": 8, 
+    "end": null, 
+    "kind_of_membership": 11
+  }
+},
+{
+  "pk": 11, 
+  "model": "members.membershipfee", 
+  "fields": {
+    "start": "2014-10-01", 
+    "amount": 25, 
+    "end": null, 
+    "kind_of_membership": 12
+  }
+},
+{
+  "pk": 1, 
+  "model": "members.kindofmembership", 
+  "fields": {
+    "name": "normal"
+  }
+},
+{
+  "pk": 2, 
+  "model": "members.kindofmembership", 
+  "fields": {
+    "name": "free"
+  }
+},
+{
+  "pk": 3, 
+  "model": "members.kindofmembership", 
+  "fields": {
+    "name": "normal+spind"
+  }
+},
+{
+  "pk": 4, 
+  "model": "members.kindofmembership", 
+  "fields": {
+    "name": "erhoeht (30EUR)"
+  }
+},
+{
+  "pk": 5, 
+  "model": "members.kindofmembership", 
+  "fields": {
+    "name": "erhoeht (40EUR)"
+  }
+},
+{
+  "pk": 6, 
+  "model": "members.kindofmembership", 
+  "fields": {
+    "name": "erhoeht (50EUR)"
+  }
+},
+{
+  "pk": 7, 
+  "model": "members.kindofmembership", 
+  "fields": {
+    "name": "free+spind"
+  }
+},
+{
+  "pk": 8, 
+  "model": "members.kindofmembership", 
+  "fields": {
+    "name": "FSFE"
+  }
+},
+{
+  "pk": 9, 
+  "model": "members.kindofmembership", 
+  "fields": {
+    "name": "normal + kleiner Spind"
+  }
+},
+{
+  "pk": 10, 
+  "model": "members.kindofmembership", 
+  "fields": {
+    "name": "normal + 2 kleine Spinde"
+  }
+},
+{
+  "pk": 11, 
+  "model": "members.kindofmembership", 
+  "fields": {
+    "name": "free + kleiner Spind"
+  }
+},
+{
+  "pk": 12, 
+  "model": "members.kindofmembership", 
+  "fields": {
+    "name": "erhoeht (25EUR)"
+  }
+},
+{
+  "pk": 1, 
+  "model": "members.paymentmethod", 
+  "fields": {
+    "name": "cash"
+  }
+},
+{
+  "pk": 2, 
+  "model": "members.paymentmethod", 
+  "fields": {
+    "name": "bank transfer"
+  }
+},
+{
+  "pk": 3, 
+  "model": "members.paymentmethod", 
+  "fields": {
+    "name": "bank collection"
+  }
+},
+{
+  "pk": 4, 
+  "model": "members.paymentmethod", 
+  "fields": {
+    "name": "in kind"
+  }
+},
+{
+  "pk": 5, 
+  "model": "members.paymentmethod", 
+  "fields": {
+    "name": "erlassen"
+  }
+}
+]

@@ -1,0 +1,117 @@
+[
+{
+  "pk": 1, 
+  "model": "core.category", 
+  "fields": {
+    "name": "metaday", 
+    "description": "die Monatliche Veranstaltung"
+  }
+},
+{
+  "pk": 2, 
+  "model": "core.category", 
+  "fields": {
+    "name": "jour fixe", 
+    "description": "wir arbeiten daran"
+  }
+},
+{
+  "pk": 1, 
+  "model": "core.location", 
+  "fields": {
+    "country": "austria", 
+    "name": "Hauptraum", 
+    "description": "Hauptraum"
+  }
+},
+{
+  "pk": 2, 
+  "model": "core.location", 
+  "fields": {
+    "country": "austria", 
+    "name": "Bibliothek", 
+    "description": "Bibliothek"
+  }
+},
+{
+  "pk": 5, 
+  "model": "core.location", 
+  "fields": {
+    "country": "austria", 
+    "name": "*.*", 
+    "description": "*.*"
+  }
+},
+{
+  "pk": 6, 
+  "model": "core.location", 
+  "fields": {
+    "country": "?", 
+    "name": "Woanders", 
+    "description": "Woanders"
+  }
+},
+{
+  "pk": 7, 
+  "model": "core.location", 
+  "fields": {
+    "country": "austria", 
+    "name": "Lounge (Raucherbetrieb)", 
+    "description": "Lounge (SMOKERS MODE)"
+  }
+},
+{
+  "pk": 8, 
+  "model": "core.location", 
+  "fields": {
+    "country": "", 
+    "name": "Whateverlab", 
+    "description": ""
+  }
+},
+{
+  "pk": 9, 
+  "model": "core.location", 
+  "fields": {
+    "country": "AT", 
+    "name": "Kueche", 
+    "description": "wo gekocht wird"
+  }
+},
+{
+  "pk": 11, 
+  "model": "core.location", 
+  "fields": {
+    "country": "", 
+    "name": "Fotolab", 
+    "description": ""
+  }
+},
+{
+  "pk": 12, 
+  "model": "core.location", 
+  "fields": {
+    "country": "", 
+    "name": "any room", 
+    "description": ""
+  }
+},
+{
+  "pk": 13, 
+  "model": "core.location", 
+  "fields": {
+    "country": "", 
+    "name": "heavy machinery", 
+    "description": ""
+  }
+},
+{
+  "pk": 14, 
+  "model": "core.location", 
+  "fields": {
+    "country": "austria", 
+    "name": "Lounge (Nichtraucherbetrieb)", 
+    "description": "Lounge NON-SMOKERMODE"
+  }
+}
+]
