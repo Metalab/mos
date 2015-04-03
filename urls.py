@@ -43,4 +43,5 @@ urlpatterns = patterns('',
     (r'^announce/$', include('mos.announce.urls')),
 
     (r'^cellardoor/', 'mos.web.views.display_cellardoor'),
+    (r'^spaceapi.json$', 'mos.web.views.spaceapi'),
 )
