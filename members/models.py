@@ -262,6 +262,10 @@ class PaymentManager(models.Manager):
             except User.DoesNotExist:
                 print line
                 continue
+            except:
+                print "exception on line:"
+                print line
+                raise
 
             sum = line[5]
             try:
