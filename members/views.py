@@ -130,7 +130,7 @@ def members_bankcollection_list(request):
         #format as csv and return it
         csv = '\r\n'.join([';'.join(x) for x in collection_records])
 
-        return HttpResponse(csv, mimetype='text/plain; charset=utf-8')
+        return HttpResponse(csv, content_type='text/plain; charset=utf-8')
 
 
     else:

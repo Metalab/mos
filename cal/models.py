@@ -89,7 +89,7 @@ class Event(models.Model):
     who = models.CharField(max_length=200, blank=True)
     where = models.CharField(max_length=200, blank=True)
 
-    created_at = models.DateTimeField(default=datetime.datetime.now())
+    created_at = models.DateTimeField(default=datetime.datetime.now)
     created_by = models.ForeignKey(User)
 
     deleted = models.BooleanField(default=False)
