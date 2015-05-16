@@ -7,8 +7,8 @@
 {% endifequal %}
 	<tr>
 		<td rowspan="46" width="100px" style="text-align:center">
-			{% if item.contactinfo_set.all.0.image %}
-				<img class="thumb_with_text" src="{{ item.contactinfo_set.all.0.image.url }}"/>
+			{% if item.contactinfo.image %}
+				<img class="thumb_with_text" src="{{ item.contactinfo.image.url }}"/>
 			{% else %}
 				<img src="{{ STATIC_URL }}images/default_avatar.png"/>
 			{% endif %}
@@ -61,7 +61,7 @@
 
 	<tr>
 		<td>Member since:</td>
-	        <td>{{ item.contactinfo_set.all.0.get_date_of_entry|date }}</td>
+	        <td>{{ item.contactinfo.get_date_of_entry|date }}</td>
 
     	</tr>
 {% if ea %}
@@ -125,7 +125,7 @@
     </tr>
 	<tr>
 		<td>Adress:</td>
-		<td>{{ item.contactinfo_set.all.0.street }}; {{ item.contactinfo_set.all.0.postcode }} {{ item.contactinfo_set.all.0.city }}; {{ item.contactinfo_set.all.0.country }}</td><td> {% if ea%}<a href='#'  onclick="set_visible($('member-edit-adress')); return	false;">Edit</a>{% endif %}</td>
+		<td>{{ item.contactinfo.street }}; {{ item.contactinfo.postcode }} {{ item.contactinfo.city }}; {{ item.contactinfo.country }}</td><td> {% if ea%}<a href='#'  onclick="set_visible($('member-edit-adress')); return	false;">Edit</a>{% endif %}</td>
 	</tr>
 
     <tr>
@@ -152,12 +152,12 @@
 		  {% else %}
 
                     <dd>
-                        <input name='street' id="member-street" type="text" value='{{ item.contactinfo_set.all.0.street }}'/>  - 
-                        <input name='postcode' id="member-postcode" size="6" type="text" value=' {{ item.contactinfo_set.all.0.postcode }}'/>
+                        <input name='street' id="member-street" type="text" value='{{ item.contactinfo.street }}'/>  - 
+                        <input name='postcode' id="member-postcode" size="6" type="text" value=' {{ item.contactinfo.postcode }}'/>
                     </dd>
                     <dt><label>City</label> - <label>Country</label></dt>
-                        <input name='city' id="member-city" type="text" value=' {{ item.contactinfo_set.all.0.city }}'/> - 
-                        <input name='country' id="member-country" type="text" value=' {{ item.contactinfo_set.all.0.country }}'/>
+                        <input name='city' id="member-city" type="text" value=' {{ item.contactinfo.city }}'/> - 
+                        <input name='country' id="member-country" type="text" value=' {{ item.contactinfo.country }}'/>
                     </dd>
 		  {% endifequal %}
 
@@ -178,8 +178,8 @@
 
 	<tr>
 		<td>On intern list</td>
-		{% if item.contactinfo_set.all.0.on_intern_list %}
-			<td>yes ( {{ item.contactinfo_set.all.0.intern_list_email }} )</td>
+		{% if item.contactinfo.on_intern_list %}
+			<td>yes ( {{ item.contactinfo.intern_list_email }} )</td>
 		{% else %}
 			<td>no</td>
 		{% endif %}
@@ -203,8 +203,8 @@
 		  {% ifequal error_type "internlist" %}
 		    <dd>{{ error_form.intern_list_email.errors.0 }}   {{ error_form.intern_list_email }} {{ error_form.on_intern_list }} </dd>
 		  {% else %}
-                    <dd><input name='on_intern_list' id="member-on_intern_list" type="checkbox" {% if item.contactinfo_set.all.0.on_intern_list%} checked="checked" {% endif %}  />
-                        <input name='intern_list_email' id="member-intern_list_email" type="text" value="{{ item.contactinfo_set.all.0.intern_list_email }}" size="40"/>
+                    <dd><input name='on_intern_list' id="member-on_intern_list" type="checkbox" {% if item.contactinfo.on_intern_list%} checked="checked" {% endif %}  />
+                        <input name='intern_list_email' id="member-intern_list_email" type="text" value="{{ item.contactinfo.intern_list_email }}" size="40"/>
                     </dd>
                   {% endifequal %}
 
@@ -228,21 +228,21 @@
 
     <tr>
 		<td>Wiki name:</td>
-		<td>{{ item.contactinfo_set.all.0.wiki_name }}</td>
+		<td>{{ item.contactinfo.wiki_name }}</td>
 	</tr>
 
     <tr><td></td></tr>
 
     <tr>
 		<td>Phone number:</td>
-		<td>{{ item.contactinfo_set.all.0.phone_number }}</td>
+		<td>{{ item.contactinfo.phone_number }}</td>
 	</tr>
 
     <tr><td></td></tr>
 
     <tr>
 		<td>Birthday:</td>
-		<td>{{ item.contactinfo_set.all.0.birthday }}</td>
+		<td>{{ item.contactinfo.birthday }}</td>
 	</tr>
 
     <tr><td></td></tr>

@@ -35,7 +35,7 @@
         <h1><a href="/member/" title="Member List">Mitglieder</a></h1>
         <div class="member_pics">
             {% for member in randommembers %}
-            {% if member.contactinfo_set.all.0.get_wikilink %}<a class="member" href="{{ member.contactinfo_set.all.0.get_wikilink }}">{% endif %}<img src="{{ member.contactinfo_set.all.0.image.url }}"  width="54" height="54" alt="{{ member.username }}" />{% if member.contactinfo_set.all.0.get_wikilink %}</a>{% endif %}
+            {% if member.contactinfo.get_wikilink %}<a class="member" href="{{ member.contactinfo.get_wikilink }}">{% endif %}<img src="{{ member.contactinfo.image.url }}"  width="54" height="54" alt="{{ member.username }}" />{% if member.contactinfo.get_wikilink %}</a>{% endif %}
             {% endfor %}
 	    <a href="/wiki/Mitglied_werden" title="Mitglied werden">Mitglied werden</a>
 	</div>

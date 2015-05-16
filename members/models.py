@@ -26,7 +26,7 @@ class PaymentInfo(models.Model):
     bank_account_mandate_reference = models.CharField(max_length=35, blank=True)
     bank_account_date_of_signing = models.DateField(null=True, blank=True)
 
-    user = models.ForeignKey(User, unique=True)
+    user = models.OneToOneField(User)
 
 
 class ContactInfo(models.Model):
@@ -53,7 +53,7 @@ class ContactInfo(models.Model):
     wiki_name = models.CharField(max_length=50, blank=True, null=True)
     image = models.ImageField(upload_to=get_image_path, blank=True)
 
-    user = models.ForeignKey(User, unique=True)
+    user = models.OneToOneField(User)
 
     last_email_ok = models.NullBooleanField()
     has_active_key = models.BooleanField(default=False)

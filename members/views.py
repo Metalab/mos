@@ -103,14 +103,14 @@ def members_bankcollection_list(request):
         collection_records = []
 
         for m in members_to_collect_from:
-            debt = m.contactinfo_set.all()[0].get_debt_for_month(date.today())
+            debt = m.contactinfo.get_debt_for_month(date.today())
             if debt != 0:
                 pmi = m.paymentinfo_set.all()[0]
                 # on the first debit initiation, set the mandate signing date
                 if not pmi.bank_account_date_of_signing:
                     pmi.bank_account_date_of_signing = date.today()
                     pmi.save()
-                ci = m.contactinfo_set.all()[0]
+                ci = m.contactinfo
                 collection_records.append([m.first_name, m.last_name,
                                            pmi.bank_account_number,
                                            pmi.bank_code,
@@ -142,7 +142,7 @@ def members_key_list(request):
     #return HttpResponse("blah", mimetype='text/plain')
 
     #just output keys one line per key
-    text = '\r\n'.join([x.contactinfo_set.all()[0].key_id for x in members_with_keys])
+    text = '\r\n'.join([x.contactinfo.key_id for x in members_with_keys])
     return HttpResponse(text, mimetype='text/plain')
 
 def members_lazzzor_list(request):
@@ -151,8 +151,8 @@ def members_lazzzor_list(request):
     comma separated list."""
     members_with_privs = get_active_and_future_members().filter(
                              contactinfo__has_lazzzor_privileges=True)
-    result = ['%s,%s,%s' % (m.contactinfo_set.all()[0].key_id, m.username,
-                            m.contactinfo_set.all()[0].lazzzor_rate)
+    result = ['%s,%s,%s' % (m.contactinfo.key_id, m.username,
+                            m.contactinfo.lazzzor_rate)
                   for m in members_with_privs]
     return HttpResponse('\r\n'.join(result), mimetype='text/plain')
 

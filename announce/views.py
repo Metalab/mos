@@ -36,7 +36,7 @@ def announce(request):
         users = users.filter(paymentinfo__bank_collection_allowed=True)\
                      .filter(paymentinfo__bank_collection_mode__id=4)
         for u in users:
-            debt = u.contactinfo_set.all()[0].get_debt_for_month(date.today())
+            debt = u.contactinfo.get_debt_for_month(date.today())
             if debt == 0:
                 users = users.exclude(pk=u.pk)
 
