@@ -9,7 +9,8 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib import admin
+from django.contrib.admin import StackedInline, TabularInline
+from django.contrib.auth.admin import UserAdmin
 from django.utils.encoding import smart_unicode
 
 
@@ -433,23 +434,23 @@ class PaymentMethod(models.Model):
         return u"%s" % self.name
 
 
-class ContactInfoInline(admin.StackedInline):
+class ContactInfoInline(StackedInline):
     model = ContactInfo
     max_num = 1
 
-class PaymentInfoInline(admin.StackedInline):
+class PaymentInfoInline(StackedInline):
     model = PaymentInfo
     max_num = 1
 
-class MembershipPeriodInline(admin.TabularInline):
+class MembershipPeriodInline(TabularInline):
     model = MembershipPeriod
 
-class PaymentInline(admin.TabularInline):
+class PaymentInline(TabularInline):
     model = Payment
     fields=('date', 'amount', 'method')
     ordering=('date',)
 
-class MemberAdmin(admin.ModelAdmin):
+class MemberAdmin(UserAdmin):
     inlines=[ContactInfoInline, PaymentInfoInline, MembershipPeriodInline, PaymentInline]
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active')
     list_filter = ('is_staff', 'is_superuser')
