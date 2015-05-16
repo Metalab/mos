@@ -2,7 +2,7 @@
 
 from unipath import FSPath as Path
 
-PROJECT_DIR = Path(__file__).absolute().ancestor(2)
+BASE_DIR = Path(__file__).absolute().ancestor(2)
 
 # Make this unique, and don't share it with anybody.
 try:
@@ -14,6 +14,7 @@ except ImportError:
 
 DEBUG = False
 TEMPLATE_DEBUG = DEBUG
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -49,7 +50,7 @@ STATIC_URL = "/static/"
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    PROJECT_DIR.child("static"),
+    BASE_DIR.child("static"),
 )
 
 # List of finder classes that know how to find static files in
@@ -65,20 +66,10 @@ STATICFILES_FINDERS = (
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/media/'
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-)
-
-MIDDLEWARE_CLASSES = (
-    'django.middleware.doc.XViewMiddleware',
-)
-
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'mos.core.middleware.SetStatFooter',  # remove this row to disable
@@ -92,7 +83,7 @@ TEMPLATE_DIRS = (
     # or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    PROJECT_DIR.child("templates"),
+    BASE_DIR.child("templates"),
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

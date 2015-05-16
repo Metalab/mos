@@ -34,7 +34,7 @@ DATABASES = {
     }
 }
 
-STATIC_ROOT = PROJECT_DIR.parent.child("www", "static")
-MEDIA_ROOT = PROJECT_DIR.parent.child("www", "media")
+STATIC_ROOT = BASE_DIR.parent.child("www", "static")
+MEDIA_ROOT = BASE_DIR.parent.child("www", "media")
 
 HOS_SEPA_CREDITOR_ID = 'AT29HXR00000037632'

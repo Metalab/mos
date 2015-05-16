@@ -30,13 +30,13 @@ except locale.Error:
 
 class EventManager(models.Manager):
 
-    def get_query_set(self):
-        return super(EventManager, self).get_query_set().filter(deleted=False)
+    def get_queryset(self):
+        return super(EventManager, self).get_queryset().filter(deleted=False)
 
 
 class FutureEventFixedNumberManager(EventManager):
 
-    def get_query_set(self):
+    def get_queryset(self):
         """
         Get <num> future events, or if there aren't enough,
         get <num> latest+future events.
@@ -52,7 +52,7 @@ class FutureEventFixedNumberManager(EventManager):
 
     def get_n(self, num):
 
-        all = super(FutureEventFixedNumberManager, self).get_query_set().order_by('startDate')
+        all = super(FutureEventFixedNumberManager, self).get_queryset().order_by('startDate')
 
         if num == 0:
             return all

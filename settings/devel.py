@@ -16,6 +16,6 @@ DATABASES = {
     }
 }
 
-MEDIA_ROOT = PROJECT_DIR.child("media")
+MEDIA_ROOT = BASE_DIR.child("media")
 
 HOS_SEPA_CREDITOR_ID = 'AT29HXR00000037632'

@@ -6,8 +6,8 @@ from django.db import models
 
 class ProjectManager(models.Manager):
 
-    def get_query_set(self):
-        return super(ProjectManager, self).get_query_set().filter(deleted=False)
+    def get_queryset(self):
+        return super(ProjectManager, self).get_queryset().filter(deleted=False)
 
 
 class Project(models.Model):

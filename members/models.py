@@ -15,7 +15,7 @@ from django.utils.encoding import smart_unicode
 
 
 class PaymentInfo(models.Model):
-    bank_collection_allowed = models.BooleanField()
+    bank_collection_allowed = models.BooleanField(default=False)
     bank_collection_mode = models.ForeignKey('BankCollectionMode')
     bank_account_owner = models.CharField(max_length=200, blank=True)
     bank_account_number = models.CharField(max_length=20, blank=True)
@@ -55,9 +55,9 @@ class ContactInfo(models.Model):
 
     user = models.ForeignKey(User, unique=True)
 
-    last_email_ok = models.NullBooleanField(null=True)
-    has_active_key = models.BooleanField(null=False)
-    has_lazzzor_privileges = models.BooleanField(null=False)
+    last_email_ok = models.NullBooleanField()
+    has_active_key = models.BooleanField(default=False)
+    has_lazzzor_privileges = models.BooleanField(default=False)
     key_id = models.CharField(max_length=100, blank=True, null=True)
 
     lazzzor_rate = models.DecimalField(choices=LAZZZOR_RATE_CHOICES, default='1.00',

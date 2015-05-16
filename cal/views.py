@@ -77,7 +77,7 @@ class EventCalendar(HTMLCalendar):
 def index(request):
     d = date.today() - relativedelta.relativedelta(days=2)
     cal = EventCalendar(Event.all, request.user.is_authenticated()).currentmonth()
-    date_list = Event.all.all().dates('startDate', 'year')
+    date_list = Event.all.all().datetimes('startDate', 'year')
     latest_events = Event.all.filter(startDate__gte=d).order_by('startDate')
 
     return render_to_response('cal/event_archive.html', {
@@ -92,7 +92,7 @@ def monthly(request, year, month):
     e = date(int(year), int(month), 1) + relativedelta.relativedelta(months=1)
     latest_events = Event.all.filter(startDate__gte=s, startDate__lt=e).order_by('startDate')
     cal = EventCalendar(Event.all, request.user.is_authenticated()).formatmonth(int(year), int(month))
-    date_list = Event.all.all().dates('startDate', 'year')
+    date_list = Event.all.all().datetimes('startDate', 'year')
 
     return render_to_response('cal/event_archive.html', {
         'rendered_calendar': mark_safe(cal),

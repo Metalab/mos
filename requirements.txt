@@ -1,5 +1,5 @@
-Django<1.6
-PIL
+Django<1.7
+Pillow==2.8.1
 icalendar
 pytz
 Unipath
