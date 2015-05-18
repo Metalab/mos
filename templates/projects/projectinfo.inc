@@ -25,7 +25,7 @@
 			<dd><input name='wikiPage' id="project-wikiPage-{{project.id}}" type="text" value='{{ project.wikiPage }}'/></dd>
 
 			<dt><label>Finished:</label></dt>
-            <dd><input name='finished_at' class='vDateField' id="project-finishedDate-{{project.id}}" type='text' value='{% if project.finished_at %}{{ project.finished_at }}{% endif %}' /></dd>
+            <dd><input name='finished_at' class='vDateField' id="project-finishedDate-{{project.id}}" type='text' value='{% if project.finished_at %}{{ project.finished_at|date:"Y-m-d" }}{% endif %}' /></dd>
 			<dt>* -> required field</dt>
 			<dt style="visibility: hidden">Submit:</dt>
 			<dd style="text-align: right">
