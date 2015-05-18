@@ -139,11 +139,11 @@ def members_bankcollection_list(request):
 def members_key_list(request):
     #get active members with active keys
     members_with_keys = get_active_and_future_members().filter(contactinfo__has_active_key=True)
-    #return HttpResponse("blah", mimetype='text/plain')
+    #return HttpResponse("blah", content_type='text/plain')
 
     #just output keys one line per key
     text = '\r\n'.join([x.contactinfo.key_id for x in members_with_keys])
-    return HttpResponse(text, mimetype='text/plain')
+    return HttpResponse(text, content_type='text/plain')
 
 def members_lazzzor_list(request):
     """
@@ -154,7 +154,7 @@ def members_lazzzor_list(request):
     result = ['%s,%s,%s' % (m.contactinfo.key_id, m.username,
                             m.contactinfo.lazzzor_rate)
                   for m in members_with_privs]
-    return HttpResponse('\r\n'.join(result), mimetype='text/plain')
+    return HttpResponse('\r\n'.join(result), content_type='text/plain')
 
 def members_update_userpic(request, user_username):
     if not request.user.username == user_username:
