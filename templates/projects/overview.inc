@@ -9,11 +9,9 @@
 	<ul>
 
 	{% for project in latestprojects %}
-		<li>{% include "projects/projectinfo.inc" %}</li>
+		<li>{% include "projects/projectinfo.inc" with new=0 %}</li>
 	{% endfor %}
 	</ul>
-	{% with 1 as new %}
-		{% include "projects/projectinfo.inc" %}
-	{% endwith %}
+	{% include "projects/projectinfo.inc" with new=1%}
 </div>
 
