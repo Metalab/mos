@@ -28,4 +28,53 @@ def display_main_page(request):
 
 def display_cellardoor(request):
     events = Event.future.all()
+<<<<<<< HEAD
     return render_to_response('cellardoor.html', {'latestevents': events}, context_instance=RequestContext(request, processors=[custom_settings_main]))
+=======
+    return render_to_response('cellardoor.html', {'latestevents': events,}, context_instance=RequestContext(request,processors=[custom_settings_main]))
+
+
+def spaceapi(request):
+    # See http://spaceapi.net/documentation
+
+    projects = Project.all.order_by('-created_at')[:5]
+
+    return json_response({
+        'api': '0.13',
+        'space': 'Metalab',
+        'logo': 'https://metalab.at/site_media/images/logo.png',
+        'url': 'https://metalab.at/',
+        'location': {
+            # https://metalab.at/wiki/Lage
+            'address': 'Rathausstraße 6, 1010 Vienna, Austria',
+            'lat': 48.2093723,
+            'lon': 16.356099,
+        },
+        'contact': {
+            'twitter': '@metalab_events',
+            'irc': 'irc://irc.freenode.net/#metalab',
+            'email': 'core@metalab.at',
+            'ml': 'metalab@lists.metalab.at',
+            'jabber': 'metalab@conference.jabber.metalab.at',
+            'phone': '+43 720 00 23 23',
+        },
+        'issue_report_channels': [
+            'email',
+        ],
+        'feeds': {
+            'wiki': {
+                'type': 'atom',
+                'url': settings.HOS_WIKI_CHANGE_URL,
+            },
+            'calendar': {
+                'type': 'rss',
+                'url': 'https://metalab.at/feeds/events/',
+            },
+        },
+        'projects': ['https://metalab.at/wiki/%s' % project.wikiPage for project in projects if project.wikiPage],
+        'state': {
+            # TODO: Implement open state tracking
+            'open': None,
+        },
+    })
+>>>>>>> origin/master

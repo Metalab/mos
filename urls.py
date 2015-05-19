@@ -20,6 +20,7 @@ urlpatterns = patterns('',
     (r'^member/', include('mos.members.urls')),
     (r'^announce/$', include('mos.announce.urls')),
     (r'^cellardoor/', 'mos.web.views.display_cellardoor'),
+    (r'^spaceapi.json$', 'mos.web.views.spaceapi'),
     (r'^$', 'mos.web.views.display_main_page'),
 )
 
