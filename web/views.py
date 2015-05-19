@@ -28,11 +28,7 @@ def display_main_page(request):
 
 def display_cellardoor(request):
     events = Event.future.all()
-<<<<<<< HEAD
     return render_to_response('cellardoor.html', {'latestevents': events}, context_instance=RequestContext(request, processors=[custom_settings_main]))
-=======
-    return render_to_response('cellardoor.html', {'latestevents': events,}, context_instance=RequestContext(request,processors=[custom_settings_main]))
-
 
 def spaceapi(request):
     # See http://spaceapi.net/documentation
@@ -77,4 +73,3 @@ def spaceapi(request):
             'open': None,
         },
     })
->>>>>>> origin/master
