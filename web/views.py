@@ -4,6 +4,7 @@ import re
 from django.contrib.auth.models import User
 from django.shortcuts import render_to_response
 from django.template import RequestContext
+from django.http import JsonResponse
 
 from django.conf import settings
 from mos.cal.models import Event
@@ -35,14 +36,14 @@ def spaceapi(request):
 
     projects = Project.all.order_by('-created_at')[:5]
 
-    return json_response({
+    return JsonResponse({
         'api': '0.13',
         'space': 'Metalab',
         'logo': 'https://metalab.at/site_media/images/logo.png',
         'url': 'https://metalab.at/',
         'location': {
             # https://metalab.at/wiki/Lage
-            'address': 'Rathausstraße 6, 1010 Vienna, Austria',
+            'address': u'Rathausstra\xdfe 6, 1010 Vienna, Austria',
             'lat': 48.2093723,
             'lon': 16.356099,
         },
@@ -60,7 +61,7 @@ def spaceapi(request):
         'feeds': {
             'wiki': {
                 'type': 'atom',
-                'url': settings.HOS_WIKI_CHANGE_URL,
+                'url': settings.MOS_WIKI_CHANGE_URL,
             },
             'calendar': {
                 'type': 'rss',
