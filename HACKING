@@ -19,15 +19,17 @@ another system (or virtualenv), see the file "requirements.txt".
 4. Acivate the "devel" virtualenv: source devel/bin/activate
 5. Install dependencies: pip install -r requirements.txt
 6. Optional: Install the locale packages for de_DE.UTF-8
-7. python manage.py syncdb
-8. Say yes to create a superuser account (and create one)
+7. python manage.py generate_secret_key
+8. Put output into secret_key.py (SECRET_KEY='<output>')
+9. python manage.py migrate
+10. python manage.py createsuperuser
 
-9. Load example data (optional, but recommended):
-     python manage.py loaddata events_2012-09-20
+11. Load example data (optional, but recommended):
+     python manage.py loaddata core/fixtures/default_choices.json
 
-9. python manage.py runserver
-10. Point your browser to http://127.0.0.1:8000/
-11. Login with your freshly-created user account
+12. python manage.py runserver
+13. Point your browser to http://127.0.0.1:8000/
+14. Login with your freshly-created user account
 
 Testing
 =======
