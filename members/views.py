@@ -105,7 +105,7 @@ def members_bankcollection_list(request):
         for m in members_to_collect_from:
             debt = m.contactinfo.get_debt_for_month(date.today())
             if debt != 0:
-                pmi = m.paymentinfo_set.all()[0]
+                pmi = m.paymentinfo
                 # on the first debit initiation, set the mandate signing date
                 if not pmi.bank_account_date_of_signing:
                     pmi.bank_account_date_of_signing = date.today()

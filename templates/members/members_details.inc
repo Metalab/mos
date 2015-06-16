@@ -264,70 +264,70 @@
 
     <tr>
 		<td>Bank collection allowed:</td>
-		<td>{{ item.paymentinfo_set.all.0.bank_collection_allowed|yesno }}</td>
+		<td>{{ item.paymentinfo.bank_collection_allowed|yesno }}</td>
 	</tr>
 
     <tr><td></td></tr>
 
     <tr>
 		<td>Bank account owner:</td>
-		<td>{{ item.paymentinfo_set.all.0.bank_account_owner }}</td>
+		<td>{{ item.paymentinfo.bank_account_owner }}</td>
 	</tr>
 
     <tr><td></td></tr>
 
     <tr>
 		<td>Bank account number:</td>
-		<td>{{ item.paymentinfo_set.all.0.bank_account_number }}</td>
+		<td>{{ item.paymentinfo.bank_account_number }}</td>
 	</tr>
 
     <tr><td></td></tr>
 
 	<tr>
 		<td>Bank name:</td>
-		<td>{{ item.paymentinfo_set.all.0.bank_name }}</td>
+		<td>{{ item.paymentinfo.bank_name }}</td>
 	</tr>
 
     <tr><td></td></tr>
 
 	<tr>
 		<td>Bank code:</td>
-		<td>{{ item.paymentinfo_set.all.0.bank_code }}</td>
+		<td>{{ item.paymentinfo.bank_code }}</td>
 	</tr>
     
     <tr><td></td></tr>
 
 	<tr>
 		<td>Bank IBAN:</td>
-		<td>{{ item.paymentinfo_set.all.0.bank_account_iban }}</td>
+		<td>{{ item.paymentinfo.bank_account_iban }}</td>
 	</tr>
     
     <tr><td></td></tr>
 
 	<tr>
 		<td>Bank BIC:</td>
-		<td>{{ item.paymentinfo_set.all.0.bank_account_bic }}</td>
+		<td>{{ item.paymentinfo.bank_account_bic }}</td>
 	</tr>
     
     <tr><td></td></tr>
 
 	<tr>
 		<td>Bank mandate reference:</td>
-		<td>{{ item.paymentinfo_set.all.0.bank_account_mandate_reference }}</td>
+		<td>{{ item.paymentinfo.bank_account_mandate_reference }}</td>
 	</tr>
 
     <tr><td></td></tr>
 
     <tr>
         <td>Date of sigining:</td>
-        <td>{{ item.paymentinfo_set.all.0.bank_account_date_of_signing }}</td>
+        <td>{{ item.paymentinfo.bank_account_date_of_signing }}</td>
     </tr>
 
     <tr><td></td></tr>
 
 	<tr>
 		<td>Mode:</td>
-		<td>{{ item.paymentinfo_set.all.0.bank_collection_mode }}</td>
+		<td>{{ item.paymentinfo.bank_collection_mode }}</td>
 	</tr>
 
     <tr><td></td></tr>
