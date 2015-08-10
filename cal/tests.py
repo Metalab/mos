@@ -4,6 +4,7 @@ from django.test.client import Client
 
 from mos.cal.forms import EventForm
 from mos.cal.models import Event
+from mos.cal.factories import EventFactory
 
 
 correct_data = {'name': 'TestEvent1',
@@ -14,6 +15,11 @@ correct_data = {'name': 'TestEvent1',
                 'endDate_0': '2009-04-02',
                 'endDate_1': '14:00'}
 
+class EventFactoriesTest(TestCase):
+
+    def testEventFactory(self):
+        event = EventFactory()
+        self.assertTrue(isinstance(event, Event))
 
 class EventFormTest(TestCase):
     fixtures = ['initial_user.json']
@@ -75,15 +81,15 @@ class EventViewsTest(TestCase):
     def testAddNewEvent(self):
         """ Adds a new event via the view """
 
-        response = self.c.post('/cal/new/',  # adds a new event via
-                               correct_data) # the view update_event
+        response = self.c.post('/calendar/new/',   # adds a new event via
+                               correct_data)  # the view update_event
         self.assertContains(response, 'TestEvent1', count=None,
                             status_code=200)
         self.assertContains(response, '06.06.2008 15:00', count=None,
                             status_code=200)
 
-        response = self.c.post('/cal/new/',           # adds a new  event via
-                               self.minimal_data_set) # the view update_event
+        response = self.c.post('/calendar/new/',            # adds a new  event via
+                               self.minimal_data_set)  # the view update_event
         self.assertContains(response, 'TestEvent1', count=None,
                             status_code=200)
         self.assertContains(response, '06.06.2008 15:00', count=None,

@@ -1,0 +1,33 @@
+---
+- hosts: all
+  sudo: yes
+  tasks:
+      - apt: update_cache=yes
+#      - apt: pkg=python-dev
+      - apt: pkg=build-essential
+#      - apt: pkg=python-pip
+
+      - pip: requirements=/vagrant/requirements.txt
+
+      - name: link /mos -> /vagrant
+        file: src=/vagrant
+              dest=/mos
+              state=link
+
+#      - name: add locale de_DE
+#        lineinfile: dest=/etc/locale.gen
+#                    regexp='^#\s*(de_DE.UTF-8\s*UTF-8)'
+#                    line='\1'
+#                    backrefs=yes
+
+#      - name: reconfigure locales
+#        command: free_form='DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales'
+
+#      sudo DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
+
+      - name: syncdb
+        django_manage: app_path=/mos
+                       command=syncdb
+
+      - lineinfile: dest=/home/vagrant/.bashrc
+                    line='cd /mos'

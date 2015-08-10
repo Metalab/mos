@@ -1,0 +1,10 @@
+Django==1.8.3
+Pillow==2.8.1
+icalendar
+pytz
+Unipath
+django-extensions
+python-dateutil
+factory_boy
+python-faker
+feedparser

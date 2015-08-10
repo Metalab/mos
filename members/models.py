@@ -2,19 +2,21 @@
 # vim: set fileencoding=utf-8
 
 import datetime
+from decimal import Decimal
 
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib import admin
+from django.contrib.admin import StackedInline, TabularInline
+from django.contrib.auth.admin import UserAdmin
 from django.utils.encoding import smart_unicode
 
 
 
 class PaymentInfo(models.Model):
-    bank_collection_allowed = models.BooleanField()
+    bank_collection_allowed = models.BooleanField(default=False)
     bank_collection_mode = models.ForeignKey('BankCollectionMode')
     bank_account_owner = models.CharField(max_length=200, blank=True)
     bank_account_number = models.CharField(max_length=20, blank=True)
@@ -23,20 +25,21 @@ class PaymentInfo(models.Model):
     bank_account_iban = models.CharField(max_length=34, blank=True)
     bank_account_bic = models.CharField(max_length=11, blank=True)
     bank_account_mandate_reference = models.CharField(max_length=35, blank=True)
+    bank_account_date_of_signing = models.DateField(null=True, blank=True)
 
-    user = models.ForeignKey(User, unique=True)
+    user = models.OneToOneField(User)
 
 
 class ContactInfo(models.Model):
     LAZZZOR_RATE_CHOICES = (
-        ('1.00', "Standard Rate (1.00)"),
-        ('0.50', "Backer's Rate (0.50)"),
+        (Decimal('1.00'), "Standard Rate (1.00)"),
+        (Decimal('0.50'), "Backer's Rate (0.50)"),
     )
 
     def get_image_path(self, filename):
         name, ext = filename.rsplit('.', 1)
         return 'userpics/%s.%s' %(self.user.username, ext)
-    
+
     on_intern_list = models.BooleanField(default=True)
     intern_list_email = models.EmailField(blank=True)
 
@@ -51,11 +54,11 @@ class ContactInfo(models.Model):
     wiki_name = models.CharField(max_length=50, blank=True, null=True)
     image = models.ImageField(upload_to=get_image_path, blank=True)
 
-    user = models.ForeignKey(User, unique=True)
+    user = models.OneToOneField(User)
 
-    last_email_ok = models.BooleanField(null=True)
-    has_active_key = models.BooleanField(null=False)
-    has_lazzzor_privileges = models.BooleanField(null=False)
+    last_email_ok = models.NullBooleanField()
+    has_active_key = models.BooleanField(default=False)
+    has_lazzzor_privileges = models.BooleanField(default=False)
     key_id = models.CharField(max_length=100, blank=True, null=True)
 
     lazzzor_rate = models.DecimalField(choices=LAZZZOR_RATE_CHOICES, default='1.00',
@@ -103,9 +106,11 @@ class ContactInfo(models.Model):
     def get_date_of_entry(self):
         # FIXME: the order here is wrong, didn't change it since i don't have time to check all implications
         #                    sf - 2010 07 27
-        mp = MembershipPeriod.objects.filter(user=self.user)\
-            .order_by('-begin')[0]
-        return mp.begin
+        mp = MembershipPeriod.objects.filter(user=self.user).order_by('-begin')
+        if mp:
+            return mp[0].begin
+        else:
+            return None
 
     def get_current_membership_period(self):
         # FIXME: the order here is wrong, didn't change it since i don't have time to check all implications
@@ -132,7 +137,7 @@ class ContactInfo(models.Model):
         wikiname = self.wiki_name
         if not wikiname:
             wikiname = self.user.username
-            
+
         return u'%sBenutzer:%s' % (settings.HOS_WIKI_URL, wikiname)
 
 
@@ -174,9 +179,9 @@ def get_active_membership_months_until(date):
             res[kind] += nrMonths
         else:
             res[kind] = nrMonths
-    
+
     return res
-    
+
 def get_months(date):
     return date.month + 12*date.year
 
@@ -198,7 +203,7 @@ class MembershipPeriod(models.Model):
         return u"%s" % self.user.username
 
     def get_duration_in_month(self):
-        if self.end is None:
+        if self.end is None or self.end > datetime.date.today():
             end = datetime.date.today()
         else:
             end = self.end
@@ -245,7 +250,7 @@ class KindOfMembership(models.Model):
 class PaymentManager(models.Manager):
     def import_smallfile(self, filename, date):
         import csv
-        
+
         f = open(filename, 'r')
         r = csv.reader(f, delimiter=";")
 
@@ -272,7 +277,7 @@ class PaymentManager(models.Manager):
     #used to import generic payments, including date and payment type (as opposed to import_smallfile)
     def import_generic(self, filename):
         import csv
-        
+
         f = open(filename, 'r')
         r = csv.reader(f, delimiter=";")
 
@@ -287,7 +292,7 @@ class PaymentManager(models.Manager):
             except User.DoesNotExist:
                 print 'user not found: ' + repr(line)
                 continue
-            
+
             sum, date, method = (line[5], line[7], line[8])
             try:
                 p = Payment.objects.filter(date=date, amount=sum, user=u)
@@ -297,7 +302,7 @@ class PaymentManager(models.Manager):
                 Payment.objects.create(date=date, user=u, amount=sum, method=PaymentMethod.objects.get(name=method), original_file=filename, original_line=str(line))
                 print 'created: ' + repr(line)
             except ValueError, e:
-                print 'error creating payment: ' + repr(line)	
+                print 'error creating payment: ' + repr(line)
 
 
     def import_hugefile(self, filename):
@@ -333,7 +338,7 @@ class PaymentManager(models.Manager):
             sum = line[5] if line[5] else '-'+line[4] if line[4] else '0'
 
             sum = sum.replace(',', '.')
-            
+
             try:
                 sum = Decimal(sum) / len(list)
             except Exception, e:
@@ -370,7 +375,7 @@ class PaymentManager(models.Manager):
 
                     if fragments[1] == 'Eckhardt':
                         fragments[1] = 'Eckardt'
-                    
+
                     if fragments[1] == 'Grenzfurtner':
                         fragments[1] = 'Grenzfurthner'
 
@@ -429,27 +434,25 @@ class PaymentMethod(models.Model):
         return u"%s" % self.name
 
 
-class ContactInfoInline(admin.StackedInline):
+class ContactInfoInline(StackedInline):
     model = ContactInfo
     max_num = 1
 
-class PaymentInfoInline(admin.StackedInline):
+class PaymentInfoInline(StackedInline):
     model = PaymentInfo
     max_num = 1
 
-class MembershipPeriodInline(admin.TabularInline):
+class MembershipPeriodInline(TabularInline):
     model = MembershipPeriod
 
-class PaymentInline(admin.TabularInline):
+class PaymentInline(TabularInline):
     model = Payment
     fields=('date', 'amount', 'method')
-    ordering=('date')
+    ordering=('date',)
 
-class MemberAdmin(admin.ModelAdmin):
+class MemberAdmin(UserAdmin):
     inlines=[ContactInfoInline, PaymentInfoInline, MembershipPeriodInline, PaymentInline]
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff', 'is_active')
     list_filter = ('is_staff', 'is_superuser')
     search_fields = ('username', 'email', 'first_name', 'last_name')
     ordering = ('username',)
-
-

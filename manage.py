@@ -1,22 +1,17 @@
 #!/usr/bin/env python
-import sys
 import os
-
-_DIRNAME = os.path.dirname(globals()["__file__"])
-sys.path.append(os.path.join(_DIRNAME, '..'))
-sys.path.append('/django/svn/trunk')
-from django.core.management import execute_manager
-try:
-    import settings # Assumed to be in the same directory.
-except ImportError:
-    import sys
-    sys.stderr.write("Error: Can't find the file 'settings.py' in the \
-                      directory containing %r. It appears you've \
-                      customized things.\nYou'll have to run django-admin.py,\
-                      passing it your settings module.\n(If the file \
-                      settings.py does indeed exist, it's causing an \
-                      ImportError somehow.)\n" % __file__)
-    sys.exit(1)
+import sys
 
 if __name__ == "__main__":
-    execute_manager(settings)
+    # Dirty hack. Right now, we need this in order for the settings module
+    # "mos.settings.devel" to be found (plus many other things that import
+    # "mos and its child modules/packages). Ideally we should create a new
+    # package "mos" in this directory and move all files there, and then
+    # remove this line.
+    sys.path.insert(0, '..')
+
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mos.settings.devel")
+
+    from django.core.management import execute_from_command_line
+
+    execute_from_command_line(sys.argv)

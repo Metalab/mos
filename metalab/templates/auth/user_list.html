@@ -1,8 +1,0 @@
-{% extends "base.html" %}
-{% block hos_content %}
-    {% if user.is_superuser %}
-		{% include 'auth/user_list_superuser.inc' %}	
-	{% else %}
-    	{% include "auth/user_list.inc" %}
-	{% endif %}
-{% endblock %}

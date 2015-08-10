@@ -1,5 +1,4 @@
-from django.conf.urls.defaults import *
-from mos import settings
+from django.conf.urls import *
 
 urlpatterns = patterns('',
     (r'^$', 'mos.announce.views.announce'),

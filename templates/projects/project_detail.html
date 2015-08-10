@@ -1,0 +1,7 @@
+{% extends 'base.html' %}
+{% load makeform %}
+{% block title %}Metalab Project: {{ project.name }}{% endblock %}
+{% block hos_content %}
+{% makeform project mos.projects.forms.ProjectForm project_form %}
+	<li>{% include "projects/projectinfo_nf.inc" with new=0 %}</li>
+{% endblock %}

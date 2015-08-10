@@ -1,0 +1,51 @@
+
+======================================================================
+HOW TO SET UP A LOCAL INSTALLATION OF METALAB OS TO CONTRIBUTE PATCHES
+======================================================================
+
+Assumption: Using a Debian-based system and not using virtualenv. When using
+another system (or virtualenv), see the file "requirements.txt".
+
+1. git clone git://github.com/Metalab/mos.git
+
+2. On a Debian-based system:
+     apt-get install python-virtualenv
+
+   On any other system:
+     easy_install pip
+     pip install virtualenv
+
+3. Create the virtualenv (call it "devel"): virtualenv devel
+4. Acivate the "devel" virtualenv: source devel/bin/activate
+5. Install dependencies: pip install -r requirements.txt
+6. Optional: Install the locale packages for de_DE.UTF-8
+7. python manage.py generate_secret_key
+8. Put output into secret_key.py (SECRET_KEY='<output>')
+9. python manage.py migrate
+10. python manage.py createsuperuser
+
+11. Load example data (optional, but recommended):
+     python manage.py loaddata core/fixtures/default_choices.json
+
+12. python manage.py runserver
+13. Point your browser to http://127.0.0.1:8000/
+14. Login with your freshly-created user account
+
+Testing
+=======
+After you've made some changes to the code, rerun the test suite to check
+that everything still works. You can do this from the project root by issuing:
+
+    ./manage.py test
+
+If you have a test failing, you can rerun only the app responsible to iterate
+faster. E.g. if you have an error somewhere inside the cal package, do:
+
+    ./manage.py test cal
+
+
+Further Reading
+===============
+
+Virtualenv/Pip Basics: http://jontourage.com/2011/02/09/virtualenv-pip-basics/
+

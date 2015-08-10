@@ -3,7 +3,7 @@
 {% block title %}{{ HOS_NAME }} - Calendar for {{year}}{% endblock %}
 
 {% block add_css %}
-    <link href="/site_media/stylesheets/cal.css" media="screen" rel="Stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}stylesheets/cal.css" media="screen" rel="Stylesheet" type="text/css" />
 {% endblock %}
 
 {% block hos_content %}
@@ -20,14 +20,14 @@
      {% if title %}
        / <b>{{ title }}</b>  /
      {% endif %}
-   
+
 {% endif %}
 {% if description %}
    {{ description.description }}</p>
 {% endif %}
 
 <ul>{% for date in date_list %}
-  <li style="display:inline;"><a href="{% url cal_archive_month year=date.year month=date|date:"b" %}">
+  <li style="display:inline;"><a href="/calendar/{{date.year}}/{{date.month|stringformat:"02d"}}/">
       {{date|date:"F"}}</a></li>
   {% endfor %}</ul>
 

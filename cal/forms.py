@@ -1,7 +1,8 @@
 from django.forms import ModelForm
 import django.forms as forms
 
-from mos.cal.fields import DateTimeCombiField
+from django.forms.fields import SplitDateTimeField
+from django.contrib.admin.widgets import AdminSplitDateTime
 from mos.cal.models import Event
 
 
@@ -10,8 +11,8 @@ class EventForm(ModelForm):
     Form to add an event
     """
 
-    startDate = DateTimeCombiField()
-    endDate = DateTimeCombiField(required=False)
+    startDate = SplitDateTimeField(widget=AdminSplitDateTime)
+    endDate = SplitDateTimeField(required=False, widget=AdminSplitDateTime)
     teaser = forms.CharField(required=False)
 
     class Meta:

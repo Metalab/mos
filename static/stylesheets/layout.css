@@ -1,0 +1,262 @@
+/* -------------------------
+	    Metalab CSS
+	    
+	    Version 1.0
+ ---------------------------*/
+
+#container {
+	float: left;
+	width: 100%;
+	background: #fff;
+	border: none;
+}
+ 
+#page {
+	 width: 900px;
+	 margin: 0 auto 2em auto;
+}
+
+/* =header */
+#header {
+	width: 100%;
+	float: left;
+	margin-bottom: 1em;
+    background-color: white;
+}
+
+#logo {
+	display: inline;
+	float: left;
+	margin-top: 0.7em;
+}
+
+#logo a {
+	line-height: 1em;
+	border: none;
+}
+
+#logo a:hover {
+	background: none;
+}
+
+#header-nav {
+	float: left;
+	margin-left: 110px;
+}
+
+#header-nav li {
+	float: left;
+}
+
+#header-nav a {
+	float: left;
+	color: #fff;
+	background: #4F5C7F;
+	margin:  0 3px;
+	padding: 0.5em 0.7em;
+}
+
+#header-nav a:hover {
+	background: #7888AF;
+}
+
+#login {
+	float: right;
+	margin: 0.7em 3em 0 0;
+	
+}
+
+#presence_closed{
+	float: right;
+	margin-top: 0.7em;
+}
+
+#presence_open {
+	float: right;
+	margin-top: 0.7em;
+}
+
+/* =main */
+#main {
+	float: left;
+	width: 100%;
+}
+
+#main #column_1 {
+	width: 333px;
+	display: inline; /* fixes IE double margin issue */
+	float: left;
+}
+
+#main #column_2 {
+	width: 518px;
+	float: right;
+}
+
+
+#soup_credits { 
+ font-size:0.8em;
+ text-align:right;
+ margin-top:-255px;
+}
+
+
+#soup_logo {
+position:absolute;
+}
+#soup_logo img {
+ position:relative;
+ top:-30px;
+ left:295px;
+ z-index:101;
+ width:57px;
+ height:57px;
+display:none;
+}
+
+
+#soup_iframe_wrapper { 
+ position:relative;
+ top:-255px;
+
+}
+#soup_iframe {
+ position:relative;
+ z-index:99;
+ width:333px;
+ height:255px;
+ border:1px solid #D7D7D7;
+ padding:1px;
+ overflow-x: hidden;
+}
+
+
+#souplink_overlay {
+ width:315px;
+ height:255px;
+ z-index:100;
+ position:relative;
+ left:2px;
+ overflow:hidden;
+
+}
+#soup_pixel {
+ width:315px;
+ height:255px;
+}
+#soup_logo a, #soup_logo a:hover, #souplink_overlay a, #souplink_overlay a:hover {
+ padding:0;
+ margin:0;
+ background:none;
+ color:none;
+}
+
+
+/* =description */
+#soup {
+	float: left;
+	width: 100%;
+        height:290px;
+	margin-bottom: 2em;
+	padding-bottom: 1em;
+}
+
+
+/* =project */
+#project_list {
+	float: left;
+	width: 249px;
+}
+
+#issue_tracker,
+#recent_changes {
+	float: right;
+	width: 249px;
+}
+
+/* =calendar */
+#calendar {
+	border-bottom: 1px solid #e7e7e7;
+	margin-bottom: 2em;
+	padding-bottom: 1em;
+}
+
+/* =members */
+#members {
+	float: left;
+	width: 100%;
+	height: 8em;
+	margin-bottom: 1em;
+	padding-bottom: 1em;
+}
+
+#introduction{
+	float:left;
+	height: 3em;
+	border-bottom: 1px solid #e7e7e7;
+	margin-bottom: 2em;
+	padding-bottom: 1em;
+}
+
+#announcement{
+	float:left;
+	border-left: 4px solid red;
+	margin-bottom: 2em;
+	padding-bottom: 1em;
+	padding: 1.5em 1em 1.5em 1.5em;
+	background: transparent;
+	font-weight: bold;
+}
+
+#announcement a{
+	font-weight: bold;
+	font-size: 130%;
+	}
+
+#announcement small{
+	font-weight: bold;
+	font-size: 80%;
+	}
+
+#extrasmall a{
+	font-weight: bold;
+	font-size: 80%;
+	}
+
+.member_pics {
+	float: left;
+	margin-bottom: 16px;
+}
+
+.member_pics .member {
+	float: left;
+	display: block;
+	line-height: 1em;
+	border: 1px solid #ddd;
+	margin-right: 7px;
+	padding: 1px 1px 0 1px;
+}
+
+.member_pics .last {
+	margin-right: 0;
+}
+
+/* =footer */
+#footer {
+	clear: both;
+	border-top: 1px solid #e7e7e7;
+	padding: 0.5em 1em;
+}
+
+#content {
+    clear: both;
+}
+
+.metasense_image {
+	margin-bottom:-4px;
+}
+
+#openlab {
+    margin-bottom: 1.5em;
+    padding-left: 0.5em;
+}

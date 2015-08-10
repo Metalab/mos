@@ -1,12 +1,12 @@
-__version__ = "$Revision$"
-
 from datetime import *
 
 from dateutil.rrule import *
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, Http404
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
+from django.conf import settings
 
 from mos.members.forms import UserEmailForm, UserNameForm, UserAdressForm,\
                               UserImageForm, UserInternListForm
@@ -15,7 +15,6 @@ from mos.members.util import *
 from django.contrib.auth import authenticate
 
 
-@login_required
 def members_history(request):
     history_entry_list = get_list_of_history_entries()
     history_list = []
@@ -27,14 +26,21 @@ def members_history(request):
                               {'list': history_list},
                               context_instance=RequestContext(request))
 
+@csrf_exempt
 def valid_user(request):
-    #tyrsystem
+    # #tyrsystem
+    # I'm no sure what this comment means... "Tuer-System"? I've found entries
+    # in Apache's log file no younger than a year. Probably this is not used
+    # anymore.
     if not request.is_secure():
         raise Http404()
-    user_cache = authenticate(username=request.POST['user'], password=request.POST['pass'])
+    user_cache = authenticate(
+            username=request.POST.get('user'),
+            password=request.POST.get('pass')
+        )
     if user_cache and user_cache.is_active:
         return HttpResponse('OK')
-    return HttpResponse('DeineMudder', status=403)
+    return HttpResponse('FAIL', status=403)
 
 
 def members_details(request, user_username, errors="", update_type=""):
@@ -97,10 +103,14 @@ def members_bankcollection_list(request):
         collection_records = []
 
         for m in members_to_collect_from:
-            debt = m.contactinfo_set.all()[0].get_debt_for_month(date.today())
+            debt = m.contactinfo.get_debt_for_month(date.today())
             if debt != 0:
-                pmi = m.paymentinfo_set.all()[0]
-                ci = m.contactinfo_set.all()[0]
+                pmi = m.paymentinfo
+                # on the first debit initiation, set the mandate signing date
+                if not pmi.bank_account_date_of_signing:
+                    pmi.bank_account_date_of_signing = date.today()
+                    pmi.save()
+                ci = m.contactinfo
                 collection_records.append([m.first_name, m.last_name,
                                            pmi.bank_account_number,
                                            pmi.bank_code,
@@ -111,13 +121,16 @@ def members_bankcollection_list(request):
                                                                 .month),
                                            pmi.bank_account_iban or '',
                                            pmi.bank_account_bic or '',
-                                           pmi.bank_account_mandate_reference or ''
+                                           pmi.bank_account_mandate_reference or '',
+                                           pmi.bank_account_date_of_signing.isoformat(),
+                                           'RCUR', # FIXME: should be "FRST" on initial run
+                                           settings.HOS_SEPA_CREDITOR_ID,
                                            ])
 
         #format as csv and return it
         csv = '\r\n'.join([';'.join(x) for x in collection_records])
 
-        return HttpResponse(csv, mimetype='text/plain; charset=utf-8')
+        return HttpResponse(csv, content_type='text/plain; charset=utf-8')
 
 
     else:
@@ -126,11 +139,11 @@ def members_bankcollection_list(request):
 def members_key_list(request):
     #get active members with active keys
     members_with_keys = get_active_and_future_members().filter(contactinfo__has_active_key=True)
-    #return HttpResponse("blah", mimetype='text/plain')
+    #return HttpResponse("blah", content_type='text/plain')
 
     #just output keys one line per key
-    text = '\r\n'.join([x.contactinfo_set.all()[0].key_id for x in members_with_keys])
-    return HttpResponse(text, mimetype='text/plain')
+    text = '\r\n'.join([x.contactinfo.key_id for x in members_with_keys])
+    return HttpResponse(text, content_type='text/plain')
 
 def members_lazzzor_list(request):
     """
@@ -138,10 +151,10 @@ def members_lazzzor_list(request):
     comma separated list."""
     members_with_privs = get_active_and_future_members().filter(
                              contactinfo__has_lazzzor_privileges=True)
-    result = ['%s,%s,%s' % (m.contactinfo_set.all()[0].key_id, m.username,
-                            m.contactinfo_set.all()[0].lazzzor_rate)
+    result = ['%s,%s,%s' % (m.contactinfo.key_id, m.username,
+                            m.contactinfo.lazzzor_rate)
                   for m in members_with_privs]
-    return HttpResponse('\r\n'.join(result), mimetype='text/plain')
+    return HttpResponse('\r\n'.join(result), content_type='text/plain')
 
 def members_update_userpic(request, user_username):
     if not request.user.username == user_username:

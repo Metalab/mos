@@ -6,11 +6,11 @@
    </tr>
 {% endifequal %}
 	<tr>
-		<td rowspan="40" width="100px" style="text-align:center">
-			{% if item.contactinfo_set.all.0.image %}
-				<img class="thumb_with_text" src="{{ item.contactinfo_set.all.0.image.url }}"/>
+		<td rowspan="46" width="100px" style="text-align:center">
+			{% if item.contactinfo.image %}
+				<img class="thumb_with_text" src="{{ item.contactinfo.image.url }}"/>
 			{% else %}
-				<img src="/site_media/images/default_avatar.png"/>
+				<img src="{{ STATIC_URL }}images/default_avatar.png"/>
 			{% endif %}
 		</td>
 		<td width="150px"><b>Info</b></td>
@@ -21,7 +21,7 @@
         <td>{{ item.first_name }} {{ item.last_name }} </td><td>{% if ea%}<a align="right" href='#'  onclick="set_visible($('member-edit-name')); return false;">Edit</a>{% endif %}</td>
     </tr>
     <tr>
-         <td colspan="3">  
+         <td colspan="3">
             {% if ea %}
             <div class="edit {% ifequal error_type "name" %} visible {% else %} invisible {% endifequal %}" id='member-edit-name' style="border: 1px solid black; padding: 5px;">
                 <form id='membmer-form-name' method="post" action="/member/{{user.username}}/update/name/" onsubmit="return false;" onKeyPress="
@@ -32,6 +32,7 @@
                     });
                 }
                 ">
+		{% csrf_token %}
                     <dt><label>First Name</label> - <label>Last Name</label></dt>
 		  {%  ifequal error_type "name" %}
 		    <dd>{{ error_form.first_name.errors.0 }}  {{ error_form.first_name }} - {{ error_form.last_name.errors.0 }}  {{ error_form.last_name }}</dd>
@@ -40,15 +41,15 @@
                         <input name='first_name' id="member-first_name" type="text" value='{{item.first_name}}'/>  - 
                         <input name='last_name' id="member-last_name" type="text" value='{{item.last_name}}'/>
                     </dd>
-                  {% endifequal %}                    
+                  {% endifequal %}
                     <dt style="visibility: hidden">Submit:</dt>
                     <dd style="text-align: left">
                         <input type="button" value="Update" class="btn-update" onclick="
                         new Ajax.Updater( $('container'), $('membmer-form-name').readAttribute('action'), {
                           parameters: $('membmer-form-name').serialize(true),
                         });
-                        "/>	
-                    
+                        "/>
+
                         <a href="#" class="toggled btn-cancel" onclick="set_invisible($('member-edit-name')); return false;">Cancel</a></dd>
 
                 </form>
@@ -56,11 +57,11 @@
             {% endif %}
         </td>
 	</tr>
-    
+
 
 	<tr>
 		<td>Member since:</td>
-	        <td>{{ item.contactinfo_set.all.0.get_date_of_entry|date }}</td>
+	        <td>{{ item.contactinfo.get_date_of_entry|date }}</td>
 
     	</tr>
 {% if ea %}
@@ -73,7 +74,7 @@
     </tr>
    <tr><td colspan="3"><hr/></td></tr>
 {% endif %}
-    
+
 	<tr>
 		<td><br></td>
 		<td></td>
@@ -86,8 +87,8 @@
 		<td>Email:</td>
 		<td>{{ item.email }}</td><td> {% if ea%}<a href='#'  onclick="set_visible($('member-edit-email')); return	false;">Edit</a>{% endif %}</td>
 	</tr>
-    <tr>    
-         <td colspan="3">  
+    <tr>
+         <td colspan="3">
             {% if ea %}
             <div class="edit {% ifequal error_type "email" %} visible {% else %} invisible {% endifequal %}" id='member-edit-email' style="border: 1px solid black; padding: 5px; width:100%;">
                 <form id='membmer-form-email' method="post" action="/member/{{user.username}}/update/email/" onsubmit="return false;" onKeyPress="
@@ -98,6 +99,7 @@
                     });
                 }
                 ">
+		{% csrf_token %}
 		  {% ifequal error_type "email" %}
 		    <dt>New Email</dt>
 		    <dd>{{ error_form.email.errors.0 }}   {{ error_form.email }} </dd>
@@ -105,15 +107,15 @@
                     <dt>New Email </dt>
                     <dd><input name='email' id="member-email" type="text" value='{{item.email}}' size="40"/></dd>
                   {% endifequal %}
-            
+
                     <dt style="visibility: hidden">Submit:</dt>
                     <dd style="text-align: left">
                         <input type="button" value="Update" class="btn-update" onclick="
                         new Ajax.Updater( $('container'), $('membmer-form-email').readAttribute('action'), {
                           parameters: $('membmer-form-email').serialize(true),
                         });
-                        "/>	
-                    
+                        "/>
+
                         <a href="#" class="toggled btn-cancel" onclick="set_invisible($('member-edit-email')); return false;">Cancel</a>
 
                 </form>
@@ -123,9 +125,9 @@
     </tr>
 	<tr>
 		<td>Adress:</td>
-		<td>{{ item.contactinfo_set.all.0.street }}; {{ item.contactinfo_set.all.0.postcode }} {{ item.contactinfo_set.all.0.city }}; {{ item.contactinfo_set.all.0.country }}</td><td> {% if ea%}<a href='#'  onclick="set_visible($('member-edit-adress')); return	false;">Edit</a>{% endif %}</td>
+		<td>{{ item.contactinfo.street }}; {{ item.contactinfo.postcode }} {{ item.contactinfo.city }}; {{ item.contactinfo.country }}</td><td> {% if ea%}<a href='#'  onclick="set_visible($('member-edit-adress')); return	false;">Edit</a>{% endif %}</td>
 	</tr>
-    
+
     <tr>
         <td colspan="3">
             {% if ea %}
@@ -138,6 +140,7 @@
                     });
                 }
                 ">
+		{% csrf_token %}
                     <dt><label>Street</label> - <label>Postcode</label></dt>
 		  {% ifequal error_type "adress" %}
 		    <dd>{{ error_form.street.errors.0 }}  {{ error_form.street }} - {{ error_form.postcode.errors.0 }}  {{ error_form.postcode }}</dd>
@@ -149,12 +152,12 @@
 		  {% else %}
 
                     <dd>
-                        <input name='street' id="member-street" type="text" value='{{ item.contactinfo_set.all.0.street }}'/>  - 
-                        <input name='postcode' id="member-postcode" size="6" type="text" value=' {{ item.contactinfo_set.all.0.postcode }}'/>
+                        <input name='street' id="member-street" type="text" value='{{ item.contactinfo.street }}'/>  - 
+                        <input name='postcode' id="member-postcode" size="6" type="text" value=' {{ item.contactinfo.postcode }}'/>
                     </dd>
                     <dt><label>City</label> - <label>Country</label></dt>
-                        <input name='city' id="member-city" type="text" value=' {{ item.contactinfo_set.all.0.city }}'/> - 
-                        <input name='country' id="member-country" type="text" value=' {{ item.contactinfo_set.all.0.country }}'/>
+                        <input name='city' id="member-city" type="text" value=' {{ item.contactinfo.city }}'/> - 
+                        <input name='country' id="member-country" type="text" value=' {{ item.contactinfo.country }}'/>
                     </dd>
 		  {% endifequal %}
 
@@ -164,156 +167,167 @@
                         new Ajax.Updater( $('container'), $('membmer-form-adress').readAttribute('action'), {
                           parameters: $('membmer-form-adress').serialize(true),
                         });
-                        "/>	
-                    
+                        "/>
+
                         <a href="#" class="toggled btn-cancel" onclick="set_invisible($('member-edit-adress')); return false;">Cancel</a>
                 </form>
             </div>
             {% endif %}
         </td>
     </tr>
-    
+
 	<tr>
 		<td>On intern list</td>
-		{% if item.contactinfo_set.all.0.on_intern_list %}
-			<td>yes ( {{ item.contactinfo_set.all.0.intern_list_email }} )</td>
+		{% if item.contactinfo.on_intern_list %}
+			<td>yes ( {{ item.contactinfo.intern_list_email }} )</td>
 		{% else %}
 			<td>no</td>
 		{% endif %}
-                <td> {% if ea%}<a href='#'  onclick="set_visible($('member-edit-on-intern-list')); return false;">Edit</a>{% endif %}</td>
+                <td> {% if ea%}<a href='#'  onclick="set_visible($('member-edit-intern-list')); return false;">Edit</a>{% endif %}</td>
 
 	</tr>
-    <tr>    
-         <td colspan="3">  
+    <tr>
+         <td colspan="3">
             {% if ea %}
-            <div class="edit {% ifequal error_type "email" %} visible {% else %} invisible {% endifequal %}" id='member-edit-on-intern-list' style="border: 1px solid black; padding: 5px; width:100%;">
-                <form id='membmer-form-on-intern-list' method="post" action="/member/{{user.username}}/update/on-intern-list/" onsubmit="return false;" onKeyPress="
+            <div class="edit {% ifequal error_type "internlist" %} visible {% else %} invisible {% endifequal %}" id='member-edit-intern-list' style="border: 1px solid black; padding: 5px; width:100%;">
+                <form id='membmer-form-internlist' method="post" action="/member/{{user.username}}/update/internlist/" onsubmit="return false;" onKeyPress="
                 if(enter_pressed(event)) {
-                    myform = $('member-form-on-intern-list');
+                    myform = $('member-form-internlist');
                     new Ajax.Updater( $('container'), myform.readAttribute('action'), {
                       parameters: myform.serialize(true),
                     });
                 }
                 ">
+		{% csrf_token %}
                     <dt>On intern list </dt>
-                    <dd><input name='on-intern-list' id="member-on-intern-list" type="check" {% if item.contactinfo_set.all.0.on_intern_list%} checked="checked" {% endif %}  /></dd>
-            
+		  {% ifequal error_type "internlist" %}
+		    <dd>{{ error_form.intern_list_email.errors.0 }}   {{ error_form.intern_list_email }} {{ error_form.on_intern_list }} </dd>
+		  {% else %}
+                    <dd><input name='on_intern_list' id="member-on_intern_list" type="checkbox" {% if item.contactinfo.on_intern_list%} checked="checked" {% endif %}  />
+                        <input name='intern_list_email' id="member-intern_list_email" type="text" value="{{ item.contactinfo.intern_list_email }}" size="40"/>
+                    </dd>
+                  {% endifequal %}
+
                     <dt style="visibility: hidden">Submit:</dt>
                     <dd style="text-align: left">
                         <input type="button" value="Update" class="btn-update" onclick="
-                        new Ajax.Updater( $('container'), $('membmer-form-on-intern-list').readAttribute('action'), {
-                          parameters: $('membmer-form-on-intern-list').serialize(true),
+                        new Ajax.Updater( $('container'), $('membmer-form-internlist').readAttribute('action'), {
+                          parameters: $('membmer-form-internlist').serialize(true),
                         });
-                        "/>	
-                    
-                        <a href="#" class="toggled btn-cancel" onclick="set_invisible($('member-edit-on-intern-list')); return false;">Cancel</a>
+                        "/>
+
+                        <a href="#" class="toggled btn-cancel" onclick="set_invisible($('member-edit-internlist')); return false;">Cancel</a>
 
                 </form>
             </div>
             {% endif %}
         </td>
     </tr>
-	
+
     <tr><td></td></tr>
-    
+
     <tr>
 		<td>Wiki name:</td>
-		<td>{{ item.contactinfo_set.all.0.wiki_name }}</td>
+		<td>{{ item.contactinfo.wiki_name }}</td>
 	</tr>
-	
+
     <tr><td></td></tr>
-    
+
     <tr>
 		<td>Phone number:</td>
-		<td>{{ item.contactinfo_set.all.0.phone_number }}</td>
+		<td>{{ item.contactinfo.phone_number }}</td>
 	</tr>
-	
+
     <tr><td></td></tr>
-    
+
     <tr>
 		<td>Birthday:</td>
-		<td>{{ item.contactinfo_set.all.0.birthday }}</td>
+		<td>{{ item.contactinfo.birthday }}</td>
 	</tr>
-	
+
     <tr><td></td></tr>
-    
+
     <tr>
 		<td><br></td>
 		<td></td>
 	</tr>
-	
+
     <tr><td></td></tr>
-    
+
+    {# FIXME: don't list all the attributes manually #}
     <tr>
 		<td><b>Bank data</b></td>
 		<td></td>
 	</tr>
-	
+
     <tr><td></td></tr>
-    
+
     <tr>
 		<td>Bank collection allowed:</td>
-		{% if item.paymentinfo_set.all.0.bank_collection_allowed %}
-			<td>yes</td>
-		{% else %}
-			<td>no</td>
-		{% endif %}
+		<td>{{ item.paymentinfo.bank_collection_allowed|yesno }}</td>
 	</tr>
-	
+
     <tr><td></td></tr>
-    
+
     <tr>
 		<td>Bank account owner:</td>
-		<td>{{ item.paymentinfo_set.all.0.bank_account_owner }}</td>
+		<td>{{ item.paymentinfo.bank_account_owner }}</td>
 	</tr>
-	
+
     <tr><td></td></tr>
-    
+
     <tr>
 		<td>Bank account number:</td>
-		<td>{{ item.paymentinfo_set.all.0.bank_account_number }}</td>
+		<td>{{ item.paymentinfo.bank_account_number }}</td>
 	</tr>
-    
+
     <tr><td></td></tr>
-    
+
 	<tr>
 		<td>Bank name:</td>
-		<td>{{ item.paymentinfo_set.all.0.bank_name }}</td>
+		<td>{{ item.paymentinfo.bank_name }}</td>
 	</tr>
-    
+
     <tr><td></td></tr>
 
 	<tr>
 		<td>Bank code:</td>
-		<td>{{ item.paymentinfo_set.all.0.bank_code }}</td>
+		<td>{{ item.paymentinfo.bank_code }}</td>
 	</tr>
-
+    
     <tr><td></td></tr>
 
 	<tr>
 		<td>Bank IBAN:</td>
-		<td>{{ item.paymentinfo_set.all.0.bank_account_iban }}</td>
+		<td>{{ item.paymentinfo.bank_account_iban }}</td>
 	</tr>
-
+    
     <tr><td></td></tr>
 
 	<tr>
 		<td>Bank BIC:</td>
-		<td>{{ item.paymentinfo_set.all.0.bank_account_bic }}</td>
+		<td>{{ item.paymentinfo.bank_account_bic }}</td>
 	</tr>
-
+    
     <tr><td></td></tr>
 
 	<tr>
 		<td>Bank mandate reference:</td>
-		<td>{{ item.paymentinfo_set.all.0.bank_account_mandate_reference }}</td>
+		<td>{{ item.paymentinfo.bank_account_mandate_reference }}</td>
 	</tr>
+
+    <tr><td></td></tr>
+
+    <tr>
+        <td>Date of sigining:</td>
+        <td>{{ item.paymentinfo.bank_account_date_of_signing }}</td>
+    </tr>
 
     <tr><td></td></tr>
 
 	<tr>
 		<td>Mode:</td>
-		<td>{{ item.paymentinfo_set.all.0.bank_collection_mode }}</td>
+		<td>{{ item.paymentinfo.bank_collection_mode }}</td>
 	</tr>
 
     <tr><td></td></tr>

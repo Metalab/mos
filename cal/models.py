@@ -13,19 +13,30 @@ from django.db.models import permalink, Q
 from mos.core.models import Category, Location
 from mos.cal import create_calendar
 import urllib
+import sys
 
-locale.setlocale(locale.LC_ALL, 'de_DE.UTF-8')
+# We want our calendar to be displayed using the German locale
+DESIRED_LOCALE = 'de_DE.UTF-8'
+
+try:
+    locale.setlocale(locale.LC_ALL, DESIRED_LOCALE)
+except locale.Error:
+    fallback_locale = locale.setlocale(locale.LC_ALL, '')
+    print >>sys.stderr, """
+    WARNING: Locale not found: %s
+             Falling back to:  %s
+    """ % (DESIRED_LOCALE, fallback_locale)
 
 
 class EventManager(models.Manager):
 
-    def get_query_set(self):
-        return super(EventManager, self).get_query_set().filter(deleted=False)
+    def get_queryset(self):
+        return super(EventManager, self).get_queryset().filter(deleted=False)
 
 
 class FutureEventFixedNumberManager(EventManager):
 
-    def get_query_set(self):
+    def get_queryset(self):
         """
         Get <num> future events, or if there aren't enough,
         get <num> latest+future events.
@@ -41,22 +52,20 @@ class FutureEventFixedNumberManager(EventManager):
 
     def get_n(self, num):
 
-        all = super(FutureEventFixedNumberManager, self).get_query_set().\
-                                                         order_by('startDate')
+        all = super(FutureEventFixedNumberManager, self).get_queryset().order_by('startDate')
 
-        if num==0:
+        if num == 0:
             return all
 
-        future = all.filter((Q(endDate__gte=datetime.datetime.now())) |
-                            (Q(endDate__isnull=True) &
-                             Q(startDate__gte=datetime.datetime.now()-\
-                               datetime.timedelta(hours=5))))\
-                               .order_by('startDate') # event visible 5 hours
-                                                      # after it started
+        future = all.filter(
+            (Q(endDate__gte=datetime.datetime.now())) |
+            (Q(endDate__isnull=True) &
+             Q(startDate__gte=datetime.datetime.now() - datetime.timedelta(hours=5)))
+        ).order_by('startDate')  # event visible 5 hours after it started
 
-        if(future.count()<num):
-            if(all.count()-num>=0):
-                latest = all[all.count()-num:all.count()]
+        if(future.count() < num):
+            if(all.count() - num >= 0):
+                latest = all[all.count() - num:all.count()]
             else:
                 latest = all
         else:
@@ -80,7 +89,7 @@ class Event(models.Model):
     who = models.CharField(max_length=200, blank=True)
     where = models.CharField(max_length=200, blank=True)
 
-    created_at = models.DateTimeField(default=datetime.datetime.now())
+    created_at = models.DateTimeField(default=datetime.datetime.now)
     created_by = models.ForeignKey(User)
 
     deleted = models.BooleanField(default=False)
@@ -106,7 +115,7 @@ class Event(models.Model):
         return ('cal_event_detail', (self.id,),)
 
     def save(self, editor=False, new=False):
-        if new and editor != False:
+        if new and editor:
             self.created_by = editor
             self.created_by.save()
 
@@ -118,14 +127,12 @@ class Event(models.Model):
     def delete(self):
         self.deleted = True
 
-
-
     def get_icalendar_event(self):
         domain = Site.objects.get_current().domain
         rv = icalEvent()
 
         rv.add('uid', u'%d@%s' % (self.id, domain))
-        
+
         rv.add('summary', unicode(self.name))
         rv.add('dtstart', vDatetime(self.startDate).to_ical(), encode=0)
         rv.add('dtstamp', vDatetime(self.created_at).to_ical(), encode=0)
@@ -157,5 +164,5 @@ class Event(models.Model):
 
     @permalink
     def get_icalendar_url(self):
-        return ( 'cal_event_icalendar', (self.id,) )
-        
+        return ('cal_event_icalendar', (self.id,))
+

@@ -2,6 +2,7 @@
 # Views for issueing announcements to all active members.
 #
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
 import django.forms as forms
@@ -26,7 +27,7 @@ def announce(request):
                                   {
                                    'form': form,
                                    'user': request.user,
-                                  })
+                                  }, context_instance=RequestContext(request))
     # Valid message: send it!
     s = ''
 
@@ -35,7 +36,7 @@ def announce(request):
         users = users.filter(paymentinfo__bank_collection_allowed=True)\
                      .filter(paymentinfo__bank_collection_mode__id=4)
         for u in users:
-            debt = u.contactinfo_set.all()[0].get_debt_for_month(date.today())
+            debt = u.contactinfo.get_debt_for_month(date.today())
             if debt == 0:
                 users = users.exclude(pk=u.pk)
 
@@ -62,4 +63,4 @@ def announce(request):
                                'form': form,
                                'user': request.user,
                                'users': users,
-                               })
+                               }, context_instance=RequestContext(request))
