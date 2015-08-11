@@ -7,8 +7,8 @@ from django.test import TestCase
 from django.core.management.base import CommandError
 from django.conf import settings
 
-from .models import WikiChange
-from .management.commands import get_wiki_changes
+from sources.models import WikiChange
+from sources.management.commands import get_wiki_changes
 
 
 class FakeFeed:
