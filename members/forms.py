@@ -3,7 +3,7 @@ import django.forms as forms
 from django.contrib.auth.models import User
 from django.forms.models import ModelForm
 
-from mos.members.models import ContactInfo
+from .models import ContactInfo
 
 
 class UserNameForm(ModelForm):

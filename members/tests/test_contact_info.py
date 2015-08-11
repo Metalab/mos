@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
 
-from mos.members.models import ContactInfo
+from members.models import ContactInfo
 
 
 class ContactInfoTest(TestCase):

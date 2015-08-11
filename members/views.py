@@ -8,10 +8,10 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
 from django.conf import settings
 
-from mos.members.forms import UserEmailForm, UserNameForm, UserAdressForm,\
+from .forms import UserEmailForm, UserNameForm, UserAdressForm,\
                               UserImageForm, UserInternListForm
-from mos.members.models import *
-from mos.members.util import *
+from .models import *
+from .util import *
 from django.contrib.auth import authenticate
 
 

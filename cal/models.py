@@ -10,8 +10,8 @@ from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models import permalink, Q
 
-from mos.core.models import Category, Location
-from mos.cal import create_calendar
+from core.models import Category, Location
+from . import create_calendar
 import urllib
 import sys
 

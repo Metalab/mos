@@ -1,5 +1,8 @@
+from __future__ import absolute_import
+
 from django.contrib import admin
 
-from mos.projects.models import Project
+from .models import Project
+
 
 admin.site.register(Project)

@@ -2,7 +2,7 @@
 
 from unipath import FSPath as Path
 
-BASE_DIR = Path(__file__).absolute().ancestor(2)
+BASE_DIR = Path(__file__).absolute().ancestor(3)
 
 # Make this unique, and don't share it with anybody.
 try:
@@ -72,8 +72,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'mos.core.middleware.SetStatFooter',  # remove this row to disable
-                                          #footer stats
+    'core.middleware.SetStatFooter',  # remove this row to disable
+                                      # footer stats
 )
 
 ROOT_URLCONF = 'mos.urls'
@@ -95,7 +95,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     "django.core.context_processors.tz",
     "django.core.context_processors.request",
     "django.contrib.messages.context_processors.messages",
-    'mos.core.context_processors.custom_settings_global',
+    'core.context_processors.custom_settings_global',
 )
 
 INSTALLED_APPS = (
@@ -108,13 +108,13 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.humanize',
-    'mos.web',
-    'mos.projects',
-    'mos.cal',
-    'mos.members',
-    'mos.sources',
-    'mos.announce',
-    'mos.core',
+    'web',
+    'projects',
+    'cal',
+    'members',
+    'sources',
+    'announce',
+    'core',
 )
 
 

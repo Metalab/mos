@@ -1,7 +1,7 @@
 from django import template
 from django.template import Variable
 
-from mos.cal.models import Event
+from cal.models import Event
 
 
 register = template.Library()

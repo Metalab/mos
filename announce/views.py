@@ -1,15 +1,17 @@
 #
 # Views for issueing announcements to all active members.
 #
+import smtplib
+from datetime import *
+
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
 from django.contrib.auth.decorators import user_passes_test
 import django.forms as forms
-from mos.members.models import get_active_members, ContactInfo
 from django.core.mail import send_mail
-import smtplib
-from datetime import *
+
+from members.models import get_active_members, ContactInfo
 
 
 class AnnouncementForm(forms.Form):

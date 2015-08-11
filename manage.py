@@ -8,7 +8,7 @@ if __name__ == "__main__":
     # "mos and its child modules/packages). Ideally we should create a new
     # package "mos" in this directory and move all files there, and then
     # remove this line.
-    sys.path.insert(0, '..')
+    #sys.path.insert(0, '..')
 
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "mos.settings.devel")
 

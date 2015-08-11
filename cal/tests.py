@@ -2,9 +2,9 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.test.client import Client
 
-from mos.cal.forms import EventForm
-from mos.cal.models import Event
-from mos.cal.factories import EventFactory
+from cal.forms import EventForm
+from cal.models import Event
+from cal.factories import EventFactory
 
 
 correct_data = {'name': 'TestEvent1',

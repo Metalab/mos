@@ -1,5 +1,5 @@
 # Django settings for a local development instance of MOS
-from common import *
+from .common import *
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG

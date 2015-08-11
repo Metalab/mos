@@ -1,3 +1,5 @@
+from __future__ import print_function
+
 from django.core.management.base import BaseCommand
 
 
@@ -7,16 +9,16 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         from django.conf import settings
-        from mos.members.models import Payment
+        from members.models import Payment
 
         if len(args) != 2:
-            print self.help
-            print self.args
+            print(self.help)
+            print(self.args)
             return
 
         file = args[0]
         date = args[1]
 
-        print 'importing'
+        print('importing')
         Payment.objects.import_smallfile(file, date)
-        print 'done'
+        print('done')

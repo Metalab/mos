@@ -3,7 +3,7 @@ import contextlib
 
 from django.test import TestCase
 
-from mos.members.models import MembershipPeriod
+from members.models import MembershipPeriod
 
 
 @contextlib.contextmanager

@@ -1,6 +1,8 @@
+from __future__ import print_function
+
 from django.core.management.base import BaseCommand
 
-from mos.members.models import get_mailinglist_members
+from members.models import get_mailinglist_members
 
 
 class Command(BaseCommand):
@@ -10,4 +12,4 @@ class Command(BaseCommand):
             in members_on_intern
             if x.contactinfo.intern_list_email != '']
 
-        print '\n'.join(addresses)
+        print('\n'.join(addresses))
