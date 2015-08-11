@@ -1,5 +1,6 @@
+from __future__ import print_function
+
 import time
-import datetime
 
 from django.test import TestCase
 from django.test.client import Client
@@ -18,8 +19,7 @@ class PerformanceMainPageTest(TestCase):
             load_time = end - start
 
             log_str = 'MainPage :  %f \n ' % (load_time)
-            print log_str
+            print(log_str)
 
-            log_file = open('web/performance.log', 'a+')
-            log_file.write(log_str)
-            log_file.close()
+            with open('web/performance.log', 'a+') as log_file:
+                log_file.write(log_str)
