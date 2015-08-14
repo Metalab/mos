@@ -75,11 +75,11 @@ class ContactInfo(models.Model):
 
     def get_debt_for_month(self, date_in_month):
         # see if the there is a membership period for the month
-        mp_list = MembershipPeriod.objects.filter(user=self.user).filter(
-                    Q(begin__lte=date_in_month),
-                    Q(end__isnull=True) | Q(end__gte=date_in_month))
+        mp_list = MembershipPeriod.objects.filter(Q(begin__lte=date_in_month),
+                    Q(end__isnull=True) | Q(end__gte=date_in_month),
+                    user=self.user)
 
-        if mp_list.count() == 0:
+        if not mp_list.exists():
             return 0
         else:
             # find the membership fee for the month and kind
@@ -101,11 +101,8 @@ class ContactInfo(models.Model):
     def get_date_of_entry(self):
         # FIXME: the order here is wrong, didn't change it since i don't have time to check all implications
         #                    sf - 2010 07 27
-        mp = MembershipPeriod.objects.filter(user=self.user).order_by('-begin')
-        if mp:
-            return mp[0].begin
-        else:
-            return None
+        mp = MembershipPeriod.objects.filter(user=self.user).order_by('-begin').first()
+        return mp.begin if mp else None
 
     def get_current_membership_period(self):
         # FIXME: the order here is wrong, didn't change it since i don't have time to check all implications
