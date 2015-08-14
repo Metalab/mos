@@ -24,6 +24,10 @@ class Project(models.Model):
     finished_at = models.DateField(blank=True, null=True)
     deleted = models.BooleanField(default=False)
 
+    @property
+    def wikiPage_slug(self):
+        return self.wikiPage.replace(' ', '_')
+
     objects = models.Manager()
     all = ProjectManager()
 

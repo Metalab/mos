@@ -1,7 +1,7 @@
 <div id='projectcontainer{{project_form.instance.id|default_if_none:""}}'>
 
 	<p class="project {% ifequal project_error_id project_form.instance.id %}invisible{% endifequal%}" id="project-view-{{project_form.instance.id|default_if_none:""}}">
-		{% if project.wikiPage %}<a href="/wiki/{{ project.wikiPage }}"> {% endif %}{{ project.name }}{% if project.wikiPage %}</a>{% endif %}
+		{% if project.wikiPage %}<a href="/wiki/{{ project.wikiPage_slug }}"> {% endif %}{{ project.name }}{% if project.wikiPage %}</a>{% endif %}
 		{% if user.is_authenticated %}<a href='#' class="{%if not new %}hoverHidden{%endif%}" onclick="toggleView('project','{% if not new %}{{project_form.instance.id|default_if_none:""}}{% endif %}', 1); return false;">{%if not new %}Edit{%else%}Create New Project{%endif%}</a>{% endif %}{% if project.teaser %}<br/><small>{{ project.teaser }}</small>{%endif%}
 	</p>
 	{% if user.is_authenticated %}

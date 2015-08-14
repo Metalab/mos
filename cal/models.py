@@ -106,6 +106,10 @@ class Event(models.Model):
     def past(self):
         return self.startDate < datetime.datetime.now()
 
+    @property
+    def wikiPage_slug(self):
+        return self.wikiPage.replace(' ', '_')
+
     @permalink
     def get_absolute_url(self):
         return ('cal_event_detail', (self.id,),)
@@ -132,7 +136,7 @@ class Event(models.Model):
         rv.add('summary', self.name)
         rv.add('dtstart', vDatetime(self.startDate).to_ical(), encode=0)
         rv.add('dtstamp', vDatetime(self.created_at).to_ical(), encode=0)
-        rv.add('url', urllib.quote((u'http://%s/wiki/%s' % (domain, self.wikiPage)).encode('utf-8')))
+        rv.add('url', urllib.quote(('http://%s/wiki/%s' % (domain, self.wikiPage_slug)).encode('utf-8')))
 
         if self.teaser:
             rv.add('description', self.teaser)
