@@ -28,4 +28,5 @@ been left out unfairly, please contact us.
 - stereotype
 - Stefan Kögl <stefan@skoegl.net>
 - Dražen Lučanin <kermit666@gmail.com>
+- Florian Schweikert <kelvan@ist-total.org>
 
