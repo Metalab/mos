@@ -1,12 +1,21 @@
-from django.contrib.syndication.views import Feed
-from models import Event
+from __future__ import unicode_literals
+
 import datetime
+
+from django.contrib.syndication.views import Feed
+from django.db.models import Q
+
+from .models import Event
 
 
 class EventFeed(Feed):
-    title = u'Zukuenftige Veranstaltungen'
+    title = 'Zukuenftige Veranstaltungen'
     link = '/'
-    description = u'''zukuenftige Veranstaltungen in und um den Wiener Hackerspace Metalab'''
+    description = 'zukuenftige und laufende Veranstaltungen ' \
+                  'in und um den Wiener Hackerspace Metalab'
 
     def items(self):
-        return Event.all.filter(startDate__gte=datetime.datetime.now()).order_by('startDate')
+        now = datetime.datetime.now()
+        future = Q(endDate=None) & Q(startDate__gte=now)
+        running = Q(endDate__gte=now)
+        return Event.all.filter(future|running).order_by('startDate')
