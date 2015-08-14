@@ -1,8 +1,10 @@
 *.pyc
 *.sqlite
 
-settings/local*
-settings/secret_key.*
+mos/settings/local*
+mos/settings/secret_key.*
+web/performance.log
+env
 
 logs/
 media/

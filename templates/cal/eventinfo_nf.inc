@@ -14,7 +14,7 @@
  {% endif %}
 	{% if user.is_authenticated and not edit_disabled %}
         <a href='#' class="{%if not new %}hoverHidden{%endif%}" onclick="toggleView('calendar', '{% if not new %}{{event.id|default_if_none:""}}{% endif %}', 1); return false;">{%if not new %}Edit{%else%}Create New Event{%endif%}</a> {% endif %}
- 	<a class="hoverHidden" href="{% if not new %}{{event.get_icalendar_url}}{% else %}{% url "mos.cal.views.complete_ical" %}{%endif %}">ical</a>
+ 	<a class="hoverHidden" href="{% if not new %}{{event.get_icalendar_url}}{% else %}{% url "cal.views.complete_ical" %}{%endif %}">ical</a>
 	</p>
 	{% if user.is_authenticated %}
 

@@ -1,7 +1,41 @@
+from __future__ import absolute_import
+
 from django.contrib import admin
 from django.contrib.auth.models import User
+from django.contrib.auth.admin import UserAdmin
 
-from mos.members.models import MemberAdmin
+from .models import Payment, PaymentInfo, MembershipPeriod, ContactInfo
+
+
+class ContactInfoInline(admin.StackedInline):
+    model = ContactInfo
+    max_num = 1
+
+
+class PaymentInfoInline(admin.StackedInline):
+    model = PaymentInfo
+    max_num = 1
+
+
+class MembershipPeriodInline(admin.TabularInline):
+    model = MembershipPeriod
+
+
+class PaymentInline(admin.TabularInline):
+    model = Payment
+    fields = ('date', 'amount', 'method')
+    ordering = ('date',)
+
 
 admin.site.unregister(User)
-admin.site.register(User, MemberAdmin)
+
+
+@admin.register(User)
+class MemberAdmin(UserAdmin):
+    inlines = [ContactInfoInline, PaymentInfoInline, MembershipPeriodInline,
+               PaymentInline]
+    list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff',
+                    'is_active')
+    list_filter = ('is_staff', 'is_superuser')
+    search_fields = ('username', 'email', 'first_name', 'last_name')
+    ordering = ('username',)

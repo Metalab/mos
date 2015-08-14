@@ -8,7 +8,7 @@ import time
 
 from django.db import connection
 from django.utils.encoding import force_unicode
-from mos.core.utils import human_readable_time
+from core.utils import human_readable_time
 
 
 TAG = '<!-- footer_stats -->'

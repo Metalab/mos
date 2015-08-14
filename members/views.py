@@ -9,11 +9,11 @@ from django.http import HttpResponse, Http404, HttpResponseNotAllowed
 from django.shortcuts import render, get_object_or_404
 from django.conf import settings
 
-from mos.members.forms import UserEmailForm, UserNameForm, UserAdressForm, \
-                              UserImageForm, UserInternListForm
-from mos.members.models import ContactInfo
-from mos.members.util import get_list_of_history_entries, get_active_members, \
-                             get_active_and_future_members
+from .forms import UserEmailForm, UserNameForm, UserAdressForm,\
+    UserImageForm, UserInternListForm
+from .models import ContactInfo
+from .util import get_list_of_history_entries, get_active_members, \
+    get_active_and_future_members
 
 
 def members_history(request):

@@ -1,9 +1,11 @@
+from __future__ import absolute_import
+
 from django.forms import ModelForm
 import django.forms as forms
 
 from django.forms.fields import SplitDateTimeField
 from django.contrib.admin.widgets import AdminSplitDateTime
-from mos.cal.models import Event
+from .models import Event
 
 
 class EventForm(ModelForm):

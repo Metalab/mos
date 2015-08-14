@@ -1,10 +1,11 @@
-from django.conf.urls import *
+from __future__ import absolute_import
 
+from django.conf.urls import *
 from django.views.generic.dates import YearArchiveView
 from django.views.generic.detail import DetailView
 
-from mos.cal.models import Event, Location, Category
-from mos.cal.views import SpecialListView
+from .models import Event, Location, Category
+from .views import SpecialListView
 
 
 date_dict = {
@@ -26,7 +27,7 @@ event_detail_dict.update(template_object_name='event')
 
 urlpatterns = patterns('',
     (r'^$',
-     'mos.cal.views.index', {}, 'cal_index'),
+     'cal.views.index', {}, 'cal_index'),
     (r'^(?P<year>\d{4})/$', YearArchiveView.as_view(
         queryset=Event.all.all(),
         date_field="startDate",
@@ -34,29 +35,29 @@ urlpatterns = patterns('',
         make_object_list=True
     ), {}, "cal_archive_year"),
     (r'^(?P<year>\d{4})/(?P<month>\d{2})/$',
-     'mos.cal.views.monthly',),
+     'cal.views.monthly',),
     (r'^special/(?P<typ>\w+)/(?P<name>\w+)/$',
-     'mos.cal.views.display_special_events'),
+     'cal.views.display_special_events'),
     (r'^event/(?P<pk>\d+)/$', DetailView.as_view(
         queryset=Event.all.all(),
         context_object_name='event'
     ), {}, 'cal_event_detail'),
     (r'^event/(?P<object_id>\d+)/update/$',
-     'mos.cal.views.update_event', {'new': False}),
+     'cal.views.update_event', {'new': False}),
     (r'^(?P<object_id>\d+)/update/$',
-     'mos.cal.views.update_event', {'new': False}),
-    (r'^event/(?P<object_id>\d+)/delete/', 'mos.cal.views.delete_event'),
-    (r'^(?P<object_id>\d+)/delete/', 'mos.cal.views.delete_event'),
-    (r'^event/(?P<object_id>\d+)/icalendar/', 'mos.cal.views.event_icalendar', {},
+     'cal.views.update_event', {'new': False}),
+    (r'^event/(?P<object_id>\d+)/delete/', 'cal.views.delete_event'),
+    (r'^(?P<object_id>\d+)/delete/', 'cal.views.delete_event'),
+    (r'^event/(?P<object_id>\d+)/icalendar/', 'cal.views.event_icalendar', {},
      'cal_event_icalendar'),
-    (r'^export/ical/$', 'mos.cal.views.complete_ical', {}, 'full_ical'),
-    (r'^event/new/$', 'mos.cal.views.update_event', {'new': True}),
-    (r'^new/$', 'mos.cal.views.update_event', {'new': True}),
+    (r'^export/ical/$', 'cal.views.complete_ical', {}, 'full_ical'),
+    (r'^event/new/$', 'cal.views.update_event', {'new': True}),
+    (r'^new/$', 'cal.views.update_event', {'new': True}),
     (r'^locations/$', SpecialListView.as_view(
                             queryset=Location.objects.all(),
                             events_by="Locations")),
     (r'^categories/$', SpecialListView.as_view(
                             queryset=Category.objects.all(),
                             events_by="Categories")),
-    (r'^ajax/list/(?P<number>\d*)/?$', 'mos.cal.views.event_list'),
+    (r'^ajax/list/(?P<number>\d*)/?$', 'cal.views.event_list'),
 )

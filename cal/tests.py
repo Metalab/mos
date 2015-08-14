@@ -2,9 +2,9 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.test.client import Client
 
-from mos.cal.forms import EventForm
-from mos.cal.models import Event
-from mos.cal.factories import EventFactory
+from cal.forms import EventForm
+from cal.models import Event
+from cal.factories import EventFactory
 
 
 correct_data = {'name': 'TestEvent1',
@@ -15,11 +15,13 @@ correct_data = {'name': 'TestEvent1',
                 'endDate_0': '2009-04-02',
                 'endDate_1': '14:00'}
 
+
 class EventFactoriesTest(TestCase):
 
     def testEventFactory(self):
         event = EventFactory()
         self.assertTrue(isinstance(event, Event))
+
 
 class EventFormTest(TestCase):
     fixtures = ['initial_user.json']
@@ -27,7 +29,7 @@ class EventFormTest(TestCase):
     def setUp(self):
         self.wrong_data = correct_data.copy()
 
-       #set error conditions
+        # set error conditions
         self.wrong_data['name'] = ''
         self.wrong_data['startDate_0'] = 'asdasd'
         self.wrong_data['endDate_1'] = 'foop'
@@ -52,7 +54,6 @@ class EventFormTest(TestCase):
         assert f.errors['endDate'] != "", 'Wrong time, but no error raised'
         assert f.errors['wikiPage'] != "", 'Wikipage missing, but no error \
                                             raised'
-        print f.errors
 
     def testSaveFromForm(self):
         """Adds  a user with valid information"""

@@ -2,8 +2,8 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 
-from mos.projects.models import Project
-from mos.projects.forms import ProjectForm
+from .models import Project
+from .forms import ProjectForm
 
 
 @login_required

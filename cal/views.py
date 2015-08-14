@@ -1,4 +1,10 @@
-# Create your views here.
+from __future__ import absolute_import
+
+from datetime import date
+from itertools import groupby
+
+from calendar import HTMLCalendar
+from dateutil import relativedelta
 from dateutil.parser import *
 
 from django.contrib.auth.decorators import login_required
@@ -7,19 +13,12 @@ from django.template import RequestContext
 from django.http import HttpResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import ListView
-
-from mos.cal.forms import EventForm
-from mos.cal.models import Event, Category, Location
-from mos.cal import create_calendar
-
-from dateutil import relativedelta
-
-from calendar import HTMLCalendar
-from datetime import date
-from itertools import groupby
-
 from django.utils.html import conditional_escape as esc
 from django.utils.safestring import mark_safe
+
+from .forms import EventForm
+from .models import Event, Category, Location
+from . import create_calendar
 
 
 class EventCalendar(HTMLCalendar):

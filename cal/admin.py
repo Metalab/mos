@@ -1,6 +1,9 @@
+from __future__ import absolute_import
+
 from django.contrib import admin
 
-from mos.cal.models import Event, Category, Location
+from .models import Event, Category, Location
+
 
 admin.site.register(Event)
 admin.site.register(Category)

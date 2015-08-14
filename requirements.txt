@@ -7,4 +7,5 @@ django-extensions
 python-dateutil
 factory_boy
 python-faker
+freezegun
 feedparser

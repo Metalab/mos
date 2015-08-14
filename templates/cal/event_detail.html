@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 {% load makeform %}
+
 {% block title %}Metalab Event: {{ event.name }}{% endblock %}
 {% block hos_content %}
-{% makeform event mos.cal.forms.EventForm event_form %}
+{% makeform event cal.forms.EventForm event_form %}
 	<li>{% include "cal/eventinfo_nf.inc" with new=0 %}</li>
 {% endblock %}

@@ -4,7 +4,7 @@ from django.conf.urls import *
 from django.conf.urls.static import static
 from django.contrib import admin
 
-from mos.cal.feeds import EventFeed
+from cal.feeds import EventFeed
 
 
 admin.autodiscover()
@@ -15,13 +15,13 @@ urlpatterns = patterns('',
 
     (r'^feeds/events/$', EventFeed()),
 
-    (r'^calendar/', include('mos.cal.urls')),
-    (r'^project/', include('mos.projects.urls')),
-    (r'^member/', include('mos.members.urls')),
-    (r'^announce/$', include('mos.announce.urls')),
-    (r'^cellardoor/', 'mos.web.views.display_cellardoor'),
-    (r'^spaceapi.json$', 'mos.web.views.spaceapi'),
-    (r'^$', 'mos.web.views.display_main_page'),
+    (r'^calendar/', include('cal.urls')),
+    (r'^project/', include('projects.urls')),
+    (r'^member/', include('members.urls')),
+    (r'^announce/$', include('announce.urls')),
+    (r'^cellardoor/', 'web.views.display_cellardoor'),
+    (r'^spaceapi.json$', 'web.views.spaceapi'),
+    (r'^$', 'web.views.display_main_page'),
 )
 
 urlpatterns +=  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

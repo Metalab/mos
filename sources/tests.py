@@ -1,14 +1,13 @@
 import datetime
 import time
 import feedparser
-from contextlib import contextmanager
 
 from django.test import TestCase
 from django.core.management.base import CommandError
 from django.conf import settings
 
-from .models import WikiChange
-from .management.commands import get_wiki_changes
+from sources.models import WikiChange
+from sources.management.commands import get_wiki_changes
 
 
 class FakeFeed:
@@ -57,7 +56,7 @@ class CronJobTest(TestCase):
 
         self.assertEqual(WikiChange.objects.count(), 5)
         for c in 'asdfg':
-            WikiChange.objects.get(title=c) # does not raise
+            WikiChange.objects.get(title=c)  # does not raise
 
         settings.MOS_WIKI_CHANGE_URL = real_url
 
@@ -76,7 +75,7 @@ class CronJobTest(TestCase):
             self.assertEqual(WikiChange.objects.count(), 5)
 
             for c in 'qwert':
-                WikiChange.objects.get(title=c) # does not raise
+                WikiChange.objects.get(title=c)  # does not raise
             for c in 'asdfg':
                 self.assertRaises(
                     WikiChange.DoesNotExist,
