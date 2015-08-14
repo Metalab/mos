@@ -6,7 +6,7 @@ BASE_DIR = Path(__file__).absolute().ancestor(3)
 
 # Make this unique, and don't share it with anybody.
 try:
-    from secret_key import *
+    from .secret_key import *
 except ImportError:
     from django_extensions.management.commands import generate_secret_key
     cmd = generate_secret_key.Command()
