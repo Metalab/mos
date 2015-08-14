@@ -1,9 +1,4 @@
-import urllib2
-import re
-
-from django.contrib.auth.models import User
-from django.shortcuts import render, render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 from django.http import JsonResponse
 from django.conf import settings
 

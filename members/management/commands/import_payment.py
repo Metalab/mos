@@ -8,7 +8,6 @@ class Command(BaseCommand):
     args = "./manage.py import_payment absolute_filepath date(yyyy-mm-dd)"
 
     def handle(self, *args, **kwargs):
-        from django.conf import settings
         from members.models import Payment
 
         if len(args) != 2:
