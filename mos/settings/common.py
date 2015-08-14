@@ -8,6 +8,7 @@ BASE_DIR = Path(__file__).absolute().ancestor(3)
 try:
     from .secret_key import *
 except ImportError:
+    # XXX Does not work, crashes before generating
     from django_extensions.management.commands import generate_secret_key
     cmd = generate_secret_key.Command()
     SECRET_KEY = cmd.handle_noargs()
@@ -83,7 +84,12 @@ TEMPLATE_DIRS = (
     # or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    BASE_DIR.child("templates"),
+    BASE_DIR.child('templates'),
+)
+
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
