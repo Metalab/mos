@@ -26,15 +26,16 @@ class PaymentInfo(models.Model):
     user = models.OneToOneField(User)
 
 
+def get_image_path(self, filename):
+    name, ext = filename.rsplit('.', 1)
+    return 'userpics/%s.%s' % (self.user.username, ext)
+
+
 class ContactInfo(models.Model):
     LAZZZOR_RATE_CHOICES = (
         (Decimal('1.00'), "Standard Rate (1.00)"),
         (Decimal('0.50'), "Backer's Rate (0.50)"),
     )
-
-    def get_image_path(self, filename):
-        name, ext = filename.rsplit('.', 1)
-        return 'userpics/%s.%s' % (self.user.username, ext)
 
     on_intern_list = models.BooleanField(default=True)
     intern_list_email = models.EmailField(blank=True)
@@ -409,11 +410,19 @@ class PaymentManager(models.Manager):
 
 
 @python_2_unicode_compatible
+class PaymentMethod(models.Model):
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+
+
+@python_2_unicode_compatible
 class Payment(models.Model):
     amount = models.FloatField()
     comment = models.CharField(max_length=200, blank=True)
     date = models.DateField()
-    method = models.ForeignKey('PaymentMethod')
+    method = models.ForeignKey(PaymentMethod)
     user = models.ForeignKey(User, null=True)
     original_line = models.TextField(blank=True)
     original_file = models.CharField(max_length=200, null=True)
@@ -426,11 +435,3 @@ class Payment(models.Model):
 
     class Meta:
         ordering = ['date']
-
-
-@python_2_unicode_compatible
-class PaymentMethod(models.Model):
-    name = models.CharField(max_length=50)
-
-    def __str__(self):
-        return self.name
