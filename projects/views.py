@@ -18,8 +18,8 @@ def update_project(request, new, object_id=None):
     else:
         project = Project()
 
-    project_error_id = '' # set event_error_id to '', if an error
-                          # occurs it will be the error id
+    # set event_error_id to '', if an error occurs it will be the error id
+    project_error_id = ''
 
     if request.method == 'POST':
         project_form = ProjectForm(request.POST, instance=project)

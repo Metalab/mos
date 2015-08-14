@@ -5,7 +5,6 @@ from itertools import groupby
 
 from calendar import HTMLCalendar
 from dateutil import relativedelta
-from dateutil.parser import *
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404
@@ -142,16 +141,10 @@ def delete_event(request, object_id=None):
 
 @login_required
 def update_event(request, new, object_id=None):
-    if not request.POST or not request.user.is_authenticated():
-        #return
-        pass
-
     if not new:
         event = get_object_or_404(Event, id=object_id)
     else:
         event = Event()
-
-    event_error_id = None
 
     event_valid = True
 
@@ -164,7 +157,6 @@ def update_event(request, new, object_id=None):
             event = Event.objects.get(id=event_data.id)
         else:
             event_valid = False
-            event_error_id = event.id
     else:
         event_form = EventForm()
 
@@ -211,6 +203,7 @@ def complete_ical(request, number=0):
 
     calendar = create_calendar([x.get_icalendar_event() for x in events])
     return HttpResponse(calendar.to_ical(), content_type='text/calendar; charset=utf-8')
+
 
 class SpecialListView(ListView):
     template_name = "cal/event_special_list.html"

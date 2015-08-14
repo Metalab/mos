@@ -136,7 +136,7 @@ class Event(models.Model):
         rv.add('summary', unicode(self.name))
         rv.add('dtstart', vDatetime(self.startDate).to_ical(), encode=0)
         rv.add('dtstamp', vDatetime(self.created_at).to_ical(), encode=0)
-        rv.add('url', urllib.quote((u'http://%s/wiki/%s' % (domain, unicode(self.wikiPage))).encode('utf-8')) )
+        rv.add('url', urllib.quote((u'http://%s/wiki/%s' % (domain, unicode(self.wikiPage))).encode('utf-8')))
 
         if self.teaser:
             rv.add('description', unicode(self.teaser))
@@ -165,4 +165,3 @@ class Event(models.Model):
     @permalink
     def get_icalendar_url(self):
         return ('cal_event_icalendar', (self.id,))
-
