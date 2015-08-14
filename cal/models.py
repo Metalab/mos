@@ -1,3 +1,7 @@
+from __future__ import unicode_literals, print_function
+
+import sys
+import urllib
 import datetime
 import locale
 
@@ -9,23 +13,21 @@ from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models import permalink, Q
+from django.utils.encoding import python_2_unicode_compatible
 
 from core.models import Category, Location
 from . import create_calendar
-import urllib
-import sys
 
 # We want our calendar to be displayed using the German locale
-DESIRED_LOCALE = 'de_DE.UTF-8'
+DESIRED_LOCALE = b'de_DE.UTF-8'
 
 try:
     locale.setlocale(locale.LC_ALL, DESIRED_LOCALE)
 except locale.Error:
-    fallback_locale = locale.setlocale(locale.LC_ALL, '')
-    print >>sys.stderr, """
-    WARNING: Locale not found: %s
+    fallback_locale = locale.setlocale(locale.LC_ALL, b'')
+    print("""WARNING: Locale not found: %s
              Falling back to:  %s
-    """ % (DESIRED_LOCALE, fallback_locale)
+    """ % (DESIRED_LOCALE, fallback_locale), file=sys.stderr)
 
 
 class EventManager(models.Manager):
@@ -41,17 +43,10 @@ class FutureEventFixedNumberManager(EventManager):
         Get <num> future events, or if there aren't enough,
         get <num> latest+future events.
         """
-
-        DEFAULT_NUM = 5
-        if(hasattr(settings, 'HOS_HOME_EVENT_NUM')):
-            num = settings.HOS_HOME_EVENT_NUM
-        else:
-            num = DEFAULT_NUM
-
+        num = getattr(settings, 'HOS_HOME_EVENT_NUM', 5)
         return self.get_n(num)
 
     def get_n(self, num):
-
         all = super(FutureEventFixedNumberManager, self).get_queryset().order_by('startDate')
 
         if num == 0:
@@ -74,6 +69,7 @@ class FutureEventFixedNumberManager(EventManager):
         return latest
 
 
+@python_2_unicode_compatible
 class Event(models.Model):
     """
     Represents an event
@@ -101,11 +97,11 @@ class Event(models.Model):
     all = EventManager()
     future = FutureEventFixedNumberManager()
 
-    def __unicode__(self):
+    def __str__(self):
         status = ''
         if self.deleted:
             status = ' [deleted]'
-        return u'%s (%s)%s' % (self.name, self.startDate, status)
+        return '%s (%s)%s' % (self.name, self.startDate, status)
 
     def past(self):
         return self.startDate < datetime.datetime.now()
@@ -131,31 +127,31 @@ class Event(models.Model):
         domain = Site.objects.get_current().domain
         rv = icalEvent()
 
-        rv.add('uid', u'%d@%s' % (self.id, domain))
+        rv.add('uid', '%d@%s' % (self.id, domain))
 
-        rv.add('summary', unicode(self.name))
+        rv.add('summary', self.name)
         rv.add('dtstart', vDatetime(self.startDate).to_ical(), encode=0)
         rv.add('dtstamp', vDatetime(self.created_at).to_ical(), encode=0)
-        rv.add('url', urllib.quote((u'http://%s/wiki/%s' % (domain, unicode(self.wikiPage))).encode('utf-8')))
+        rv.add('url', urllib.quote((u'http://%s/wiki/%s' % (domain, self.wikiPage)).encode('utf-8')))
 
         if self.teaser:
-            rv.add('description', unicode(self.teaser))
+            rv.add('description', self.teaser)
 
         if self.endDate:
             rv.add('dtend', vDatetime(self.endDate).to_ical(), encode=0)
 
         if self.who:
-            rv.add('organizer', unicode(self.who))
+            rv.add('organizer', self.who)
         elif self.created_by_id and User.objects.filter(id=self.created_by_id):
-            rv.add('organizer', unicode(self.created_by))
+            rv.add('organizer', self.created_by)
 
         if self.location:
-            rv.add('location', u'Metalab ' + unicode(self.location))
+            rv.add('location', u'Metalab %s' & self.location)
         elif self.where:
-            rv.add('location', u'Metalab ' + unicode(self.where))
+            rv.add('location', u'Metalab %s' & self.where)
 
         if self.category:
-            rv.add('categories', unicode(self.category))
+            rv.add('categories', self.category)
 
         return rv
 
