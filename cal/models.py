@@ -146,9 +146,9 @@ class Event(models.Model):
             rv.add('organizer', self.created_by)
 
         if self.location:
-            rv.add('location', u'Metalab %s' & self.location)
+            rv.add('location', 'Metalab %s' % self.location)
         elif self.where:
-            rv.add('location', u'Metalab %s' & self.where)
+            rv.add('location', 'Metalab %s' % self.where)
 
         if self.category:
             rv.add('categories', self.category)
