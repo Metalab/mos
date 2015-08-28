@@ -16,6 +16,6 @@ class EventFeed(Feed):
 
     def items(self):
         now = datetime.datetime.now()
-        future = Q(endDate=None) & Q(startDate__gte=now)
-        running = Q(endDate__gte=now)
+        future = Q(startDate__gte=now)
+        running = Q(startDate__lte=now) & Q(endDate__gte=now)
         return Event.all.filter(future|running).order_by('startDate')
