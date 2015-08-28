@@ -52,8 +52,9 @@ function delete_event(id) {
 
     new Ajax.Request('/calendar/' + id + '/delete/', {
                                                     onSuccess: function(r) {
-                                                                            new Ajax.Updater('calendar-content', calendarUpdateURL);
-                                                                           } 
+                                                                            new Ajax.Request('calendar-content', calendarUpdateURL, {
+                                                                              method: 'get'})
+                                                                           }
                                                   })
 }
 
@@ -104,7 +105,8 @@ function submit_event(id) {
     new Ajax.Request(frm.readAttribute('action'), {
                                                     parameters: frm.serialize(true),
                                                     onSuccess: function(r) {
-                                                                            new Ajax.Updater('calendar-content', calendarUpdateURL);
+                                                                            new Ajax.Updater('calendar-content', calendarUpdateURL, {
+                                                                              method: 'get'})
                                                                            },
                                                     onFailure: function(r) {
                                                                             cnt.innerHTML = r.responseText;
