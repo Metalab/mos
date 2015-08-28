@@ -1,10 +1,13 @@
+from datetime import datetime, timedelta
+
 from django.contrib.auth.models import User
 from django.test import TestCase
 from django.test.client import Client
 
-from cal.forms import EventForm
-from cal.models import Event
-from cal.factories import EventFactory
+from .forms import EventForm
+from .models import Event
+from .factories import EventFactory
+from .feeds import EventFeed
 
 
 correct_data = {'name': 'TestEvent1',
@@ -21,6 +24,10 @@ class EventFactoriesTest(TestCase):
     def testEventFactory(self):
         event = EventFactory()
         self.assertTrue(isinstance(event, Event))
+        defaults = {'username': 'admin'}
+        user, _ = User.objects.get_or_create(pk=1, defaults=defaults)
+        event.created_by_id = 1
+        event.save()
 
 
 class EventFormTest(TestCase):
@@ -95,3 +102,40 @@ class EventViewsTest(TestCase):
                             status_code=200)
         self.assertContains(response, '06.06.2008 15:00', count=None,
                             status_code=200)
+
+
+class EventFeedTest(TestCase):
+    def setUp(self):
+        now = datetime.now()
+        yesterday = now - timedelta(days=1)
+        tommorrow = now + timedelta(days=1)
+
+        defaults = {'username': 'admin'}
+        user, _ = User.objects.get_or_create(pk=1, defaults=defaults)
+
+        self.past_event = EventFactory()
+        self.past_event.startDate = yesterday
+        self.past_event.endDate = yesterday
+        self.past_event.created_by_id = 1
+        self.past_event.save()
+        self.future_event = EventFactory()
+        self.future_event.startDate = tommorrow
+        self.future_event.endDate = tommorrow
+        self.future_event.created_by_id = 1
+        self.future_event.save()
+        self.running_event = EventFactory()
+        self.running_event.startDate = yesterday
+        self.running_event.endDate = tommorrow
+        self.running_event.created_by_id = 1
+        self.running_event.save()
+
+        self.items = EventFeed().items()
+
+    def testRunningEvents(self):
+        self.assertIn(self.running_event, self.items)
+
+    def testFutureEvents(self):
+        self.assertIn(self.future_event, self.items)
+
+    def testPastEvents(self):
+        self.assertNotIn(self.past_event, self.items)
