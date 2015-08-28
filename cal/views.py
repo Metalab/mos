@@ -9,7 +9,7 @@ from dateutil import relativedelta
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseNotAllowed
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import ListView
 from django.utils.html import conditional_escape as esc
@@ -128,13 +128,12 @@ def display_special_events(request, typ, name):
 
 @login_required
 def delete_event(request, object_id=None):
-    if not request.method == 'POST' or not request.user.is_authenticated():
-        return
+    if not request.method == 'POST':
+        return HttpResponseNotAllowed(['POST'])
 
-    event = get_object_or_404(Event, id=object_id)
+    event = get_object_or_404(Event.all, id=object_id)
 
     event.delete()
-    event.save()
 
     return HttpResponse()
 
@@ -142,7 +141,7 @@ def delete_event(request, object_id=None):
 @login_required
 def update_event(request, new, object_id=None):
     if not new:
-        event = get_object_or_404(Event, id=object_id)
+        event = get_object_or_404(Event.all, id=object_id)
     else:
         event = Event()
 
@@ -185,7 +184,7 @@ def event_list(request, number=0):
 
 
 def event_icalendar(request, object_id):
-    event = get_object_or_404(Event, pk=object_id)
+    event = get_object_or_404(Event.all, pk=object_id)
 
     response = HttpResponse(event.get_icalendar().to_ical(),
                         content_type='text/calendar; charset=utf-8')

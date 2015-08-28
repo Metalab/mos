@@ -122,6 +122,7 @@ class Event(models.Model):
 
     def delete(self):
         self.deleted = True
+        self.save()
 
     def get_icalendar_event(self):
         domain = Site.objects.get_current().domain
