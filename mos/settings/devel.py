@@ -16,6 +16,9 @@ DATABASES = {
     }
 }
 
+INSTALLED_APPS = INSTALLED_APPS + (
+    'debug_toolbar',)
+
 MEDIA_ROOT = BASE_DIR.child("media")
 
 HOS_SEPA_CREDITOR_ID = 'AT29HXR00000037632'
