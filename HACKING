@@ -27,6 +27,7 @@ another system (or virtualenv), see the file "requirements.txt".
 11. Load example data (optional, but recommended):
      python manage.py loaddata core/fixtures/default_choices.json
      python manage.py loaddata members/fixtures/default_choices.json
+     python manage.py loaddata members/fixtures/dummy_members.json
      python manage.py loaddata cal/fixtures/events_2012-09-20.json
 
 12. python manage.py runserver
