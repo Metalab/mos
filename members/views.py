@@ -11,9 +11,9 @@ from django.conf import settings
 
 from .forms import UserEmailForm, UserNameForm, UserAdressForm,\
     UserImageForm, UserInternListForm
-from .models import ContactInfo
-from .util import get_list_of_history_entries, get_active_members, \
+from .models import ContactInfo, get_active_members, \
     get_active_and_future_members
+from .util import get_list_of_history_entries
 
 
 def members_history(request):

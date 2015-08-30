@@ -1,9 +1,9 @@
-from datetime import *
+from datetime import date
 
-from dateutil.rrule import *
+from dateutil.rrule import MONTHLY
 from django.contrib.auth.models import User
 
-from .models import *
+from .models import MembershipPeriod
 
 
 def get_date_of_entry(user):

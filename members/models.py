@@ -76,8 +76,8 @@ class ContactInfo(models.Model):
     def get_debt_for_month(self, date_in_month):
         # see if the there is a membership period for the month
         mp_list = MembershipPeriod.objects.filter(Q(begin__lte=date_in_month),
-                    Q(end__isnull=True) | Q(end__gte=date_in_month),
-                    user=self.user)
+                                                  Q(end__isnull=True) | Q(end__gte=date_in_month),
+                                                  user=self.user)
 
         if not mp_list.exists():
             return 0
