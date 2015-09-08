@@ -120,9 +120,10 @@ class Event(models.Model):
     def start_end_date_eq(self):
         return self.startDate.date() == self.endDate.date()
 
-    def delete(self):
+    def delete(self, commit=True):
         self.deleted = True
-        self.save()
+        if commit:
+            self.save()
 
     def get_icalendar_event(self):
         domain = Site.objects.get_current().domain
