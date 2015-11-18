@@ -130,7 +130,7 @@ table.month td.today {
 	}
 
 
-	.noday, /* hide nodays */
+	.month .noday, /* hide nodays */
 	.month tr:nth-child(2) /* hide weekdays*/
 	{
 		position: absolute;
@@ -144,33 +144,33 @@ table.month td.today {
 
 
 	/* reset table stuff */
-	table, tbody, th, td, tr {
+	table.month, 
+	.month tbody, 
+	.month th, 
+	.month td, 
+	.month tr {
 		display: block;
 	}
 
-	tr {
-		
-	}
-
-	td {
+	.month td {
 		position: relative;
 		padding-left: 2em;
 	}
 
 	/* weekdays via css */
-	td:before {
+	.month td:before {
 		position: absolute;
 		top: 3px;
 		left: 3px;
 		padding-right: 10px;
 		white-space: nowrap;
 	}
-	td:nth-of-type(1):before { content: "Mo"; }
-	td:nth-of-type(2):before { content: "Di"; }
-	td:nth-of-type(3):before { content: "Mi"; }
-	td:nth-of-type(4):before { content: "Do"; }
-	td:nth-of-type(5):before { content: "Fr"; }
-	td:nth-of-type(6):before { content: "Sa"; }
-	td:nth-of-type(7):before { content: "So"; }
+	.month td:nth-of-type(1):before { content: "Mo"; }
+	.month td:nth-of-type(2):before { content: "Di"; }
+	.month td:nth-of-type(3):before { content: "Mi"; }
+	.month td:nth-of-type(4):before { content: "Do"; }
+	.month td:nth-of-type(5):before { content: "Fr"; }
+	.month td:nth-of-type(6):before { content: "Sa"; }
+	.month td:nth-of-type(7):before { content: "So"; }
 }
 
