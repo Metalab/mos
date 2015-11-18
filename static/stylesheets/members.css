@@ -30,6 +30,15 @@ td.changepwd {
     text-align: center;
 }
 
-img.thumb_with_text { max-width:32px; max-height:32px; }
+img.thumb_with_text { max-width:96px; max-height:96px; }
 
+#user_details {
+    width: 100%;
+    max-width: 700px;
+}
+
+#user_avatar {
+	float:left;
+	margin: 0 1em 1em 0;
+}
 

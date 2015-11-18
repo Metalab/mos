@@ -19,7 +19,7 @@ h1 { font-size: 1.5em; color: #4F5C7F; margin:  0 0 1em 0;}
 
 h2 { font-size: 1.1em; color: #4F5C7F; margin: 1.5em 0 1em 0;}
 
-h3 { font-size: 1em; color: #4F5C7F; margin: 1.5em 0 1em 0;}
+h3 { font-size: 1em; font-weight: bold; color: #444; margin: 1.5em 0 1em 0;}
 
 p { margin: 1em 0;}
 

@@ -1,21 +1,18 @@
-<table id="table_user_details" width="800">
 {% ifequal error_type "permission" %}
-   <tr>
-     <td colspan="3">
-     </td>
-   </tr>
+
 {% endifequal %}
-	<tr>
-		<td rowspan="46" width="100px" style="text-align:center">
-			{% if item.contactinfo.image %}
-				<img class="thumb_with_text" src="{{ item.contactinfo.image.url }}"/>
-			{% else %}
-				<img src="{{ STATIC_URL }}images/default_avatar.png"/>
-			{% endif %}
-		</td>
-		<td width="150px"><b>Info</b></td>
-		<td></td>
-	</tr>
+
+<div id="user_avatar">
+	{% if item.contactinfo.image %}
+		<img class="thumb_with_text" src="{{ item.contactinfo.image.url }}"/>
+	{% else %}
+		<img src="{{ STATIC_URL }}images/default_avatar.png"/>
+	{% endif %}
+	<a href="/member/{{user.username}}/update/userpic/" title="Change Userpic">Change Userpic</a>
+</div>
+
+<h3>Info</h3>
+<table id="user_details">
 	<tr>
 		<td>Name:</td>
         <td>{{ item.first_name }} {{ item.last_name }} </td><td>{% if ea%}<a align="right" href='#'  onclick="set_visible($('member-edit-name')); return false;">Edit</a>{% endif %}</td>
@@ -69,20 +66,14 @@
     <tr>
         <td colspan="3"><a href="/member/change_password/" title="Change Password">Change Password</a></th>
     </tr>
-    <tr>
-        <td colspan="3"><a href="/member/{{user.username}}/update/userpic/" title="Change Userpic">Change Userpic</a></th>
-    </tr>
    <tr><td colspan="3"><hr/></td></tr>
 {% endif %}
 
-	<tr>
-		<td><br></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td><b>Contact info</b></td>
-		<td></td>
-	</tr>
+</table>
+
+<h3>Contact info</h3>
+
+<table id="user_contactinfo">
 	<tr id='member-tr-email'>
 		<td>Email:</td>
 		<td>{{ item.email }}</td><td> {% if ea%}<a href='#'  onclick="set_visible($('member-edit-email')); return	false;">Edit</a>{% endif %}</td>
@@ -224,139 +215,94 @@
         </td>
     </tr>
 
-    <tr><td></td></tr>
-
     <tr>
 		<td>Wiki name:</td>
 		<td>{{ item.contactinfo.wiki_name }}</td>
 	</tr>
-
-    <tr><td></td></tr>
 
     <tr>
 		<td>Phone number:</td>
 		<td>{{ item.contactinfo.phone_number }}</td>
 	</tr>
 
-    <tr><td></td></tr>
-
     <tr>
 		<td>Birthday:</td>
 		<td>{{ item.contactinfo.birthday }}</td>
 	</tr>
+</table>
 
-    <tr><td></td></tr>
 
-    <tr>
-		<td><br></td>
-		<td></td>
-	</tr>
+{# FIXME: don't list all the attributes manually #}
 
-    <tr><td></td></tr>
-
-    {# FIXME: don't list all the attributes manually #}
-    <tr>
-		<td><b>Bank data</b></td>
-		<td></td>
-	</tr>
-
-    <tr><td></td></tr>
-
+<h3>Bank data</h3>
+<table id="user_bankdata">
     <tr>
 		<td>Bank collection allowed:</td>
 		<td>{{ item.paymentinfo.bank_collection_allowed|yesno }}</td>
 	</tr>
-
-    <tr><td></td></tr>
 
     <tr>
 		<td>Bank account owner:</td>
 		<td>{{ item.paymentinfo.bank_account_owner }}</td>
 	</tr>
 
-    <tr><td></td></tr>
-
     <tr>
 		<td>Bank account number:</td>
 		<td>{{ item.paymentinfo.bank_account_number }}</td>
 	</tr>
-
-    <tr><td></td></tr>
 
 	<tr>
 		<td>Bank name:</td>
 		<td>{{ item.paymentinfo.bank_name }}</td>
 	</tr>
 
-    <tr><td></td></tr>
-
 	<tr>
 		<td>Bank code:</td>
 		<td>{{ item.paymentinfo.bank_code }}</td>
 	</tr>
-    
-    <tr><td></td></tr>
 
 	<tr>
 		<td>Bank IBAN:</td>
 		<td>{{ item.paymentinfo.bank_account_iban }}</td>
 	</tr>
-    
-    <tr><td></td></tr>
 
 	<tr>
 		<td>Bank BIC:</td>
 		<td>{{ item.paymentinfo.bank_account_bic }}</td>
 	</tr>
-    
-    <tr><td></td></tr>
 
 	<tr>
 		<td>Bank mandate reference:</td>
 		<td>{{ item.paymentinfo.bank_account_mandate_reference }}</td>
 	</tr>
 
-    <tr><td></td></tr>
-
     <tr>
         <td>Date of sigining:</td>
         <td>{{ item.paymentinfo.bank_account_date_of_signing }}</td>
     </tr>
-
-    <tr><td></td></tr>
 
 	<tr>
 		<td>Mode:</td>
 		<td>{{ item.paymentinfo.bank_collection_mode }}</td>
 	</tr>
 
-    <tr><td></td></tr>
+</table>
 
-	<tr>
-		<td><br></td>
-		<td></td>
-	</tr>
 
-    <tr><td></td></tr>
+<h3>Payments</h3>
+<table id="user_paymenthistory">
 
-	<tr>
-		<td><b>Payments</b></td>
-		<td></td>
-	</tr>
 	{% for p in item.payment_set.all %}
 		<tr>
 			<td>{{ p.amount }} Euro</td>
 			<td>paid on {{ p.date|date:"d.m.Y" }} ({{ p.comment }} {{ p.method }})</td>
 		</tr>
 	{% endfor %}
-	<tr>
-		<td><br></td>
-		<td></td>
-	</tr>
-	<tr>
-		<td><b>Membership periods</b></td>
-		<td></td>
-	</tr>
+</table>
+
+
+<h3>Membership periods</h3>
+<table id="user_memberhistory">
 	{% for mp in item.membershipperiod_set.all %}
 		<tr>
 			<td>{{ mp.begin|date:"d.m.Y" }} - {% if mp.end %}{{ mp.end|date:"d.m.Y" }}{% else %}now{% endif %}</td>
