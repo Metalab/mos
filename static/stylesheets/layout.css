@@ -40,8 +40,7 @@
 }
 
 #header-nav {
-	float: left;
-	margin-left: 110px;
+    margin-left: 280px;
 }
 
 #header-nav li {
@@ -52,7 +51,7 @@
 	float: left;
 	color: #fff;
 	background: #4F5C7F;
-	margin:  0 3px;
+	margin:  0 3px 6px;
 	padding: 0.5em 0.7em;
 }
 
@@ -259,4 +258,117 @@ display:none;
 #openlab {
     margin-bottom: 1.5em;
     padding-left: 0.5em;
+}
+
+
+/* small screen stuff */
+@media screen and (max-width: 920px) {
+
+	#page {
+		width: 96%;
+		margin: 0 2%;
+	}
+
+
+	#main #column_1, 
+	#main #column_2,
+	#soup_iframe,
+	#calendar-content li,
+	#issue_tracker
+	{
+		width: 100% !important;
+		box-sizing:border-box;
+		display: block;
+		float: none;
+	}
+	
+	#soup,
+	#project_list {
+		width: 49%;
+		margin-right: 2%;
+	}
+
+	#calendar,
+	#recent_changes
+	{
+		width: 49%;
+		float:left;
+	}
+
+	#openlab {
+		padding: 0;
+	}
+	
+	#soup_credits {
+		text-align: left;
+	}
+	
+}
+
+
+/* mobile stuff */
+@media screen and (max-width: 600px) {
+
+	#soup,
+	#calendar,
+	#project_list, 
+	#issue_tracker, 
+	#recent_changes
+	{
+		width: 100% !important;
+		box-sizing:border-box;
+		display: block;
+		float: none;
+	}
+
+
+	/* burger button for drop down navigation */
+	ul#header-nav:before {
+		content: "\2630";
+		padding: 1em;
+		background: #4F5C7F;
+		color: #fff;
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 1em;
+		height: 1em;
+		line-height: 1em;
+		font-size: 1.3em;
+	}
+	#header-nav {
+		display: inline;
+		position: absolute;
+		z-index: 101;
+		top: 0;
+		padding-top: 3.8em;
+		right: 0;
+		margin: 0;
+	}
+
+	#header-nav > li {
+		float: none;
+		display:none;
+		border-bottom: 2px solid #42495D;
+		width: 12em;
+	}
+	#header-nav:hover > li, #header-nav:active > li {
+		display: block;
+		width: 12em;
+	}
+
+	#header-nav a {
+		float: none;
+		display: block;
+		color: #fff;
+		background: #4F5C7F;
+		margin: 0;
+		padding: 0.7em 1em;
+	}
+	
+	/* move login link next to menu button*/
+	#login {
+	    margin: 1.2em 5em 0 0;
+	}
+
 }

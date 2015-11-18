@@ -1,5 +1,4 @@
 ul.user-list-pictures {
-    border-top: 1px solid grey;
     max-width: 885px;
     margin-left: auto;
     margin-right: auto;
@@ -16,12 +15,10 @@ ul.user-list-pictures li {
     border-left: none;
     border-top: none
 }
-ul.user-list-pictures li.image-col-one {
-    border-left: 1px solid grey;
-    clear: left;
-}
 ul.user-list-pictures li {
+    border: 1px solid grey;
     text-align: center;
+    margin: 0 -1px -1px 0
 }
 
 h2 {
@@ -34,3 +31,5 @@ td.changepwd {
 }
 
 img.thumb_with_text { max-width:32px; max-height:32px; }
+
+

@@ -120,3 +120,57 @@ table.month td.today {
     font-weight:bold;
 }
 
+
+
+@media screen and (max-width: 800px)  {
+
+	table.month th.month {
+		text-align: left;
+		margin: .2em 0;
+	}
+
+
+	.noday, /* hide nodays */
+	.month tr:nth-child(2) /* hide weekdays*/
+	{
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	table.month td {
+		width:auto;
+	}
+
+
+	/* reset table stuff */
+	table, tbody, th, td, tr {
+		display: block;
+	}
+
+	tr {
+		
+	}
+
+	td {
+		position: relative;
+		padding-left: 2em;
+	}
+
+	/* weekdays via css */
+	td:before {
+		position: absolute;
+		top: 3px;
+		left: 3px;
+		padding-right: 10px;
+		white-space: nowrap;
+	}
+	td:nth-of-type(1):before { content: "Mo"; }
+	td:nth-of-type(2):before { content: "Di"; }
+	td:nth-of-type(3):before { content: "Mi"; }
+	td:nth-of-type(4):before { content: "Do"; }
+	td:nth-of-type(5):before { content: "Fr"; }
+	td:nth-of-type(6):before { content: "Sa"; }
+	td:nth-of-type(7):before { content: "So"; }
+}
+
