@@ -8,6 +8,7 @@
 #      - apt: pkg=python-pip
 
       - pip: requirements=/vagrant/requirements.txt
+      - pip: requirements=/vagrant/requirements-dev.txt
 
       - name: link /mos -> /vagrant
         file: src=/vagrant
