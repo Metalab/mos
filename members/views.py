@@ -147,9 +147,9 @@ def members_lazzzor_list(request):
     members_with_privs = get_active_and_future_members().filter(
         contactinfo__has_lazzzor_privileges=True)
 
-    result = [','.join([m.contactinfo.key_id, m.username,
-                        m.contactinfo.lazzzor_rate])
-              for m in members_with_privs]
+    result = ['%s,%s,%s' % (m.contactinfo.key_id, m.username,
+                            m.contactinfo.lazzzor_rate)
+                  for m in members_with_privs]
     return HttpResponse('\r\n'.join(result), content_type='text/plain')
 
 
