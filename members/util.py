@@ -1,6 +1,6 @@
 from datetime import date
 
-from dateutil.rrule import MONTHLY
+from dateutil.rrule import rrule, MONTHLY
 from django.contrib.auth.models import User
 
 from .models import MembershipPeriod
