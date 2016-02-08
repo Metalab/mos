@@ -28,7 +28,7 @@ def display_main_page(request):
 
 def display_cellardoor(request):
     context = custom_settings_main(request)
-    context['latestevents'] = Event.future.get_all()
+    context['latestevents'] = Event.future.all()
     return render(request, 'cellardoor.html', context)
 
 
