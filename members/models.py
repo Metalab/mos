@@ -248,7 +248,7 @@ class PaymentManager(models.Manager):
         import csv
 
         f = open(filename, 'r')
-        r = csv.reader(f, delimiter=";")
+        r = csv.reader(f, delimiter=b";")
 
         for line in r:
             if len(line) < 2:
@@ -428,7 +428,7 @@ class Payment(models.Model):
     objects = PaymentManager()
 
     def __str__(self):
-        return ', '.join([self.date, self.amount, self.user.username, self.method.name])
+        return ', '.join([str(self.date), str(self.amount), str(self.user.username), str(self.method.name)])
 
     class Meta:
         ordering = ['date']
