@@ -248,7 +248,7 @@ class PaymentManager(models.Manager):
         import csv
 
         f = open(filename, 'r')
-        r = csv.reader(f, delimiter=";")
+        r = csv.reader(f, delimiter=b";")
 
         for line in r:
             if len(line) < 2:
