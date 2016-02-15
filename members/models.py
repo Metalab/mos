@@ -8,7 +8,7 @@ from django.db import models
 from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.utils.encoding import python_2_unicode_compatible, smart_unicode
+from django.utils.encoding import python_2_unicode_compatible, smart_unicode, force_str
 
 
 class PaymentInfo(models.Model):
@@ -248,7 +248,7 @@ class PaymentManager(models.Manager):
         import csv
 
         f = open(filename, 'r')
-        r = csv.reader(f, delimiter=";")
+        r = csv.reader(f, delimiter=force_str(';'))
 
         for line in r:
             if len(line) < 2:
@@ -275,7 +275,7 @@ class PaymentManager(models.Manager):
         import csv
 
         f = open(filename, 'r')
-        r = csv.reader(f, delimiter=";")
+        r = csv.reader(f, delimiter=force_str(';'))
 
         for line in r:
             if len(line) < 9:
@@ -302,7 +302,7 @@ class PaymentManager(models.Manager):
         import csv
 
         f = open(filename, 'r')
-        r = csv.reader(f, delimiter=";")
+        r = csv.reader(f, delimiter=force_str(';'))
 
         i = 0
         for line in r:
