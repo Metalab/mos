@@ -27,6 +27,14 @@ class PaymentInline(admin.TabularInline):
     ordering = ('date',)
 
 
+@admin.register(Payment)
+class PaymentAdmin(admin.ModelAdmin):
+    date_hierarchy = 'date'
+    list_filter = ['user']
+    list_display = ['date', 'method', 'user', 'amount', 'original_file', 'original_line']
+    list_display_links = None
+
+
 admin.site.unregister(User)
 
 
