@@ -1,6 +1,7 @@
 Django>=3.1.9,<4.0
 Pillow
 icalendar>=4,<4.0.3
+django-reversion
 pytz
 Unipath
 django-extensions

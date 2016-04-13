@@ -6,6 +6,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.template.loader import get_template
 from django.conf import settings
 from django.contrib import messages
+from reversion.admin import VersionAdmin
 
 from .models import Payment, PaymentInfo, MembershipPeriod, ContactInfo, KindOfMembership, MembershipFee, BankCollectionMode, MailinglistMail
 
@@ -83,7 +84,7 @@ def send_welcome_mail(modeladmin, request, queryset):
 
 
 @admin.register(User)
-class MemberAdmin(UserAdmin):
+class MemberAdmin(VersionAdmin,UserAdmin):
     inlines = [ContactInfoInline, PaymentInfoInline, MembershipPeriodInline,
                PaymentInline]
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff',

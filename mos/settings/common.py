@@ -109,6 +109,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django.contrib.humanize',
     'django.contrib.messages',
+    'reversion',
     'web',
     'projects',
     'cal',
