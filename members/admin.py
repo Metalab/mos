@@ -4,6 +4,8 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 
+from reversion.admin import VersionAdmin
+
 from .models import Payment, PaymentInfo, MembershipPeriod, ContactInfo
 
 
@@ -39,7 +41,7 @@ admin.site.unregister(User)
 
 
 @admin.register(User)
-class MemberAdmin(UserAdmin):
+class MemberAdmin(VersionAdmin,UserAdmin):
     inlines = [ContactInfoInline, PaymentInfoInline, MembershipPeriodInline,
                PaymentInline]
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff',
