@@ -1,4 +1,21 @@
 {% extends 'base.html' %}
+
+
+{% if user.is_superuser %}
+
+{% block add_css %}
+    <style type="text/css">
+    table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sorttable_nosort):after { 
+    content: " \25B4\25BE" 
+    }
+    </style>
+{% endblock %}
+
+{% block add_js %}
+    <script src="{{ STATIC_URL }}javascripts/sorttable.js"/></a>
+{% endblock %}
+{% endif %}
+
 {% block hos_content %}
     {% if user.is_superuser %}
 		{% include 'members/member_list_superuser.inc' %}

@@ -63,6 +63,8 @@
                 <dd> {{ event_errors.category }} </dd>
             {% endif %}
 
+            <dt><label>created by:{{ event.created_by }}</label></dt>
+            <br/>
 
             <legend> (*) -> required field </legend>
 
