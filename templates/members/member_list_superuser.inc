@@ -21,7 +21,7 @@
 		</td>
             	<td>
 			{{item.first_name}} {{item.last_name}} <br />
-			debts: {{ item.contactinfo.get_debts }} Euro
+			debts: {{ item.contactinfo.get_debts|floatformat:2 }} Euro
 		</td>
 	<tr>
 {% endfor %}
