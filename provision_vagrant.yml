@@ -7,10 +7,10 @@
               dest=/mos
               state=link
 
-# check the existence of the secret_key.py file
+# check the existence of the secret_key.py file and create one if it does not exist
       - stat: path=/mos/mos/settings/secret_key.py
         register: st
-      - fail: msg="Error! secret_key.py file not found in mos/settings folder (create one with content SECRET_KEY='start123')"
+      - shell: echo "SECRET_KEY='start123'" > /mos/mos/settings/secret_key.py
         when: st.stat.exists == False
 
 # update / install packages
