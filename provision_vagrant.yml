@@ -7,12 +7,6 @@
               dest=/mos
               state=link
 
-# check the existence of the secret_key.py file and create one if it does not exist
-      - stat: path=/mos/mos/settings/secret_key.py
-        register: st
-      - shell: echo "SECRET_KEY='start123'" > /mos/mos/settings/secret_key.py
-        when: st.stat.exists == False
-
 # update / install packages
       - apt: update_cache=yes
 
@@ -35,6 +29,12 @@
 
 #      sudo DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 
+# check the existence of the secret_key.py file and create one if it does not exist
+# a generated file should contain something like: SECRET_KEY='<KVPy@&pwCO[1KCz.O[]*mZ\+Q*CfTTm#;$1Bdd_17gq@9dzaG'
+      - stat: path=/mos/mos/settings/secret_key.py
+        register: st
+      - shell: echo "SECRET_KEY='`cat /dev/urandom | tr -dc 'a-z0-9!@#$%^&*(-_=+)' | head -c50`'" > /mos/mos/settings/secret_key.py
+        when: st.stat.exists == False
 
 # prepare MOS itself
       - name: django syncdb
