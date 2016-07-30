@@ -1,0 +1,10 @@
+enter the VM with:
+$ vagrant ssh
+
+the following commands have to be executed inside the VM!
+
+1) after provisioning the VM you have to set the 'admin' superuser password manually
+$ ./manage.py changepassword admin
+
+2) start the server bound on all interfaces instead of 127.0.0.1 only
+$ ./manage.py runserver 0.0.0.0:8000

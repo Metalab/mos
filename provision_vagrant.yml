@@ -2,18 +2,27 @@
 - hosts: all
   sudo: yes
   tasks:
-      - apt: update_cache=yes
-#      - apt: pkg=python-dev
-      - apt: pkg=build-essential
-#      - apt: pkg=python-pip
-
-      - pip: requirements=/vagrant/requirements.txt
-      - pip: requirements=/vagrant/requirements-dev.txt
-
       - name: link /mos -> /vagrant
         file: src=/vagrant
               dest=/mos
               state=link
+
+# check the existence of the secret_key.py file
+      - stat: path=/mos/mos/settings/secret_key.py
+        register: st
+      - fail: msg="Error! secret_key.py file not found in mos/settings folder (create one with content SECRET_KEY='start123')"
+        when: st.stat.exists == False
+
+# update / install packages
+      - apt: update_cache=yes
+
+#      - apt: pkg=python-dev
+      - apt: pkg=build-essential
+#      - apt: pkg=python-pip
+
+# install required python modules
+      - pip: requirements=/vagrant/requirements.txt
+      - pip: requirements=/vagrant/requirements-dev.txt
 
 #      - name: add locale de_DE
 #        lineinfile: dest=/etc/locale.gen
@@ -26,9 +35,21 @@
 
 #      sudo DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
 
-      - name: syncdb
+
+# prepare MOS itself
+      - name: django syncdb
         django_manage: app_path=/mos
                        command=syncdb
 
+      - name: django migrate
+        django_manage: app_path=/mos
+                       command=migrate
+
+      - name: django loaddata 
+        django_manage: app_path=/mos 
+                       fixtures='core/fixtures/default_choices.json members/fixtures/default_choices.json members/fixtures/dummy_members.json cal/fixtures/events_2012-09-20.json'
+                       command=loaddata 
+
+# set the default directory to /mos
       - lineinfile: dest=/home/vagrant/.bashrc
                     line='cd /mos'
