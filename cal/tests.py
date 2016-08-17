@@ -6,7 +6,6 @@ from django.test.client import Client
 
 from .forms import EventForm
 from .models import Event
-from .factories import EventFactory
 from .feeds import EventFeed
 
 
@@ -17,17 +16,6 @@ correct_data = {'name': 'TestEvent1',
                 'startDate_1': '15:00',
                 'endDate_0': '2009-04-02',
                 'endDate_1': '14:00'}
-
-
-class EventFactoriesTest(TestCase):
-
-    def testEventFactory(self):
-        event = EventFactory()
-        self.assertTrue(isinstance(event, Event))
-        defaults = {'username': 'admin'}
-        user, _ = User.objects.get_or_create(pk=1, defaults=defaults)
-        event.created_by_id = 1
-        event.save()
 
 
 class EventFormTest(TestCase):
@@ -113,17 +101,17 @@ class EventFeedTest(TestCase):
         defaults = {'username': 'admin'}
         user, _ = User.objects.get_or_create(pk=1, defaults=defaults)
 
-        self.past_event = EventFactory()
+        self.past_event = Event()
         self.past_event.startDate = yesterday
         self.past_event.endDate = yesterday
         self.past_event.created_by_id = 1
         self.past_event.save()
-        self.future_event = EventFactory()
+        self.future_event = Event()
         self.future_event.startDate = tommorrow
         self.future_event.endDate = tommorrow
         self.future_event.created_by_id = 1
         self.future_event.save()
-        self.running_event = EventFactory()
+        self.running_event = Event()
         self.running_event.startDate = yesterday
         self.running_event.endDate = tommorrow
         self.running_event.created_by_id = 1

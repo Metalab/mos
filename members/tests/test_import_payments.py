@@ -1,9 +1,10 @@
 import os
+import sys
 import tempfile
 import shutil
+from StringIO import StringIO
 
 from django.test import TestCase
-from django.core.files.uploadedfile import SimpleUploadedFile
 
 from ..models import Payment
 
@@ -24,9 +25,12 @@ class ImportTest(TestCase):
             outfile.write(CSV)
 
         try:
+            sys.stdout = None
             Payment.objects.import_smallfile(csv_file, '2016-01-02')
         except TypeError as e:
             if e.message == '"delimiter" must be an 1-character string':
                 assert False, 'The delimiter argument for csv.reader() is of the wrong type.'
             else:
                 raise
+        finally:
+            sys.stdout = sys.__stdout__
