@@ -37,6 +37,9 @@
         when: st.stat.exists == False
 
 # prepare MOS itself
+      - stat: path=/mos/mos.sqlite
+        register: st_sqlite
+        
       - name: django syncdb
         django_manage: app_path=/mos
                        command=syncdb
@@ -44,6 +47,10 @@
       - name: django migrate
         django_manage: app_path=/mos
                        command=migrate
+
+      - django_manage: app_path=/mos
+                       command="createsuperuser --noinput --username=admin --email=admin@example.com" 
+        when: st_sqlite.stat.exists == False
 
       - name: django loaddata 
         django_manage: app_path=/mos 
