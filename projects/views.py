@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.views.decorators.http import require_http_methods
+from django.shortcuts import render, get_object_or_404
 
 from .models import Project
 from .forms import ProjectForm
@@ -44,17 +45,11 @@ def update_project(request, new, object_id=None):
 
 
 @login_required
+@require_http_methods(['POST'])
 def delete_project(request, object_id=None):
-    """ Deletes the project with object_id """
-    if not request.POST or not object_id \
-            or not request.user.is_authenticated():
-        return
-
-    project = Project.all.get(id=object_id)
-
+    """Delete a project"""
+    project = get_object_or_404(Project, id=object_id)
     project.delete()
-    project.save()
-
     return _get_latest(request)
 
 

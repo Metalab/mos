@@ -38,24 +38,33 @@ function gettext(lol) {
     return lol;
 }
 
-function submit_form(type, id){
+function submit_form(type, id) {
     myform = $(type + '-form-' + id);
     new Ajax.Updater($(type + 'container' + id), myform.readAttribute('action'), {
-                  parameters: myform.serialize(true),
+        parameters: myform.serialize(true),
     });
- 
 }
 
 function delete_event(id) {
     var frm = $('calendar-form-'+id);
     var cnt = $('calendar-edit-'+id);
-
     new Ajax.Request('/calendar/' + id + '/delete/', {
-                                                    onSuccess: function(r) {
-                                                                            new Ajax.Request('calendar-content', calendarUpdateURL, {
-                                                                              method: 'get'})
-                                                                           }
-                                                  })
+        onSuccess: function(r) {
+            new Ajax.Request('calendar-content', calendarUpdateURL, {
+                method: 'get'
+            })
+        }
+    })
+}
+
+function delete_entry(type, id) {
+    container = $(type + 'container' + id);
+    url = '/' + type + '/' + id + '/delete/';
+    new Ajax.Request(url, {
+        onSuccess: function(response) {
+            container.remove();
+        }
+    })
 }
 
 function toggleView(type, id, onoff) {
