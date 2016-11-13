@@ -1,5 +1,5 @@
 <div id='projectcontainer{{ project.id }}'>
-	<p class="project visible {% cycle odd,even %}" id='project-view-{{project.id}}'>
+	<p class="project visible" id='project-view-{{project.id}}'>
 		{% if project.wikiPage %}<a href="/wiki/{{ project.wikiPage }}"> {% endif %}{{ project.name }}{% if project.wikiPage %}</a>{% endif %}
 		{% if user.is_authenticated %}<a href='#' class="{%if not new %}hoverHidden{%endif%}" onclick='toggleView("project","{{project.id}}", 1); return	false;'>{%if not new %}Edit{%else%}Create New Project{%endif%}</a>{% endif %}{% if project.teaser %}<br/><small>{{ project.teaser }}</small>{%endif%}
 	</p>
