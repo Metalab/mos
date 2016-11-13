@@ -150,6 +150,16 @@
   }
 },
 {
+  "pk": 12,
+  "model": "members.membershipfee", 
+  "fields": {
+    "start": "2016-10-01", 
+    "amount": 10, 
+    "end": null, 
+    "kind_of_membership": 13
+  }
+},
+{
   "pk": 1, 
   "model": "members.kindofmembership", 
   "fields": {
@@ -231,6 +241,13 @@
   "model": "members.kindofmembership", 
   "fields": {
     "name": "erhoeht (25EUR)"
+  }
+},
+{
+  "pk": 13,
+  "model": "members.kindofmembership", 
+  "fields": {
+    "name": "ermäßigt (10EUR)"
   }
 },
 {
