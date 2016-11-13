@@ -1,6 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render_to_response
-from django.template import RequestContext
+from django.shortcuts import render
 
 from .models import Project
 from .forms import ProjectForm
@@ -39,12 +38,12 @@ def update_project(request, new, object_id=None):
     else:
         project_form = ProjectForm
 
-    return render_to_response('projects/projectinfo_nf.inc',
-            {'project_error_id': project_error_id,
-             'project_form': project_form,
-             'project': project,
-             'new': not project.pk,
-             }, context_instance=RequestContext(request))
+    return render(request, 'projects/projectinfo_nf.inc', {
+        'project_error_id': project_error_id,
+        'project_form': project_form,
+        'project': project,
+        'new': not project.pk,
+    })
 
 
 @login_required
@@ -67,9 +66,9 @@ def _get_latest(request, current_project=None, errors=None,
     """ Returns a view that displays the latest 5 projects """
 
     latest = Project.all.order_by('-created_at')[:5]
-    return render_to_response('projects/overview.inc',
-                              {'project': current_project,
-                               'latestprojects': latest,
-                               'errors': errors,
-                               'e_project_name': e_project_name,
-                               }, context_instance=RequestContext(request))
+    return render(request, 'projects/overview.inc', {
+        'project': current_project,
+        'latestprojects': latest,
+        'errors': errors,
+        'e_project_name': e_project_name,
+    })
