@@ -9,9 +9,6 @@ from .forms import ProjectForm
 def update_project(request, new, object_id=None):
     """ Updates or add a project and returns a view with a project form """
 
-    if not request.POST or not request.user.is_authenticated():
-        return
-
     if not new:
         project = Project.all.get(id=object_id)
     else:
