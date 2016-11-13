@@ -12,7 +12,7 @@ def update_project(request, new, object_id=None):
     if not new:
         project = Project.all.get(id=object_id)
     else:
-        project = Project()
+        project = None
 
     # set event_error_id to '', if an error occurs it will be the error id
     project_error_id = ''
@@ -35,7 +35,7 @@ def update_project(request, new, object_id=None):
     else:
         project_form = ProjectForm
 
-    return render(request, 'projects/projectinfo_nf.inc', {
+    return render(request, 'projects/projectinfo.inc', {
         'project_error_id': project_error_id,
         'project_form': project_form,
         'project': project,
