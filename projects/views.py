@@ -13,9 +13,6 @@ def update_project(request, object_id=None):
     """
     project = None if object_id is None else Project.all.get(id=object_id)
 
-    # set event_error_id to '', if an error occurs it will be the error id
-    project_error_id = ''
-
     if request.method == 'POST':
         project_form = ProjectForm(request.POST, instance=project)
         if project_form.is_valid():
@@ -23,14 +20,10 @@ def update_project(request, object_id=None):
             if project.created_by_id is None:
                 project.created_by = request.user
             project.save()
-
-        else:
-            project_error_id = project.id
     else:
         project_form = ProjectForm()
 
     return render(request, 'projects/projectinfo.inc', {
-        'project_error_id': project_error_id,
         'project_form': project_form,
         'project': project,
     })
