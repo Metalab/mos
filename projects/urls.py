@@ -16,8 +16,6 @@ urlpatterns = patterns('',
         (r'^(?P<pk>\d+)/$', DetailView.as_view(
             queryset=Project.all.all()
         )),
-        (r'^(?P<object_id>\d+)/update/$',
-            'projects.views.update_project', {'new': False}),
-        (r'^new/$',
-            'projects.views.update_project', {'new': True}),
+        (r'^(?P<object_id>\d+)/update/$', 'projects.views.update_project'),
+        (r'^new/$', 'projects.views.update_project'),
 )
