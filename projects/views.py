@@ -7,40 +7,25 @@ from .forms import ProjectForm
 
 
 @login_required
-def update_project(request, new, object_id=None):
-    """ Updates or add a project and returns a view with a project form """
-
-    if not new:
-        project = Project.all.get(id=object_id)
-    else:
-        project = None
-
-    # set event_error_id to '', if an error occurs it will be the error id
-    project_error_id = ''
+def update_project(request, object_id=None):
+    """
+    Updates or creates a project and returns a view with a project form.
+    """
+    project = None if object_id is None else Project.all.get(id=object_id)
 
     if request.method == 'POST':
         project_form = ProjectForm(request.POST, instance=project)
-
         if project_form.is_valid():
-            project_data = project_form.save(commit=False)
-
-            if new:
-                project_data.created_by = request.user
-                project_data.save()
-                project = Project.objects.get(id=project_data.id)
-            else:
-                project_data.save()
-
-        else:
-            project_error_id = project.id
+            project = project_form.save(commit=False)
+            if project.created_by_id is None:
+                project.created_by = request.user
+            project.save()
     else:
-        project_form = ProjectForm
+        project_form = ProjectForm()
 
     return render(request, 'projects/projectinfo.inc', {
-        'project_error_id': project_error_id,
         'project_form': project_form,
         'project': project,
-        'new': not project.pk,
     })
 
 
