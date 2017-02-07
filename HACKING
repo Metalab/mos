@@ -3,24 +3,34 @@
 HOW TO SET UP A LOCAL INSTALLATION OF METALAB OS TO CONTRIBUTE PATCHES
 ======================================================================
 
-Assumption: Using a Debian-based system and not using virtualenv. When using
-another system (or virtualenv), see the file "requirements.txt".
+Please note: In case your python-2.7 specific tools have a "2" or "27" suffix,
+you need to ensure to call the correct version of your tools in order to avoid
+accidentally trying to run the MOS in python 3.x, which is currently
+unsupported.
 
 1. git clone git://github.com/Metalab/mos.git
 
 2. On a Debian-based system:
      apt-get install python-virtualenv
 
+   On OpenSuSE:
+     zypper install python-virtualenv
+
    On any other system:
      easy_install pip
      pip install virtualenv
 
+     Alternatively, you can install the python2.7-virtualenv package for your
+     distribution, in case one exists.
+
 3. Create the virtualenv (call it "devel"): virtualenv devel
 4. Acivate the "devel" virtualenv: source devel/bin/activate
 5. Install dependencies: pip install -r requirements.txt
-6. Optional: Install the locale packages for de_DE.UTF-8
-7. python manage.py generate_secret_key
-8. Put output into secret_key.py (SECRET_KEY='<output>')
+6. Install dev dependencies: pip install -r requirements-dev.txt
+7. Optional: Install the locale packages for de_DE.UTF-8
+8. Put a temporary key into mos/settings/secret_key.py (SECRET_KEY='bla')
+8a. python manage.py generate_secret_key (optional for development) and then
+8b. Put output into secret_key.py (SECRET_KEY='<output>') (also optional)
 9. python manage.py migrate
 10. python manage.py createsuperuser
 

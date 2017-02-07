@@ -40,7 +40,7 @@ def spaceapi(request):
     return JsonResponse({
         'api': '0.13',
         'space': 'Metalab',
-        'logo': 'https://metalab.at/site_media/images/logo.png',
+        'logo': 'https://metalab.at/static/images/logo.png',
         'url': 'https://metalab.at/',
         'location': {
             # https://metalab.at/wiki/Lage

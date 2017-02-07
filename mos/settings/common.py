@@ -121,7 +121,7 @@ INSTALLED_APPS = (
 
 
 LOGIN_REDIRECT_URL = '/'
-LOGIN_URL = '/login/'
+LOGIN_URL = '/member/login/'
 
 #---  Custom Options ----------------------------------------------------------
 HOS_URL_PREFIX = '/'

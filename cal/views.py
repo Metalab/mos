@@ -9,7 +9,7 @@ from dateutil import relativedelta
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render_to_response, get_object_or_404
 from django.template import RequestContext
-from django.http import HttpResponse, HttpResponseNotAllowed
+from django.http import HttpResponse, HttpResponseNotAllowed, Http404
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import ListView
 from django.utils.html import conditional_escape as esc
@@ -86,7 +86,11 @@ def index(request):
 
 
 def monthly(request, year, month):
-    s = date(int(year), int(month), 1)
+    try:
+        s = date(int(year), int(month), 1)
+    except ValueError:
+        raise Http404
+
     e = date(int(year), int(month), 1) + relativedelta.relativedelta(months=1)
     latest_events = Event.all.filter(startDate__gte=s, startDate__lt=e).order_by('startDate')
     cal = EventCalendar(Event.all, request.user.is_authenticated()).formatmonth(int(year), int(month))

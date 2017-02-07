@@ -4,7 +4,7 @@
 mos/settings/local*
 mos/settings/secret_key.*
 web/performance.log
-env
+mos_env/
 
 logs/
 media/

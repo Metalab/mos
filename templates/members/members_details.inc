@@ -64,7 +64,7 @@
 {% if ea %}
    <tr><td colspan="3"><hr/></td></tr>
     <tr>
-        <td colspan="3"><a href="/member/change_password/" title="Change Password">Change Password</a></th>
+        <td colspan="3"><a href="{% url 'password_change' %}" title="Change Password">Change Password</a></th>
     </tr>
    <tr><td colspan="3"><hr/></td></tr>
 {% endif %}
