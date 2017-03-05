@@ -26,6 +26,10 @@ unsupported.
 3. Create the virtualenv (call it "devel"): virtualenv devel
 4. Acivate the "devel" virtualenv: source devel/bin/activate
 5. Install dependencies: pip install -r requirements.txt
+   (Note: Requires a C compiler and the python development headers.
+   Debian: apt-get install python-dev build-essential
+   OpenSuSE: zypper in -t pattern devel_C_C++ devel_python)
+
 6. Install dev dependencies: pip install -r requirements-dev.txt
 7. Optional: Install the locale packages for de_DE.UTF-8
 8. Put a temporary key into mos/settings/secret_key.py (SECRET_KEY='bla')
