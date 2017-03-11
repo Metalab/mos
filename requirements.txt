@@ -13,3 +13,4 @@ websockets
 sepaxml
 daphne
 requests
+easy-thumbnails

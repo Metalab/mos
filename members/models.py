@@ -13,6 +13,8 @@ from django.core.mail import send_mail
 # for iButton regex
 from django.core.validators import RegexValidator
 
+from easy_thumbnails.fields import ThumbnailerImageField
+
 
 class PaymentInfo(models.Model):
     bank_collection_allowed = models.BooleanField(default=False)
@@ -58,7 +60,7 @@ class ContactInfo(models.Model):
     birthday = models.DateField(null=True, blank=True)
 
     wiki_name = models.CharField(max_length=50, blank=True, null=True)
-    image = models.ImageField(upload_to=get_image_path, blank=True)
+    image = ThumbnailerImageField(upload_to=get_image_path, blank=True)
 
     user = models.OneToOneField(
         User,

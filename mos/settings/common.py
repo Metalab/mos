@@ -109,6 +109,7 @@ INSTALLED_APPS = (
     'django.contrib.admindocs',
     'django.contrib.humanize',
     'django.contrib.messages',
+    'easy_thumbnails',
     'web',
     'projects',
     'cal',
@@ -161,3 +162,10 @@ MOS_JF_DAYS_IN_ADVANCE = 3
 MOS_JF_DB_ID = 2 # id of events of type "Jour Fixe" in the database
 MOS_JF_SENDER = 'jf-reminder@metalab.at'
 MOS_JF_RECIPIENTS = ['intern@lists.metalab.at']
+
+# ----------------- Thumbnail Settings ------------
+THUMBNAIL_ALIASES = {
+    '': {
+        'avatar': {'size': (120, 120), 'crop': False},
+    },
+}
