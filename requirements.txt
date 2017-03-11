@@ -7,3 +7,4 @@ django-extensions
 python-dateutil
 freezegun
 feedparser
+easy-thumbnails==2.3

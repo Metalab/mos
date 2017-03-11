@@ -110,6 +110,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
     'django.contrib.humanize',
+    'easy_thumbnails',
     'web',
     'projects',
     'cal',
@@ -143,3 +144,9 @@ HOS_OPENLAB = True
 HOS_INTRODUCTION = True
 HOS_PROJECTS = True
 HOS_RECENT_CHANGES = True
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'avatar': {'size': (54, 54), 'crop': False},
+    },
+}
