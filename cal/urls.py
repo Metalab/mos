@@ -50,7 +50,7 @@ urlpatterns = patterns('',
     (r'^(?P<object_id>\d+)/delete/', 'cal.views.delete_event'),
     (r'^event/(?P<object_id>\d+)/icalendar/', 'cal.views.event_icalendar', {},
      'cal_event_icalendar'),
-    (r'^export\/ical\/(?P<number>\d*)$', 'cal.views.complete_ical', {}, 'full_ical'),
+    (r'^export/ical/(?P<number>\d*)$', 'cal.views.complete_ical', {}, 'full_ical'),
     (r'^event/new/$', 'cal.views.update_event', {'new': True}),
     (r'^new/$', 'cal.views.update_event', {'new': True}),
     (r'^locations/$', SpecialListView.as_view(
