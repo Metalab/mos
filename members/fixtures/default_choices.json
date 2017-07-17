@@ -45,6 +45,16 @@
   "fields": {
     "start": "2006-04-01", 
     "amount": 20, 
+    "end": "2017-06-30", 
+    "kind_of_membership": 1
+  }
+},
+{
+  "pk": 13, 
+  "model": "members.membershipfee", 
+  "fields": {
+    "start": "2017-07-01", 
+    "amount": 25, 
     "end": null, 
     "kind_of_membership": 1
   }
