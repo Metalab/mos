@@ -30,6 +30,10 @@ td.changepwd {
     text-align: center;
 }
 
+td.graphbar {
+    vertical-align: middle;
+}
+
 img.thumb_with_text { max-width:96px; max-height:96px; }
 
 #user_details {
