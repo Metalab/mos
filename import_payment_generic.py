@@ -21,7 +21,7 @@ if __name__ == "__main__":
     setup_environ(settings)
     from  members.models import *
     if len(sys.argv) < 2:
-        print "%s <filename>" % sys.argv[0]
+        print("%s <filename>" % sys.argv[0])
         sys.exit(1)
 
     Payment.objects.import_generic(sys.argv[1])

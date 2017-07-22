@@ -42,10 +42,10 @@ class EventCalendar(HTMLCalendar):
                 body.append(event.startDate.strftime('%H:%M') + ' ' + esc(event.name))
                 body.append('</a>')
                 if self.admin:
-                    body.append(u'<a href="%s" class="edit">/e</a>' % event.get_absolute_url())
+                    body.append('<a href="%s" class="edit">/e</a>' % event.get_absolute_url())
                 body.append('</li>')
             body.append('</ul>')
-            return self.day_cell(cssclass, '%d %s' % (day, (u''.join(body)).encode('utf-8')))
+            return self.day_cell(cssclass, '%d %s' % (day, (''.join(body))))
             return self.day_cell(cssclass, day)
         return self.day_cell('noday', '&nbsp;')
 
@@ -55,8 +55,8 @@ class EventCalendar(HTMLCalendar):
         d = date(int(year), int(month), 1)
         prev = d - relativedelta.relativedelta(months=1)
         next = d + relativedelta.relativedelta(months=1)
-        head = u'<a href="/calendar/%04d/%02d/">&lt;</a> <a href="/calendar/%04d/%02d/">&gt;</a>' % (prev.year, prev.month, next.year, next.month)
-        return head.encode('utf-8') + super(EventCalendar, self).formatmonth(year, month, withyear)
+        head = '<a href="/calendar/%04d/%02d/">&lt;</a> <a href="/calendar/%04d/%02d/">&gt;</a>' % (prev.year, prev.month, next.year, next.month)
+        return head+ super(EventCalendar, self).formatmonth(year, month, withyear)
 
     def group_by_day(self, events):
         field = lambda event: event.startDate.day
@@ -177,7 +177,7 @@ def update_event(request, new, object_id=None):
 
 
 def event_list(request, number=0):
-    events = Event.future.get_n(long(number) if number != '' else 0)
+    events = Event.future.get_n(int(number) if number != '' else 0)
 
     if not number:
         events = events.reverse()
@@ -193,13 +193,13 @@ def event_icalendar(request, object_id):
     response = HttpResponse(event.get_icalendar().to_ical(),
                         content_type='text/calendar; charset=utf-8')
 
-    response['Content-Disposition'] = (u'filename="' + unicode(event.startDate.strftime('%Y-%m-%d')) + u' - ' + unicode(event.name) + u'.ics"').encode('ascii', 'ignore')
+    response['Content-Disposition'] = 'filename="{}-{}.ics"'.format(event.startDate.strftime('%Y-%m-%d'), event.name)
 
     return response
 
 
 def complete_ical(request, number=0):
-    events = Event.future.get_n(long(number) if number != '' else 0)
+    events = Event.future.get_n(int(number) if number != '' else 0)
 
     if not number:
         events = events.reverse()
