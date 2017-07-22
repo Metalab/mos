@@ -2,6 +2,7 @@
 from __future__ import unicode_literals, print_function
 
 from datetime import datetime, date
+from dateutil.relativedelta import relativedelta
 from decimal import Decimal
 
 from django.db import models
@@ -68,9 +69,14 @@ class ContactInfo(models.Model):
         arrears = 0
         mp_list = MembershipPeriod.objects.filter(user=self.user)
         for mp in mp_list:
-            fee = MembershipFee.objects.get(kind_of_membership=mp.kind_of_membership)
-            if fee.amount > 0:
-                arrears += mp.get_duration_in_month() * fee.amount
+            for month in mp.get_months():
+                fee = MembershipFee.objects.get(
+                    Q(kind_of_membership=mp.kind_of_membership),
+                    Q(start__lte=month),
+                    Q(end__isnull=True) | Q(end__gte=month)
+                )
+                if fee.amount > 0:
+                    arrears += fee.amount
         return arrears - self.get_all_payments()
 
     def get_debt_for_month(self, date_in_month):
@@ -215,6 +221,16 @@ class MembershipPeriod(models.Model):
                 begin = date(begin.year, begin.month + 1, 1)
             month += 1
         return month
+
+    def get_months(self):
+        cur = self.begin
+        end = self.end
+        if end is None or end >= date.today():
+            end = date.today()
+
+        while cur < end:
+            yield cur
+            cur = cur + relativedelta(months=1)
 
 
 @python_2_unicode_compatible
