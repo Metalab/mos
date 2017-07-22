@@ -1,7 +1,7 @@
 from __future__ import unicode_literals, print_function
 
 import sys
-import urllib
+import urllib.parse
 import datetime
 import locale
 
@@ -134,7 +134,7 @@ class Event(models.Model):
         rv.add('summary', self.name)
         rv.add('dtstart', vDatetime(self.startDate).to_ical(), encode=0)
         rv.add('dtstamp', vDatetime(self.created_at).to_ical(), encode=0)
-        rv.add('url', urllib.quote((u'http://%s/wiki/%s' % (domain, self.wikiPage)).encode('utf-8')))
+        rv.add('url', 'https://{}/wiki/{}'.format(domain, urllib.parse.quote(self.wikiPage)))
 
         if self.teaser:
             rv.add('description', self.teaser)
