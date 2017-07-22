@@ -1,7 +1,7 @@
 from django.forms.models import ModelForm
 from django.forms import TextInput
 
-from models import Project
+from .models import Project
 
 
 class ProjectForm(ModelForm):

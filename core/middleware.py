@@ -7,7 +7,7 @@ pagestats.py for authors
 import time
 
 from django.db import connection
-from django.utils.encoding import force_unicode
+from django.utils.encoding import force_text
 from core.utils import human_readable_time
 
 
@@ -39,7 +39,7 @@ class SetStatFooter:
             stats = FOOTER_STAT_STRING % {'render_time': render_time,
                                           'queries': queries}
             content = response.content
-            response.content = force_unicode(content).replace(TAG, stats)
+            response.content = force_text(content).replace(TAG, stats)
         except:
             pass
 

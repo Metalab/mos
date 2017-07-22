@@ -9,13 +9,13 @@ def do_makeform(parser, token):
     try:
         tag_name, context_var, form_path, target_name = token.split_contents()
     except ValueError:
-        raise template.TemplateSyntaxError, "%r tag requires two arguments" % token.contents.split()[0]
+        raise template.TemplateSyntaxError("%r tag requires two arguments" % token.contents.split()[0])
 
     try:
         modulename, classname = form_path.rsplit('.', 1)
         module = __import__(modulename, fromlist=[classname])
     except:
-        raise template.TemplateSyntaxError, "the path to form class (%s) should be import-able! %r" % (form_path.rsplit('.', 1)[0], token.contents.split()[0])
+        raise template.TemplateSyntaxError("the path to form class (%s) should be import-able! %r" % (form_path.rsplit('.', 1)[0], token.contents.split()[0]))
 
     cls = getattr(module, classname)
 
@@ -33,7 +33,7 @@ class MakeFormNode(template.Node):
             try:
                 actual_var = self.context_var.resolve(context)
             except template.VariableDoesNotExist:
-                raise template.TemplateSyntaxError, 'MakeFormNode cannot resolve variable'
+                raise template.TemplateSyntaxError('MakeFormNode cannot resolve variable')
 
         if not self.context_var:
             context[self.target_name] = self.cls()
