@@ -1,49 +1,45 @@
 ---
 - hosts: all
-  sudo: yes
+  become: yes
   tasks:
       - name: link /mos -> /vagrant
         file: src=/vagrant
               dest=/mos
               state=link
 
-# update / install packages
-      - apt: update_cache=yes
+      # update / install packages
+      - name: "Install packages"
+        apt:
+          update_cache: yes
+          cache_valid_time: 3600
+          name: "{{ item }}"
+        with_items:
+          - build-essential
+          - python3-pip
+          - locales
+      - name: "add locale de_DE.UTF-8"
+        locale_gen: name="de_DE.UTF-8" state=present
+      # install required python modules
+      - name: "Install python modules"
+        pip: requirements={{item}} executable=pip3
+        with_items:
+          - /vagrant/requirements.txt
+          - /vagrant/requirements-dev.txt
 
-#      - apt: pkg=python-dev
-      - apt: pkg=build-essential
-#      - apt: pkg=python-pip
-
-# install required python modules
-      - pip: requirements=/vagrant/requirements.txt
-      - pip: requirements=/vagrant/requirements-dev.txt
-
-#      - name: add locale de_DE
-#        lineinfile: dest=/etc/locale.gen
-#                    regexp='^#\s*(de_DE.UTF-8\s*UTF-8)'
-#                    line='\1'
-#                    backrefs=yes
-
-#      - name: reconfigure locales
-#        command: free_form='DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales'
-
-#      sudo DEBIAN_FRONTEND=noninteractive dpkg-reconfigure locales
-
-# check the existence of the secret_key.py file and create one if it does not exist
-# a generated file should contain something like: SECRET_KEY='<KVPy@&pwCO[1KCz.O[]*mZ\+Q*CfTTm#;$1Bdd_17gq@9dzaG'
+      # check the existence of the secret_key.py file and create one if it does not exist
+      # a generated file should contain something like: SECRET_KEY='<KVPy@&pwCO[1KCz.O[]*mZ\+Q*CfTTm#;$1Bdd_17gq@9dzaG'
       - stat: path=/mos/mos/settings/secret_key.py
         register: st
       - shell: echo "SECRET_KEY='`cat /dev/urandom | tr -dc 'a-z0-9!@#$%^&*(-_=+)' | head -c50`'" > /mos/mos/settings/secret_key.py
         when: st.stat.exists == False
 
-# prepare MOS itself
+      # prepare MOS itself
       - stat: path=/mos/mos.sqlite
         register: st_sqlite
         
       - name: django syncdb
         django_manage: app_path=/mos
                        command=syncdb
-
       - name: django migrate
         django_manage: app_path=/mos
                        command=migrate
@@ -57,6 +53,6 @@
                        fixtures='core/fixtures/default_choices.json members/fixtures/default_choices.json members/fixtures/dummy_members.json cal/fixtures/events_2012-09-20.json'
                        command=loaddata 
 
-# set the default directory to /mos
+      # set the default directory to /mos
       - lineinfile: dest=/home/vagrant/.bashrc
                     line='cd /mos'
