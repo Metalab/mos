@@ -1,4 +1,4 @@
-ipython
+ipython==5.0
 flake8
 autopep8
 django_debug_toolbar
