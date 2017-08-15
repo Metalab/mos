@@ -1,0 +1,2 @@
+{% for perm in user_permission %}"{{ perm.key_id|addslashes }}","{{ perm.user.username|addslashes }}","{{ perm.user.contactinfo.lazzzor_rate|addslashes }}"
+{% endfor %}

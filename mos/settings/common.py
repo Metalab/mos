@@ -117,6 +117,7 @@ INSTALLED_APPS = (
     'sources',
     'announce',
     'core',
+    'metaauth',
 )
 
 
