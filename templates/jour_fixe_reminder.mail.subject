@@ -1,0 +1,1 @@
+[REMINDER] Jour Fixe am {{ jf.startDate | date:"l, Y-m-d" }}
