@@ -155,4 +155,4 @@ HOS_RECENT_CHANGES = True
 MOS_JF_DAYS_IN_ADVANCE = 3
 MOS_JF_DB_ID = 2 # id of events of type "Jour Fixe" in the database
 MOS_JF_SENDER = 'core@metalab.at'
-MOS_JF_RECIPIENTS = ['mw@barfooze.de']#'intern@lists.metalab.at']
+MOS_JF_RECIPIENTS = ['intern@lists.metalab.at']
