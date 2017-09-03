@@ -30,3 +30,6 @@ MIDDLEWARE += (
 MEDIA_ROOT = BASE_DIR.child("media")
 
 HOS_SEPA_CREDITOR_ID = 'AT29HXR00000037632'
+
+HOS_WIKI_URL = "https://metalab.at/wiki/"
+MEDIAWIKI_API = HOS_WIKI_URL + "api.php"

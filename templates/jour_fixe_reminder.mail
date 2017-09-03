@@ -1,7 +1,23 @@
-Liebe Leute,
+{% load i18n %}{% language 'de' %}Liebe Leute,
 
 Am {{ jf.startDate | date:"l" }} den {{ jf.startDate | date:"Y-m-d" }} um {{ jf.startDate | date:"H:i" }} gibt es einen Jour Fixe.
 
-Details siehe https://metalab.at/wiki/{{ jf.wikiPage }}
+{% if wiki.article_missing %}
+Leider gibt es dazu keinen Wiki-Artikel. Das bedeutet wahrscheinlich, dass der
+Jour Fixe ausfällt. Die Deadline für neue Themen ist nämlich vorbei.
+{% elif wiki.error %}
+Leider hat der Wiki-Artikel das falsche Format und kann nicht geparst werden,
+oder es ist ein anderer Fehler beim lesen des Artikels aufgetreten. Wenn das MOS
+den Artikel nicht lesen kann, kannst du ihn sicher auch nicht lesen ;)
+Du kannst es aber versuchen.
+{% else %}Folgende Themen wurden bisher im Wiki eingetragen:
+{% for heading in wiki.headlines %}
+ * {{ heading }}{% if heading == "Thema1 (you)" %} - bitte löscht diese Boilerplate-Themen raus, wenn ihr ein Thema anlegt.{% endif %}{% endfor %}
 
-<3 dein MOS
+Laut einer gottgegebenen Regel müssen Jour-Fixe-Themen mindestens 3 Tage vor dem
+Termin eingetragen sein, wenn du also noch Vorschläge hast, bitte nimm sie mit
+zum nächsten Jour Fixe.
+{% endif %}
+Wiki Page: https://metalab.at/wiki/{{ jf.wikiPage }}
+
+<3 dein MOS{% endlanguage %}
