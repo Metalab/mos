@@ -94,6 +94,14 @@ function set_invisible(obj){
 }
 
 
+<<<<<<< HEAD
+=======
+function do_on_load()
+{
+    // Do nothing. *Thumbleweed crossed the web*
+}
+
+>>>>>>> 3b685c9... removed unused Metasense Functionality
 function enter_pressed(e){
     var keycode;
     if (window.event) keycode = window.event.keyCode; 
@@ -119,4 +127,7 @@ function submit_event(id) {
                                                                            }
                                                   })
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3b685c9... removed unused Metasense Functionality
