@@ -93,7 +93,7 @@ function set_invisible(obj){
 
 function do_on_load()
 {
-    update_metasense();
+    // Do nothing. *Thumbleweed crossed the web*
 }
 
 function enter_pressed(e){
@@ -122,27 +122,4 @@ function submit_event(id) {
                                                                             DateTimeShortcuts.init.defer(1);
                                                                            }
                                                   })
-}
-
-
-function update_metasense() {
-    /*new Ajax.Request('http://metalab.at/metasense/status.html', {asynchronous:true, onFailure:function(){}, onException:function(){}, onSuccess:function(transport){ */
-    new Ajax.Request('/metasense/status.html', {asynchronous:true, onFailure:function(){}, onException:function(){}, onSuccess:function(transport){ 
-        oopen = $('presence_open');
-        oclosed = $('presence_closed');
-        odefunct = $('presence_defunct');
-        if(transport.responseText.match("ffnet")) {
-            set_visible(oopen);
-            set_invisible(oclosed);
-            set_invisible(odefunct);
-          } else if( transport.responseText.match("niemand")){
-            set_visible(oclosed);
-            set_invisible(oopen);            
-            set_invisible(odefunct);
-        } else {
-            set_invisible(oopen);
-            set_invisible(oclosed);
-            set_visible(odefunct);
-        }
-    }});
 }
