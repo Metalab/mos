@@ -1,6 +1,6 @@
 /* -------------------------
 	    Metalab CSS
-	    
+
 	    Version 1.0
  ---------------------------*/
 
@@ -10,7 +10,7 @@
 	background: #fff;
 	border: none;
 }
- 
+
 #page {
 	 width: 900px;
 	 margin: 0 auto 2em auto;
@@ -62,7 +62,7 @@
 #login {
 	float: right;
 	margin: 0.7em 3em 0 0;
-	
+
 }
 
 #presence_closed{
@@ -93,7 +93,7 @@
 }
 
 
-#soup_credits { 
+#soup_credits {
  font-size:0.8em;
  text-align:right;
  margin-top:-255px;
@@ -114,7 +114,7 @@ display:none;
 }
 
 
-#soup_iframe_wrapper { 
+#soup_iframe_wrapper {
  position:relative;
  top:-255px;
 
@@ -261,6 +261,7 @@ display:none;
 }
 
 
+
 /* small screen stuff */
 @media screen and (max-width: 920px) {
 
@@ -270,7 +271,7 @@ display:none;
 	}
 
 
-	#main #column_1, 
+	#main #column_1,
 	#main #column_2,
 	#soup_iframe,
 	#calendar-content li,
@@ -281,7 +282,7 @@ display:none;
 		display: block;
 		float: none;
 	}
-	
+
 	#soup,
 	#project_list {
 		width: 49%;
@@ -298,11 +299,11 @@ display:none;
 	#openlab {
 		padding: 0;
 	}
-	
+
 	#soup_credits {
 		text-align: left;
 	}
-	
+
 }
 
 
@@ -311,8 +312,8 @@ display:none;
 
 	#soup,
 	#calendar,
-	#project_list, 
-	#issue_tracker, 
+	#project_list,
+	#issue_tracker,
 	#recent_changes
 	{
 		width: 100% !important;
@@ -365,7 +366,7 @@ display:none;
 		margin: 0;
 		padding: 0.7em 1em;
 	}
-	
+
 	/* move login link next to menu button*/
 	#login {
 	    margin: 1.2em 5em 0 0;

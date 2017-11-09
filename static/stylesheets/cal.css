@@ -5,16 +5,15 @@
 
 #calendar-content ul {
 	border: 1px solid #ddd;
+	box-sizing: border-box;
 }
 
 #calendar-content li {
 	display: block;
-/* width:100%;  broken on IE7 :(*/
-	width: 329px;
 }
 
-#calendar-content div {
-	padding: 1px 0 0 1px;
+#calendar-content li {
+  padding: 1px 1px 0 1px;
 }
 
 #calendar-content li p {
@@ -27,7 +26,7 @@
 }
 */
 #calendar-content li .event {
-	background: #C8D8FF;	
+	background: #C8D8FF;
 }
 
 #calendar-content li .past_event {
@@ -66,6 +65,7 @@
 
 table.month {
     border-collapse: collapse;
+		width: 100%;
 }
 
 table.month th {
@@ -78,7 +78,7 @@ table.month th {
 table.month th.month {
     background-color: inherit;
     font-size: 20pt;
-    padding: 4px;
+    padding: 4px 0;
     color: #aaa;
     text-align: right;
 }
@@ -87,8 +87,9 @@ table.month td {
     border: 1px solid white;
     background-color: #ddd;
     width: 14%;
-    height: 110px;
+    height: 5em;
     color: #999;
+		hyphens: auto;
 }
 
 table.month td:nth-last-child(-n+2) {
@@ -115,62 +116,53 @@ table.month td li:last-child {
 }
 
 table.month td.today {
-    background-color: #c0c0ff; 
+    background-color: #c0c0ff;
     color:white;
     font-weight:bold;
+}
+
+table.month .day-nr {
+		text-align: right;
+		line-height: 1em;
+}
+table.month .event-time {
+	  font-weight: bold;
+}
+
+#calendar-year-list {
+	text-align: right;
+}
+
+.edit-form {
+	max-width: 20em;
+	background-color: #f6f6f6;
+	padding: 1em;
 }
 
 
 
 @media screen and (max-width: 800px)  {
 
-	table.month th.month {
-		text-align: left;
-		margin: .2em 0;
+	table.month {
+	    margin: 0 -2%;
+			width: 104%;
 	}
 
-
-	.month .noday, /* hide nodays */
-	.month tr:nth-child(2) /* hide weekdays*/
-	{
-		position: absolute;
-		top: -9999px;
-		left: -9999px;
+	table.month .event-time {
+		  display: block;
+		  font-size: .9em;
+	}
+	table.month .event {
+			font-size: .9em;
+		  word-wrap: break-word;
+			hyphens: auto;
+			line-height: 1em;
+			word-break: break-all;
+			overflow-wrap: break-word;
+			text-overflow: ellipsis;
+			overflow: hidden;
+			width: 100%;
+			word-wrap: normal;
 	}
 
-	table.month td {
-		width:auto;
-	}
-
-
-	/* reset table stuff */
-	table.month, 
-	.month tbody, 
-	.month th, 
-	.month td, 
-	.month tr {
-		display: block;
-	}
-
-	.month td {
-		position: relative;
-		padding-left: 2em;
-	}
-
-	/* weekdays via css */
-	.month td:before {
-		position: absolute;
-		top: 3px;
-		left: 3px;
-		padding-right: 10px;
-		white-space: nowrap;
-	}
-	.month td:nth-of-type(1):before { content: "Mo"; }
-	.month td:nth-of-type(2):before { content: "Di"; }
-	.month td:nth-of-type(3):before { content: "Mi"; }
-	.month td:nth-of-type(4):before { content: "Do"; }
-	.month td:nth-of-type(5):before { content: "Fr"; }
-	.month td:nth-of-type(6):before { content: "Sa"; }
-	.month td:nth-of-type(7):before { content: "So"; }
 }
-
