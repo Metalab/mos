@@ -167,7 +167,6 @@ display:none;
 	width: 249px;
 }
 
-#issue_tracker,
 #recent_changes {
 	float: right;
 	width: 249px;
@@ -274,8 +273,7 @@ display:none;
 	#main #column_1,
 	#main #column_2,
 	#soup_iframe,
-	#calendar-content li,
-	#issue_tracker
+	#calendar-content li
 	{
 		width: 100% !important;
 		box-sizing:border-box;
@@ -313,7 +311,6 @@ display:none;
 	#soup,
 	#calendar,
 	#project_list,
-	#issue_tracker,
 	#recent_changes
 	{
 		width: 100% !important;
