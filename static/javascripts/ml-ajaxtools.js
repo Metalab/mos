@@ -72,11 +72,15 @@ function toggleView(type, id, onoff) {
     edit = $(type + '-edit-' + id);
 
     if (onoff) {
-        set_visible(edit);
-        set_invisible(view);
+      set_visible(edit);
+      if (view) {
+          set_invisible(view);
+        }
     } else {
+      if (view) {
         set_visible(view);
-        set_invisible(edit);
+      }
+      set_invisible(edit);
     }
 }
 

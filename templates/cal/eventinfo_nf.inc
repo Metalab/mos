@@ -20,12 +20,12 @@
 
   {%else%}
     {% if user.is_authenticated and not edit_disabled %}
+    <p><a href="{% url 'cal.views.complete_ical' %}">Download ALL events in ical format</a></p>
     <p>
       <a href='#' class="btn" onclick="toggleView('calendar', '', 1); return false;">
         Create new event
       </a>
     </p>
-    <p><a href="{% url 'cal.views.complete_ical' %}">Download ALL events in ical format</a></p>
     {%endif %}
   {%endif %}
 
@@ -95,7 +95,7 @@
 			<a href="#" class="toggled" onclick="toggleView('calendar', '{% if not new %}{{event.id|default_if_none:""}}{% endif %}', 0); return false;">Cancel</a>
             </dd>
             </dl>
-            <a style="padding:0.5em; border:1px solid red; background:#ffbbbb; display:inline-block; margin: .5em 0;" href="http://metalab.at/wiki/Kalender">Terminkonflikt?</a>
+      <a style="padding:0.5em; border:1px solid red; background:#ffbbbb; display:inline-block; margin: .5em 0;" href="http://metalab.at/wiki/Kalender">Terminkonflikt?</a>
 		</form>
 	</div>
 	{% endif %}

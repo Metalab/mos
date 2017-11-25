@@ -139,6 +139,81 @@ table.month .event-time {
 	padding: 1em;
 }
 
+.calendarbox  {
+	position: relative;
+}
+
+.calendarnav-next, .calendarnav-previous {
+	position: absolute;
+	top: 6px;
+	background: #fff;
+	width: 10px;
+	height: 10px;
+	font-size: 10px;
+	font-weight: bold;
+	text-align: center;
+	line-height: 1;
+	border-radius: 50%;
+	padding: 3px;
+}
+.calendarnav-previous {
+	left:6px;
+}
+.calendarnav-next {
+	right:6px;
+}
+
+.calendarbox caption {
+	text-align: center;
+	background: #4F5C7F;
+	color: #fff;
+	font-weight: bold;
+	margin: 0 0 5px;
+	padding: 8px 30px;
+	line-height: 1;
+}
+.calendarbox th {
+	color: #999;
+}
+.calendarbox th, .calendarbox td a {
+	padding: 4px 8px;
+	text-align: right;
+}
+.calendarbox td a {
+	display: block;
+}
+.calendarbox td {
+	padding: 0;
+}
+.calendarbox .calendar-shortcuts {
+    text-align: center;
+    margin: 10px;
+}
+.calendar-cancel {
+    text-align: right;
+    margin: 10px;
+}
+
+.clockbox, .calendarbox {
+	background: #fff;
+	box-shadow: 0 2px 5px rgba(0,0,0,.3)
+}
+
+.clockbox h2 {
+	text-align: center;
+	background: #4F5C7F;
+	color: #fff;
+	font-weight: bold;
+	margin: 0 0 5px;
+	padding: 8px 30px;
+	line-height: 1;
+}
+
+.clockbox .timelist a {
+	display: block;
+	padding: 4px 10px;
+}
+
 
 
 @media screen and (max-width: 800px)  {

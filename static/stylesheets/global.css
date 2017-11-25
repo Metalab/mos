@@ -90,3 +90,9 @@ tr.odd td {background-color:#fff;}
 .warning { border-color: #dada10; }
 .error { border-color: #e31515; }
 .info { border-color: #62a7f5; }
+
+ul.errorlist {
+	border: none !important;
+	color: #e31515;
+	margin: 0 0 10px;
+}
