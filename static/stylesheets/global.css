@@ -56,10 +56,22 @@ tr.odd td {background-color:#fff;}
 
 /* Forms */
 input[type="email"], input[type="number"], input[type="password"], input[type="tel"], input[type="url"], input[type="text"] {
-	border: 1px solid #aaa;
-	padding: .2em .3em;	
+	border: 1px solid #8c9ce9;
+	padding: .3em .5em;
 	margin: .2em 0;
+	font-family: inherit;
+	font-size: 14px;
+	line-height: 1em;
+	box-sizing: border-box;
 }
+
+dd {
+	margin-bottom: .6em;
+}
+dt {
+  margin-bottom: .2em;
+}
+
 
 .btn {
 	background-color: #4F5C7F;
