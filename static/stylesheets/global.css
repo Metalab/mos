@@ -54,16 +54,28 @@ tr.odd td {background-color:#fff;}
 
 .flattrbtn { display: inline-block; vertical-align: middle; }
 
+/* Forms */
+input[type="email"], input[type="number"], input[type="password"], input[type="tel"], input[type="url"], input[type="text"] {
+	border: 1px solid #aaa;
+	padding: .2em .3em;	
+	margin: .2em 0;
+}
+
 .btn {
-    background-color: #4F5C7F;
-    color: #fff;
-    font-weight: bold;
-    display: inline-block;
-		font-size: 1.2em;
-    line-height: 1.6em;
-    text-align: center;
-    padding: .3em .6em;
-		min-width: 1.2em;
+	background-color: #4F5C7F;
+	color: #fff;
+	font-weight: bold;
+	display: inline-block;
+	font-size: 1.2em;
+	line-height: 1.6em;
+	text-align: center;
+	padding: .3em .6em;
+	min-width: 1.2em;
+	border: none;
+	cursor: pointer;
+}
+.btn:hover {
+  background: #8c9ce9;
 }
 
 /* list items inline */
