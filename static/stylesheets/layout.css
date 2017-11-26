@@ -225,16 +225,50 @@ display:none;
 .member_pics {
 	float: left;
 	margin-bottom: 16px;
+	margin-right: -5px;
+}
+
+.member_pics .member, .member_pics .become-member {
+	float: left;
+	display: block;
+	margin: 0 5px 5px 0;
+  width: 60px;
+  height: 60px;
+	box-sizing: border-box;
 }
 
 .member_pics .member {
-	float: left;
-	display: block;
-	line-height: 1em;
+	background-size: cover;
+	background-position: center;
 	border: 1px solid #ddd;
-	margin-right: 7px;
-	padding: 1px 1px 0 1px;
+	line-height: 1em;
 }
+
+.member_pics .become-member {
+	background: #4f5c7f;
+	border: 1px solid #4f5c7f;
+	color: #fff;
+	text-align: center;
+	font-weight: bold;
+	line-height: 1.2;
+	font-size: 10px;
+	text-transform: uppercase;
+	transition: all .3s;
+}
+.member_pics .become-member-text:before {
+	content: "++";
+	font-weight: normal;
+	display: block;
+	font-size: 30px;
+	line-height: 1em;
+	color: rgba(255,255,255,.6);
+	transition: all .3s;
+}
+.member_pics .become-member-text:hover:before {
+    color: rgba(255,255,255,1);
+}
+
+
 
 .member_pics .last {
 	margin-right: 0;
