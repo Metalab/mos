@@ -38,11 +38,11 @@ class EventCalendar(HTMLCalendar):
             body = ['<ul class="daily-events">']
             for event in self.events.exclude(startDate__gt=d1).exclude(endDate__lt=d, endDate__isnull=False).exclude(endDate__isnull=True, startDate__lt=d):
                 body.append('<li class="event">')
+                if self.admin:
+                    body.append(u'<a href="%s" class="edit" title="edit">/e</a>' % event.get_absolute_url())
                 body.append('<a href="/wiki/%s">' % event.wikiPage)
                 body.append('<span class="event-time">' + event.startDate.strftime('%H:%M') + '</span> ' + esc(event.name))
                 body.append('</a>')
-                if self.admin:
-                    body.append(u'<a href="%s" class="edit">/e</a>' % event.get_absolute_url())
                 body.append('</li>')
             body.append('</ul>')
             return self.day_cell(cssclass, '<div class="day-nr">%d</div> %s' % (day, (u''.join(body)).encode('utf-8')) )

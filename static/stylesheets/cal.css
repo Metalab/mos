@@ -49,17 +49,18 @@
     display: block;
 }
 
-.event .hoverHidden {
-    opacity: 0;
-}
-.event:hover .hoverHidden {
-    opacity: 0.6;
-}
+@media (pointer: fine) {
+	.event .hoverHidden {
+		opacity: 0;
+	}
+	.event:hover .hoverHidden {
+		opacity: 0.6;
+	}
 
-.event:hover .hoverHidden:hover {
-    opacity: 1;
+	.event:hover .hoverHidden:hover {
+		opacity: 1;
+	}
 }
-
 
 /* new stuff */
 
@@ -132,6 +133,29 @@ table.month .event-time {
 #calendar-year-list {
 	text-align: right;
 }
+
+/* edit link */
+.event > .edit {
+	display: inline-block;
+	float: right;
+	background: #5D5EA2;
+	color: #fff;
+	width: 10px;
+	text-align: center;
+	border-radius: 2px;
+	font-size: 10px;
+	line-height: 1;
+padding: 2px;
+}
+@media (pointer: fine) {
+	.event > .edit {
+		display: none;
+	}
+	.event:hover > .edit {
+		display: inline-block;
+	}
+}
+/* edit form */
 
 .edit-form {
 	max-width: 26em;
