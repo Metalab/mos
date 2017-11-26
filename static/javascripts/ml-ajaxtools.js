@@ -50,6 +50,11 @@ function delete_event(id) {
     var cnt = $('calendar-edit-'+id);
     new Ajax.Request('/calendar/' + id + '/delete/', {
         onSuccess: function(r) {
+            var notification = document.createElement('div');
+            notification.className = 'notification success';
+            notification.innerHTML = '<h3>Event '+ document.getElementById('calendarcontainer' + id).getElementsByClassName('name')[0].innerHTML +' deleted!</h3> ' + r.responseText;
+            document.getElementById('calendarcontainer' + id ).parentNode.parentNode.insertBefore(notification, document.getElementById('calendarcontainer' + id ).parentNode);
+            document.getElementById('calendarcontainer' + id ).parentNode.remove();
             new Ajax.Request('calendar-content', calendarUpdateURL, {
                 method: 'get'
             })

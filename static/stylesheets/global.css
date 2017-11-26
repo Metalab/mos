@@ -76,12 +76,16 @@ tr.odd td {background-color:#fff;}
 
 /*  notifications */
 .notification {
-	padding: .5em .5em 0;
-	margin-bottom: .5em;
+	padding: .5em;
+	margin: .3em;
 	border-radius: 5px;
 	background: #fff;
 	border: #aaa 3px solid;
 }
+.notification .event {
+	margin-bottom: 0;
+}
+
 .notification h3 {
 	font-size: 1.2em;
 	margin: 0;
