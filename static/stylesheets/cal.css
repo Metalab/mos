@@ -163,6 +163,9 @@ padding: 2px;
 	padding: 1em;
 }
 
+p.datetime {
+    margin: 0;
+}
 .calendarbox  {
 	position: relative;
 }
