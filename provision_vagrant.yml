@@ -51,11 +51,11 @@
 
       - name: django loaddata 
         django_manage: app_path=/mos 
-                       fixtures='core/fixtures/default_choices.json members/fixtures/default_choices.json members/fixtures/dummy_members.json'
+                       fixtures='core/fixtures/default_choices.json members/fixtures/default_choices.json members/fixtures/dummy_members.json cal/fixtures/events_2012-09-20.json'
                        command=loaddata 
-      #Fixture with calender is somehow broken. TODO to fix. no calender data for now
-      #fixtures='core/fixtures/default_choices.json members/fixtures/default_choices.json members/fixtures/dummy_members.json cal/fixtures/events_2012-09-20.json' TOOD to fix cal import
-
+                       
+      # If calender data fixture fails because of auth.user 1 not there. Creating Admin failed...
+      # Delete mos.sqlite DB in folder and provision vagrant Box again.
 
       # set the default directory to /mos
       - lineinfile: dest=/home/vagrant/.bashrc
