@@ -17,6 +17,7 @@
           - build-essential
           - python3-pip
           - locales
+          - python-dev
       - name: "add locale de_DE.UTF-8"
         locale_gen: name="de_DE.UTF-8" state=present
       # install required python modules
@@ -50,8 +51,11 @@
 
       - name: django loaddata 
         django_manage: app_path=/mos 
-                       fixtures='core/fixtures/default_choices.json members/fixtures/default_choices.json members/fixtures/dummy_members.json cal/fixtures/events_2012-09-20.json'
+                       fixtures='core/fixtures/default_choices.json members/fixtures/default_choices.json members/fixtures/dummy_members.json'
                        command=loaddata 
+      #Fixture with calender is somehow broken. TODO to fix. no calender data for now
+      #fixtures='core/fixtures/default_choices.json members/fixtures/default_choices.json members/fixtures/dummy_members.json cal/fixtures/events_2012-09-20.json' TOOD to fix cal import
+
 
       # set the default directory to /mos
       - lineinfile: dest=/home/vagrant/.bashrc
