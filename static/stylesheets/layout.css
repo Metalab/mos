@@ -1,6 +1,6 @@
 /* -------------------------
 	    Metalab CSS
-	    
+
 	    Version 1.0
  ---------------------------*/
 
@@ -10,7 +10,7 @@
 	background: #fff;
 	border: none;
 }
- 
+
 #page {
 	 width: 900px;
 	 margin: 0 auto 2em auto;
@@ -61,8 +61,8 @@
 
 #login {
 	float: right;
-	margin: 0.7em 3em 0 0;
-	
+	margin: 0.7em 0 0 1em;
+
 }
 
 #presence_closed{
@@ -93,7 +93,7 @@
 }
 
 
-#soup_credits { 
+#soup_credits {
  font-size:0.8em;
  text-align:right;
  margin-top:-255px;
@@ -114,7 +114,7 @@ display:none;
 }
 
 
-#soup_iframe_wrapper { 
+#soup_iframe_wrapper {
  position:relative;
  top:-255px;
 
@@ -167,7 +167,6 @@ display:none;
 	width: 249px;
 }
 
-#issue_tracker,
 #recent_changes {
 	float: right;
 	width: 249px;
@@ -225,16 +224,50 @@ display:none;
 .member_pics {
 	float: left;
 	margin-bottom: 16px;
+	margin-right: -5px;
+}
+
+.member_pics .member, .member_pics .become-member {
+	float: left;
+	display: block;
+	margin: 0 5px 5px 0;
+  width: 60px;
+  height: 60px;
+	box-sizing: border-box;
 }
 
 .member_pics .member {
-	float: left;
-	display: block;
-	line-height: 1em;
+	background-size: cover;
+	background-position: center;
 	border: 1px solid #ddd;
-	margin-right: 7px;
-	padding: 1px 1px 0 1px;
+	line-height: 1em;
 }
+
+.member_pics .become-member {
+	background: #4f5c7f;
+	border: 1px solid #4f5c7f;
+	color: #fff;
+	text-align: center;
+	font-weight: bold;
+	line-height: 1.2;
+	font-size: 10px;
+	text-transform: uppercase;
+	transition: all .3s;
+}
+.member_pics .become-member-text:before {
+	content: "++";
+	font-weight: normal;
+	display: block;
+	font-size: 30px;
+	line-height: 1em;
+	color: rgba(255,255,255,.6);
+	transition: all .3s;
+}
+.member_pics .become-member-text:hover:before {
+    color: rgba(255,255,255,1);
+}
+
+
 
 .member_pics .last {
 	margin-right: 0;
@@ -261,6 +294,7 @@ display:none;
 }
 
 
+
 /* small screen stuff */
 @media screen and (max-width: 920px) {
 
@@ -270,18 +304,17 @@ display:none;
 	}
 
 
-	#main #column_1, 
+	#main #column_1,
 	#main #column_2,
 	#soup_iframe,
-	#calendar-content li,
-	#issue_tracker
+	#calendar-content li
 	{
 		width: 100% !important;
 		box-sizing:border-box;
 		display: block;
 		float: none;
 	}
-	
+
 	#soup,
 	#project_list {
 		width: 49%;
@@ -298,11 +331,11 @@ display:none;
 	#openlab {
 		padding: 0;
 	}
-	
+
 	#soup_credits {
 		text-align: left;
 	}
-	
+
 }
 
 
@@ -311,8 +344,7 @@ display:none;
 
 	#soup,
 	#calendar,
-	#project_list, 
-	#issue_tracker, 
+	#project_list,
 	#recent_changes
 	{
 		width: 100% !important;
@@ -365,7 +397,7 @@ display:none;
 		margin: 0;
 		padding: 0.7em 1em;
 	}
-	
+
 	/* move login link next to menu button*/
 	#login {
 	    margin: 1.2em 5em 0 0;

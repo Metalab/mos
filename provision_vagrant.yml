@@ -17,6 +17,7 @@
           - build-essential
           - python3-pip
           - locales
+          - python-dev
       - name: "add locale de_DE.UTF-8"
         locale_gen: name="de_DE.UTF-8" state=present
       # install required python modules
@@ -52,6 +53,9 @@
         django_manage: app_path=/mos 
                        fixtures='core/fixtures/default_choices.json members/fixtures/default_choices.json members/fixtures/dummy_members.json cal/fixtures/events_2012-09-20.json'
                        command=loaddata 
+                       
+      # If calender data fixture fails because of auth.user 1 not there. Creating Admin failed...
+      # Delete mos.sqlite DB in folder and provision vagrant Box again.
 
       # set the default directory to /mos
       - lineinfile: dest=/home/vagrant/.bashrc
