@@ -12,17 +12,19 @@
       </a>
     </div>
     <div id='soup_iframe_wrapper'>
-      <iframe border=0 frameborder=0 id="soup_iframe" src="https://metalab.at/soup/"></iframe>
+      <iframe border=0 frameborder=0 id="soup_iframe" src="https://metalab.at/soup/index.html"></iframe>
     </div>
     <div id='soup_credits'>managed with <a href='http://metalab.at/wiki/Soup'>soup.io</a></div>
   </div>
 	<div id="calendar">
-        <h1><a href="/calendar" title="Veranstaltungen">Events</a></h1>
+    <h1><a href="/calendar" title="Veranstaltungen">Events</a></h1>
+    <div id="calendar-update">
 		{% include "cal/calendar.inc" %}
     </div>
-    <div id="openlab">
-        Interessiert? Dann schau doch am besten <a href="/wiki/Location" title="Anreise">vorbei</a> oder join unseren <a href="xmpp://metalab@conference.jabber.metalab.at">Jabber Multi-User-Chat</a> bzw. eine der <a href="/wiki/Mailinglisten" title="Mailinglisten">Mailinglisten</a>.
-    </div>
+  </div>
+  <div id="openlab">
+      Interessiert? Dann schau doch am besten <a href="/wiki/Location" title="Anreise">vorbei</a> oder join unseren <a href="xmpp://metalab@conference.jabber.metalab.at">Jabber Multi-User-Chat</a> bzw. eine der <a href="/wiki/Mailinglisten" title="Mailinglisten">Mailinglisten</a>.
+  </div>
 </div>
 <div id="column_2">
 {% comment %}
@@ -32,12 +34,16 @@
     <img style="border:none;" src="http://metalab.at/static/5jahre/banner.png" />
 </a>
 {% endcomment %}
-        <h1><a href="/member/" title="Member List">Mitglieder</a></h1>
-        <div class="member_pics">
-            {% for member in randommembers %}
-            {% if member.contactinfo.get_wikilink %}<a class="member" href="{{ member.contactinfo.get_wikilink }}">{% endif %}<img src="{{ member.contactinfo.image.url }}"  width="54" height="54" alt="{{ member.username }}" />{% if member.contactinfo.get_wikilink %}</a>{% endif %}
-            {% endfor %}
-	    <a href="/wiki/Mitglied_werden" title="Mitglied werden">Mitglied werden</a>
+  <h1><a href="/member/" title="Member List">Mitglieder</a></h1>
+  <div class="member_pics">
+    {% for member in randommembers %}
+    {% if member.contactinfo.get_wikilink %}
+      <a class="member" href="{{ member.contactinfo.get_wikilink }}" title="{{ member.username }}" style="background-image:url({{ member.contactinfo.image.url }});"></a>
+    {% else %}
+      <div class="member" title="{{ member.username }}" style="background-image:url({{ member.contactinfo.image.url }});"></div>
+    {% endif %}
+    {% endfor %}
+	    <a href="/wiki/Mitglied_werden" class="become-member" title="Mitglied werden"><div class="become-member-text">Mitglied werden</div></a>
 	</div>
 	<div id="introduction">
 	    220m² Raum im Herzen Wiens für technologisch-kreative Projekte, Veranstaltungen, Software, Hardware, Essen &amp; mehr....
@@ -62,9 +68,6 @@
 		{% include "rss/recentchanges.inc" %}
 	  </div>
 
-          <div id="issue_tracker">
-              <h2><a href="https://metalab.at/issues/">Issue Tracker</a></h2>
-          </div>
 
     <script type="text/javascript">
         var calendarUpdateURL = '/calendar/ajax/list/5/';

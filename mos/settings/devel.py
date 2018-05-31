@@ -25,4 +25,6 @@ MIDDLEWARE_CLASSES += (
 
 MEDIA_ROOT = BASE_DIR.child("media")
 
+MIDDLEWARE_CLASSES += ('debug_toolbar.middleware.DebugToolbarMiddleware',)
+
 HOS_SEPA_CREDITOR_ID = 'AT29HXR00000037632'

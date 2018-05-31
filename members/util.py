@@ -1,5 +1,6 @@
-from datetime import date
+from datetime import date, timedelta
 
+from dateutil.relativedelta import relativedelta
 from dateutil.rrule import rrule, MONTHLY
 from django.contrib.auth.models import User
 
@@ -28,31 +29,42 @@ class HistoryEntry:
 
 
 def get_list_of_history_entries():
-    he_list = {}
+    end_of_month = date.today() + relativedelta(day=31)
 
-    month_list = list(rrule(MONTHLY, dtstart=date(2006, 3, 1),
-                            until=date.today()))
+    he_list = {}
+    month_list = rrule(MONTHLY, dtstart=date(2006, 3, 1), until=end_of_month)
     for month in month_list:
         d = date(month.year, month.month, month.day)
         he_list[d] = HistoryEntry()
         he_list[d].month = d
 
-    user_list = User.objects.all()
-    for u in user_list:
-        entry = get_date_of_entry(u)
-        if entry is not None:
-            entry = date(entry.year, entry.month, 1)
-            num = he_list[entry].new_member
-            num += 1
-            he_list[entry].new_member = num
+    for u in User.objects.all():
+        mps = u.membershipperiod_set.values_list('begin', 'end')
+        if not mps:
+            continue
 
-            end = get_date_of_exit(u)
-            if end is not None:
-                end = date(end.year, end.month, 1)
-                if end <= date.today():
-                    num = he_list[end].resigned_member
-                    num += 1
-                    he_list[end].resigned_member = num
+        starts, ends = zip(*mps)
+        starts = list(starts) + [None]
+        ends = [None] + list(ends)
+
+        for end, start in zip(ends, starts):
+            if end is None and start is None:
+                continue
+
+            if end is None:
+                he_list[start.replace(day=1)].new_member += 1
+                continue
+
+            if start is None:
+                if end <= end_of_month:
+                    he_list[end.replace(day=1)].resigned_member += 1
+                continue
+
+            pause = start.replace(day=1) - (end + relativedelta(day=31))
+            if pause > timedelta(1):
+                he_list[start.replace(day=1)].new_member += 1
+                if end <= end_of_month:
+                    he_list[end.replace(day=1)].resigned_member += 1
 
     num = 0
     for month in month_list:
