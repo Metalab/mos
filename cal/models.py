@@ -1,7 +1,7 @@
 from __future__ import unicode_literals, print_function
 
 import sys
-import urllib
+import urllib.parse
 import datetime
 import locale
 
@@ -19,12 +19,12 @@ from core.models import Category, Location
 from . import create_calendar
 
 # We want our calendar to be displayed using the German locale
-DESIRED_LOCALE = b'de_DE.UTF-8'
+DESIRED_LOCALE = 'de_DE.UTF-8'
 
 try:
     locale.setlocale(locale.LC_ALL, DESIRED_LOCALE)
 except locale.Error:
-    fallback_locale = locale.setlocale(locale.LC_ALL, b'')
+    fallback_locale = locale.setlocale(locale.LC_ALL, '')
     print("""WARNING: Locale not found: %s
              Falling back to:  %s
     """ % (DESIRED_LOCALE, fallback_locale), file=sys.stderr)
@@ -137,7 +137,7 @@ class Event(models.Model):
         rv.add('summary', self.name)
         rv.add('dtstart', vDatetime(self.startDate).to_ical(), encode=0)
         rv.add('dtstamp', vDatetime(self.created_at).to_ical(), encode=0)
-        rv.add('url', urllib.quote((u'http://%s/wiki/%s' % (domain, self.wikiPage)).encode('utf-8')))
+        rv.add('url', 'https://{}/wiki/{}'.format(domain, urllib.parse.quote(self.wikiPage)))
 
         if self.teaser:
             rv.add('description', self.teaser)

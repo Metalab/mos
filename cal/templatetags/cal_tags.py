@@ -13,7 +13,7 @@ def do_events_by_type(parser, token):
         # split_contents() knows not to split quoted strings.
         tag_name, name = token.split_contents()
     except ValueError:
-        raise template.TemplateSyntaxError, "%r tag requires exactly two arguments" % token.contents.split()[0]
+        raise template.TemplateSyntaxError("%r tag requires exactly two arguments" % token.contents.split()[0])
     return EventsByTypeNode(name)
 
 

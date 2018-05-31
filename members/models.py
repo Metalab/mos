@@ -9,7 +9,7 @@ from django.db import models
 from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.utils.encoding import python_2_unicode_compatible, smart_unicode, force_str
+from django.utils.encoding import python_2_unicode_compatible, smart_text, force_str
 
 
 class PaymentInfo(models.Model):
@@ -271,7 +271,7 @@ class PaymentManager(models.Manager):
                 print(line)
                 continue
             try:
-                u = User.objects.get(first_name=smart_unicode(line[0]), last_name=smart_unicode(line[1]))
+                u = User.objects.get(first_name=smart_text(line[0]), last_name=smart_text(line[1]))
             except User.DoesNotExist:
                 print(line)
                 continue
@@ -298,7 +298,7 @@ class PaymentManager(models.Manager):
                 print('malformed:', repr(line))
                 continue
             try:
-                u = User.objects.get(first_name=smart_unicode(line[0]), last_name=smart_unicode(line[1]))
+                u = User.objects.get(first_name=smart_text(line[0]), last_name=smart_text(line[1]))
             except User.DoesNotExist:
                 print('user not found:', repr(line))
                 continue
@@ -353,7 +353,7 @@ class PaymentManager(models.Manager):
 
             try:
                 sum = Decimal(sum) / len(list)
-            except Exception, e:
+            except Exception as e:
                 print(e)
                 print(line)
                 continue
