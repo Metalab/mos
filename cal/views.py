@@ -43,17 +43,13 @@ class EventCalendar(HTMLCalendar):
                 body.append('<a href="/wiki/%s">' % event.wikiPage)
                 body.append('<span class="event-time">' + event.startDate.strftime('%H:%M') + '</span> ' + esc(event.name))
                 body.append('</a>')
-<<<<<<< HEAD
-                body.append('</li>')
-            body.append('</ul>')
-            return self.day_cell(cssclass, '<div class="day-nr">%d</div> %s' % (day, (u''.join(body)).encode('utf-8')) )
-=======
+                
                 if self.admin:
                     body.append('<a href="%s" class="edit">/e</a>' % event.get_absolute_url())
                 body.append('</li>')
             body.append('</ul>')
             return self.day_cell(cssclass, '%d %s' % (day, (''.join(body))))
->>>>>>> b5ac1a56e9f3dc0b3f17a954de5f39977c496143
+
             return self.day_cell(cssclass, day)
         return self.day_cell('noday', '&nbsp;')
 
@@ -63,13 +59,9 @@ class EventCalendar(HTMLCalendar):
         d = date(int(year), int(month), 1)
         prev = d - relativedelta.relativedelta(months=1)
         next = d + relativedelta.relativedelta(months=1)
-<<<<<<< HEAD
-        head = u'<a href="/calendar/%04d/%02d/" class="btn">&lsaquo;</a> <a href="/calendar/%04d/%02d/" class="btn">&rsaquo;</a>' % (prev.year, prev.month, next.year, next.month)
-        return head.encode('utf-8') + super(EventCalendar, self).formatmonth(year, month)
-=======
+        
         head = '<a href="/calendar/%04d/%02d/">&lt;</a> <a href="/calendar/%04d/%02d/">&gt;</a>' % (prev.year, prev.month, next.year, next.month)
         return head+ super(EventCalendar, self).formatmonth(year, month, withyear)
->>>>>>> b5ac1a56e9f3dc0b3f17a954de5f39977c496143
 
     def group_by_day(self, events):
         field = lambda event: event.startDate.day
