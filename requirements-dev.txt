@@ -1,4 +1,6 @@
-ipython
+#ipython
+#Version 5.7.0 for python2
+ipython==5.7.0
 flake8
 autopep8
 django_debug_toolbar

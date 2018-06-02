@@ -16,13 +16,14 @@
         with_items:
           - build-essential
           - python3-pip
+          - python-pip
           - locales
           - python-dev
       - name: "add locale de_DE.UTF-8"
         locale_gen: name="de_DE.UTF-8" state=present
       # install required python modules
       - name: "Install python modules"
-        pip: requirements={{item}} executable=pip3
+        pip: requirements={{item}} executable=pip
         with_items:
           - /vagrant/requirements.txt
           - /vagrant/requirements-dev.txt
