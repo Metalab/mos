@@ -1,16 +1,16 @@
 import feedparser
 from datetime import datetime
 
-from django.core.management.base import NoArgsCommand, CommandError
+from django.core.management.base import BaseCommand, CommandError
 from django.conf import settings
 
 from ...models import WikiChange
 
 
-class Command(NoArgsCommand):
+class Command(BaseCommand):
     help = 'Get the n most recent changes from the wiki.'
 
-    def handle_noargs(self, **options):
+    def handle(self, *args, **options):
         feed = feedparser.parse(settings.MOS_WIKI_CHANGE_URL)
 
         # If there was _any_ kind of error, bail
