@@ -7,7 +7,7 @@ from calendar import HTMLCalendar
 from dateutil import relativedelta
 
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render_to_response, get_object_or_404
+from django.shortcuts import render, get_object_or_404
 from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseNotAllowed, Http404
 from django.core.exceptions import ObjectDoesNotExist
@@ -83,11 +83,11 @@ def index(request):
     date_list = Event.all.all().datetimes('startDate', 'year')
     latest_events = Event.all.filter(startDate__gte=d).order_by('startDate')
 
-    return render_to_response('cal/event_archive.html', {
+    return render(request, 'cal/event_archive.html', {
         'rendered_calendar': mark_safe(cal),
         'date_list': date_list,
         'latestevents': latest_events
-    }, RequestContext(request))
+    })
 
 
 def monthly(request, year, month):
@@ -101,11 +101,11 @@ def monthly(request, year, month):
     cal = EventCalendar(Event.all, request.user.is_authenticated()).formatmonth(int(year), int(month))
     date_list = Event.all.all().datetimes('startDate', 'year')
 
-    return render_to_response('cal/event_archive.html', {
+    return render(request, 'cal/event_archive.html', {
         'rendered_calendar': mark_safe(cal),
         'date_list': date_list,
         'latestevents': latest_events
-    }, RequestContext(request))
+    })
 
 
 def display_special_events(request, typ, name):
@@ -127,12 +127,12 @@ def display_special_events(request, typ, name):
     except ObjectDoesNotExist:
         events = None
 
-    return render_to_response('cal/event_archive.html', {
+    return render(request, 'cal/event_archive.html', {
         'latestevents': events,
         'title': name,
         'type': typ,
         'description': des,
-    }, context_instance=RequestContext(request))
+    })
 
 
 @login_required
@@ -168,12 +168,12 @@ def update_event(request, new, object_id=None):
     else:
         event_form = EventForm()
 
-    response = render_to_response('cal/eventinfo_nf.inc', {
+    response = render(request, 'cal/eventinfo_nf.inc', {
         'event_has_error': not event_valid,
         'event_form': event_form,
         'event': event,
         'new': not event.pk,
-    }, context_instance=RequestContext(request))
+    })
 
     if not event_valid:
         response.status_code = 500
@@ -187,9 +187,8 @@ def event_list(request, number=0):
     if not number:
         events = events.reverse()
 
-    return render_to_response('cal/calendar.inc',
-                              {'latestevents': events},
-                              context_instance=RequestContext(request))
+    return render(request, 'cal/calendar.inc',
+                              {'latestevents': events})
 
 
 def event_icalendar(request, object_id):
