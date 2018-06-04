@@ -2,7 +2,6 @@
 from common import *
 
 DEBUG = False
-TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     # ('MOS Admin', 'mos@metalab.at'),
