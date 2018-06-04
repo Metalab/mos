@@ -38,9 +38,9 @@
       - stat: path=/mos/mos.sqlite
         register: st_sqlite
         
-      - name: django syncdb
+      - name: django makemigrations
         django_manage: app_path=/mos
-                       command=syncdb
+                       command=makemigrations
       - name: django migrate
         django_manage: app_path=/mos
                        command=migrate
