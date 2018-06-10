@@ -5,7 +5,7 @@ from django.views.generic.dates import YearArchiveView
 from django.views.generic.detail import DetailView
 
 from .models import Event, Location, Category
-from .views import SpecialListView
+import cal.views
 
 
 date_dict = {
@@ -25,39 +25,38 @@ event_detail_dict = date_dict.copy()
 event_detail_dict.update(template_object_name='event')
 
 
-urlpatterns = patterns('',
-    (r'^$',
-     'cal.views.index', {}, 'cal_index'),
-    (r'^(?P<year>\d{4})/$', YearArchiveView.as_view(
+urlpatterns = [
+    url(r'^$', cal.views.index, {}, 'cal_index'),
+    url(r'^(?P<year>\d{4})/$', YearArchiveView.as_view(
         queryset=Event.all.all(),
         date_field="startDate",
         allow_future=True,
         make_object_list=True
     ), {}, "cal_archive_year"),
-    (r'^(?P<year>\d{4})/(?P<month>\d{2})/$',
-     'cal.views.monthly',),
-    (r'^special/(?P<typ>\w+)/(?P<name>\w+)/$',
-     'cal.views.display_special_events'),
-    (r'^event/(?P<pk>\d+)/$', DetailView.as_view(
+    url(r'^(?P<year>\d{4})/(?P<month>\d{2})/$',
+     cal.views.monthly,),
+    url(r'^special/(?P<typ>\w+)/(?P<name>\w+)/$',
+     cal.views.display_special_events),
+    url(r'^event/(?P<pk>\d+)/$', DetailView.as_view(
         queryset=Event.all.all(),
         context_object_name='event'
     ), {}, 'cal_event_detail'),
-    (r'^event/(?P<object_id>\d+)/update/$',
-     'cal.views.update_event', {'new': False}),
-    (r'^(?P<object_id>\d+)/update/$',
-     'cal.views.update_event', {'new': False}),
-    (r'^event/(?P<object_id>\d+)/delete/', 'cal.views.delete_event'),
-    (r'^(?P<object_id>\d+)/delete/', 'cal.views.delete_event'),
-    (r'^event/(?P<object_id>\d+)/icalendar/', 'cal.views.event_icalendar', {},
+    url(r'^event/(?P<object_id>\d+)/update/$',
+     cal.views.update_event, {'new': False}),
+    url(r'^(?P<object_id>\d+)/update/$',
+     cal.views.update_event, {'new': False}),
+    url(r'^event/(?P<object_id>\d+)/delete/', cal.views.delete_event),
+    url(r'^(?P<object_id>\d+)/delete/', cal.views.delete_event),
+    url(r'^event/(?P<object_id>\d+)/icalendar/', cal.views.event_icalendar, {},
      'cal_event_icalendar'),
-    (r'^export/ical/$', 'cal.views.complete_ical', {}, 'full_ical'),
-    (r'^event/new/$', 'cal.views.update_event', {'new': True}),
-    (r'^new/$', 'cal.views.update_event', {'new': True}),
-    (r'^locations/$', SpecialListView.as_view(
+    url(r'^export/ical/$', cal.views.complete_ical, {}, 'full_ical'),
+    url(r'^event/new/$', cal.views.update_event, {'new': True}),
+    url(r'^new/$', cal.views.update_event, {'new': True}),
+    url(r'^locations/$', cal.views.SpecialListView.as_view(
                             queryset=Location.objects.all(),
                             events_by="Locations")),
-    (r'^categories/$', SpecialListView.as_view(
+    url(r'^categories/$', cal.views.SpecialListView.as_view(
                             queryset=Category.objects.all(),
                             events_by="Categories")),
-    (r'^ajax/list/(?P<number>\d*)/?$', 'cal.views.event_list'),
-)
+    url(r'^ajax/list/(?P<number>\d*)/?$', cal.views.event_list),
+]

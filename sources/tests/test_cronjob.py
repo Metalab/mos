@@ -41,7 +41,7 @@ class CronJobTest(TestCase):
         real_url = settings.MOS_WIKI_CHANGE_URL
         settings.MOS_WIKI_CHANGE_URL = 'xxx'
 
-        self.assertRaises(CommandError, self.cmd.handle_noargs)
+        self.assertRaises(CommandError, self.cmd.handle)
 
         settings.MOS_WIKI_CHANGE_URL = real_url
 
@@ -50,7 +50,7 @@ class CronJobTest(TestCase):
         settings.MOS_WIKI_CHANGE_URL = 'xxx'
 
         try:
-            self.cmd.handle_noargs()
+            self.cmd.handle()
         except:
             pass
 
@@ -61,7 +61,7 @@ class CronJobTest(TestCase):
         settings.MOS_WIKI_CHANGE_URL = real_url
 
     def test_old_entries_are_deleted(self):
-        self.cmd.handle_noargs()
+        self.cmd.handle()
         for c in 'asdfg':
             self.assertRaises(WikiChange.DoesNotExist,
                               WikiChange.objects.get, title=c)
@@ -71,7 +71,7 @@ class CronJobTest(TestCase):
 
         try:
             feedparser.parse = FakeFeed
-            self.cmd.handle_noargs()
+            self.cmd.handle()
             self.assertEqual(WikiChange.objects.count(), 5)
 
             for c in 'qwert':

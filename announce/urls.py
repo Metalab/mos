@@ -1,6 +1,7 @@
 from django.conf.urls import *
 
+import announce.views
 
-urlpatterns = patterns('',
-    (r'^$', 'announce.views.announce'),
-)
+urlpatterns = [
+    url(r'^$', announce.views.announce),
+]
