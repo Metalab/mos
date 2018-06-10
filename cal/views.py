@@ -61,7 +61,7 @@ class EventCalendar(HTMLCalendar):
         next = d + relativedelta.relativedelta(months=1)
         
         head = '<a href="/calendar/%04d/%02d/">&lt;</a> <a href="/calendar/%04d/%02d/">&gt;</a>' % (prev.year, prev.month, next.year, next.month)
-        return head+ super(EventCalendar, self).formatmonth(year, month, withyear)
+        return head+ super(EventCalendar, self).formatmonth(year, month)
 
     def group_by_day(self, events):
         field = lambda event: event.startDate.day
