@@ -50,11 +50,6 @@ function delete_event(id) {
     var cnt = $('calendar-edit-'+id);
     new Ajax.Request('/calendar/' + id + '/delete/', {
         onSuccess: function(r) {
-            var notification = document.createElement('div');
-            notification.className = 'notification success';
-            notification.innerHTML = '<h3>Event '+ document.getElementById('calendarcontainer' + id).getElementsByClassName('name')[0].innerHTML +' deleted!</h3> ' + r.responseText;
-            document.getElementById('calendarcontainer' + id ).parentNode.parentNode.insertBefore(notification, document.getElementById('calendarcontainer' + id ).parentNode);
-            document.getElementById('calendarcontainer' + id ).parentNode.remove();
             new Ajax.Request('calendar-content', calendarUpdateURL, {
                 method: 'get'
             })
@@ -75,23 +70,22 @@ function delete_entry(type, id) {
 function toggleView(type, id, onoff) {
     view = $(type + '-view-' + id);
     edit = $(type + '-edit-' + id);
-
+    
     if (onoff) {
-      set_visible(edit);
-      if (view) {
-          set_invisible(view);
-        }
+        set_visible(edit);
+        set_invisible(view);
+		document.querySelector("#events").className="visible";
     } else {
-      if (view) {
         set_visible(view);
-      }
-      set_invisible(edit);
-    }
+        set_invisible(edit);
+		document.querySelector("#events").className="";
+    }    
 }
 
 function set_visible(obj) {
     obj.addClassName('visible');
     obj.removeClassName('invisible');
+
 }
 
 function set_invisible(obj){
@@ -100,20 +94,13 @@ function set_invisible(obj){
 }
 
 
-function do_on_load()
-{
-    // Do nothing. *Tumbleweed crosses the web*
-}
-
 function enter_pressed(e){
     var keycode;
-    if (window.event) keycode = window.event.keyCode;
-    else if (e) keycode = e.which;
-    else return false;
-    return (keycode == 13);
+    if (window.event) keycode = window.event.keyCode; 
+    else if (e) keycode = e.which; 
+    else return false; 
+    return (keycode == 13); 
 }
-
-addEvent(window, 'load', do_on_load);
 
 
 function submit_event(id) {
@@ -121,25 +108,15 @@ function submit_event(id) {
     var cnt = $('calendar-edit-'+id);
 
     new Ajax.Request(frm.readAttribute('action'), {
-      parameters: frm.serialize(true),
-      onSuccess: function(r) {
-
-        var notification = document.createElement('div');
-        notification.className = 'notification success';
-        notification.innerHTML = '<h3>Event created or updated!</h3> ' + r.responseText;
-        document.getElementById('calendar-update').parentNode.appendChild(notification);
-
-        new Ajax.Updater('calendar-update', calendarUpdateURL, {
-          method: 'get'
-        });
-
-//        new Notification('success', 'Event created/updated!', r.responseText).show();
-
-
-      },
-      onFailure: function(r) {
-        cnt.innerHTML = r.responseText;
-        DateTimeShortcuts.init.defer(1);
-      }
-    })
+                                                    parameters: frm.serialize(true),
+                                                    onSuccess: function(r) {
+                                                                            new Ajax.Updater('calendar-content', calendarUpdateURL, {
+                                                                              method: 'get'})
+                                                                           },
+                                                    onFailure: function(r) {
+                                                                            cnt.innerHTML = r.responseText;
+                                                                            DateTimeShortcuts.init.defer(1);
+                                                                           }
+                                                  })
 }
+
