@@ -5,15 +5,16 @@
 
 #calendar-content ul {
 	border: 1px solid #ddd;
-	box-sizing: border-box;
 }
 
 #calendar-content li {
 	display: block;
+/* width:100%;  broken on IE7 :(*/
+	width: 329px;
 }
 
-#calendar-content li {
-  padding: 1px 1px 0 1px;
+#calendar-content div {
+	padding: 1px 0 0 1px;
 }
 
 #calendar-content li p {
@@ -26,7 +27,7 @@
 }
 */
 #calendar-content li .event {
-	background: #C8D8FF;
+	background: #C8D8FF;	
 }
 
 #calendar-content li .past_event {
@@ -49,24 +50,22 @@
     display: block;
 }
 
-@media (pointer: fine) {
-	.event .hoverHidden {
-		opacity: 0;
-	}
-	.event:hover .hoverHidden {
-		opacity: 0.6;
-	}
-
-	.event:hover .hoverHidden:hover {
-		opacity: 1;
-	}
+.event .hoverHidden {
+    opacity: 0;
 }
+.event:hover .hoverHidden {
+    opacity: 0.6;
+}
+
+.event:hover .hoverHidden:hover {
+    opacity: 1;
+}
+
 
 /* new stuff */
 
 table.month {
     border-collapse: collapse;
-		width: 100%;
 }
 
 table.month th {
@@ -79,7 +78,7 @@ table.month th {
 table.month th.month {
     background-color: inherit;
     font-size: 20pt;
-    padding: 4px 0;
+    padding: 4px;
     color: #aaa;
     text-align: right;
 }
@@ -88,9 +87,8 @@ table.month td {
     border: 1px solid white;
     background-color: #ddd;
     width: 14%;
-    height: 5em;
+    height: 110px;
     color: #999;
-		hyphens: auto;
 }
 
 table.month td:nth-last-child(-n+2) {
@@ -117,154 +115,62 @@ table.month td li:last-child {
 }
 
 table.month td.today {
-    background-color: #c0c0ff;
+    background-color: #c0c0ff; 
     color:white;
     font-weight:bold;
-}
-
-table.month .day-nr {
-		text-align: right;
-		line-height: 1em;
-}
-table.month .event-time {
-	  font-weight: bold;
-}
-
-#calendar-year-list {
-	text-align: right;
-}
-
-/* edit link */
-.event > .edit {
-	display: inline-block;
-	float: right;
-	background: #5D5EA2;
-	color: #fff;
-	width: 10px;
-	text-align: center;
-	border-radius: 2px;
-	font-size: 10px;
-	line-height: 1;
-padding: 2px;
-}
-@media (pointer: fine) {
-	.event > .edit {
-		display: none;
-	}
-	.event:hover > .edit {
-		display: inline-block;
-	}
-}
-/* edit form */
-
-.edit-form {
-	max-width: 26em;
-	background-color: #f6f6f6;
-	padding: 1em;
-}
-
-p.datetime {
-    margin: 0;
-}
-.calendarbox  {
-	position: relative;
-}
-
-.calendarnav-next, .calendarnav-previous {
-	position: absolute;
-	top: 6px;
-	background: #fff;
-	width: 10px;
-	height: 10px;
-	font-size: 10px;
-	font-weight: bold;
-	text-align: center;
-	line-height: 1;
-	border-radius: 50%;
-	padding: 3px;
-}
-.calendarnav-previous {
-	left:6px;
-}
-.calendarnav-next {
-	right:6px;
-}
-
-.calendarbox caption {
-	text-align: center;
-	background: #4F5C7F;
-	color: #fff;
-	font-weight: bold;
-	margin: 0 0 5px;
-	padding: 8px 30px;
-	line-height: 1;
-}
-.calendarbox th {
-	color: #999;
-}
-.calendarbox th, .calendarbox td a {
-	padding: 4px 8px;
-	text-align: right;
-}
-.calendarbox td a {
-	display: block;
-}
-.calendarbox td {
-	padding: 0;
-}
-.calendarbox .calendar-shortcuts {
-    text-align: center;
-    margin: 10px;
-}
-.calendar-cancel {
-    text-align: right;
-    margin: 10px;
-}
-
-.clockbox, .calendarbox {
-	background: #fff;
-	box-shadow: 0 2px 5px rgba(0,0,0,.3)
-}
-
-.clockbox h2 {
-	text-align: center;
-	background: #4F5C7F;
-	color: #fff;
-	font-weight: bold;
-	margin: 0 0 5px;
-	padding: 8px 30px;
-	line-height: 1;
-}
-
-.clockbox .timelist a {
-	display: block;
-	padding: 4px 10px;
 }
 
 
 
 @media screen and (max-width: 800px)  {
 
-	table.month {
-	    margin: 0 -2%;
-			width: 104%;
+	table.month th.month {
+		text-align: left;
+		margin: .2em 0;
 	}
 
-	table.month .event-time {
-		  display: block;
-		  font-size: .9em;
-	}
-	table.month .event {
-			font-size: .9em;
-		  word-wrap: break-word;
-			hyphens: auto;
-			line-height: 1em;
-			word-break: break-all;
-			overflow-wrap: break-word;
-			text-overflow: ellipsis;
-			overflow: hidden;
-			width: 100%;
-			word-wrap: normal;
+
+	.month .noday, /* hide nodays */
+	.month tr:nth-child(2) /* hide weekdays*/
+	{
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
 	}
 
+	table.month td {
+		width:auto;
+	}
+
+
+	/* reset table stuff */
+	table.month, 
+	.month tbody, 
+	.month th, 
+	.month td, 
+	.month tr {
+		display: block;
+	}
+
+	.month td {
+		position: relative;
+		padding-left: 2em;
+	}
+
+	/* weekdays via css */
+	.month td:before {
+		position: absolute;
+		top: 3px;
+		left: 3px;
+		padding-right: 10px;
+		white-space: nowrap;
+	}
+	.month td:nth-of-type(1):before { content: "Mo"; }
+	.month td:nth-of-type(2):before { content: "Di"; }
+	.month td:nth-of-type(3):before { content: "Mi"; }
+	.month td:nth-of-type(4):before { content: "Do"; }
+	.month td:nth-of-type(5):before { content: "Fr"; }
+	.month td:nth-of-type(6):before { content: "Sa"; }
+	.month td:nth-of-type(7):before { content: "So"; }
 }
+

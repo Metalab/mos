@@ -1,13 +1,13 @@
 /* -------------------------
 	    Metalab CSS
-
+	    
 	    Version 1.0
  ---------------------------*/
 
 html { height: 100%;}
 
-body {
-	font: 76% "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+body { 
+	font: 76% "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif; 
 	color: #444;
 	line-height: 1.3em;
 	}
@@ -49,78 +49,6 @@ td { background: #FFF; padding: 3px 5px; vertical-align: top; }
 
 #table_user_list td {padding:10px 2px;text-valign:top;}
 
-tr.even td {background-color:#eee;}
-tr.odd td {background-color:#fff;}
+tr.even td {background-color:#EEEEEE;}
+tr.odd td {background-color:white;}
 
-.flattrbtn { display: inline-block; vertical-align: middle; }
-
-/* Forms */
-input[type="email"], input[type="number"], input[type="password"], input[type="tel"], input[type="url"], input[type="text"] {
-	border: 1px solid #8c9ce9;
-	padding: .3em .5em;
-	margin: .2em 0;
-	font-family: inherit;
-	font-size: 14px;
-	line-height: 1em;
-	box-sizing: border-box;
-}
-
-dd {
-	margin-bottom: .6em;
-}
-dt {
-  margin-bottom: .2em;
-}
-
-
-.btn {
-	background-color: #4F5C7F;
-	color: #fff;
-	font-weight: bold;
-	display: inline-block;
-	font-size: 1.2em;
-	line-height: 1.6em;
-	text-align: center;
-	padding: .3em .6em;
-	min-width: 1.2em;
-	border: none;
-	cursor: pointer;
-}
-.btn:hover {
-  background: #8c9ce9;
-}
-
-/* list items inline */
-.inline-list {
-	display: block;
-}
-.inline-list > li {
-	display: inline;
-}
-
-/*  notifications */
-.notification {
-	padding: .5em;
-	margin: .3em;
-	border-radius: 5px;
-	background: #fff;
-	border: #aaa 3px solid;
-}
-.notification .event {
-	margin-bottom: 0;
-}
-
-.notification h3 {
-	font-size: 1.2em;
-	margin: 0;
-}
-.success { border-color: #00bf00; }
-.warning { border-color: #dada10; }
-.error { border-color: #e31515; }
-.info { border-color: #62a7f5; }
-
-ul.errorlist {
-	border: none !important;
-	color: #e31515;
-	margin: 0 0 10px;
-}

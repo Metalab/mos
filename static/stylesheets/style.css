@@ -1,0 +1,401 @@
+html, body {
+  font-family:Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  margin: 0;
+  padding: 0;
+}
+body {
+  display: flex;
+  flex-direction: column;
+}
+a {
+  color: white;
+  text-decoration: none;
+}
+a:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+section, footer {
+  width: 100%;
+  padding: 8rem 0;
+  text-align: right;
+}
+
+.projects-inner, .people-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  transform: skewY(3deg);
+}
+
+/* action */
+.invisible {
+    display: none;
+}
+
+.visible {
+    display: block;
+	z-index: 11;
+}
+
+.event .hoverHidden {
+    opacity: 0;
+}
+.event:hover .hoverHidden {
+    opacity: 0.6;
+}
+
+.event:hover .hoverHidden:hover {
+    opacity: 1;
+}
+
+.main {
+  background: url('https://metalab.at/wiki/images/b/b1/Maker_Faire_Dome.jpg') no-repeat center center fixed;
+  height: 85vh;
+  text-align: left;
+  padding: 0;
+}
+.main-inner {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  align-content: flex-start;
+  max-width: 960px;
+  height: 100%;
+  margin: 0 auto;
+}
+.main-inner > * {
+  margin: 1rem;
+}
+
+#events {
+  flex: 1 1 40%;
+  background-color: #003054;
+  color: white;
+  box-shadow: 0.5rem 0.5rem rgba(0,0,0,0.5);
+  overflow: visible;
+}
+#events > h3 {
+  margin: 0;
+  padding: 0.5rem;
+}
+#events > a {
+  font-size: 0.75rem;
+  padding: 0.25rem;
+}
+.eventlist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.event {
+  padding: 0.25rem 0.5rem;
+  display: block;
+}
+.event:nth-child(2n+1) {
+  background-color: rgba(255,255,255,0.5);
+}
+.event:nth-child(2n) {
+  background-color: rgba(255,255,255,0.2);
+}
+.event > * {
+  margin: 0;
+}
+.event > p {
+  display: inline;
+  font-size: 0.75rem;
+}
+.event > h4 {
+  margin: 0.25rem 0;
+}
+.event-description {
+  font-size: 0.8rem !important;
+}
+.event_ical, .event-category {
+  background-color: #f26522;
+  padding: 0.1rem 0.25rem;
+}
+.event-category a::before {
+  content: "#";
+}
+
+.intro {
+  flex: 1 1 60%;
+  background-color: white;
+  box-shadow: 0.5rem 0.5rem rgba(0,0,0,0.5);
+}
+.intro > * {
+  padding: 0.5rem;
+}
+.intro > p {
+  margin: 0;
+}
+.intro > h2 {
+  background-color: #003054;
+  color: white;
+  margin: 0;
+}
+.intro .english {
+  background-color: #f26522;
+  padding: 0.1rem 0.25rem;
+  font-size: 0.75rem;
+}
+.main-buttons {
+  padding-bottom: 1rem;
+}
+.main-buttons > a:first-of-type {
+  background-color: #f26522;
+  color: white;
+  padding: 0.5rem;
+  font-weight: bold;
+}
+.main-buttons > a {
+  color: #999;
+  padding: 0.5rem;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.titlebar-bg {
+  background: transparent;
+  z-index: 10;
+  position: sticky;
+  top: -1px;
+  margin-top: -15vh;
+}
+.titlebar-bg.sticky {
+  background: linear-gradient(-3deg, transparent, transparent 50%, #f26522 50%, #f26522 100%);
+}
+.titlebar {
+  margin-top: 3rem;
+  background-color: #f26522;
+  color: white;
+  transform: skewY(-3deg);
+}
+.titlebar-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 768px;
+  margin: 0 auto;
+}
+.nav {
+  padding: 0;
+  list-style: none;
+}
+.nav li {
+  display: inline-block;
+  background-color: #003054;
+  font-size: 1.25rem;
+}
+.nav a {
+  padding: 0 0.5rem;
+}
+.title {
+  color: white;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 0.5rem;
+}
+#logo-image {
+  transform: skewY(3deg);
+  padding-right: 0.5rem;
+  height: 3rem;
+}
+#logo-text {
+  transform: rotate(14deg);
+  height: 3rem;
+}
+
+#projects {
+  z-index: 2;
+  background-color: #003054;
+  transform: skewY(-3deg);
+  color: white;
+}
+.project-list {
+  display: flex;
+  flex-flow: row wrap;
+}
+.project-list > a {
+  flex: 1 1 15%;
+  background-color: rgba(255,255,255,0.2);
+  margin: 0.5rem;
+  padding: 0.5rem;
+  text-align: center;
+}
+.project-list > a > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100%;
+}
+.project-list > a > div > * {
+  margin: 0;
+}
+
+
+#people {
+  transform: skewY(-3deg);
+  background-color: white;
+  z-index: 1;
+}
+.people-list {
+  text-align: center;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  align-content: space-between;
+}
+.people-list > * {
+  flex: 1 1 20%;
+  padding: 1rem;
+  color: black;
+  text-decoration: none;
+}
+.people-list img {
+  border-radius: 50%;
+  max-width: 100%;
+}
+.people-list img:hover {
+  box-shadow: 0.2rem 0.2rem rgba(0,0,0,0.5);
+  opacity: 0.8;
+}
+.all-members {
+  color: #f26522;
+  font-weight: bold;
+  font-size: 2rem;
+  line-height: 2rem;
+  margin: 0;
+}
+.become-member {
+  background-color: #f26522;
+  color: white;
+}
+.become-member:hover {
+  text-decoration: none;
+  opacity: 0.8;
+}
+.become-member > h2 {
+  font-size: 5rem;
+  line-height: 5rem;
+  margin: 0;
+}
+.become-member > p {
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 1rem;
+}
+
+#location {
+  background-color: white;
+  z-index: 2;
+}
+.location-inner {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+#map {
+  height: 20rem;
+}
+.leaflet-popup-location .leaflet-popup-content-wrapper {
+  border-radius: 0;
+  background-color: #f26522;
+}
+.leaflet-popup-location .leaflet-popup-content {
+  margin: 0.5rem;
+  line-height: inherit;
+}
+.leaflet-popup-location h3, .leaflet-popup-location p {
+  margin: 0 !important;
+  color: white;
+}
+.leaflet-popup-location .leaflet-popup-tip {
+  background-color: #f26522;
+}
+
+
+footer {
+  padding: 1rem 0;
+  z-index: 1;
+  background-color: white;
+  color: #999;
+  font-size: 0.8rem;
+}
+footer a {
+  color: #999;
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .titlebar-bg {
+    background: linear-gradient(-3deg, transparent, transparent 50%, white 50%, white 100%) !important;
+    width: 100%;
+    height: 5.75rem;
+  }
+  .titlebar {
+    order: 1;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    margin: 0;
+  }
+  .main {
+    order: 2;
+    height: inherit;
+    padding: 7rem 0;
+  }
+  .main-inner{
+    flex-wrap: wrap;
+  }
+  #projects {
+    margin-top: -3rem;
+    order: 3;
+  }
+  #people {
+    order: 4;
+  }
+  #location {
+    order: 5;
+  }
+  footer {
+    order: 6;
+  }
+
+  #events {
+    order: 2;
+  }
+  .intro {
+    order: 1;
+  }
+  .intro > a {
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+  }
+
+  .nav {
+    margin: 0;
+  }
+  .nav li {
+    display: block;
+  }
+}
+
+@media (min-height: 1080px) {
+  .main {
+    height: 70vh;
+  }
+}
+
+@media (min-width: 1920px) {
+  section {
+    padding: 10rem 0;
+  }
+}
