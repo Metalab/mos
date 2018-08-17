@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}metalab{% endblock %}
+
+{% block hos_content %}
+<div id="column_1">
+  <div id="soup">
+    <h1><a href="http://metalab.soup.io" target="metalab_soup">Aktueller Content</a></h1>
+    <div id='souplink_overlay'>
+      <a href="http://metalab.soup.io" target="metalab_soup">
+        <img src="{{ STATIC_URL }}images/pixel.gif" id="soup_pixel" />
+      </a>
+    </div>
+    <div id='soup_iframe_wrapper'>
+      <iframe border=0 frameborder=0 id="soup_iframe" src="https://metalab.at/soup/index.html"></iframe>
+    </div>
+    <div id='soup_credits'>managed with <a href='http://metalab.at/wiki/Soup'>soup.io</a></div>
+  </div>
+	<div id="calendar">
+        <h1><a href="/calendar" title="Veranstaltungen">Events</a></h1>
+		{% include "cal/calendar.inc" %}
+    </div>
+    <div id="openlab">
+        Interessiert? Dann schau doch am besten <a href="/wiki/Location" title="Anreise">vorbei</a> oder join unseren <a href="xmpp://metalab@conference.jabber.metalab.at">Jabber Multi-User-Chat</a> bzw. eine der <a href="/wiki/Mailinglisten" title="Mailinglisten">Mailinglisten</a>.
+    </div>
+</div>
+<div id="column_2">
+{% comment %}
+<style type="text/css">#members a:hover { text-decoration:none; background-color:white; } </style>
+	<div id="members" style="text-align:center;">
+<a href="http://metalab.at/static/5jahre" >
+    <img style="border:none;" src="http://metalab.at/static/5jahre/banner.png" />
+</a>
+{% endcomment %}
+        <h1><a href="/member/" title="Member List">Mitglieder</a></h1>
+        <div class="member_pics">
+            {% for member in randommembers %}
+            {% if member.contactinfo.get_wikilink %}<a class="member" href="{{ member.contactinfo.get_wikilink }}">{% endif %}<img src="{{ member.contactinfo.image.url }}"  width="54" height="54" alt="{{ member.username }}" />{% if member.contactinfo.get_wikilink %}</a>{% endif %}
+            {% endfor %}
+	    <a href="/wiki/Mitglied_werden" title="Mitglied werden">Mitglied werden</a>
+	</div>
+	<div id="introduction">
+	    220m² Raum im Herzen Wiens für technologisch-kreative Projekte, Veranstaltungen, Software, Hardware, Essen &amp; mehr....
+	</div>
+	<!--<div id="announcement">
+	</div>-->
+	<!--<div id="announcement">
+		We grieve deeply over the tragic loss of our beloved friend and distinguished metalab-member Florian Hufsky, also known as "oneup".<br /><br />
+		Our condolences and heartfelt sympathy go out to his family and close friends.<br /><br />
+
+		You will be remembered.<br />
+<br />
+		<span id='extrasmall'><a href="http://florianhufsky.soup.io" target="_blank">condolence blog</a></span><br />
+		<small>Vienna, 17.12.2009</small>
+	</div>-->
+	<div id="project_list">
+		<h1><a href="/project/" title="Projekte">Projekte</a></h1>
+		{% include "projects/overview.inc" %}
+    </div>
+
+	   <div id="recent_changes">
+		{% include "rss/recentchanges.inc" %}
+	  </div>
+
+          <div id="issue_tracker">
+              <h2><a href="https://metalab.at/issues/">Issue Tracker</a></h2>
+          </div>
+
+    <script type="text/javascript">
+        var calendarUpdateURL = '/calendar/ajax/list/5/';
+    </script>
+</div>
+{% endblock %}

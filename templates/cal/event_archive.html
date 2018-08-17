@@ -26,28 +26,22 @@
    {{ description.description }}</p>
 {% endif %}
 
-<ul id="calendar-year-list" class="inline-list">
-{% for date in date_list %}
-  <li><a href="{% url "cal_archive_year" year=date.year %}">{{date.year}}</a></li>
-{% endfor %}
-</ul>
+<ul>{% for date in date_list %}
+  <li style="display:inline;"><a href="{% url "cal_archive_year" year=date.year %}">{{date.year}}</a></li>
+{% endfor %}</ul>
 
     {% if type %}
       {% with "True" as edit_disabled %}
         {% with "True" as all_events %}   {# variable for switching more link ind calendar.inc #}
-    <div id="calendar-update">
 	  {% include "cal/calendar.inc" %}
-    </div>
         {% endwith %}
       {% endwith %}
     {% else %}
        {% with "True" as all_events %}   {# variable for switching more link ind calendar.inc #}
-    <div id="calendar-update">
 	  {% include "cal/calendar.inc" %}
-    </div>
         {% endwith %}
     {% endif %}
 <script type="text/javascript">
-    var calendarUpdateURL = '/calendar/ajax/list/30';
+    var calendarUpdateURL = '/calendar/ajax/list/';
 </script>
 {% endblock %}
