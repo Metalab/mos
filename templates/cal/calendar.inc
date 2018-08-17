@@ -7,10 +7,10 @@
      <script>
        var came_from = '{{came_from}}';
      </script>
-    <ul>
+    <ul class="eventlist">
 	{% for event in latestevents %}
         {% makeform event cal.forms.EventForm event_form %}
-		<li>{% include "cal/eventinfo_nf.inc" with new=0 %}</li>
+		<li class="event">{% include "cal/eventinfo_nf.inc" with new=0 %}</li>
 	{% endfor %}
     </ul>
 
