@@ -20,5 +20,4 @@ def custom_settings_main(request):
             'calendar': settings.HOS_CALENDAR,
             'projects': settings.HOS_PROJECTS,
             'recent_changes': settings.HOS_RECENT_CHANGES,
-            'metasense': settings.HOS_METASENSE,
             }

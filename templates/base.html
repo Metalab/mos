@@ -42,34 +42,13 @@
             <a href="/" title="{{HOS_NAME}}"><img src="{{ STATIC_URL }}images/logo.png" width="180" height="62" alt="metalab Logo" /></a>
         </div>
         <ul id="header-nav">
+            <li><a href="/wiki/" title="Wiki">Wiki</a></li>
             <li><a href="/wiki/Info_Folder" title="About">About</a></li>
             <li><a href="/wiki/Lage" title="Anreise">Location</a></li>
-            <li><a href="/wiki/" title="Wiki">Wiki</a></li>
-            <li><a href="/calendar" title="Kalender">Kalender</a></li>
-            <li><a href="https://metalab.at/issues/" title="Issue Tracker">Issues</a></li>
             <li><a href="/wiki/Sponsoren" title="Sponsoren">Sponsoren</a></li>
+            <li><a href="/wiki/Impressum" title="Impressum">Impressum</a></li>
             <li><a href="/wiki/English" title="English version"><img src="{{ STATIC_URL }}images/Flag_UK.png" style="vertical-align: top;"/> English</a></li>
         </ul>
-
-        <div id="presence_closed" class="invisible">
-            <a href="/wiki/Metasense">
-            <img src="{{ STATIC_URL }}images/metasense_off.gif" class="metasense_image" width="16" height="15" alt="derzeit ist niemand im metalab!" />
-             geschlossen
-            </a>
-
-        </div>
-        <div id="presence_open" class="invisible">
-            <a href="/wiki/Metasense">
-            <img src="{{ STATIC_URL }}images/metasense_on.gif" class="metasense_image"  width="16" height="15" alt="metalab ist geöffnet!" />
-             offen
-            </a>
-        </div>
-        <div id="presence_defunct" class="invisible">
-            <a href="/wiki/Metasense">
-            <!-- <img src="{{ STATIC_URL }}images/metasense_on.gif" class="metasense_image"  width="16" height="15" alt="metalab ist geöffnet!" /> -->
-             Sensor down
-            </a>
-        </div>
 
         <div id="login">
             {% if not user.is_authenticated %}
@@ -88,7 +67,6 @@
 
     <div id="footer">
         powered by <a href="https://github.com/Metalab/mos/">Metalab OS</a> |
-        <a href="/wiki/Impressum" title="Impressum">Impressum</a> |
         <a href="/wiki/Datenschutzerklärung" title="Datenschutzerklärung">Datenschutzerklärung</a>
     </div>
 </div>

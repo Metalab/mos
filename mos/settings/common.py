@@ -136,7 +136,6 @@ MOS_WIKI_KEEP = 5
 
 # ----------------- Style ---------------------
 HOS_CUSTOM_STYLE = ''  # name of the custom style, blank for default
-HOS_METASENSE = True
 HOS_MEMBER_GALLERY = True
 HOS_CALENDAR = True
 HOS_OPENLAB = True

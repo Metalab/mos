@@ -104,10 +104,7 @@ class Event(models.Model):
         return '%s (%s)%s' % (self.name, self.startDate, status)
 
     def past(self):
-        if self.endDate:
-            return self.endDate < datetime.datetime.now()
-        else:
-            return self.startDate < datetime.datetime.now()
+        return self.startDate < datetime.datetime.now()
 
     @permalink
     def get_absolute_url(self):
