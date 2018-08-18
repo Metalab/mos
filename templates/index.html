@@ -5,12 +5,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Metalab: der Hackspace im Herzen Wiens</title>
-	<script src="{{ STATIC_URL }}javascripts/prototype.js" type="text/javascript"></script>
-	<link href="{{ STATIC_URL }}stylesheets/style.css" media="screen" rel="Stylesheet" type="text/css" />
-	<link href="{{ STATIC_URL }}stylesheets/leaflet.css" media="screen" rel="Stylesheet" type="text/css" />
+    <script src="{{ STATIC_URL }}javascripts/prototype.js" type="text/javascript"></script>
+    <link href="{{ STATIC_URL }}stylesheets/style.css" media="screen" rel="Stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}stylesheets/leaflet.css" media="screen" rel="Stylesheet" type="text/css" />
     <script src="{{ STATIC_URL }}javascripts/leaflet.js" type="text/javascript"></script>
-	<script src="{{ STATIC_URL }}javascripts/ml-ajaxtools.js" type="text/javascript"></script>
-	<script src="{{ STATIC_URL }}admin/js/core.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}javascripts/ml-ajaxtools.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}admin/js/core.js" type="text/javascript"></script>
     <script src="{{ STATIC_URL }}admin/js/jquery.js" type="text/javascript"></script>
     <script src="{{ STATIC_URL }}admin/js/jquery.init.js" type="text/javascript"></script>
     <script src="{{ STATIC_URL }}admin/js/actions.js" type="text/javascript"></script>
@@ -21,16 +21,25 @@
     <section class="main">
       <div class="main-inner">
         <div id="events">
-          <h3><a href="/calendar" title="Veranstaltungen">Events</a></h3>      
-			{% include "cal/calendar.inc" %}
+          <h3>
+            <a href="/calendar" title="Veranstaltungen">Events</a>
+          </h3>
+     	  {% include "cal/new_calendar.inc" %}
         </div>
         <div class="intro">
           <h2>Metalab: der Hackspace im Herzen Wiens</h2>
           <p>
             <a href="https://metalab.at/wiki/English" class="english">In English</a>
-            Das Metalab ist ein unabhängig und gemeinschaftlich betriebener Raum für technisch-kreative Projekte im Zentrum von Wien, gleich hinter dem Rathaus.
+            Das Metalab ist ein unabhängig und gemeinschaftlich betriebener
+            Raum für technisch-kreative Projekte im Zentrum von Wien,
+            gleich hinter dem Rathaus.
           </p>
-          <p>Auf über 200 m² bietet es Raum und Infrastruktur für Wissensaustausch, die Umsetzung von innovativen Projekten und die Abhaltung von Veranstaltungen. Es dient auch als sozialer Treffpunkt für kreative Köpfe jeden Alters aus dem weiten Umfeld von Informations- und Kommunikationstechnologie, neue Medien, usw.</p>
+          <p>
+            Auf über 200 m² bietet es Raum und Infrastruktur für Wissensaustausch,
+            die Umsetzung von innovativen Projekten und die Abhaltung von Veranstaltungen.
+            Es dient auch als sozialer Treffpunkt für kreative Köpfe jeden Alters aus
+            dem weiten Umfeld von Informations- und Kommunikationstechnologie, neue Medien, usw.
+          </p>
           <div class="main-buttons">
             <a href="#location">Schau vorbei!</a>
             <a href="https://metalab.at/wiki/Info_Folder">Mehr über das Metalab.</a>
@@ -42,13 +51,14 @@
       <div class="titlebar">
         <div class="titlebar-inner">
           <ul class="nav">
-			<li><a href="#people">Menschen</a></li>
+	    <li><a href="#people">Menschen</a></li>
             <li><a href="#projects">Projekte</a></li>
-			<li><a href="/wiki">Wiki</a></li>
+	    <li><a href="/wiki">Wiki</a></li>
             <li><a href="#location">Location</a></li>
           </ul>
           <a class="title" href="#">
-            <img id="logo-image" src="https://metalab.at/wiki/images/3/37/Atomic_1color_scalable.svg" alt="Metalab Logo" />
+            <img id="logo-image"
+                 src="https://metalab.at/wiki/images/3/37/Atomic_1color_scalable.svg" alt="Metalab Logo" />
             <img id="logo-text" src="https://metalab.at/wiki/images/1/17/Metalab.svg" alt="Metalab" />
           </a>
         </div>
@@ -57,15 +67,33 @@
     <section id="people">
       <div class="people-inner">
         <h2>Menschen</h2>
-        <p>Das Metalab wird von seinen Mitglieder gemeinsam erhalten und gestaltet.</p>
+        <p>
+          Das Metalab wird von seinen Mitglieder gemeinsam erhalten und gestaltet.
+        </p>
         <div class="people-list">
-		  {% for member in randommembers %}
-		  {% if member.contactinfo.get_wikilink %}<a href="{{ member.contactinfo.get_wikilink }}">{% endif %}<img src="{{ member.contactinfo.image.url }}" alt="{{ member.username }}" />{% if member.contactinfo.get_wikilink %}</a>{% endif %}
-	   	  {% endfor %}
-          <a href="https://metalab.at/wiki/Benutzer:jk"><img src="https://metalab.at/media/userpics/jk.jpg" /></a>
-          <a href="https://metalab.at/wiki/Benutzer:Emi"><img src="https://metalab.at/media/userpics/emi.png" /></a>
-          <a href="https://metalab.at/wiki/Benutzer:A"><img src="https://metalab.at/media/userpics/A.GIF" /></a>
-          <a href="https://metalab.at/wiki/Benutzer:ente"><img src="https://metalab.at/media/userpics/ente.jpg" /></a>
+	  {% for member in randommembers %}
+	  {% if member.contactinfo.get_wikilink %}
+          <a href="{{ member.contactinfo.get_wikilink }}">
+            <img src="{{ member.contactinfo.image.url }}"
+                 alt="{{ member.username }}" />
+          </a>
+          {% else %}
+          <img src="{{ member.contactinfo.image.url }}"
+               alt="{{ member.username }}" />
+          {% endif %}
+	  {% endfor %}
+          <a href="https://metalab.at/wiki/Benutzer:jk">
+            <img src="https://metalab.at/media/userpics/jk.jpg" />
+          </a>
+          <a href="https://metalab.at/wiki/Benutzer:Emi">
+            <img src="https://metalab.at/media/userpics/emi.png" />
+          </a>
+          <a href="https://metalab.at/wiki/Benutzer:A">
+            <img src="https://metalab.at/media/userpics/A.GIF" />
+          </a>
+          <a href="https://metalab.at/wiki/Benutzer:ente">
+            <img src="https://metalab.at/media/userpics/ente.jpg" />
+          </a>
           <a href="/member/" class="all-members">
             <p>mehr…</p>
           </a>
@@ -79,17 +107,33 @@
     <section id="projects">
       <div class="projects-inner">
         <h2>Projekte</h2>
-        <p>Im Metalab passiert ständig etwas! Hier stellen wir dir ein paar der laufenden Projekte vor, an denen Leute im Metalab werkeln.</p>
+        <p>
+          Im Metalab passiert ständig etwas! Hier stellen wir dir ein
+          paar der laufenden Projekte vor, an denen Leute im Metalab
+          werkeln.
+        </p>
         <div class="project-list">
-			{% include "projects/overview.inc" %}
+	  {% include "projects/overview.inc" %}
         </div>
       </div>
     </section>
     <section id="location">
       <div class="location-inner">
         <h2>Komm' vorbei!</h2>
-        <p>Du findest uns in der Rathausstraße 6 im 1. Wiener Gemeindebezirk gleich hinter dem Rathaus.</p>
-        <p>Offen hat das Lab, wenn mindestens ein Mitglied anwesend ist. Zumindest zur „Kernzeit“ zwischen 15:00 und 00:00 ist das erfahrungsgemäß jeden Tag der Fall, an den meisten Arbeitstagen sind auch schon mittags einige Metalabber*innen am Werk. Meist ist das Metalab fast 24 Stunden am Tag besetzt, insbesondere Donnerstag bis Sonntag. Selbstverständlich bekommst du auch jederzeit gerne eine Führung durch die Räumlichkeiten!</p>
+        <p>
+          Du findest uns in der Rathausstraße 6 im 1.
+          Wiener Gemeindebezirk gleich hinter dem Rathaus.
+        </p>
+        <p>
+          Offen hat das Lab, wenn mindestens ein Mitglied anwesend ist.
+          Zumindest zur „Kernzeit“ zwischen 15:00 und 00:00 ist das
+          erfahrungsgemäß jeden Tag der Fall, an den meisten Arbeitstagen
+          sind auch schon mittags einige Metalabber*innen am Werk.
+          Meist ist das Metalab fast 24 Stunden am Tag besetzt,
+          insbesondere Donnerstag bis Sonntag. Selbstverständlich
+          bekommst du auch jederzeit gerne eine Führung durch die
+          Räumlichkeiten!
+        </p>
       </div>
       <div id="map"></div>
     </section>
@@ -97,22 +141,25 @@
       Made with ♥ at Metalab.
       Runs on <a href="https://github.com/metalab/mos">Metalab OS</a>
       (<a href="https://metalab.at/member/login/">Login</a>).
-	  <a href="/wiki/Datenschutzerklärung" title="Datenschutzerklärung">Datenschutzerklärung</a>
+      <a href="/wiki/Datenschutzerklärung" title="Datenschutzerklärung">Datenschutzerklärung</a>
       <a href="https://metalab.at/issues">Issue Tracker</a>.
       <a href="https://metalab.at/wiki/Impressum">Impressum</a>.
     </footer>
-	<script type="text/javascript">
-        var calendarUpdateURL = '/calendar/ajax/list/5/';
-    </script>
     <script>
+      var calendarUpdateURL = '/calendar/ajax/list/5/';
+      
       var metalab_location = [48.20941, 16.35610];
-      var stamen = L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.{ext}', {
-        attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-        subdomains: 'abcd',
-        minZoom: 17,
-        maxZoom: 17,
-        ext: 'png'
-      });
+      var attributionText = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+      var layerOptions = {
+          attribution: attributionText,
+          subdomains: 'abcd',
+          minZoom: 17,
+          maxZoom: 17,
+          ext: 'png'
+      };
+      var tilesUri = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.{ext}';
+      var stamen   = L.tileLayer(tilesUri, layerOptions);
+      
       var map = new L.Map('map', {
         center: metalab_location,
         zoom: 17,
@@ -133,10 +180,11 @@
         closeButton: false,
         closeOnClick: false,
         className: 'leaflet-popup-location'
-      })
-        .setLatLng(metalab_location)
-        .setContent('<h3>Metalab</h3><p>Rathausstraße 6, 1010 Wien</p>')
-        .openOn(map);
+      });
+
+      popup.setLatLng(metalab_location);
+      popup.setContent('<h3>Metalab</h3><p>Rathausstraße 6, 1010 Wien</p>')
+      popup.openOn(map);
 
       window.addEventListener('scroll', function() {
         var titlebar = document.querySelector('.titlebar-bg');
