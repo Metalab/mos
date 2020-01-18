@@ -10,7 +10,7 @@
 
 </tr>
 {% for item in object_list %}
-	<tr class="{% cycle even,odd %}">
+	<tr class="{% cycle "even" "odd" %}">
 		<td width="100px" style="text-align:center">
 			{% if item.contactinfo.image %}
 				<a href="../member/{{ item }}"><img class="thumb_with_text" src="{{ item.contactinfo.image.url }}"/></a>

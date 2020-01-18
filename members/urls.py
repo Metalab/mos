@@ -8,7 +8,12 @@ import members.views
 
 
 urlpatterns = [
-    path('', ListView.as_view(queryset=get_active_members(), template_name='members/member_list.html')),
+    path('',
+         ListView.as_view(
+             queryset=get_active_members(),
+             template_name='members/member_list.html',
+        ),
+    ),
 
     path('', include('django.contrib.auth.urls')),
 
