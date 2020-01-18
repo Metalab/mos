@@ -27,9 +27,22 @@ class Migration(migrations.Migration):
                 ('where', models.CharField(max_length=200, blank=True)),
                 ('created_at', models.DateTimeField(default=datetime.datetime.now)),
                 ('deleted', models.BooleanField(default=False)),
-                ('category', models.ForeignKey(blank=True, to='core.Category', null=True)),
-                ('created_by', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
-                ('location', models.ForeignKey(blank=True, to='core.Location', null=True)),
+                ('category', models.ForeignKey(
+                    blank=True,
+                    on_delete=models.CASCADE,
+                    to='core.Category',
+                    null=True,
+                )),
+                ('created_by', models.ForeignKey(
+                    to=settings.AUTH_USER_MODEL,
+                    on_delete=models.CASCADE,
+                )),
+                ('location', models.ForeignKey(
+                    blank=True,
+                    to='core.Location',
+                    on_delete=models.CASCADE,
+                    null=True,
+                )),
             ],
         ),
     ]

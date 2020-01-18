@@ -86,12 +86,25 @@ class Event(models.Model):
     where = models.CharField(max_length=200, blank=True)
 
     created_at = models.DateTimeField(default=datetime.datetime.now)
-    created_by = models.ForeignKey(User)
+    created_by = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+    )
 
     deleted = models.BooleanField(default=False)
 
-    category = models.ForeignKey(Category, blank=True, null=True)
-    location = models.ForeignKey(Location, blank=True, null=True)
+    category = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
+    location = models.ForeignKey(
+        Location,
+        on_delete=models.CASCADE,
+        blank=True,
+        null=True,
+    )
 
     objects = models.Manager()
     all = EventManager()

@@ -1,7 +1,7 @@
-from django.conf.urls import *
+from django.urls import path
 
 import announce.views
 
 urlpatterns = [
-    url(r'^$', announce.views.announce),
+    path('', announce.views.announce),
 ]

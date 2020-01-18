@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 
-from django.conf.urls import url, include
+from django.urls import path, re_path, include
 from django.views.generic.list import ListView
 
 from .models import get_active_members
@@ -8,17 +8,17 @@ import members.views
 
 
 urlpatterns = [
-    url(r'^$', ListView.as_view(queryset=get_active_members(), template_name='members/member_list.html')),
+    path('', ListView.as_view(queryset=get_active_members(), template_name='members/member_list.html')),
 
-    url('', include('django.contrib.auth.urls')),
+    path('', include('django.contrib.auth.urls')),
 
-    url(r'^valid_user/?$', members.views.valid_user),
-    url(r'^history/$', members.views.members_history),
-    url(r'^collection/$', members.views.members_bankcollection_list),
-    url(r'^keylist/$', members.views.members_key_list),
-    url(r'^lazzzorlist/$', members.views.members_lazzzor_list),
+    re_path(r'^valid_user/?$', members.views.valid_user),
+    path('history/', members.views.members_history),
+    path('collection/', members.views.members_bankcollection_list),
+    path('keylist/', members.views.members_key_list),
+    path('lazzzorlist/', members.views.members_lazzzor_list),
 
-    url(r'^(?P<user_username>(\w|-)+)/update/userpic/$', members.views.members_update_userpic),
-    url(r'^(?P<user_username>(\w|-)+)/update/(?P<update_type>\w+)/$', members.views.members_update),
-    url(r'^(?P<user_username>(\w|-)+)/$', members.views.members_details),
+    re_path(r'^(?P<user_username>(\w|-)+)/update/userpic/$', members.views.members_update_userpic),
+    re_path(r'^(?P<user_username>(\w|-)+)/update/(?P<update_type>\w+)/$', members.views.members_update),
+    re_path(r'^(?P<user_username>(\w|-)+)/$', members.views.members_details),
 ]

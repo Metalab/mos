@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from django.conf.urls import *
+from django.urls import path, re_path, include
 from django.conf.urls.static import static
 from django.contrib import admin
 import django.views.i18n
@@ -11,18 +11,19 @@ import web.views
 admin.autodiscover()
 
 urlpatterns = [
-    url(r'^admin/jsi18n/', django.views.i18n.javascript_catalog),
-    url(r'^admin/', include(admin.site.urls)),
+    path('admin/jsi18n/', django.views.i18n.JavaScriptCatalog.as_view()),
+    path('admin/', admin.site.urls),
 
-    url(r'^feeds/events/$', EventFeed()),
 
-    url(r'^calendar/', include('cal.urls')),
-    url(r'^project/', include('projects.urls')),
-    url(r'^member/', include('members.urls')),
-    url(r'^announce/', include('announce.urls')),
-    url(r'^cellardoor/', web.views.display_cellardoor),
-    url(r'^spaceapi.json$', web.views.spaceapi),
-    url(r'^$', web.views.display_main_page),
+    path('feeds/events/', EventFeed()),
+
+    path('calendar/', include('cal.urls')),
+    path('project/', include('projects.urls')),
+    path('member/', include('members.urls')),
+    path('announce/', include('announce.urls')),
+    path('cellardoor/', web.views.display_cellardoor),
+    path('spaceapi.json', web.views.spaceapi),
+    path('', web.views.display_main_page),
 ]
 
 urlpatterns +=  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

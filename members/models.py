@@ -14,7 +14,10 @@ from django.utils.encoding import python_2_unicode_compatible, smart_text, force
 
 class PaymentInfo(models.Model):
     bank_collection_allowed = models.BooleanField(default=False)
-    bank_collection_mode = models.ForeignKey('BankCollectionMode')
+    bank_collection_mode = models.ForeignKey(
+        'BankCollectionMode',
+        on_delete=models.CASCADE,
+    )
     bank_account_owner = models.CharField(max_length=200, blank=True)
     bank_account_number = models.CharField(max_length=20, blank=True)
     bank_name = models.CharField(max_length=100, blank=True)
@@ -24,7 +27,10 @@ class PaymentInfo(models.Model):
     bank_account_mandate_reference = models.CharField(max_length=35, blank=True)
     bank_account_date_of_signing = models.DateField(null=True, blank=True)
 
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+    )
 
 
 def get_image_path(self, filename):
@@ -52,7 +58,10 @@ class ContactInfo(models.Model):
     wiki_name = models.CharField(max_length=50, blank=True, null=True)
     image = models.ImageField(upload_to=get_image_path, blank=True)
 
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+    )
 
     last_email_ok = models.NullBooleanField()
     has_active_key = models.BooleanField(default=False)
@@ -196,8 +205,14 @@ class BankCollectionMode(models.Model):
 class MembershipPeriod(models.Model):
     begin = models.DateField()
     end = models.DateField(null=True, blank=True)
-    user = models.ForeignKey(User)
-    kind_of_membership = models.ForeignKey('KindOfMembership')
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+    )
+    kind_of_membership = models.ForeignKey(
+        'KindOfMembership',
+        on_delete=models.CASCADE,
+    )
 
     def __str__(self):
         return self.user.username
@@ -242,7 +257,10 @@ class MembershipFee(models.Model):
     kind of members, e.g. pupils, unemployees, normal members, ...
     """
 
-    kind_of_membership = models.ForeignKey('KindOfMembership')
+    kind_of_membership = models.ForeignKey(
+        'KindOfMembership',
+        on_delete=models.CASCADE,
+    )
     start = models.DateField()
     end = models.DateField(null=True, blank=True)
     amount = models.IntegerField()
@@ -435,8 +453,15 @@ class Payment(models.Model):
     amount = models.FloatField()
     comment = models.CharField(max_length=200, blank=True)
     date = models.DateField()
-    method = models.ForeignKey(PaymentMethod)
-    user = models.ForeignKey(User, null=True)
+    method = models.ForeignKey(
+        PaymentMethod,
+        on_delete=models.CASCADE,
+    )
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+    )
     original_line = models.TextField(blank=True)
     original_file = models.CharField(max_length=200, null=True)
     original_lineno = models.IntegerField(blank=True, null=True)

@@ -20,7 +20,7 @@ class Project(models.Model):
     wikiPage = models.CharField(max_length=200, blank=True, null=True)
 
     created_at = models.DateTimeField(default=datetime.datetime.now)
-    created_by = models.ForeignKey(User)
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE)
     finished_at = models.DateField(blank=True, null=True)
     deleted = models.BooleanField(default=False)
 

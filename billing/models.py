@@ -14,8 +14,13 @@ class Invoice(models.Model):
 
 
 class InoviceItem(models.Model):
-    invoice = models.ForeignKey(Invoice, null=False,
-                                edit_inline=models.TABULAR, core=True)
+    invoice = models.ForeignKey(
+        Invoice,
+        on_delete=models.CASCADE,
+        null=False,
+        edit_inline=models.TABULAR,
+        core=True,
+    )
     text = models.TextField(null=False, core=True)
     value = models.DecimalField(null=False, decimal_places=2, max_digits=7,
                                 core=True)

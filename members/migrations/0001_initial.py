@@ -42,7 +42,10 @@ class Migration(migrations.Migration):
                 ('key_id', models.CharField(max_length=100, null=True, blank=True)),
                 ('lazzzor_rate', models.DecimalField(default='1.00', max_digits=3, decimal_places=2, choices=[(Decimal('1.00'), 'Standard Rate (1.00)'), (Decimal('0.50'), "Backer's Rate (0.50)")])),
                 ('remark', models.TextField(null=True, blank=True)),
-                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
+                ('user', models.OneToOneField(
+                    to=settings.AUTH_USER_MODEL,
+                    on_delete=models.CASCADE,
+                )),
             ],
         ),
         migrations.CreateModel(
@@ -59,7 +62,10 @@ class Migration(migrations.Migration):
                 ('start', models.DateField()),
                 ('end', models.DateField(null=True, blank=True)),
                 ('amount', models.IntegerField()),
-                ('kind_of_membership', models.ForeignKey(to='members.KindOfMembership')),
+                ('kind_of_membership', models.ForeignKey(
+                    to='members.KindOfMembership',
+                    on_delete=models.CASCADE,
+                )),
             ],
         ),
         migrations.CreateModel(
@@ -68,8 +74,14 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(verbose_name='ID', serialize=False, auto_created=True, primary_key=True)),
                 ('begin', models.DateField()),
                 ('end', models.DateField(null=True, blank=True)),
-                ('kind_of_membership', models.ForeignKey(to='members.KindOfMembership')),
-                ('user', models.ForeignKey(to=settings.AUTH_USER_MODEL)),
+                ('kind_of_membership', models.ForeignKey(
+                    to='members.KindOfMembership',
+                    on_delete=models.CASCADE,
+                )),
+                ('user', models.ForeignKey(
+                    to=settings.AUTH_USER_MODEL,
+                    on_delete=models.CASCADE,
+                )),
             ],
         ),
         migrations.CreateModel(
@@ -100,8 +112,14 @@ class Migration(migrations.Migration):
                 ('bank_account_bic', models.CharField(max_length=11, blank=True)),
                 ('bank_account_mandate_reference', models.CharField(max_length=35, blank=True)),
                 ('bank_account_date_of_signing', models.DateField(null=True, blank=True)),
-                ('bank_collection_mode', models.ForeignKey(to='members.BankCollectionMode')),
-                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL)),
+                ('bank_collection_mode', models.ForeignKey(
+                    to='members.BankCollectionMode',
+                    on_delete=models.CASCADE,
+                )),
+                ('user', models.OneToOneField(
+                    to=settings.AUTH_USER_MODEL,
+                    on_delete=models.CASCADE,
+                )),
             ],
         ),
         migrations.CreateModel(
@@ -114,11 +132,18 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='payment',
             name='method',
-            field=models.ForeignKey(to='members.PaymentMethod'),
+            field=models.ForeignKey(
+                to='members.PaymentMethod',
+                on_delete=models.CASCADE,
+            ),
         ),
         migrations.AddField(
             model_name='payment',
             name='user',
-            field=models.ForeignKey(to=settings.AUTH_USER_MODEL, null=True),
+            field=models.ForeignKey(
+                to=settings.AUTH_USER_MODEL,
+                on_delete=models.CASCADE,
+                null=True,
+            ),
         ),
     ]
