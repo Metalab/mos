@@ -1,6 +1,6 @@
 Django>=1.11,<2
 Pillow==2.8.1
-icalendar
+icalendar>=4,<4.0.3
 pytz
 Unipath
 django-extensions
