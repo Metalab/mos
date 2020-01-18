@@ -14,7 +14,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "debian/contrib-jessie64"
+  config.vm.box = "debian/contrib-buster64"
   config.vm.hostname = "mos"
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,

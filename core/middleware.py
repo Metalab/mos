@@ -7,7 +7,9 @@ pagestats.py for authors
 import time
 
 from django.db import connection
+from django.utils.deprecation import MiddlewareMixin
 from django.utils.encoding import force_text
+
 from core.utils import human_readable_time
 
 
@@ -15,7 +17,7 @@ TAG = '<!-- footer_stats -->'
 FOOTER_STAT_STRING = 'renderd in %(render_time)s - %(queries)s sql queries'
 
 
-class SetStatFooter:
+class SetStatFooter(MiddlewareMixin):
     """
     Sets some performance data (number of queries,..
     """
