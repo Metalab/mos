@@ -72,10 +72,18 @@
         fixtures: 'core/fixtures/default_choices.json members/fixtures/default_choices.json members/fixtures/dummy_members.json cal/fixtures/events_2012-09-20.json'
         command: loaddata
         virtualenv: "{{ virtualenv_path }}"
+      when: st_sqlite.stat.exists == False
 
     # If calender data fixture fails because of auth.user 1 not there. Creating Admin failed...
     # Delete mos.sqlite DB in folder and provision vagrant Box again.
 
+    - name: Activate virtualenv on vagrant ssh
+      lineinfile:
+        dest: /home/vagrant/.bashrc
+        line: 'source {{ virtualenv_path }}/bin/activate'
+
     # set the default directory to /mos
-    - lineinfile: dest=/home/vagrant/.bashrc
-                  line='cd /mos'
+    - name: Change into mos dir on vagrant ssh
+      lineinfile:
+        dest: /home/vagrant/.bashrc
+        line: 'cd /mos'
