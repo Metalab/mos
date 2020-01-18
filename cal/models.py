@@ -14,7 +14,6 @@ from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
-from django.utils.encoding import python_2_unicode_compatible
 
 from core.models import Category, Location
 from . import create_calendar
@@ -70,7 +69,6 @@ class FutureEventFixedNumberManager(EventManager):
         return latest
 
 
-@python_2_unicode_compatible
 class Event(models.Model):
     """
     Represents an event

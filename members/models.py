@@ -9,7 +9,7 @@ from django.db import models
 from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.utils.encoding import python_2_unicode_compatible, smart_text, force_str
+from django.utils.encoding import smart_text, force_str
 
 
 class PaymentInfo(models.Model):
@@ -192,7 +192,6 @@ def get_months(date):
     return date.month + 12 * date.year
 
 
-@python_2_unicode_compatible
 class BankCollectionMode(models.Model):
     name = models.CharField(max_length=20)
     num_month = models.IntegerField()
@@ -201,7 +200,6 @@ class BankCollectionMode(models.Model):
         return self.name
 
 
-@python_2_unicode_compatible
 class MembershipPeriod(models.Model):
     begin = models.DateField()
     end = models.DateField(null=True, blank=True)
@@ -248,7 +246,6 @@ class MembershipPeriod(models.Model):
             cur = cur + relativedelta(months=1)
 
 
-@python_2_unicode_compatible
 class MembershipFee(models.Model):
     """
     Defines the membership fee for a certain period of time.
@@ -269,7 +266,6 @@ class MembershipFee(models.Model):
         return "%s - %d" % (self.kind_of_membership, self.amount)
 
 
-@python_2_unicode_compatible
 class KindOfMembership(models.Model):
     name = models.CharField(max_length=30)
 
@@ -440,7 +436,6 @@ class PaymentManager(models.Manager):
                     print(line)
 
 
-@python_2_unicode_compatible
 class PaymentMethod(models.Model):
     name = models.CharField(max_length=50)
 
@@ -448,7 +443,6 @@ class PaymentMethod(models.Model):
         return self.name
 
 
-@python_2_unicode_compatible
 class Payment(models.Model):
     amount = models.FloatField()
     comment = models.CharField(max_length=200, blank=True)

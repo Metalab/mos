@@ -1,8 +1,6 @@
 from django.db import models
-from django.utils.encoding import python_2_unicode_compatible
 
 
-@python_2_unicode_compatible
 class Category(models.Model):
     """
     represents a Category (name, description)
@@ -15,7 +13,6 @@ class Category(models.Model):
         return self.name
 
 
-@python_2_unicode_compatible
 class Location(models.Model):
     """
     represents a location(name, description, country)

@@ -1,4 +1,4 @@
-Django>=2.2,<3
+Django>=3.0,<3.1
 Pillow==2.8.1
 icalendar>=4,<4.0.3
 pytz

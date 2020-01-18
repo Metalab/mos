@@ -3,7 +3,6 @@ from __future__ import unicode_literals
 import datetime
 
 from django.contrib.auth.models import User
-from django.utils.encoding import python_2_unicode_compatible
 from django.db import models
 
 
@@ -13,7 +12,6 @@ class ProjectManager(models.Manager):
         return super(ProjectManager, self).get_queryset().filter(deleted=False)
 
 
-@python_2_unicode_compatible
 class Project(models.Model):
     name = models.CharField(max_length=200)
     teaser = models.TextField(max_length=200, blank=True, null=True)
