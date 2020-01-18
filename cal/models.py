@@ -12,7 +12,8 @@ from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.sites.models import Site
 from django.db import models
-from django.db.models import permalink, Q
+from django.db.models import Q
+from django.urls import reverse
 from django.utils.encoding import python_2_unicode_compatible
 
 from core.models import Category, Location
@@ -122,9 +123,8 @@ class Event(models.Model):
         else:
             return self.startDate < datetime.datetime.now()
 
-    @permalink
     def get_absolute_url(self):
-        return ('cal_event_detail', (self.id,),)
+        return reverse('cal_event_detail', args=(self.id,))
 
     def save(self, editor=False, new=False):
         if new and editor:
@@ -176,6 +176,5 @@ class Event(models.Model):
     def get_icalendar(self):
         return create_calendar([self.get_icalendar_event()])
 
-    @permalink
     def get_icalendar_url(self):
-        return ('cal_event_icalendar', (self.id,))
+        return reverse('cal_event_icalendar', args=(self.id,))

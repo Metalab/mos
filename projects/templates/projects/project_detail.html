@@ -4,5 +4,5 @@
 {% block title %}Metalab Project: {{ project.name }}{% endblock %}
 {% block hos_content %}
 {% makeform project projects.forms.ProjectForm project_form %}
-	<li>{% include "projects/projectinfo_nf.inc" with new=0 %}</li>
+    <li>{% include "projects/projectinfo_nf.inc" with new=0 %}</li>
 {% endblock %}
