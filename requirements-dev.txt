@@ -3,4 +3,4 @@
 ipython==5.7.0
 flake8
 autopep8
-django_debug_toolbar
+django_debug_toolbar==1.9.1
