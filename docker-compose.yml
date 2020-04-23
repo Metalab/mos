@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  app:
+    image: metalab-mos
+    build: .
+    command: "python3 /code/manage.py runserver 0.0.0.0:8020"
+    environment:
+        PYTHONUNBUFFERED: 0
+    links:
+    - db
+    depends_on:
+      - db
+    volumes:
+    - .:/code
+    ports:
+    - "8020:8020"
+  db:
+    image: postgres:10
