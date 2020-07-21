@@ -68,10 +68,10 @@ def spaceapi(request):
                 'type': 'rss',
                 'url': 'https://metalab.at/feeds/events/',
             },
-            'blog': {
-                'type': 'rss',
-                'url': 'http://metalab.soup.io/rss',
-            },
+            #'blog': {
+            #    'type': 'rss',
+            #    'url': 'http://metalab.soup.io/rss',
+            #},
         },
         'projects': ['https://metalab.at/wiki/%s' % project.wikiPage for project in projects if project.wikiPage],
         'state': {

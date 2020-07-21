@@ -92,75 +92,6 @@
 	float: right;
 }
 
-
-#soup_credits {
- font-size:0.8em;
- text-align:right;
- margin-top:-255px;
-}
-
-
-#soup_logo {
-position:absolute;
-}
-#soup_logo img {
- position:relative;
- top:-30px;
- left:295px;
- z-index:101;
- width:57px;
- height:57px;
-display:none;
-}
-
-
-#soup_iframe_wrapper {
- position:relative;
- top:-255px;
-
-}
-#soup_iframe {
- position:relative;
- z-index:99;
- width:333px;
- height:255px;
- border:1px solid #D7D7D7;
- padding:1px;
- overflow-x: hidden;
-}
-
-
-#souplink_overlay {
- width:315px;
- height:255px;
- z-index:100;
- position:relative;
- left:2px;
- overflow:hidden;
-
-}
-#soup_pixel {
- width:315px;
- height:255px;
-}
-#soup_logo a, #soup_logo a:hover, #souplink_overlay a, #souplink_overlay a:hover {
- padding:0;
- margin:0;
- background:none;
- color:none;
-}
-
-
-/* =description */
-#soup {
-	float: left;
-	width: 100%;
-        height:290px;
-	margin-bottom: 2em;
-	padding-bottom: 1em;
-}
-
-
 /* =project */
 #project_list {
 	float: left;
@@ -306,7 +237,6 @@ display:none;
 
 	#main #column_1,
 	#main #column_2,
-	#soup_iframe,
 	#calendar-content li
 	{
 		width: 100% !important;
@@ -315,7 +245,6 @@ display:none;
 		float: none;
 	}
 
-	#soup,
 	#project_list {
 		width: 49%;
 		margin-right: 2%;
@@ -332,17 +261,12 @@ display:none;
 		padding: 0;
 	}
 
-	#soup_credits {
-		text-align: left;
-	}
-
 }
 
 
 /* mobile stuff */
 @media screen and (max-width: 600px) {
 
-	#soup,
 	#calendar,
 	#project_list,
 	#recent_changes
