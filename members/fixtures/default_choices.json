@@ -160,6 +160,26 @@
   }
 },
 {
+  "pk": 13,
+  "model": "members.membershipfee", 
+  "fields": {
+    "start": "2017-03-01", 
+    "amount": 5, 
+    "end": null, 
+    "kind_of_membership": 14
+  }
+},
+{
+  "pk": 14,
+  "model": "members.membershipfee", 
+  "fields": {
+    "start": "2017-03-01", 
+    "amount": 15, 
+    "end": null, 
+    "kind_of_membership": 15
+  }
+},
+{
   "pk": 1, 
   "model": "members.kindofmembership", 
   "fields": {
@@ -248,6 +268,20 @@
   "model": "members.kindofmembership", 
   "fields": {
     "name": "ermäßigt (10EUR)"
+  }
+},
+{
+  "pk": 14, 
+  "model": "members.kindofmembership", 
+  "fields": {
+    "name": "ermäßigt (5EUR)"
+  }
+},
+{
+  "pk": 15,
+  "model": "members.kindofmembership", 
+  "fields": {
+    "name": "ermäßigt (15EUR)"
   }
 },
 {
