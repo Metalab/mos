@@ -4,11 +4,10 @@ from unipath import FSPath as Path
 
 BASE_DIR = Path(__file__).absolute().ancestor(3)
 
-# Make this unique, and don't share it with anybody.
-from .secret_key import *
-
 DEBUG = False
 TEST_RUNNER = 'django.test.runner.DiscoverRunner'
+
+ASGI_APPLICATION = "mos.routing.application"
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -115,6 +114,7 @@ INSTALLED_APPS = (
     'sources',
     'announce',
     'core',
+    'channels',
 )
 
 

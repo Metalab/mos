@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 
-from .models import Payment, PaymentInfo, MembershipPeriod, ContactInfo
+from .models import Payment, PaymentInfo, MembershipPeriod, ContactInfo, KindOfMembership, MembershipFee, BankCollectionMode
 
 
 class ContactInfoInline(admin.StackedInline):
@@ -34,6 +34,16 @@ class PaymentAdmin(admin.ModelAdmin):
     list_display = ['date', 'method', 'user', 'amount', 'original_file', 'original_line']
     list_display_links = None
 
+class MembershipFeeInline(admin.TabularInline):
+    model = MembershipFee
+
+@admin.register(KindOfMembership)
+class KindOfMembershipAdmin(admin.ModelAdmin):
+    inlines = [MembershipFeeInline]
+
+@admin.register(BankCollectionMode)
+class BankCollectionModeAdmin(admin.ModelAdmin):
+    pass
 
 admin.site.unregister(User)
 

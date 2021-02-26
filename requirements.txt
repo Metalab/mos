@@ -7,3 +7,6 @@ django-extensions
 python-dateutil
 freezegun
 feedparser
+mysqlclient
+channels
+websockets

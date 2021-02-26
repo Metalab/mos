@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  mos:
+    image: metalab-mos:latest
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      PYTHONUNBUFFERED: 0
+      DJANGO_SETTINGS_MODULE: "mos.settings.deploy_env"
+      DJANGO_DOMAIN: 'metalab.at'
+      MYSQL_DATABASE: 'mos'
+      MYSQL_USER: 'mos'
+      MYSQL_PASSWORD: 'mos'
+      MYSQL_HOST: 'db'
+      DJANGO_SECRET_KEY: 'CHANGEME'
+      DJANGO_STATIC_ROOT: '/static'
+      DJANGO_MEDIA_ROOT: '/media'
+#      HOS_SEPA_CREDITOR_ID
+    links:
+    - db
+    depends_on:
+    - db
+    volumes:
+#    - .:/code
+    - ./volume-static:/static
+    - ./volume-media:/media
+    ports:
+    - "127.0.0.1:3031:3031"
+  db:
+    image: mariadb:10.5
+    environment:
+      MYSQL_DATABASE: 'mos'
+      MYSQL_USER: 'mos'
+      MYSQL_PASSWORD: 'mos'
+      MYSQL_ROOT_PASSWORD: mostest
+    restart: on-failure
+    volumes:
+    - ./volume-mysql:/var/lib/mysql
