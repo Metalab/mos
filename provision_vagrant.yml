@@ -1,6 +1,5 @@
 ---
 - hosts: all
-  become: yes
   vars:
     virtualenv_path: /home/vagrant/dev
   tasks:
@@ -12,40 +11,55 @@
 
     # update / install packages
     - name: "Install packages"
+      become: true
       apt:
-        update_cache: yes
+        update_cache: true
         cache_valid_time: 3600
-        name: "{{ item }}"
-      with_items:
-        - build-essential
-        - locales
-        - python3-dev
-        - python3-pip
-        - python3-venv
+        pkg:
+          - build-essential
+          - locales
+          - python3-dev
+          - python3-pip
+          - python3-venv
+          # - rustc
+
     - name: "add locale de_DE.UTF-8"
+      become: true
       locale_gen:
         name: "de_DE.UTF-8"
         state: present
 
+    - name: Upgrade pip3
+      pip:
+        name:
+          - pip
+          - wheel
+        extra_args: --upgrade
+        virtualenv: "{{ virtualenv_path }}"
+        virtualenv_command: /usr/bin/python3 -m venv
+
     # install required python modules
-    - name: "Install python modules"
+    - name: Install python modules
       pip:
         requirements: "{{ item }}"
         virtualenv: "{{ virtualenv_path }}"
         virtualenv_command: /usr/bin/python3 -m venv
       with_items:
-        - /vagrant/requirements.txt
+        - /vagrant/requirements-vagrant.txt
         - /vagrant/requirements-dev.txt
 
-    # check the existence of the secret_key.py file and create one if it does not exist
     # a generated file should contain something like: SECRET_KEY='<KVPy@&pwCO[1KCz.O[]*mZ\+Q*CfTTm#;$1Bdd_17gq@9dzaG'
-    - stat: path=/mos/mos/settings/secret_key.py
+    - name: check the existence of the secret_key.py file and create one if it does not exist
+      stat: path=/mos/mos/settings/secret_key.py
       register: st
-    - shell: echo "SECRET_KEY='`cat /dev/urandom | tr -dc 'a-z0-9!@#$%^&*(-_=+)' | head -c50`'" > /mos/mos/settings/secret_key.py
-      when: st.stat.exists == False
+
+    - name: generate random django secret
+      shell: echo "SECRET_KEY=r'`cat /dev/urandom | tr -dc 'a-z0-9!@#$%^&*(-_=+)' | head -c50`'" > /mos/mos/settings/secret_key.py
+      when: not st.stat.exists
 
     # prepare MOS itself
-    - stat: path=/mos/mos.sqlite
+    - name: generate mos sqlite database
+      stat: path=/mos/mos.sqlite
       register: st_sqlite
 
     - name: django makemigrations
@@ -60,11 +74,12 @@
         command: migrate
         virtualenv: "{{ virtualenv_path }}"
 
-    - django_manage:
+    - name: Create Admin User
+      django_manage:
         app_path: /mos
         command: "createsuperuser --noinput --username=admin --email=admin@example.com"
         virtualenv: "{{ virtualenv_path }}"
-      when: st_sqlite.stat.exists == False
+      when: not st_sqlite.stat.exists
 
     - name: django loaddata
       django_manage:
@@ -72,7 +87,7 @@
         fixtures: 'core/fixtures/default_choices.json members/fixtures/default_choices.json members/fixtures/dummy_members.json cal/fixtures/events_2012-09-20.json'
         command: loaddata
         virtualenv: "{{ virtualenv_path }}"
-      when: st_sqlite.stat.exists == False
+      when: not st_sqlite.stat.exists
 
     # If calender data fixture fails because of auth.user 1 not there. Creating Admin failed...
     # Delete mos.sqlite DB in folder and provision vagrant Box again.

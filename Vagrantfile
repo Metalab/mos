@@ -1,6 +1,41 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+$msg = <<MSG
+======================================================
+
+
+███╗   ███╗███████╗████████╗ █████╗ ██╗      █████╗ ██████╗
+████╗ ████║██╔════╝╚══██╔══╝██╔══██╗██║     ██╔══██╗██╔══██╗
+██╔████╔██║█████╗     ██║   ███████║██║     ███████║██████╔╝
+██║╚██╔╝██║██╔══╝     ██║   ██╔══██║██║     ██╔══██║██╔══██╗
+██║ ╚═╝ ██║███████╗   ██║   ██║  ██║███████╗██║  ██║██████╔╝
+╚═╝     ╚═╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚════╝
+
+Vagrant VM Development Machine
+
+How to proceed further:
+
+enter the VM with:
+$ vagrant ssh
+
+Execute the following commands inside the VM:
+
+1) You have to set the 'admin' superuser password manually
+$ ./manage.py changepassword admin
+
+2) Start the server bound on all interfaces instead of 127.0.0.1 only
+$ ./manage.py runserver 0.0.0.0:8000
+
+Access the instance under http://localhost:8000 in your browser
+
+Modifications in the folder will be immediately available in the dev environment.
+
+
+=====================================================
+MSG
+
+
 # Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
 VAGRANTFILE_API_VERSION = "2"
 
@@ -40,4 +75,5 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
 
+  config.vm.post_up_message = $msg
 end

@@ -1,0 +1,11 @@
+Django>=3.0,<3.1
+Pillow
+icalendar>=4,<4.0.3
+pytz
+Unipath
+django-extensions
+python-dateutil
+freezegun
+feedparser
+channels
+websockets
