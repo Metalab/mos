@@ -1,79 +1,200 @@
-{% extends "base.html" %}
-
-{% block title %}metalab{% endblock %}
-
-{% block hos_content %}
-<div id="column_1">
-	<div id="calendar">
-        <h1><a href="/calendar" title="Veranstaltungen">Events</a></h1>
-		{% include "cal/calendar.inc" %}
-    </div>
-    <div id="openlab">
-        Interessiert? Dann schau doch am besten <a href="/wiki/Location" title="Anreise">vorbei</a> oder join unseren <a href="xmpp://metalab@conference.jabber.metalab.at">Jabber Multi-User-Chat</a> bzw. eine der <a href="/wiki/Mailinglisten" title="Mailinglisten">Mailinglisten</a>.
-    </div>
-</div>
-<div id="column_2">
-{% comment %}
-<style type="text/css">#members a:hover { text-decoration:none; background-color:white; } </style>
-	<div id="members" style="text-align:center;">
-<a href="http://metalab.at/static/5jahre" >
-    <img style="border:none;" src="http://metalab.at/static/5jahre/banner.png" />
-</a>
-{% endcomment %}
-        <h1><a href="/member/" title="Member List">Mitglieder</a></h1>
-        <div class="member_pics">
-            {% for member in randommembers %}
-            {% if member.contactinfo.get_wikilink %}<a class="member" href="{{ member.contactinfo.get_wikilink }}">{% endif %}<img src="{{ member.contactinfo.image.url }}"  width="54" height="54" alt="{{ member.username }}" />{% if member.contactinfo.get_wikilink %}</a>{% endif %}
-            {% endfor %}
-	    <a href="/wiki/Mitglied_werden" title="Mitglied werden">Mitglied werden</a>
-	</div>
-	<div id="introduction">
-	    220m² Raum im Herzen Wiens für technologisch-kreative Projekte, Veranstaltungen, Software, Hardware, Essen &amp; mehr....
-	</div>
-	<!--<div id="announcement">
-	</div>-->
-	<!--<div id="announcement">
-		We grieve deeply over the tragic loss of our beloved friend and distinguished metalab-member Florian Hufsky, also known as "oneup".<br /><br />
-		Our condolences and heartfelt sympathy go out to his family and close friends.<br /><br />
-
-		You will be remembered.<br />
-<br />
-		<span id='extrasmall'><a href="http://florianhufsky.soup.io" target="_blank">condolence blog</a></span><br />
-		<small>Vienna, 17.12.2009</small>
-	</div>-->
-  <!--div id="announcement">
-    Der aktuelle Stand unserer Corona-Regeln ist hier verfügbar: <span id='extrasmall'><a href="/wiki/COVID-19" target="_blank">COVID-19 Infopage im Metalab Wiki</a></span><br />
-    Wenn ihr Fragen habt, könnt ihr euch gerne unter core [et] metalab {dot} at melden!
-    <br /><br />
-    Achtet auf euch und bleibt gesund,<br />
-    Euer Metalab Core Team<br />
-    <br />
-    <small>Wien, 29.09.2020</small><br />
-    _______________________________________________________________________________<br />
-    <br />
-    <br />
-    Latest Updates about Corona are available here: <span id='extrasmall'><a href="/wiki/COVID-19/en" target="_blank">COVID-19 Infopage in the Metalab Wiki</a></span><br />
-    For questions you can contact us via core [et] metalab {dot} at !
-    <br /><br />
-    Stay safe,<br />
-    The Metalab Core Team<br /><br />
-    <small>Vienna, 29.09.2020</small>
-  </div-->
-	<div id="project_list">
-		<h1><a href="/project/" title="Projekte">Projekte</a></h1>
-		{% include "projects/overview.inc" %}
-    </div>
-
-	   <div id="recent_changes">
-		{% include "rss/recentchanges.inc" %}
-	  </div>
-
-          <div id="issue_tracker">
-              <h2><a href="https://metalab.at/issues/">Issue Tracker</a></h2>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Metalab: der Hackspace im Herzen Wiens</title>
+    <link href="{{ STATIC_URL }}stylesheets/style.css" media="screen" rel="Stylesheet" type="text/css" />
+    <link href="{{ STATIC_URL }}stylesheets/leaflet.css" media="screen" rel="Stylesheet" type="text/css" />
+    <script src="{{ STATIC_URL }}javascripts/prototype.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}javascripts/leaflet.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}javascripts/ml-ajaxtools.js" type="text/javascript"></script>
+    <!-- <script src="{{ STATIC_URL }}admin/js/core.js" type="text/javascript"></script> -->
+    <!-- <script src="{{ STATIC_URL }}admin/js/jquery.js" type="text/javascript"></script> -->
+    <!-- <script src="{{ STATIC_URL }}admin/js/jquery.init.js" type="text/javascript"></script> -->
+    <!-- <script src="{{ STATIC_URL }}admin/js/actions.js" type="text/javascript"></script> -->
+    <script src="{{ STATIC_URL }}admin/js/calendar.js" type="text/javascript"></script>
+    <script src="{{ STATIC_URL }}admin/js/admin/DateTimeShortcuts.js" type="text/javascript"></script>
+  </head>
+  <body>
+    <section class="main">
+      <div class="main-inner">
+        <div id="events">
+          <h3>
+            <a href="/calendar" title="Veranstaltungen">Events</a>
+          </h3>
+     	    {% include "cal/new_calendar.inc" %}
+        </div>
+        <div class="intro">
+          <h2>Metalab: der Hackspace im Herzen Wiens</h2>
+          <p>
+            <a href="https://metalab.at/wiki/English" class="english">In English</a>
+            Das Metalab ist ein unabhängig und gemeinschaftlich betriebener
+            Raum für technisch-kreative Projekte im Zentrum von Wien,
+            gleich hinter dem Rathaus.
+          </p>
+          <p>
+            Auf über 200 m² bietet es Raum und Infrastruktur für Wissensaustausch,
+            die Umsetzung von innovativen Projekten und die Abhaltung von Veranstaltungen.
+            Es dient auch als sozialer Treffpunkt für kreative Köpfe jeden Alters aus
+            dem weiten Umfeld von Informations- und Kommunikationstechnologie, neue Medien, usw.
+          </p>
+          <div class="main-buttons">
+            <a href="#location">Schau vorbei!</a>
+            <a href="https://metalab.at/wiki/Info_Folder">Mehr über das Metalab.</a>
           </div>
+        </div>
+      </div>
+    </section>
+    <nav class="titlebar-bg">
+      <div class="titlebar">
+        <div class="titlebar-inner">
+          <ul class="nav">
+            <li><a href="#people">Menschen</a></li>
+            <li><a href="#projects">Projekte</a></li>
+            <li><a href="/wiki">Wiki</a></li>
+            <li><a href="#location">Location</a></li>
+          </ul>
+          <a class="title" href="#">
+            <img id="logo-image" src="https://metalab.at/wiki/images/3/37/Atomic_1color_scalable.svg" alt="Metalab Logo" />
+            <img id="logo-text" src="https://metalab.at/wiki/images/1/17/Metalab.svg" alt="Metalab" />
+          </a>
+        </div>
+      </div>
+    </nav>
+    <section id="people">
+      <div class="people-inner">
+        <h2>Menschen</h2>
+        <p>
+          Das Metalab wird von seinen Mitglieder gemeinsam erhalten und gestaltet.
+        </p>
+        <div class="people-list">
+          {% for member in randommembers %}
+            {% if member.contactinfo.get_wikilink %}
+              <a href="{{ member.contactinfo.get_wikilink }}">
+                <img src="{{ member.contactinfo.image.url }}" alt="{{ member.username }}" />
+              </a>
+            {% else %}
+              <img src="{{ member.contactinfo.image.url }}" alt="{{ member.username }}" />
+            {% endif %}
+	        {% endfor %}
+          <a href="https://metalab.at/wiki/Benutzer:jk">
+            <img src="https://metalab.at/media/userpics/jk.jpg" />
+          </a>
+          <a href="https://metalab.at/wiki/Benutzer:Emi">
+            <img src="https://metalab.at/media/userpics/emi.png" />
+          </a>
+          <a href="https://metalab.at/wiki/Benutzer:A">
+            <img src="https://metalab.at/media/userpics/A.GIF" />
+          </a>
+          <a href="https://metalab.at/wiki/Benutzer:Cygenb0ck">
+            <img src="https://metalab.at/media/userpics/cygenb0ck_thumb.jpg">
+          </a>
+          <a href="https://metalab.at/wiki/Benutzer:Tkolar">
+            <img src="https://metalab.at/media/userpics/tkolar.png">
+          </a>
+          <a href="/member/" class="all-members">
+            <p>mehr…</p>
+          </a>
+          <a href="https://metalab.at/wiki/Mitglied_werden" class="become-member">
+            <h2>+</h2>
+            <p>Mitglied werden</p>
+          </a>
+        </div>
+      </div>
+    </section>
+    <section id="projects">
+      <div class="projects-inner">
+        <h2>Projekte</h2>
+        <p>
+          Im Metalab passiert ständig etwas! Hier stellen wir dir ein
+          paar der laufenden Projekte vor, an denen Leute im Metalab
+          werkeln.
+        </p>
+        <div class="project-list">
+	        {% include "projects/overview.inc" %}
+        </div>
+      </div>
+    </section>
+    <section id="location">
+      <div class="location-inner">
+        <h2>Komm' vorbei!</h2>
+        <p>
+          Du findest uns in der Rathausstraße 6 im 1.
+          Wiener Gemeindebezirk gleich hinter dem Rathaus.
+        </p>
+        <p>
+          Offen hat das Lab, wenn mindestens ein Mitglied anwesend ist.
+          Zumindest zur „Kernzeit“ zwischen 15:00 und 00:00 ist das
+          erfahrungsgemäß jeden Tag der Fall, an den meisten Arbeitstagen
+          sind auch schon mittags einige Metalabber*innen am Werk.
+          Meist ist das Metalab fast 24 Stunden am Tag besetzt,
+          insbesondere Donnerstag bis Sonntag. Selbstverständlich
+          bekommst du auch jederzeit gerne eine Führung durch die
+          Räumlichkeiten!
+        </p>
+      </div>
+      <div id="map"></div>
+    </section>
+    <footer>
+      Made with ♥ at Metalab.
+      Runs on <a href="https://github.com/metalab/mos">Metalab OS</a>
+      (<a href="/member/login/">Login</a>).
+      <a href="/wiki/Datenschutzerklärung" title="Datenschutzerklärung">Datenschutzerklärung</a>
+      <a href="https://metalab.at/wiki/Impressum">Impressum</a>.
+    </footer>
+    <script>
+      var calendarUpdateURL = '/calendar/ajax/list/5/';
+      
+      var metalab_location = [48.20941, 16.35610];
+      var attributionText = 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>';
+      var layerOptions = {
+          attribution: attributionText,
+          subdomains: 'abcd',
+          minZoom: 17,
+          maxZoom: 17,
+          ext: 'png'
+      };
+      var tilesUri = 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.{ext}';
+      var stamen   = L.tileLayer(tilesUri, layerOptions);
+      
+      var map = new L.Map('map', {
+        center: metalab_location,
+        zoom: 17,
+        minZoom: 17,
+        maxZoom: 17,
+        zoomControl: false,
+        touchZoom: false,
+        doubleClickZoom: false,
+        scrollWheelZoom: false,
+        boxZoom: false,
+        keyboard: false,
+        tap: false,
+        dragging: false
+      });
+      map.addLayer(stamen);
 
-    <script type="text/javascript">
-        var calendarUpdateURL = '/calendar/ajax/list/5/';
+      var popup = new L.Popup({
+        closeButton: false,
+        closeOnClick: false,
+        className: 'leaflet-popup-location'
+      });
+
+      popup.setLatLng(metalab_location);
+      popup.setContent('<h3>Metalab</h3><p>Rathausstraße 6, 1010 Wien</p>')
+      popup.openOn(map);
+
+      window.addEventListener('scroll', function() {
+        var titlebar = document.querySelector('.titlebar-bg');
+        if(titlebar.getBoundingClientRect().top <= 0) {
+          titlebar.classList.add('sticky');
+        } else {
+          if(titlebar.classList.contains('sticky')) {
+            titlebar.classList.remove('sticky');
+          }
+        }
+      });
     </script>
-</div>
-{% endblock %}
+  </body>
+</html>
