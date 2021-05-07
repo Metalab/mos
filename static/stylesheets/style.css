@@ -284,13 +284,12 @@ section > * {
 }
 
 .people-list > * {
-  flex: 1 1 20%;
-  padding: 1rem;
+  flex: 1 1 10%;
+  padding: 0rem;
   text-decoration: none;
 }
 
 .people-list img {
-  border-radius: 50%;
   max-width: 100%;
 }
 
@@ -302,7 +301,7 @@ section > * {
 .all-members {
   color: #000;
   font-weight: bold;
-  font-size: 2rem;
+  font-size: 1rem;
   line-height: 2rem;
   margin: 0;
 }
