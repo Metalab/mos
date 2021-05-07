@@ -1,18 +1,28 @@
+@font-face {
+  font-family: "Jura";
+  src: url("/static/fonts/Jura-Book.ttf");
+}
+
 html, body {
   font-family:Helvetica,Arial,sans-serif;
   font-size: 16px;
   margin: 0;
   padding: 0;
+  color: #000;
 }
 
 body {
-  display: flex;
-  flex-direction: column;
+}
+
+h1,h2,h3,h4{
+  font-family: "Jura";
+  font-weight: normal;
 }
 
 a {
-  color: white;
+  color: #000;
   text-decoration: none;
+  
 }
 
 a:hover {
@@ -20,17 +30,17 @@ a:hover {
   text-decoration: underline;
 }
 
-section, footer {
-  width: 100%;
-  padding: 8rem 0;
-  text-align: right;
+section {
+  border: 1px solid #000;
+  margin-bottom: 10px;
 }
 
-.projects-inner, .people-inner {
-  max-width: 960px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  transform: skewY(3deg);
+section > * {
+	margin: 10px;
+}
+
+#location > * {
+	margin: 0px;
 }
 
 /* action */
@@ -52,25 +62,6 @@ section, footer {
 
 .event:hover .hoverHidden:hover {
   opacity: 1;
-}
-
-.main {
-  background: url('https://metalab.at/wiki/images/b/b1/Maker_Faire_Dome.jpg') no-repeat center center fixed;
-  height: 85vh;
-  text-align: left;
-  padding: 0;
-}
-.main-inner {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  align-content: flex-start;
-  max-width: 960px;
-  height: 100%;
-  margin: 0 auto;
-}
-.main-inner > * {
-  margin: 1rem;
 }
 
 #events {
@@ -98,7 +89,7 @@ section, footer {
 }
 
 .event {
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 0rem;
   display: block;
 }
 
@@ -128,8 +119,9 @@ section, footer {
 }
 
 .event_ical, .event-category {
-  background-color: #f26522;
-  padding: 0.1rem 0.25rem;
+  background-color: #ddd;
+  padding: 0.1rem;
+  margin: 0 0.3rem 0 0;
 }
 
 .event-category a::before {
@@ -137,29 +129,23 @@ section, footer {
 }
 
 .intro {
-  flex: 1 1 60%;
-  background-color: white;
-  box-shadow: 0.5rem 0.5rem rgba(0,0,0,0.5);
 }
 
-.intro > * {
-  padding: 0.5rem;
-}
+.intro > * {padding: 0.;}
 
 .intro > p {
   margin: 0;
 }
 
 .intro > h2 {
-  background-color: #003054;
-  color: white;
-  margin: 0;
+  color: #000;
 }
 
 .intro .english {
-  background-color: #f26522;
   padding: 0.1rem 0.25rem;
   font-size: 0.75rem;
+  background: #ddd;
+  color: #000;
 }
 
 .main-buttons {
@@ -167,14 +153,14 @@ section, footer {
 }
 
 .main-buttons > a:first-of-type {
-  background-color: #f26522;
-  color: white;
+  background-color: #ddd;
+  color: #000;
   padding: 0.5rem;
   font-weight: bold;
 }
 
 .main-buttons > a {
-  color: #999;
+  color: #000;
   padding: 0.5rem;
   white-space: nowrap;
   display: inline-block;
@@ -188,15 +174,9 @@ section, footer {
   margin-top: -15vh;
 }
 
-.titlebar-bg.sticky {
-  background: linear-gradient(-3deg, transparent, transparent 50%, #f26522 50%, #f26522 100%);
-}
 
 .titlebar {
-  margin-top: 3rem;
-  background-color: #f26522;
-  color: white;
-  transform: skewY(-3deg);
+	width: 100vw;
 }
 
 .titlebar-inner {
@@ -208,18 +188,37 @@ section, footer {
 }
 
 .nav {
-  padding: 0;
-  list-style: none;
+	padding: 0;
+	list-style: none;
+	margin: 20px 20px 10px 20px;
 }
 
 .nav li {
-  display: inline-block;
-  background-color: #003054;
-  font-size: 1.25rem;
+	display: inline-block;
+	font-size: 1.5rem;
+	width: 195px;
+	height: 40px;
+	border: 1px solid #000;
+	margin-right: 4px;
 }
 
 .nav a {
-  padding: 0 0.5rem;
+	display: inline-grid;
+	text-align: center;
+	text-transform: uppercase;
+	height: 100%;
+	width: 100%;
+	align-items: center;
+	font-family: Jura;
+}
+
+.content{
+	margin: 0 20px;
+	display: flex;
+	height: calc(100vH - 72px);
+	flex-flow: column wrap;
+	align-items: flex-start;
+	align-content: flex-start;
 }
 
 .title {
@@ -244,9 +243,6 @@ section, footer {
 
 #projects {
   z-index: 2;
-  background-color: #003054;
-  transform: skewY(-3deg);
-  color: white;
 }
 
 .project-list {
@@ -274,7 +270,6 @@ section, footer {
 }
 
 #people {
-  transform: skewY(-3deg);
   background-color: white;
   z-index: 1;
 }
@@ -291,7 +286,6 @@ section, footer {
 .people-list > * {
   flex: 1 1 20%;
   padding: 1rem;
-  color: black;
   text-decoration: none;
 }
 
@@ -306,7 +300,7 @@ section, footer {
 }
 
 .all-members {
-  color: #f26522;
+  color: #000;
   font-weight: bold;
   font-size: 2rem;
   line-height: 2rem;
@@ -314,8 +308,8 @@ section, footer {
 }
 
 .become-member {
-  background-color: #f26522;
-  color: white;
+  background-color: #ddd;
+  color: #000;
 }
 
 .become-member:hover {
@@ -347,12 +341,12 @@ section, footer {
 }
 
 #map {
-  height: 20rem;
+  height: 390px;
 }
 
 .leaflet-popup-location .leaflet-popup-content-wrapper {
   border-radius: 0;
-  background-color: #f26522;
+  background-color: #ddd;
 }
 
 .leaflet-popup-location .leaflet-popup-content {
@@ -362,19 +356,20 @@ section, footer {
 
 .leaflet-popup-location h3, .leaflet-popup-location p {
   margin: 0 !important;
-  color: white;
 }
 
 .leaflet-popup-location .leaflet-popup-tip {
-  background-color: #f26522;
+  background-color: #ddd;
 }
 
 footer {
   padding: 1rem 0;
-  z-index: 1;
-  background-color: white;
+  z-index: 10;
   color: #999;
-  font-size: 0.8rem;
+  position: fixed;
+  font-size: 1rem;
+  right: 0;
+  bottom: 0;
 }
 
 footer a {
@@ -455,6 +450,8 @@ footer a {
 
 @media (min-width: 768px) {
   section {
-    padding: 10rem 0;
+  width: 400px;
+  margin-right: 10px;
+  box-shadow: antiquewhite;
   }
 }
