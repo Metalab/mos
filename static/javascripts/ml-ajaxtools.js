@@ -100,11 +100,6 @@ function set_invisible(obj){
 }
 
 
-function do_on_load()
-{
-    // Do nothing. *Tumbleweed crosses the web*
-}
-
 function enter_pressed(e){
     var keycode;
     if (window.event) keycode = window.event.keyCode;
@@ -112,9 +107,6 @@ function enter_pressed(e){
     else return false;
     return (keycode == 13);
 }
-
-addEvent(window, 'load', do_on_load);
-
 
 function submit_event(id) {
     var frm = $('calendar-form-'+id);
