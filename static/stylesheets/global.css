@@ -52,8 +52,6 @@ td { background: #FFF; padding: 3px 5px; vertical-align: top; }
 tr.even td {background-color:#eee;}
 tr.odd td {background-color:#fff;}
 
-.flattrbtn { display: inline-block; vertical-align: middle; }
-
 /* Forms */
 input[type="email"], input[type="number"], input[type="password"], input[type="tel"], input[type="url"], input[type="text"] {
 	border: 1px solid #8c9ce9;
