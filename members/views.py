@@ -1,12 +1,15 @@
-from datetime import date
+from datetime import date, datetime, timedelta
+from sepaxml import SepaDD
+import json
 
 from dateutil.rrule import rrule, MONTHLY
+from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, Http404, HttpResponseNotAllowed
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 
 from .forms import UserEmailForm, UserNameForm, UserAdressForm,\
@@ -53,7 +56,7 @@ def members_details(request, user_username, errors="", update_type=""):
 
 
 def members_update(request, user_username, update_type):
-    if not request.POST or not request.user.username == user_username:
+    if request.method != "POST" or not request.user.username == user_username:
         return members_details(request, user_username,
                                "no permission to edit settings", "permission")
     user = get_object_or_404(User, username=user_username)
@@ -129,6 +132,88 @@ def members_bankcollection_list(request):
 
     else:
         return HttpResponseNotAllowed('you are not allowed to use this method')
+
+@login_required
+def members_bank(request):
+    if not request.user.is_superuser:
+        return HttpResponseNotAllowed('you are not allowed to use this method')
+    return render(request, 'members/member_bank.html')
+
+@login_required
+def members_bankcollection_sepa(request):
+    if not request.user.is_superuser:
+        return HttpResponseNotAllowed('you are not allowed to use this method')
+
+    if request.method != "POST":
+        return redirect("/member/bank/")
+
+    # get members that are active and have monthly collection activated
+    # 4 = monthly
+    members_to_collect_from = get_active_members()\
+        .filter(paymentinfo__bank_collection_allowed=True)\
+        .filter(paymentinfo__bank_collection_mode__id=4)
+
+    if len(members_to_collect_from) == 0:
+        return HttpResponse('Error: no members to collect from.')
+
+    sepa = SepaDD({
+        "name": settings.HOS_SEPA_CREDITOR_NAME,
+        "IBAN": settings.HOS_SEPA_CREDITOR_IBAN,
+        "BIC": settings.HOS_SEPA_CREDITOR_BIC,
+        "batch": settings.HOS_SEPA_BATCH,
+        "creditor_id": settings.HOS_SEPA_CREDITOR_ID,
+        "currency": settings.HOS_SEPA_CURRENCY,
+        "instrument": 'CORE'
+    }, schema=settings.HOS_SEPA_SCHEMA)
+
+    for member in members_to_collect_from:
+        debt = m.contactinfo.get_debt_for_month(date.today())
+        if debt > 0:
+            pmi = member.paymentinfo
+            # on the first debit initiation, set the mandate signing date
+            if not pmi.bank_account_date_of_signing:
+                pmi.bank_account_date_of_signing = date.today()
+                pmi.save()
+                payment_type = "FRST"
+                collection_date = date.today() + timedelta(days=+5)
+            else:
+                payment_type = "RCUR"
+                collection_date = date.today() + timedelta(days=+3)
+
+            sepa.add_payment({
+                "name": "%s %s" % (member.first_name, member.last_name),
+                "IBAN": pmi.bank_account_iban,
+                "mandate_id": pmi.bank_account_mandate_reference,
+                "mandate_date": pmi.bank_account_date_of_signing,
+                "type": payment_type,
+                "collection_date": collection_date,
+                "amount": debt * 100,  # in cents
+                "execution_date": date.today(),
+                "description": 'Mitgliedsbeitrag %d/%d (u%d)'
+                    % (date.today().year, date.today().month, member.id)
+                })
+    response = HttpResponse(sepa.export(), content_type='application/xml; charset=utf-8')
+    response['Content-Disposition'] = 'attachment; filename="metalab_sepa_%s_%s.xml"' \
+        % (date.today().year, format(date.today().month, '02'))
+    return response
+
+@login_required
+def members_bankcollection_importjson(request):
+    if not request.user.is_superuser:
+        return HttpResponseNotAllowed('you are not allowed to use this method')
+    if request.method != "POST" or not 'erstejson' in request.FILES:
+        messages.error(request, 'No file found.')
+        return redirect("/member/bank/")
+
+    try:
+        payments = json.load(request.FILES['erstejson'])
+    except json.JSONDecodeError:
+        messages.error(request, 'could not parse JSON data')
+        return redirect("/member/bank/")
+
+    # TODO not yet implemented
+    return render(request, 'members/member_bank_uploadresults.html')
+
 
 
 def members_key_list(request):

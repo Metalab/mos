@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block hos_content %}
+    <p>
+        <h1>SEPA Export</h1>
+        <form method="post" action="/member/bankexport/">
+            {% csrf_token %}
+            <button type="submit">Export SEPA.xml</button> (warning: will set mandate date on new mandates/members)
+        </form>
+    </p>
+    <p>
+        <h1>Erste Bank JSON import</h1>
+        <form method="post" action="/member/bankimport/" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" placeholder="Picture" name="erstejson" /><br />
+            <button type="submit">Import JSON</button>
+        </form>
+    </p>
+{% endblock %}
