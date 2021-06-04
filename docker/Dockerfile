@@ -4,6 +4,9 @@ EXPOSE 8080
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV PYTHONUNBUFFERED 1
+ENV DJANGO_STATIC_ROOT '/static'
+ENV DJANGO_MEDIA_ROOT '/media'
+ENV DJANGO_SETTINGS_MODULE: "mos.settings.deploy_env"
 
 RUN mkdir /code
 COPY . /code/

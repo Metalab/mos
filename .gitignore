@@ -11,3 +11,4 @@ logs/
 media/
 
 .vagrant
+/docker/volume-*

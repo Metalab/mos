@@ -6,10 +6,12 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile
+    command: run-dockerdev
     environment:
       PYTHONUNBUFFERED: 0
       DJANGO_SETTINGS_MODULE: "mos.settings.deploy_env"
-      DJANGO_DOMAIN: 'metalab.at'
+      DJANGO_DEBUG: 'true'
+      DJANGO_DOMAIN: 'localhost'
       MYSQL_DATABASE: 'mos'
       MYSQL_USER: 'mos'
       MYSQL_PASSWORD: 'mos'
@@ -23,11 +25,11 @@ services:
     depends_on:
     - db
     volumes:
-#    - .:/code
+    - ..:/code
     - ./volume-static:/static
     - ./volume-media:/media
     ports:
-    - "127.0.0.1:3031:3031"
+    - "127.0.0.1:8020:8020"
   db:
     image: mariadb:10.5
     environment:

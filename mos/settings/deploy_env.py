@@ -2,7 +2,7 @@
 import os
 from .common import *
 
-DEBUG = False
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() in ('true', 'yes', '1')
 
 ADMINS = (
     # ('MOS Admin', 'mos@metalab.at'),
