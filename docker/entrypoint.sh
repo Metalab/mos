@@ -1,4 +1,4 @@
-#!/bin/ash
+#!/bin/sh
 
 for i in $(seq 1 15); do
     nc -z "${MYSQL_HOST:=db}" "3306" > /dev/null 2>&1 && break
@@ -7,7 +7,7 @@ for i in $(seq 1 15); do
 done
 
 if [ "$#" -ge "1" ]; then
-    if [ "$1" == "run-dockerdev" ]; then
+    if [ "$1" = "run-dockerdev" ]; then
         set -x
         python3 manage.py migrate
         python3 manage.py runserver 0.0.0.0:8020
