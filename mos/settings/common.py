@@ -129,6 +129,8 @@ HOS_WIKI_URL = '/wiki/'
 HOS_ANNOUNCE_FROM = 'core@metalab.at'
 HOS_SEPA_CREDITOR_ID = 'AT12ZZZ00000000001'
 
+HOS_ANNOUNCE_LOG = '../announce.log'
+
 MOS_WIKI_CHANGE_URL = 'https://metalab.at/wiki/index.php?title=Spezial:Letzte_%C3%84nderungen&feed=atom'
 MOS_WIKI_KEEP = 5
 

@@ -46,4 +46,6 @@ EMAIL_HOST_PASSWORD = os.environ.get('DJANGO_EMAIL_HOST_PASSWORD', '')
 EMAIL_SUBJECT_PREFIX = os.environ.get('DJANGO_EMAIL_SUBJECT_PREFIX', '[MOS] ')
 DEFAULT_FROM_EMAIL = os.environ.get('DJANGO_DEFAULT_FROM_EMAIL', 'webmaster@localhost')
 
+HOS_ANNOUNCE_LOG = os.environ.get('HOS_ANNOUNCE_LOG', '/announce.log')
+
 HOS_SEPA_CREDITOR_ID = os.environ.get('HOS_SEPA_CREDITOR_ID', 'AT29HXR00000037632')
