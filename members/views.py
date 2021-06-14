@@ -181,7 +181,7 @@ def members_bankcollection_sepa(request):
                 collection_date = date.today() + timedelta(days=+3)
 
             sepa.add_payment({
-                "name": "%s %s" % (member.first_name, member.last_name),
+                "name": pmi.bank_account_owner,
                 "IBAN": pmi.bank_account_iban,
                 "mandate_id": pmi.bank_account_mandate_reference,
                 "mandate_date": pmi.bank_account_date_of_signing,
