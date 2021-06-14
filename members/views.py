@@ -167,7 +167,7 @@ def members_bankcollection_sepa(request):
     }, schema=settings.HOS_SEPA_SCHEMA)
 
     for member in members_to_collect_from:
-        debt = m.contactinfo.get_debt_for_month(date.today())
+        debt = member.contactinfo.get_debt_for_month(date.today())
         if debt > 0:
             pmi = member.paymentinfo
             # on the first debit initiation, set the mandate signing date
