@@ -2,7 +2,7 @@
 import os
 from .common import *
 
-DEBUG = False
+DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() in ('true', 'yes', '1')
 
 ADMINS = (
     # ('MOS Admin', 'mos@metalab.at'),
@@ -49,3 +49,5 @@ DEFAULT_FROM_EMAIL = os.environ.get('DJANGO_DEFAULT_FROM_EMAIL', 'webmaster@loca
 HOS_ANNOUNCE_LOG = os.environ.get('HOS_ANNOUNCE_LOG', '/announce.log')
 
 HOS_SEPA_CREDITOR_ID = os.environ.get('HOS_SEPA_CREDITOR_ID', 'AT29HXR00000037632')
+HOS_SEPA_CREDITOR_IBAN = os.environ.get('HOS_SEPA_CREDITOR_IBAN', 'AT912011182821260400')
+HOS_SEPA_CREDITOR_BIC = os.environ.get('HOS_SEPA_CREDITOR_BIC', 'GIBAATWWXXX')

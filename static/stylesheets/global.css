@@ -116,7 +116,12 @@ dt {
 .warning { border-color: #dada10; }
 .error { border-color: #e31515; }
 .info { border-color: #62a7f5; }
-
+.messages > li {
+    border-style: solid;
+    border-width: 1px;
+    margin: 0.2rem 0;
+    padding: 0.2rem;
+}
 ul.errorlist {
 	border: none !important;
 	color: #e31515;

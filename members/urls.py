@@ -20,6 +20,9 @@ urlpatterns = [
     re_path(r'^valid_user/?$', members.views.valid_user),
     path('history/', members.views.members_history),
     path('collection/', members.views.members_bankcollection_list),
+    path('bank/', members.views.members_bank),
+    path('bankexport/', members.views.members_bankcollection_sepa),
+    path('bankimport/', members.views.members_bankcollection_importjson),
     path('keylist/', members.views.members_key_list),
     path('lazzzorlist/', members.views.members_lazzzor_list),
 
