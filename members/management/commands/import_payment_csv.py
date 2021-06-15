@@ -24,13 +24,11 @@ class Command(BaseCommand):
             for row in reader:
                 yield row
 
-    def handle(self, *args, **kwargs):
-        if len(args) != 1:
-            print(self.help)
-            print(self.args)
-            return
+    def add_arguments(self, parser):
+        parser.add_argument('file')
 
-        self.file = args[0]
+    def handle(self, *args, **options):
+        self.file = options['file']
 
         payment_method = PaymentMethod.objects.get(name='bank collection')
 

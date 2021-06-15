@@ -7,17 +7,14 @@ class Command(BaseCommand):
     help = 'Load months collection CVS'
     args = "./manage.py import_payment absolute_filepath date(yyyy-mm-dd)"
 
-    def handle(self, *args, **kwargs):
+
+    def add_arguments(self, parser):
+        parser.add_argument('file')
+        parser.add_argument('date', help='yyyy-mm-dd')
+
+    def handle(self, *args, **options):
         from members.models import Payment
 
-        if len(args) != 2:
-            print(self.help)
-            print(self.args)
-            return
-
-        file = args[0]
-        date = args[1]
-
         print('importing')
-        Payment.objects.import_smallfile(file, date)
+        Payment.objects.import_smallfile(options['file'], options['date'])
         print('done')
