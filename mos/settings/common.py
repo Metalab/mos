@@ -121,6 +121,8 @@ INSTALLED_APPS = (
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/member/login/'
 
+DATA_UPLOAD_MAX_NUMBER_FIELDS=3000
+
 #---  Custom Options ----------------------------------------------------------
 HOS_URL_PREFIX = '/'
 HOS_NAME = 'Metalab OS'
