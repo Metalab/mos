@@ -7,6 +7,12 @@
   Diese Vorrichtung versendet Nachrichten an alle derzeit aktiven
   Mitglieder des Metalabs. Mi&szlig;brauch wird Folgen haben!
 </p>
+<p>
+  Die folgenden Variablen k&ouml;nnen im Body verwendet werden:<br />
+{% verbatim %}
+  {{username}} {{full_name}} {{short_name}} {{first_name}} {{last_name}} {{user_id}} {{profile_link}} {{IBAN}} {{BIC}}
+{% endverbatim %}
+</p>
 
 <form method="POST" action="">{% csrf_token %}
   <table>
