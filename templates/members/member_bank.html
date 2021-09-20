@@ -2,12 +2,13 @@
 
 {% block hos_content %}
     <p>
-        <h1>SEPA Export</h1>
+        <h1>Payment SEPA-DD Export</h1>
         <form method="post" action="/member/bankexport/">
             {% csrf_token %}
-            <button type="submit">Export SEPA.xml</button> (warning: will set mandate date on new mandates/members)
+            <button type="submit">Create Payments and export</button>
         </form>
     </p>
+{% comment %}
     <p>
         <h1>Erste Bank JSON import</h1>
         <form method="post" action="/member/bankimport/" enctype="multipart/form-data">
@@ -16,4 +17,5 @@
             <button type="submit">Import JSON</button>
         </form>
     </p>
+{% endcomment %}
 {% endblock %}

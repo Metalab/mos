@@ -7,6 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
+from django.db import transaction
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, Http404, HttpResponseNotAllowed
 from django.shortcuts import render, redirect, get_object_or_404
@@ -15,7 +16,7 @@ from django.conf import settings
 from .forms import UserEmailForm, UserNameForm, UserAdressForm,\
     UserImageForm, UserInternListForm
 from .models import ContactInfo, get_active_members, \
-    get_active_and_future_members
+    get_active_and_future_members, Payment, PaymentMethod
 from .util import get_list_of_history_entries
 
 
@@ -140,6 +141,7 @@ def members_bank(request):
     return render(request, 'members/member_bank.html')
 
 @login_required
+@transaction.atomic
 def members_bankcollection_sepa(request):
     if not request.user.is_superuser:
         return HttpResponseNotAllowed('you are not allowed to use this method')
@@ -166,6 +168,12 @@ def members_bankcollection_sepa(request):
         "instrument": 'CORE'
     }, schema=settings.HOS_SEPA_SCHEMA)
 
+    sepaxml_filename = f'metalab_sepa_{date.today().year}_{format(date.today().month, "02")}.xml'
+    payment_comment = f'{sepaxml_filename} exported {datetime.now().replace(microsecond=0).isoformat()} by {request.user.username}'
+    payment_method = PaymentMethod.objects.get(name='bank collection')
+    if not payment_method:
+        raise ValueError("could not find PaymentMethod 'bank collection'")
+
     for member in members_to_collect_from:
         debt = member.contactinfo.get_debt_for_month(date.today())
         if debt > 0:
@@ -182,7 +190,7 @@ def members_bankcollection_sepa(request):
 
             sepa.add_payment({
                 "name": pmi.bank_account_owner,
-                "IBAN": pmi.bank_account_iban,
+                "IBAN": pmi.bank_account_iban.replace(' ', ''),
                 "mandate_id": pmi.bank_account_mandate_reference,
                 "mandate_date": pmi.bank_account_date_of_signing,
                 "type": payment_type,
@@ -192,9 +200,16 @@ def members_bankcollection_sepa(request):
                 "description": 'Mitgliedsbeitrag %d/%d (u%d)'
                     % (date.today().year, date.today().month, member.id)
                 })
+            Payment.objects.create(
+                date = collection_date,
+                user = member,
+                amount = debt,
+                method = payment_method,
+                original_file = sepa.msg_id,
+                comment = payment_comment
+                )
     response = HttpResponse(sepa.export(), content_type='application/xml; charset=utf-8')
-    response['Content-Disposition'] = 'attachment; filename="metalab_sepa_%s_%s.xml"' \
-        % (date.today().year, format(date.today().month, '02'))
+    response['Content-Disposition'] = f'attachment; filename="{sepaxml_filename}"'
     return response
 
 @login_required
