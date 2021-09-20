@@ -16,7 +16,8 @@ from django.conf import settings
 from .forms import UserEmailForm, UserNameForm, UserAdressForm,\
     UserImageForm, UserInternListForm
 from .models import ContactInfo, get_active_members, \
-    get_active_and_future_members, Payment, PaymentMethod
+    get_active_and_future_members, Payment, PaymentMethod, \
+    get_mailinglist_members
 from .util import get_list_of_history_entries
 
 
@@ -252,6 +253,12 @@ def members_lazzzor_list(request):
                   for m in members_with_privs]
     return HttpResponse('\r\n'.join(result), content_type='text/plain')
 
+def members_intern_list(request):
+    members_on_intern = get_mailinglist_members() \
+        .filter(contactinfo__on_intern_list = True) \
+        .exclude(contactinfo__intern_list_email = '')
+    addresses = [m.contactinfo.intern_list_email for m in members_on_intern]
+    return HttpResponse('\r\n'.join(addresses), content_type='text/plain')
 
 def members_update_userpic(request, user_username):
     if not request.user.username == user_username:

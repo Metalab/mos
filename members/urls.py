@@ -25,6 +25,7 @@ urlpatterns = [
     path('bankimport/', members.views.members_bankcollection_importjson),
     path('keylist/', members.views.members_key_list),
     path('lazzzorlist/', members.views.members_lazzzor_list),
+    path('internlist/', members.views.members_intern_list),
 
     re_path(r'^(?P<user_username>(\w|-)+)/update/userpic/$', members.views.members_update_userpic),
     re_path(r'^(?P<user_username>(\w|-)+)/update/(?P<update_type>\w+)/$', members.views.members_update),
