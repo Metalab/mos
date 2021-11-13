@@ -10,6 +10,8 @@ from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.utils.encoding import smart_text, force_str
+# for iButton regex
+from django.core.validators import RegexValidator
 
 
 class PaymentInfo(models.Model):
@@ -66,7 +68,9 @@ class ContactInfo(models.Model):
     last_email_ok = models.NullBooleanField()
     has_active_key = models.BooleanField(default=False)
     has_lazzzor_privileges = models.BooleanField(default=False)
-    key_id = models.CharField(max_length=100, blank=True, null=True)
+
+    iButtonValidator = RegexValidator(r"\b[0-9]{2}-[0-9A-Z]{12}\b", "iButton ID entspricht nicht dem Format [0-9]{2}-[0-9A-Z]{12}")
+    key_id = models.CharField(max_length=15, blank=True, null=True, validators=[iButtonValidator])
 
     lazzzor_rate = models.DecimalField(choices=LAZZZOR_RATE_CHOICES, default='1.00',
                                        max_digits=3, decimal_places=2)
