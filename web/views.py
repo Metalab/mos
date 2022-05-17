@@ -50,7 +50,7 @@ def spaceapi(request):
         },
         'contact': {
             'twitter': '@metalab_events',
-            'irc': 'irc://irc.freenode.net/#metalab',
+            'irc': 'irc://irc.libera.chat/#metalab',
             'email': 'core@metalab.at',
             'ml': 'metalab@lists.metalab.at',
             'jabber': 'metalab@conference.jabber.metalab.at',
