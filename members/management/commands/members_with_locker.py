@@ -15,8 +15,8 @@ class Command(LabelCommand):
 
     def handle_label(self, label, **options):
         year = int(label)
-
-	print('        normal klein 2*klein ohne insg.')
+        
+        print('        normal klein 2*klein ohne insg.')
         for month in range(1, 13):
             dt = date(year, month, 1)
             counts = self.handle_date(dt)
