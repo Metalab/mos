@@ -36,12 +36,24 @@ class Command(LabelCommand):
                     Q(end__isnull=True) | Q(end__gte=dt)
             ).first()
 
+            # please do not  implement this, like we did /o\
+            # strings für normale Spinde
+            normal_locker = ['normal+spind', 'free+spind',
+                'ermäßigt (7EUR) + Spind', 'Erhöht (35EUR) + Spind']
+
+            # strings für kleine  Spinde
+            small_locker = ['normal + kleiner Spind', 'free + kleiner Spind',
+                'ermäßigt (7EUR) + kl. Spind', 'ermäßigt (15EUR) + kl. Spind']
+
+            # strings für 2 kleine  Spinde
+            two_small_lockers = ['normal + 2 kleine Spinde']
+
             kind = period.kind_of_membership.name
-            if kind in ['normal+spind', 'free+spind']:
+            if kind in normal_locker:
                 count_normal += 1
-            elif kind in ['normal + kleiner Spind', 'free + kleiner Spind']:
+            elif kind in small_locker:
                 count_small += 1
-            elif kind in ['normal + 2 kleine Spinde']:
+            elif kind in two_small_lockers:
                 count_2small += 1
             else:
                 count_without += 1
