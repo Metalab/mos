@@ -11,3 +11,4 @@ mysqlclient
 channels
 websockets
 sepaxml
+daphne

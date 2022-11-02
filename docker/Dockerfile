@@ -12,7 +12,7 @@ RUN mkdir /code
 COPY . /code/
 
 RUN apt-get update \
-    && apt-get install -y --force-yes daphne libmariadb-dev libjpeg-dev daphne netcat \
+    && apt-get install -y --force-yes libmariadb-dev libjpeg-dev netcat \
     && pip3 install --no-cache-dir -vvv -r /code/requirements.txt \
     && pip3 install --no-cache-dir -vvv -Ur /code/requirements-dev.txt
 
