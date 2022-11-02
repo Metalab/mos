@@ -127,9 +127,8 @@
 	padding-bottom: 1em;
 }
 
-#announcement{
+.announcement{
 	float:left;
-	border-left: 4px solid red;
 	margin-bottom: 2em;
 	padding-bottom: 1em;
 	padding: 1.5em 1em 1.5em 1.5em;
@@ -137,12 +136,20 @@
 	font-weight: bold;
 }
 
-#announcement a{
+.announcement.red{
+	border-left: 4px solid red;
+}
+
+.announcement.green{
+	border-left: 4px solid green;
+}
+
+.announcement a{
 	font-weight: bold;
 	font-size: 130%;
 	}
 
-#announcement small{
+.announcement small{
 	font-weight: bold;
 	font-size: 80%;
 	}
