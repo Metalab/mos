@@ -77,8 +77,6 @@ class ContactInfo(models.Model):
     remark = models.TextField(null=True, blank=True)
 
     def get_debts(self):
-        # FIXME: this is broken because it assumes that a membership period
-        #       has a constant fee
         arrears = 0
         mp_list = MembershipPeriod.objects.filter(user=self.user)
         for mp in mp_list:
