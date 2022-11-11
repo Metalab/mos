@@ -4,6 +4,7 @@ from __future__ import unicode_literals, print_function
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 from decimal import Decimal
+from django.db.models import Sum
 
 from django.db import models
 from django.db.models import Q
@@ -77,17 +78,19 @@ class ContactInfo(models.Model):
     remark = models.TextField(null=True, blank=True)
 
     def get_debts(self):
-        # FIXME: this is broken because it assumes that a membership period
-        #       has a constant fee
         arrears = 0
         mp_list = MembershipPeriod.objects.filter(user=self.user)
+        fees = list(MembershipFee.objects.all())
+
+        def get_fee(kind_of_membership, month):
+            for fee in fees:
+                if fee.kind_of_membership == kind_of_membership and fee.start <= month and (fee.end is None or fee.end >= month):
+                    return fee
+            raise Exception(f"could not find a membership fee for month {month} and kind of membership {kind_of_membership}")
+
         for mp in mp_list:
             for month in mp.get_months():
-                fee = MembershipFee.objects.get(
-                    Q(kind_of_membership=mp.kind_of_membership),
-                    Q(start__lte=month),
-                    Q(end__isnull=True) | Q(end__gte=month)
-                )
+                fee = get_fee(mp.kind_of_membership, month)
                 if fee.amount > 0:
                     arrears += fee.amount
         return arrears - self.get_all_payments()
@@ -114,11 +117,7 @@ class ContactInfo(models.Model):
             return fee.amount
 
     def get_all_payments(self):
-        payments = 0
-        p_list = Payment.objects.filter(user=self.user)
-        for p in p_list:
-            payments += p.amount
-        return payments
+        return Payment.objects.filter(user=self.user).aggregate(Sum('amount'))['amount__sum']
 
     def get_date_of_entry(self):
         # FIXME: the order here is wrong, didn't change it since i don't have time to check all implications
