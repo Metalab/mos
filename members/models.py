@@ -114,7 +114,7 @@ class ContactInfo(models.Model):
             return fee.amount
 
     def get_all_payments(self):
-        return Payment.objects.filter(user=self.user).aggregate(Sum('amount'))['amount__sum']
+        return Payment.objects.filter(user=self.user).aggregate(Sum('amount'))['amount__sum'] or 0
 
     def get_date_of_entry(self):
         # FIXME: the order here is wrong, didn't change it since i don't have time to check all implications
