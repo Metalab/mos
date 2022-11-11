@@ -289,6 +289,14 @@
 </table>
 
 
+<h3>Balance</h3>
+<p>
+  {{ item.contactinfo.get_balance|floatformat:2 }} Euro<br><br>
+  Keep in mind that payments are put into the database manually, so they may
+  take some time to show up here.
+</p>
+
+
 <h3>Payments</h3>
 <table id="user_paymenthistory">
 

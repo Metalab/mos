@@ -92,6 +92,9 @@ class ContactInfo(models.Model):
                     arrears += fee.amount
         return arrears - self.get_all_payments()
 
+    def get_balance(self):
+        return self.get_debts() * -1
+
     def get_debt_for_month(self, date_in_month):
         # see if the there is a membership period for the month
         mp_list = MembershipPeriod.objects.filter(Q(begin__lte=date_in_month),
