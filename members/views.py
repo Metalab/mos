@@ -1,15 +1,20 @@
+from collections import defaultdict
 from datetime import date, datetime, timedelta
+from typing import DefaultDict
+from dateutil import relativedelta
 from sepaxml import SepaDD
 import json
 
 from dateutil.rrule import rrule, MONTHLY
 from django.contrib import messages
+from django.db.models import Q
+from django.db.models import Sum
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse, Http404, HttpResponseNotAllowed
+from django.http import HttpResponse, Http404, HttpResponseNotAllowed, HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 
@@ -17,7 +22,7 @@ from .forms import UserEmailForm, UserNameForm, UserAdressForm,\
     UserImageForm, UserInternListForm
 from .models import ContactInfo, get_active_members, \
     get_active_and_future_members, Payment, PaymentMethod, \
-    get_mailinglist_members
+    get_mailinglist_members, get_month_list, KindOfMembership, MembershipPeriod
 from .util import get_list_of_history_entries
 
 
@@ -30,6 +35,75 @@ def members_history(request):
     history_list.reverse()
     context = {'list': history_list}
     return render(request, 'members/members_history.html', context)
+
+
+@login_required
+def hetti(request):
+    if not request.user.is_superuser:
+        return HttpResponseNotAllowed('you are not allowed to use the hetti')
+
+    def parse_date(s):
+        return date(*(int(c) for c in s.split('-')))
+
+    try:
+        end_date = parse_date(request.GET["end_date"])
+    except KeyError:
+        end_date = date.today()
+    except Exception as ex:
+        return HttpResponseBadRequest(str(ex), content_type="text/plain")
+
+    try:
+        start_date = parse_date(request.GET["start_date"])
+    except KeyError:
+        start_date = end_date - relativedelta.relativedelta(years=2)
+    except Exception as ex:
+        return HttpResponseBadRequest(str(ex), content_type="text/plain")
+
+    months = []
+
+    # all of the following is very slow, but we're only dealing with 24 months
+
+    for month in get_month_list(start_date, end_date):
+        first_day_of_month = month
+        first_day_of_next_month = month + relativedelta.relativedelta(months=1)
+
+        month_statistics = {
+            "month": month,
+            "spind_kinds": defaultdict(int),
+            "fee_category_kinds": defaultdict(int),
+        }
+
+        periods = MembershipPeriod.objects.filter(Q(begin__lte=month), Q(end__isnull=True) | Q(end__gte=month))
+
+        for kind in KindOfMembership.objects.all():
+            count = periods.filter(kind_of_membership=kind).count()
+            if count > 0:
+                month_statistics["spind_kinds"][kind.get_spind_display()] += 1
+                month_statistics["fee_category_kinds"][kind.get_fee_category_display()] += 1
+
+        month_statistics["total_fees"] = 0
+        month_statistics["total_fees_spind"] = 0
+        month_statistics["total_fees_membership"] = 0
+
+        for period in periods:
+            fee_spind = period.kind_of_membership.spind_fee
+            fee_membership = period.get_membership_fee(month).amount - fee_spind
+
+            month_statistics["total_fees"] += fee_spind + fee_membership
+            month_statistics["total_fees_spind"] += fee_spind
+            month_statistics["total_fees_membership"] += fee_membership
+
+        month_statistics["total_payments"] = Payment.objects.filter(
+            date__gte=first_day_of_month,
+            date__lt=first_day_of_next_month,
+        ).aggregate(Sum('amount'))['amount__sum'] or 0
+
+        month_statistics["spind_kinds"] = dict(month_statistics["spind_kinds"])
+        month_statistics["fee_category_kinds"] = dict(month_statistics["fee_category_kinds"])
+        months.append(month_statistics)
+
+    context = {'months': months}
+    return render(request, 'members/members_hetti.html', context)
 
 
 @csrf_exempt
