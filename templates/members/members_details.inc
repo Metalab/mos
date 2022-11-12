@@ -289,13 +289,26 @@
 </table>
 
 
-<h3>Payments</h3>
+<h3>Balance movements</h3>
 <table id="user_paymenthistory">
-
-	{% for p in item.payment_set.all %}
+	<tr>
+		<td>Date</td>
+		<td>Transaction</td>
+		<td>Amount</td>
+		<td>Total</td>
+	</tr>
+	{% for p in item.contactinfo.get_debts_detailed %}
 		<tr>
-			<td>{{ p.amount }} Euro</td>
-			<td>paid on {{ p.date|date:"d.m.Y" }} ({{ p.comment }} {{ p.method }})</td>
+			<td>{{ p.date|date:"Y-m-d" }}</td>
+			<td>
+			{% if p.kind == "bank collection" and p.amount < 0 %}
+				bank collection rejected
+				{% else %}
+				{{ p.kind }}
+				{% endif %}
+			</td>
+			<td class="number">{{ p.amount|floatformat:2 }} Euro</td>
+			<td class="number">{{ p.balance|floatformat:2 }} Euro</td>
 		</tr>
 	{% endfor %}
 </table>

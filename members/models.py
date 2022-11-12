@@ -77,8 +77,7 @@ class ContactInfo(models.Model):
                                        max_digits=3, decimal_places=2)
     remark = models.TextField(null=True, blank=True)
 
-    def get_debts(self):
-        arrears = 0
+    def get_membership_fees(self):
         mp_list = MembershipPeriod.objects.filter(user=self.user)
         fees = list(MembershipFee.objects.all())
 
@@ -92,8 +91,26 @@ class ContactInfo(models.Model):
             for month in mp.get_months():
                 fee = get_fee(mp.kind_of_membership, month)
                 if fee.amount > 0:
-                    arrears += fee.amount
+                    yield (month, fee.amount)
+
+    def get_debts(self):
+        arrears = sum(f[1] for f in self.get_membership_fees())
         return arrears - self.get_all_payments()
+
+    def get_debts_detailed(self):
+        fees = ({"date": f[0], "amount": -f[1], "kind": "membership fee"} for f in self.get_membership_fees())
+        payments = ({"date": p.date, "amount": p.amount, "kind": p.method.name} for p in Payment.objects.filter(user=self.user))
+        movements = [*fees, *payments]
+        movements.sort(key=lambda m: m["date"])
+
+        balance = 0
+
+        for movment in movements:
+            balance += movment["amount"]
+            movment["balance"] = balance
+
+        movements.reverse()
+        return movements
 
     def get_debt_for_month(self, date_in_month):
         # see if the there is a membership period for the month
