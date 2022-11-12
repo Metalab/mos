@@ -287,7 +287,14 @@ class MembershipFee(models.Model):
 
 
 class KindOfMembership(models.Model):
+    SPIND_CHOICES = (
+        ('small_1', "1 kleiner Spind"),
+        ('small_2', "2 kleiner Spind"),
+        ('big_1', "1 großer Spind"),
+    )
+
     name = models.CharField(max_length=30)
+    spind = models.CharField(choices=SPIND_CHOICES, max_length=7, null=True, blank=True)
 
     def __str__(self):
         return self.name
