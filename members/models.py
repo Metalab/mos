@@ -287,12 +287,14 @@ class MembershipFee(models.Model):
 
 
 class KindOfMembership(models.Model):
-    SPIND_CHOICES = (
-        ('no', "0 Spind"),
-        ('small_1', "1 kleiner Spind"),
-        ('big_1', "1 großer Spind"),
-        ('small_2', "2 kleiner Spind"),
+    FULL_SPIND_CHOICES = (
+        ('no', "0 Spind", 0),
+        ('small_1', "1 kleiner Spind", 8),
+        ('big_1', "1 großer Spind", 10),
+        ('small_2', "2 kleiner Spind", 16),
     )
+    SPIND_FEES = {c[0]: c[2] for c in FULL_SPIND_CHOICES}
+    SPIND_CHOICES = ((c[0], f"{c[1]} ({c[2]}€)") for c in FULL_SPIND_CHOICES)
     FEE_CATEGORY = (
         ('standard', 'standard'),
         ('free', 'free'),
