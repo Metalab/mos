@@ -1,8 +1,12 @@
 from __future__ import unicode_literals
+from re import template
 
 from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
+from django.template.loader import get_template
+from django.conf import settings
+from django.contrib import messages
 
 from .models import Payment, PaymentInfo, MembershipPeriod, ContactInfo, KindOfMembership, MembershipFee, BankCollectionMode
 
@@ -49,6 +53,24 @@ class BankCollectionModeAdmin(admin.ModelAdmin):
 admin.site.unregister(User)
 
 
+@admin.action(description='Send welcome mail')
+def send_welcome_mail(modeladmin, request, queryset):
+    tpl_subject = get_template("members/new_member_welcome.mail.subject")
+    tpl_body = get_template("members/new_member_welcome.mail")
+
+    for user in queryset.all():
+        ctx = {
+            "user": user,
+        }
+        user.contactinfo.send_mail(
+            tpl_subject.render(ctx).strip(),
+            tpl_body.render(ctx),
+            settings.HOS_EMAIL_LOG,
+        )
+
+    messages.success(request, 'Welcome mail sent.')
+
+
 @admin.register(User)
 class MemberAdmin(UserAdmin):
     inlines = [ContactInfoInline, PaymentInfoInline, MembershipPeriodInline,
@@ -58,3 +80,4 @@ class MemberAdmin(UserAdmin):
     list_filter = ('is_staff', 'is_superuser', 'paymentinfo__bank_collection_mode')
     search_fields = ('username', 'email', 'first_name', 'last_name')
     ordering = ('username',)
+    actions = [send_welcome_mail]
