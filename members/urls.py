@@ -10,7 +10,7 @@ import members.views
 urlpatterns = [
     path('',
          ListView.as_view(
-             queryset=get_active_members(),
+             queryset=get_active_members().prefetch_related("contactinfo"),
              template_name='members/member_list.html',
         ),
     ),
