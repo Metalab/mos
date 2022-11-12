@@ -46,7 +46,7 @@ class FutureEventFixedNumberManager(EventManager):
         num = getattr(settings, 'HOS_HOME_EVENT_NUM', 5)
         return self.get_n(num)
 
-    def get_n(self, num):
+    def get_n(self, num, past_duration=datetime.timedelta(hours=5)):
         all = super(FutureEventFixedNumberManager, self).get_queryset().order_by('startDate')
 
         if num == 0:
@@ -55,8 +55,8 @@ class FutureEventFixedNumberManager(EventManager):
         future = all.filter(
             (Q(endDate__gte=datetime.datetime.now())) |
             (Q(endDate__isnull=True) &
-             Q(startDate__gte=datetime.datetime.now() - datetime.timedelta(hours=5)))
-        ).order_by('startDate')  # event visible 5 hours after it started
+             Q(startDate__gte=datetime.datetime.now() - past_duration))
+        ).order_by('startDate')  # event visible X hours/days/weeks/... after it started
 
         if(future.count() < num):
             if(all.count() - num >= 0):
