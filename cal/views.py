@@ -202,10 +202,10 @@ def event_icalendar(request, object_id):
     return response
 
 
-def complete_ical(request, number=0):
-    events = Event.future.get_n(int(number) if number != '' else 0)
+def complete_ical(request, num, past_duration):
+    events = Event.future.get_n(num, past_duration)
 
-    if not number:
+    if not num:
         events = events.reverse()
 
     calendar = create_calendar([x.get_icalendar_event() for x in events])

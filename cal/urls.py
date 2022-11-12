@@ -1,8 +1,10 @@
 from __future__ import absolute_import
+import datetime
 
 from django.urls import path, re_path
 from django.views.generic.dates import YearArchiveView
 from django.views.generic.detail import DetailView
+from functools import partial
 
 from .models import Event, Location, Category
 import cal.views
@@ -86,7 +88,13 @@ urlpatterns = [
     ),
     path(
         'export/ical/',
-        cal.views.complete_ical,
+        partial(cal.views.complete_ical, num=100, past_duration=datetime.timedelta(days=7)),
+        {},
+        'small_ical',
+    ),
+    path(
+        'export/ical_full/',
+        partial(cal.views.complete_ical, num=0, past_duration=None),
         {},
         'full_ical',
     ),
