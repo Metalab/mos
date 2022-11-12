@@ -1,25 +1,18 @@
-from django.core.management.base import NoArgsCommand, CommandError
+from django.core.management.base import BaseCommand
 from django.conf import settings
-from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
 from django.template.loader import get_template
-from django.template import Context
 from cal.models import Event
-import datetime, requests
+import datetime
+from django.utils.html import strip_tags
+import requests
 
-# TODO: does this handle timezones correctly?
-# TODO: send a warning mail to core if the next jour fixe does not have a wiki page
 
 def get_next_jf():
-    when = datetime.date.today() + datetime.timedelta(days = settings.MOS_JF_DAYS_IN_ADVANCE)
+    when = datetime.date.today() + datetime.timedelta(days=settings.MOS_JF_DAYS_IN_ADVANCE)
     try:
-        # FIXME: django too old, this doesn't work yet: startDate__date = when
-        return Event.objects.get(category_id = settings.MOS_JF_DB_ID,
-                                 startDate__year  = when.year,
-                                 startDate__month = when.month,
-                                 startDate__day   = when.day)
-    except MultipleObjectsReturned as e:
-        raise e # FIXME: Ehhhhh. Multiple Jour fixes in the calendar for the same date.
+        return Event.objects.filter(category_id = settings.MOS_JF_DB_ID, startDate__date=when).first()
     except ObjectDoesNotExist:
         return None
 
@@ -40,25 +33,30 @@ def get_wiki_headlines(article):
             continue
         if skip:
             continue
-        results.append(heading["line"])
+
+        text = heading["line"]
+
+        if not text.startswith("Thema1") and not text.startswith("Thema2"):
+            text = strip_tags(text)
+            results.append(text)
 
     return {"article_missing": False, "error": len(results) == 0, "headlines": results}
 
 def mail(template, ctx_vars):
     tpl = get_template(template)
-    ctx = Context(ctx_vars)
-    msg = tpl.render(ctx)
-    sub = ''.join(get_template(template + ".subject").render(ctx).splitlines())
-    send_mail(sub, msg,
+    body = tpl.render(ctx_vars)
+    subject = get_template(template + ".subject").render(ctx_vars).strip()
+    send_mail(subject, body,
               settings.MOS_JF_SENDER,
               settings.MOS_JF_RECIPIENTS,
               fail_silently=False)
 
-class Command(NoArgsCommand):
+class Command(BaseCommand):
     help = 'Send the Jour Fixe reminder email, if a Jour Fixe is in settings.MOS_JF_DAYS_IN_ADVANCE days'
-    def handle_noargs(self, **options):
+
+    def handle(self, *args, **kwargs):
         next_jf = get_next_jf()
-        if not next_jf:
-            return
-        ctx = { 'jf': next_jf, 'wiki': get_wiki_headlines(next_jf.wikiPage) }
-        mail("jour_fixe_reminder.mail", ctx)
+
+        if next_jf:
+            ctx = {'jf': next_jf, 'wiki': get_wiki_headlines(next_jf.wikiPage)}
+            mail("jour_fixe_reminder.mail", ctx)

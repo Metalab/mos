@@ -12,11 +12,10 @@ den Artikel nicht lesen kann, kannst du ihn sicher auch nicht lesen ;)
 Du kannst es aber versuchen.
 {% else %}Folgende Themen wurden bisher im Wiki eingetragen:
 {% for heading in wiki.headlines %}
- * {{ heading }}{% if heading == "Thema1 (you)" %} - bitte löscht diese Boilerplate-Themen raus, wenn ihr ein Thema anlegt.{% endif %}{% endfor %}
+ * {{ heading }}{% endfor %}
 
-Laut einer gottgegebenen Regel müssen Jour-Fixe-Themen mindestens 3 Tage vor dem
-Termin eingetragen sein, wenn du also noch Vorschläge hast, bitte nimm sie mit
-zum nächsten Jour Fixe.
+Jour-Fixe-Themen müssen mindestens 3 Tage vor dem Termin eingetragen sein, wenn
+du also noch Vorschläge hast, trage sie zum nächsten Jour Fixe.
 {% endif %}
 Wiki Page: https://metalab.at/wiki/{{ jf.wikiPage }}
 
