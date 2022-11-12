@@ -81,15 +81,15 @@ class ContactInfo(models.Model):
         mp_list = MembershipPeriod.objects.filter(user=self.user)
         fees = list(MembershipFee.objects.all())
 
-        def get_fee(kind_of_membership, month):
+        def get_fee(kind_of_membership_id, month):
             for fee in fees:
-                if fee.kind_of_membership == kind_of_membership and fee.start <= month and (fee.end is None or fee.end >= month):
+                if fee.kind_of_membership_id == kind_of_membership_id and fee.start <= month and (fee.end is None or fee.end >= month):
                     return fee
             raise Exception(f"could not find a membership fee for month {month} and kind of membership {kind_of_membership}")
 
         for mp in mp_list:
             for month in mp.get_months():
-                fee = get_fee(mp.kind_of_membership, month)
+                fee = get_fee(mp.kind_of_membership_id, month)
                 if fee.amount > 0:
                     yield (month, fee.amount)
 
