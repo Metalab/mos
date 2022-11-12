@@ -128,6 +128,7 @@ HOS_URL_PREFIX = '/'
 HOS_NAME = 'Metalab OS'
 HOS_HOME_EVENT_NUM = 5
 HOS_WIKI_URL = '/wiki/'
+MEDIAWIKI_API = HOS_WIKI_URL + "api.php"
 HOS_ANNOUNCE_FROM = 'core@metalab.at'
 HOS_SEPA_CREDITOR_ID = 'AT12ZZZ00000000001'
 HOS_SEPA_CREDITOR_NAME = 'Verein Metalab'
@@ -150,3 +151,9 @@ HOS_OPENLAB = True
 HOS_INTRODUCTION = True
 HOS_PROJECTS = True
 HOS_RECENT_CHANGES = True
+
+# ----------------- Jour Fixe Reminder ------------
+MOS_JF_DAYS_IN_ADVANCE = 3
+MOS_JF_DB_ID = 2 # id of events of type "Jour Fixe" in the database
+MOS_JF_SENDER = 'core@metalab.at'
+MOS_JF_RECIPIENTS = ['m@luto.at']

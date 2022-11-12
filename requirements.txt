@@ -12,3 +12,4 @@ channels
 websockets
 sepaxml
 daphne
+requests
