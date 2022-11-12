@@ -124,6 +124,9 @@ class ContactInfo(models.Model):
 
             return fee.amount
 
+    def get_debt_for_this_month(self):
+        return self.get_debt_for_month(date.today())
+
     def get_all_payments(self):
         return Payment.objects.filter(user=self.user).aggregate(Sum('amount'))['amount__sum'] or 0
 
