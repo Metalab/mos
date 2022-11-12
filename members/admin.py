@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 
-from .models import Payment, PaymentInfo, MembershipPeriod, ContactInfo, KindOfMembership, MembershipFee, BankCollectionMode
+from .models import Payment, PaymentInfo, MembershipPeriod, ContactInfo, KindOfMembership, MembershipFee, BankCollectionMode, MailinglistMail
 
 
 class ContactInfoInline(admin.StackedInline):
@@ -45,6 +45,18 @@ class KindOfMembershipAdmin(admin.ModelAdmin):
 @admin.register(BankCollectionMode)
 class BankCollectionModeAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(MailinglistMail)
+class MemberAdmin(admin.ModelAdmin):
+    search_fields = (
+        'email',
+    )
+    list_display = (
+        'email',
+        'on_intern_list',
+    )
+
 
 admin.site.unregister(User)
 

@@ -512,3 +512,11 @@ class Payment(models.Model):
 
     class Meta:
         ordering = ['date']
+
+
+class MailinglistMail(models.Model):
+    email = models.EmailField()
+    on_intern_list = models.BooleanField(default=True)
+
+    def __str__(self):
+        return self.email
