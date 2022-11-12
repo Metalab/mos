@@ -8,20 +8,18 @@
 </p>
 
 <p>
-Thema: {{ form.cleaned_data.subject }}
+<b>Betreff:</b> {{ form.cleaned_data.subject }}
 </p>
 
+<b>Body:</b>
 <p>
 {{ form.cleaned_data.body }}
 </p>
 
-<p>
-a: {{ a }}
-</p>
-
+<b>Users ({{ users.count }}):</b>
 <ol>
   {% for u in users %}
-     <li>{{u.email}}</li>
+     <li>{{ u.username }} - {{ u.email|default:"(keine Mail-Adresse)" }}</li>
   {% endfor %}
 </ol>
 
