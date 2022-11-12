@@ -11,6 +11,8 @@ from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.utils.encoding import smart_text, force_str
+import smtplib
+from django.core.mail import send_mail
 # for iButton regex
 from django.core.validators import RegexValidator
 
@@ -159,6 +161,24 @@ class ContactInfo(models.Model):
 
         return u'%sBenutzer:%s' % (settings.HOS_WIKI_URL, wikiname)
 
+    def send_mail(self, subject, body, log_file=None):
+        try:
+            send_mail(
+                subject,
+                body,
+                settings.HOS_ANNOUNCE_FROM,
+                [self.user.email],
+                fail_silently=False,
+            )
+            self.last_email_ok = True
+            self.save()
+        except smtplib.SMTPException as e:
+            if log_file:
+                with open(log_file, 'a') as f:
+                    f.write('\n\n'+self.user.email)
+                    f.write('\n'+repr(e))
+            self.last_email_ok = False
+            self.save()
 
 def get_mailinglist_members():
     return User.objects.filter(
