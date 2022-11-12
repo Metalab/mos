@@ -19,8 +19,8 @@
   </p>
 
   {%else%}
-    {% if user.is_authenticated and not edit_disabled %}
     <p><a href="{% url 'small_ical' %}">Download current events in ical format</a></p>
+    {% if user.is_authenticated and not edit_disabled %}
     <p>
       <a href='#' class="btn" onclick="toggleView('calendar', '', 1); return false;">
         Create new event
