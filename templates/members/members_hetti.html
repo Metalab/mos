@@ -32,10 +32,10 @@
                 {{ count }}x {{ kind }}<br>
                 {% endfor %}
             </td>
-            <td class="number">{{ month.total_fees_membership }} Euro</td>
-            <td class="number">{{ month.total_fees_spind }} Euro</td>
-            <td class="number">{{ month.total_fees }} Euro</td>
-            <td class="number">{{ month.total_payments }} Euro</td>
+            <td class="number">{{ month.total_fees_membership|floatformat:2 }} Euro</td>
+            <td class="number">{{ month.total_fees_spind|floatformat:2 }} Euro</td>
+            <td class="number">{{ month.total_fees|floatformat:2 }} Euro</td>
+            <td class="number">{{ month.total_payments|floatformat:2 }} Euro</td>
         </tr>
     {% endfor %}
 </table>

@@ -78,8 +78,8 @@ def hetti(request):
         for kind in KindOfMembership.objects.all():
             count = periods.filter(kind_of_membership=kind).count()
             if count > 0:
-                month_statistics["spind_kinds"][kind.get_spind_display()] += 1
-                month_statistics["fee_category_kinds"][kind.get_fee_category_display()] += 1
+                month_statistics["spind_kinds"][kind.get_spind_display()] += count
+                month_statistics["fee_category_kinds"][kind.get_fee_category_display()] += count
 
         month_statistics["total_fees"] = 0
         month_statistics["total_fees_spind"] = 0
