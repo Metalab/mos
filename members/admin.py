@@ -36,6 +36,7 @@ class PaymentAdmin(admin.ModelAdmin):
 
 class MembershipFeeInline(admin.TabularInline):
     model = MembershipFee
+    ordering = ('start',)
 
 @admin.register(KindOfMembership)
 class KindOfMembershipAdmin(admin.ModelAdmin):
