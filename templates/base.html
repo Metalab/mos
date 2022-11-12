@@ -58,6 +58,9 @@
                 {% if user.is_superuser %}
                     | <a href="/admin/">Manage</a>
                     | <a href="/member/bank/">Bank Export/Import</a>
+                    | <a href="/member/hetti/">HETTI</a>
+                    | <a href="/member/">Mitglieder</a>
+                    | <a href="/announce/">Announce</a>
                 {% endif %}
                 | <a href="{% url 'logout' %}">Logout</a>
             {% endif %}
