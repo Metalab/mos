@@ -138,6 +138,7 @@ HOS_SEPA_CURRENCY = 'EUR' # ISO 4217
 HOS_SEPA_BATCH = True
 
 HOS_ANNOUNCE_LOG = '../announce.log'
+HOS_EMAIL_LOG = '../email.log'
 
 MOS_WIKI_CHANGE_URL = 'https://metalab.at/wiki/index.php?title=Spezial:Letzte_%C3%84nderungen&feed=atom'
 MOS_WIKI_KEEP = 5

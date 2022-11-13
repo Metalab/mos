@@ -2,14 +2,12 @@
 # Views for issueing announcements to all active members.
 #
 from functools import partial
-import smtplib
 from datetime import date, datetime
 
 from django.shortcuts import render
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 import django.forms as forms
-from django.core.mail import send_mail
 from django.db.models import Q
 
 from members.models import get_active_members, ContactInfo, KindOfMembership
@@ -78,22 +76,7 @@ def announce(request):
             .replace('{{IBAN}}', str(settings.HOS_SEPA_CREDITOR_IBAN)) \
             .replace('{{BIC}}', str(settings.HOS_SEPA_CREDITOR_BIC))
 
-        ci = ContactInfo.objects.get(user=user)
-        try:
-            send_mail(form.cleaned_data['subject'],
-                      body,
-                      settings.HOS_ANNOUNCE_FROM,
-                      [user.email],
-                      fail_silently=False)
-            ci.last_email_ok = True
-            ci.save()
-        except smtplib.SMTPException as e:
-            f = open(settings.HOS_ANNOUNCE_LOG, 'a')
-            f.write('\n\n'+user.email)
-            f.write('\n'+repr(e))
-            ci.last_email_ok = False
-            ci.save()
-            f.close()
+        user.contactinfo.send_mail(form.cleaned_data['subject'], body, settings.HOS_ANNOUNCE_LOG)
 
     context = {'form': form, 'user': request.user, 'users': users}
     return render(request, 'announce/message_sent.html', context)
