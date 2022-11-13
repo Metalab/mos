@@ -264,7 +264,7 @@ class MembershipPeriod(models.Model):
         for fee in fees:
             if fee.kind_of_membership_id == self.kind_of_membership_id and fee.start <= month and (fee.end is None or fee.end >= month):
                 return fee
-        raise Exception(f"could not find a membership fee for month {month} and kind of membership {kind_of_membership}")
+        raise Exception(f"could not find a membership fee for month {month} and kind of membership {self.kind_of_membership}")
 
     def get_months(self):
         return get_month_list(self.begin, self.end)
