@@ -48,7 +48,7 @@ def hetti(request):
     try:
         end_date = parse_date(request.GET["end_date"])
     except KeyError:
-        end_date = date.today()
+        end_date = date(date.today().year, date.today().month, 1)
     except Exception as ex:
         return HttpResponseBadRequest(str(ex), content_type="text/plain")
 

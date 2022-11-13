@@ -21,7 +21,7 @@
     </tr>
     {% for month in months %}
         <tr>
-            <td>{{ month.month|date:"Y-m-d" }}</td>
+            <td>{{ month.month|date:"Y-m" }}</td>
             <td>
                 {% for kind, count in month.fee_category_kinds.items %}
                 {{ count }}x {{ kind }}<br>
