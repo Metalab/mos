@@ -6,6 +6,7 @@
 <th>name</th>
 <th>member since</th>
 <th class="sorttable_nosort"></th>
+<th class="sorttable_numeric">monthly fee</th>
 <th class="sorttable_numeric">debts</th>
 
 </tr>
@@ -32,6 +33,9 @@
 			{{item.first_name}} {{item.last_name}} <br />
         </td>
         <td>
+			{{ item.contactinfo.get_debt_for_this_month|floatformat:2 }} Euro
+		</td>
+		<td>
 			{{ item.contactinfo.get_debts|floatformat:2 }} Euro
 		</td>
 	<tr>
