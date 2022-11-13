@@ -81,15 +81,9 @@ class ContactInfo(models.Model):
         mp_list = MembershipPeriod.objects.filter(user=self.user)
         fees = list(MembershipFee.objects.all())
 
-        def get_fee(kind_of_membership_id, month):
-            for fee in fees:
-                if fee.kind_of_membership_id == kind_of_membership_id and fee.start <= month and (fee.end is None or fee.end >= month):
-                    return fee
-            raise Exception(f"could not find a membership fee for month {month} and kind of membership {kind_of_membership}")
-
         for mp in mp_list:
             for month in mp.get_months():
-                fee = get_fee(mp.kind_of_membership_id, month)
+                fee = mp.get_membership_fee(month, fees)
                 if fee.amount > 0:
                     yield (month, fee.amount)
 
@@ -129,6 +123,9 @@ class ContactInfo(models.Model):
                 Q(end__isnull=True) | Q(end__gte=date_in_month))[0]
 
             return fee.amount
+
+    def get_debt_for_this_month(self):
+        return self.get_debt_for_month(date.today())
 
     def get_all_payments(self):
         return Payment.objects.filter(user=self.user).aggregate(Sum('amount'))['amount__sum'] or 0
@@ -220,6 +217,15 @@ class BankCollectionMode(models.Model):
         return self.name
 
 
+def get_month_list(cur, end):
+    if end is None or end >= date.today():
+        end = date.today()
+
+    while cur < end:
+        yield cur
+        cur = cur + relativedelta(months=1)
+
+
 class MembershipPeriod(models.Model):
     begin = models.DateField()
     end = models.DateField(null=True, blank=True)
@@ -255,15 +261,16 @@ class MembershipPeriod(models.Model):
             month += 1
         return month
 
-    def get_months(self):
-        cur = self.begin
-        end = self.end
-        if end is None or end >= date.today():
-            end = date.today()
+    def get_membership_fee(self, month, fees=None):
+        if fees is None:
+            fees = list(MembershipFee.objects.all())
+        for fee in fees:
+            if fee.kind_of_membership_id == self.kind_of_membership_id and fee.start <= month and (fee.end is None or fee.end >= month):
+                return fee
+        raise Exception(f"could not find a membership fee for month {month} and kind of membership {self.kind_of_membership}")
 
-        while cur < end:
-            yield cur
-            cur = cur + relativedelta(months=1)
+    def get_months(self):
+        return get_month_list(self.begin, self.end)
 
 
 class MembershipFee(models.Model):
@@ -287,7 +294,28 @@ class MembershipFee(models.Model):
 
 
 class KindOfMembership(models.Model):
+    FULL_SPIND_CHOICES = (
+        ('no', "0 Spind", 0),
+        ('small_1', "1 kleiner Spind", 8),
+        ('big_1', "1 großer Spind", 10),
+        ('small_2', "2 kleiner Spind", 16),
+    )
+    SPIND_FEES = {c[0]: c[2] for c in FULL_SPIND_CHOICES}
+    SPIND_CHOICES = ((c[0], f"{c[1]} ({c[2]}€)") for c in FULL_SPIND_CHOICES)
+    FEE_CATEGORY = (
+        ('standard', 'standard'),
+        ('free', 'free'),
+        ('decreased', 'ermäßigt'),
+        ('increased', 'erhöht'),
+    )
+
     name = models.CharField(max_length=30)
+    spind = models.CharField(choices=SPIND_CHOICES, max_length=7, default="no")
+    fee_category = models.CharField(choices=FEE_CATEGORY, max_length=9, default="standard")
+
+    @property
+    def spind_fee(self):
+        return self.SPIND_FEES[self.spind]
 
     def __str__(self):
         return self.name

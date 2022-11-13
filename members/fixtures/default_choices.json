@@ -170,84 +170,98 @@
   "pk": 2, 
   "model": "members.kindofmembership", 
   "fields": {
-    "name": "free"
+    "name": "free",
+    "fee_category": "free"
   }
 },
 {
   "pk": 3, 
   "model": "members.kindofmembership", 
   "fields": {
-    "name": "normal+spind"
+    "name": "normal+spind",
+    "spind": "big_1"
   }
 },
 {
   "pk": 4, 
   "model": "members.kindofmembership", 
   "fields": {
-    "name": "erhoeht (30EUR)"
+    "name": "erhoeht (30EUR)",
+    "fee_category": "increased"
   }
 },
 {
   "pk": 5, 
   "model": "members.kindofmembership", 
   "fields": {
-    "name": "erhoeht (40EUR)"
+    "name": "erhoeht (40EUR)",
+    "fee_category": "increased"
   }
 },
 {
   "pk": 6, 
   "model": "members.kindofmembership", 
   "fields": {
-    "name": "erhoeht (50EUR)"
+    "name": "erhoeht (50EUR)",
+    "fee_category": "increased"
   }
 },
 {
   "pk": 7, 
   "model": "members.kindofmembership", 
   "fields": {
-    "name": "free+spind"
+    "name": "free+spind",
+    "fee_category": "free",
+    "spind": "big_1"
   }
 },
 {
   "pk": 8, 
   "model": "members.kindofmembership", 
   "fields": {
-    "name": "FSFE"
+    "name": "FSFE",
+    "fee_category": "increased"
   }
 },
 {
   "pk": 9, 
   "model": "members.kindofmembership", 
   "fields": {
-    "name": "normal + kleiner Spind"
+    "name": "normal + kleiner Spind",
+    "spind": "small_1"
   }
 },
 {
   "pk": 10, 
   "model": "members.kindofmembership", 
   "fields": {
-    "name": "normal + 2 kleine Spinde"
+    "name": "normal + 2 kleine Spinde",
+    "spind": "small_2"
   }
 },
 {
   "pk": 11, 
   "model": "members.kindofmembership", 
   "fields": {
-    "name": "free + kleiner Spind"
+    "name": "free + kleiner Spind",
+    "fee_category": "free",
+    "spind": "small_1"
   }
 },
 {
   "pk": 12, 
   "model": "members.kindofmembership", 
   "fields": {
-    "name": "erhoeht (25EUR)"
+    "name": "erhoeht (25EUR)",
+    "fee_category": "increased"
   }
 },
 {
   "pk": 13,
   "model": "members.kindofmembership", 
   "fields": {
-    "name": "ermäßigt (10EUR)"
+    "name": "ermäßigt (10EUR)",
+    "fee_category": "decreased"
   }
 },
 {

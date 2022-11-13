@@ -127,3 +127,7 @@ ul.errorlist {
 	color: #e31515;
 	margin: 0 0 10px;
 }
+
+td.number {
+    text-align: right;
+}

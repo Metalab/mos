@@ -1,26 +1,18 @@
 #
 # Views for issueing announcements to all active members.
 #
+from functools import partial
 import smtplib
-from datetime import date
+from datetime import date, datetime
 
 from django.shortcuts import render
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
 import django.forms as forms
 from django.core.mail import send_mail
+from django.db.models import Q
 
-from members.models import get_active_members, ContactInfo
-
-
-class AnnouncementForm(forms.Form):
-    subject = forms.CharField(required=True, label="Thema", max_length=40)
-    body = forms.CharField(required=True, label="Mitteilung",
-                           widget=forms.Textarea)
-    to = forms.ChoiceField(required=True, label="An",
-                           choices=(('collection', 'collection'),
-                                    ('keymembers', 'keymembers'),
-                                    ('all', 'all'),))
+from members.models import get_active_members, ContactInfo, KindOfMembership
 
 
 def _announce_filter_collection(users):
@@ -36,6 +28,32 @@ def _announce_filter_keymembers(users):
     return users.filter(contactinfo__has_active_key=True) \
                     .exclude(contactinfo__key_id=None)
 
+
+def _announce_filter_fee_category_members(users, fee_category):
+    return users.filter(
+        Q(membershipperiod__begin__lt=datetime.now()) &
+        (Q(membershipperiod__end__isnull=True) | Q(membershipperiod__end__gt=datetime.now())) &
+        Q(membershipperiod__kind_of_membership__fee_category=fee_category)
+    )
+
+
+ANNOUNCE_TARGETS = {
+    'collection': ('collection', _announce_filter_collection),
+    'keymembers': ('keymembers', _announce_filter_keymembers),
+    **{
+        cat[0]: (cat[1] + ' members', partial(_announce_filter_fee_category_members, fee_category=cat[0]))
+        for cat in KindOfMembership.FEE_CATEGORY
+    },
+    'all': ('all', lambda users: users),
+}
+
+class AnnouncementForm(forms.Form):
+    subject = forms.CharField(required=True, label="Thema", max_length=40)
+    body = forms.CharField(required=True, label="Mitteilung",
+                           widget=forms.Textarea)
+    to = forms.ChoiceField(required=True, label="An", choices=((k, v[0]) for k, v in ANNOUNCE_TARGETS.items()))
+
+
 @staff_member_required
 def announce(request):
     form = AnnouncementForm(request.POST or None)
@@ -45,10 +63,7 @@ def announce(request):
     # Valid message: send it!
     users = get_active_members()
 
-    if form.cleaned_data['to'] == 'collection':
-        users = _announce_filter_collection(users)
-    elif form.cleaned_data['to'] == 'keymembers':
-        users = _announce_filter_keymembers(users)
+    users = ANNOUNCE_TARGETS[form.cleaned_data['to']][1](users)
 
     for user in users:
         body = form.cleaned_data['body'] \

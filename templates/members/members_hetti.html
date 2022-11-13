@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block add_css %}
+    <link href="{{ STATIC_URL }}stylesheets/members.css" media="screen" rel="Stylesheet" type="text/css" />
+{% endblock %}
+
+{% block hos_content %}
+<h1 class="hetti">
+    HETTI
+    <span>(Hetti Equivalent Text 2 Table Interface)</span>
+</h1>
+<table>
+    <tr>
+        <td>Month</td>
+        <td>Fee kinds</td>
+        <td>Spind kinds</td>
+        <td>Fees Membership</td>
+        <td>Fees Spind</td>
+        <td>Fees</td>
+        <td>Total Payments</td>
+    </tr>
+    {% for month in months %}
+        <tr>
+            <td>{{ month.month|date:"Y-m" }}</td>
+            <td>
+                {% for kind, count in month.fee_category_kinds.items %}
+                {{ count }}x {{ kind }}<br>
+                {% endfor %}
+            </td>
+            <td>
+                {% for kind, count in month.spind_kinds.items %}
+                {{ count }}x {{ kind }}<br>
+                {% endfor %}
+            </td>
+            <td class="number">{{ month.total_fees_membership|floatformat:2 }} Euro</td>
+            <td class="number">{{ month.total_fees_spind|floatformat:2 }} Euro</td>
+            <td class="number">{{ month.total_fees|floatformat:2 }} Euro</td>
+            <td class="number">{{ month.total_payments|floatformat:2 }} Euro</td>
+        </tr>
+    {% endfor %}
+</table>
+<p>Hint call me like this: /member/hetti/?start_date=2022-01-01&end_date=2022-08-01</p>
+{% endblock %}
