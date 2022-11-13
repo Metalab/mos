@@ -8,7 +8,7 @@ from django.template.loader import get_template
 from django.conf import settings
 from django.contrib import messages
 
-from .models import Payment, PaymentInfo, MembershipPeriod, ContactInfo, KindOfMembership, MembershipFee, BankCollectionMode
+from .models import Payment, PaymentInfo, MembershipPeriod, ContactInfo, KindOfMembership, MembershipFee, BankCollectionMode, MailinglistMail
 
 
 class ContactInfoInline(admin.StackedInline):
@@ -49,6 +49,18 @@ class KindOfMembershipAdmin(admin.ModelAdmin):
 @admin.register(BankCollectionMode)
 class BankCollectionModeAdmin(admin.ModelAdmin):
     pass
+
+
+@admin.register(MailinglistMail)
+class MemberAdmin(admin.ModelAdmin):
+    search_fields = (
+        'email',
+    )
+    list_display = (
+        'email',
+        'on_intern_list',
+    )
+
 
 admin.site.unregister(User)
 

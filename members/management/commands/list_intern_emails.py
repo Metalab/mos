@@ -3,6 +3,7 @@ from __future__ import print_function
 from django.core.management.base import BaseCommand
 
 from members.models import get_mailinglist_members
+from members.models import MailinglistMail
 
 
 class Command(BaseCommand):
@@ -11,5 +12,8 @@ class Command(BaseCommand):
         addresses = [x.contactinfo.intern_list_email for x
             in members_on_intern
             if x.contactinfo.intern_list_email != '']
-
+        addresses.extend(
+            e.email
+            for e in MailinglistMail.objects.filter(on_intern_list=True)
+        )
         print('\n'.join(addresses))
