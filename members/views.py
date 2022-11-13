@@ -22,7 +22,8 @@ from .forms import UserEmailForm, UserNameForm, UserAdressForm,\
     UserImageForm, UserInternListForm
 from .models import ContactInfo, get_active_members, \
     get_active_and_future_members, Payment, PaymentMethod, \
-    get_mailinglist_members, get_month_list, KindOfMembership, MembershipPeriod
+    get_mailinglist_members, get_month_list, KindOfMembership, \
+    MembershipPeriod, MembershipFee
 from .util import get_list_of_history_entries
 
 
@@ -62,6 +63,7 @@ def hetti(request):
     months = []
 
     # all of the following is very slow, but we're only dealing with 24 months
+    fees = list(MembershipFee.objects.all())
 
     for month in get_month_list(start_date, end_date):
         first_day_of_month = month
@@ -87,7 +89,7 @@ def hetti(request):
 
         for period in periods:
             fee_spind = period.kind_of_membership.spind_fee
-            fee_membership = period.get_membership_fee(month).amount - fee_spind
+            fee_membership = period.get_membership_fee(month, fees).amount - fee_spind
 
             month_statistics["total_fees"] += fee_spind + fee_membership
             month_statistics["total_fees_spind"] += fee_spind
