@@ -1,5 +1,3 @@
-from __future__ import unicode_literals
-
 import datetime
 
 from django.contrib.auth.models import User
@@ -7,9 +5,8 @@ from django.db import models
 
 
 class ProjectManager(models.Manager):
-
     def get_queryset(self):
-        return super(ProjectManager, self).get_queryset().filter(deleted=False)
+        return super().get_queryset().filter(deleted=False)
 
 
 class Project(models.Model):

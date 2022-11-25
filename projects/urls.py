@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 from django.urls import path, re_path
 from django.views.generic import ListView, DetailView
 

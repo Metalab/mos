@@ -1,6 +1,3 @@
-#encoding=utf-8
-from __future__ import unicode_literals, print_function
-
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 from decimal import Decimal
@@ -68,7 +65,7 @@ class ContactInfo(models.Model):
         on_delete=models.CASCADE,
     )
 
-    last_email_ok = models.NullBooleanField()
+    last_email_ok = models.BooleanField(null=True)
     has_active_key = models.BooleanField(default=False)
     has_lazzzor_privileges = models.BooleanField(default=False)
 
