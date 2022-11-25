@@ -32,6 +32,9 @@ class EventQuerySet(models.QuerySet):
     def not_deleted(self):
         return self.filter(deleted=False)
 
+    def advertise(self):
+        return self.filter(advertise=True)
+
 
 class EventManager(models.Manager):
     def get_queryset(self):
