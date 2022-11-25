@@ -1,5 +1,3 @@
-from __future__ import print_function
-
 from django.core.management.base import LabelCommand
 from django.core.exceptions import MultipleObjectsReturned
 from django.contrib.auth import get_user_model
