@@ -4,6 +4,11 @@ from django.views.generic.list import ListView
 from .models import get_active_members
 import members.views
 
+username_patterns = [
+    path(r'update/userpic/', members.views.members_update_userpic),
+    re_path(r'^update/(?P<update_type>\w+)/$', members.views.members_update),
+    path('', members.views.members_details),
+]
 
 urlpatterns = [
     path('',
@@ -26,7 +31,5 @@ urlpatterns = [
     path('lazzzorlist/', members.views.members_lazzzor_list),
     path('internlist/', members.views.members_intern_list),
 
-    re_path(r'^(?P<user_username>(\w|-)+)/update/userpic/$', members.views.members_update_userpic),
-    re_path(r'^(?P<user_username>(\w|-)+)/update/(?P<update_type>\w+)/$', members.views.members_update),
-    re_path(r'^(?P<user_username>(\w|-)+)/$', members.views.members_details),
+    re_path(r'^(?P<user_username>([\w\-+.@_])+)/', include(username_patterns)),
 ]
