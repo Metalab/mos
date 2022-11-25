@@ -15,6 +15,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
 DATABASES = {
     'default': {
         'NAME': 'meta',
