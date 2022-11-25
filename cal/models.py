@@ -90,6 +90,8 @@ class Event(models.Model):
         on_delete=models.CASCADE,
     )
 
+    advertise = models.BooleanField(default=False)
+
     deleted = models.BooleanField(default=False)
 
     category = models.ForeignKey(
