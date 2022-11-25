@@ -68,7 +68,7 @@ class ContactInfo(models.Model):
         on_delete=models.CASCADE,
     )
 
-    last_email_ok = models.NullBooleanField()
+    last_email_ok = models.BooleanField(null=True)
     has_active_key = models.BooleanField(default=False)
     has_lazzzor_privileges = models.BooleanField(default=False)
 
