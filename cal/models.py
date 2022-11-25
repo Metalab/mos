@@ -1,5 +1,3 @@
-from __future__ import unicode_literals, print_function
-
 import sys
 import urllib.parse
 import datetime
@@ -33,11 +31,10 @@ except locale.Error:
 class EventManager(models.Manager):
 
     def get_queryset(self):
-        return super(EventManager, self).get_queryset().filter(deleted=False)
+        return super().get_queryset().filter(deleted=False)
 
 
 class FutureEventFixedNumberManager(EventManager):
-
     def get_queryset(self):
         """
         Get <num> future events, or if there aren't enough,
@@ -47,7 +44,7 @@ class FutureEventFixedNumberManager(EventManager):
         return self.get_n(num)
 
     def get_n(self, num, past_duration=datetime.timedelta(hours=5)):
-        all = super(FutureEventFixedNumberManager, self).get_queryset().order_by('startDate')
+        all = super().get_queryset().order_by('startDate')
 
         if num == 0:
             return all
@@ -131,7 +128,7 @@ class Event(models.Model):
             self.created_by = editor
             self.created_by.save()
 
-        super(Event, self).save()
+        super().save()
 
     def start_end_date_eq(self):
         return self.startDate.date() == self.endDate.date()
