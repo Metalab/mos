@@ -35,7 +35,7 @@ class EventQuerySet(models.QuerySet):
 
 class EventManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(deleted=False)
+        return super().get_queryset().not_deleted()
 
 
 class FutureEventFixedNumberManager(EventManager):
