@@ -28,8 +28,11 @@ except locale.Error:
     """ % (DESIRED_LOCALE, fallback_locale), file=sys.stderr)
 
 
-class EventManager(models.Manager):
+class EventQuerySet(models.QuerySet):
+    pass
 
+
+class EventManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(deleted=False)
 
@@ -104,9 +107,9 @@ class Event(models.Model):
         null=True,
     )
 
-    objects = models.Manager()
-    all = EventManager()
-    future = FutureEventFixedNumberManager()
+    objects = EventQuerySet.as_manager()
+    all = EventManager.from_queryset(EventQuerySet)()
+    future = FutureEventFixedNumberManager.from_queryset(EventQuerySet)()
 
     def __str__(self):
         status = ''
