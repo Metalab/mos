@@ -33,9 +33,14 @@
       </p>
       {% endif %}
 
-
-    
       {% if user.is_authenticated %}
+      <p>
+        {% if event.advertise %}
+          Dieser Event kann öffentlich beworben werden.
+        {% else %}
+          Dieser Event soll nicht öffentlich beworben werden.
+        {% endif %}
+      </p>
       <p>
         ical: <a href="{{event.get_icalendar_url}}">{{ request.get_host }}{{event.get_icalendar_url}}</a>
       </p>
