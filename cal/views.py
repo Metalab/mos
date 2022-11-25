@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 from datetime import date
 from itertools import groupby
 
@@ -23,7 +21,7 @@ from . import create_calendar
 class EventCalendar(HTMLCalendar):
 
     def __init__(self, events, admin=False):
-        super(EventCalendar, self).__init__()
+        super().__init__()
         self.events = events
         self.admin = admin
 
@@ -61,7 +59,7 @@ class EventCalendar(HTMLCalendar):
         next = d + relativedelta.relativedelta(months=1)
         
         head = '<a href="/calendar/%04d/%02d/">&lt;</a> <a href="/calendar/%04d/%02d/">&gt;</a>' % (prev.year, prev.month, next.year, next.month)
-        return head+ super(EventCalendar, self).formatmonth(year, month)
+        return head + super().formatmonth(year, month)
 
     def group_by_day(self, events):
         field = lambda event: event.startDate.day
@@ -217,7 +215,7 @@ class SpecialListView(ListView):
     events_by = None
 
     def get_context_data(self, **kwargs):
-        context = super(SpecialListView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
         context.update({
             'events_by': self.events_by,
         })

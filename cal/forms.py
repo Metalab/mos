@@ -1,5 +1,3 @@
-from __future__ import absolute_import
-
 from django.forms import ModelForm
 import django.forms as forms
 
