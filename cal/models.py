@@ -29,7 +29,8 @@ except locale.Error:
 
 
 class EventQuerySet(models.QuerySet):
-    pass
+    def not_deleted(self):
+        return self.filter(deleted=False)
 
 
 class EventManager(models.Manager):
