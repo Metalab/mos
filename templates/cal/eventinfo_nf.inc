@@ -77,6 +77,11 @@
                 <dd> {{ event_errors.category }} </dd>
             {% endif %}
 
+            <dt><label>This event can be advertised to potential newcomers:</label></dt>
+            <dd> {{ event_form.advertise }}</dd>
+            {% if event_form.advertise.errors %}
+                <dd> {{ event_errors.advertise }} </dd>
+            {% endif %}
 
             <legend> (*) -> required field </legend>
 

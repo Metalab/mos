@@ -1,5 +1,3 @@
-from __future__ import unicode_literals, print_function
-
 import sys
 import urllib.parse
 import datetime
@@ -30,14 +28,20 @@ except locale.Error:
     """ % (DESIRED_LOCALE, fallback_locale), file=sys.stderr)
 
 
-class EventManager(models.Manager):
+class EventQuerySet(models.QuerySet):
+    def not_deleted(self):
+        return self.filter(deleted=False)
 
+    def advertise(self):
+        return self.filter(advertise=True)
+
+
+class EventManager(models.Manager):
     def get_queryset(self):
-        return super(EventManager, self).get_queryset().filter(deleted=False)
+        return super().get_queryset().not_deleted()
 
 
 class FutureEventFixedNumberManager(EventManager):
-
     def get_queryset(self):
         """
         Get <num> future events, or if there aren't enough,
@@ -47,7 +51,7 @@ class FutureEventFixedNumberManager(EventManager):
         return self.get_n(num)
 
     def get_n(self, num, past_duration=datetime.timedelta(hours=5)):
-        all = super(FutureEventFixedNumberManager, self).get_queryset().order_by('startDate')
+        all = super().get_queryset().order_by('startDate')
 
         if num == 0:
             return all
@@ -90,6 +94,8 @@ class Event(models.Model):
         on_delete=models.CASCADE,
     )
 
+    advertise = models.BooleanField(default=False)
+
     deleted = models.BooleanField(default=False)
 
     category = models.ForeignKey(
@@ -105,9 +111,9 @@ class Event(models.Model):
         null=True,
     )
 
-    objects = models.Manager()
-    all = EventManager()
-    future = FutureEventFixedNumberManager()
+    objects = EventQuerySet.as_manager()
+    all = EventManager.from_queryset(EventQuerySet)()
+    future = FutureEventFixedNumberManager.from_queryset(EventQuerySet)()
 
     def __str__(self):
         status = ''
@@ -129,7 +135,7 @@ class Event(models.Model):
             self.created_by = editor
             self.created_by.save()
 
-        super(Event, self).save()
+        super().save()
 
     def start_end_date_eq(self):
         return self.startDate.date() == self.endDate.date()
