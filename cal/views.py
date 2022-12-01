@@ -1,5 +1,7 @@
 from datetime import date
 from itertools import groupby
+import json
+import urllib.parse
 
 from calendar import HTMLCalendar
 from dateutil import relativedelta
@@ -10,6 +12,7 @@ from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseNotAllowed, Http404
 from django.core.exceptions import ObjectDoesNotExist
 from django.views.generic import ListView
+from django.utils import timezone
 from django.utils.html import conditional_escape as esc
 from django.utils.safestring import mark_safe
 
@@ -220,3 +223,34 @@ class SpecialListView(ListView):
             'events_by': self.events_by,
         })
         return context
+
+
+def public_upcoming(request):
+    events = Event.objects.not_deleted().advertise().filter(
+        startDate__gt=timezone.now().date(),
+    ).order_by("startDate", "pk")[:5]
+
+    data = []
+    for event in events:
+        sd = event.startDate
+        ed = event.endDate
+
+        # Date format examples:
+        # Wed 30.11.2022 19:00 - 23:00
+        # Fri 25.11.2022 18:30 - 18:30 (+2)
+        # Date and times
+        date_formatted = f"{sd:%a %d.%m.%Y %H:%M} - {ed:%H:%M}"
+
+        # Day offset suffix if needed
+        if (days_diff := (ed.date() - sd.date()).days) > 0:
+            date_formatted += f" (+{days_diff})"
+
+        event_data = {
+            "date": date_formatted,
+            "title": event.name,
+            "url": f"https://metalab.at/wiki/{urllib.parse.quote(event.wikiPage)}",
+            "subtitle": event.teaser,
+        }
+        data.append(event_data)
+
+    return HttpResponse(json.dumps(data), content_type="application/json")

@@ -125,4 +125,8 @@ urlpatterns = [
         r'^ajax/list/(?P<number>\d*)/?$',
         cal.views.event_list,
     ),
+    re_path(
+        r'^api/public_upcoming/?$',
+        cal.views.public_upcoming,
+    ),
 ]
