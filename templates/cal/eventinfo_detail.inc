@@ -45,7 +45,7 @@
         ical: <a href="{{event.get_icalendar_url}}">{{ request.get_host }}{{event.get_icalendar_url}}</a>
       </p>
       <p>
-        Das Event wurde am {{ event.created_at|date:"d.m.Y" }} um {{ event.created_at|date:"H:i" }} von <i>{{ event.created_by }}</i> erstellt.</a>
+        Das Event wurde am {{ event.created_at|date:"d.m.Y" }} um {{ event.created_at|date:"H:i" }} von <i><a href="/wiki/Benutzer:{{ event.created_by }}">{{ event.created_by }}</a></i> erstellt.</a>
       </p>
       
       {% if not edit_disabled %}
