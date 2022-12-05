@@ -63,7 +63,6 @@
 }
 
 /* new stuff */
-
 table.month {
     border-collapse: collapse;
 		width: 100%;
@@ -155,8 +154,8 @@ padding: 2px;
 		display: inline-block;
 	}
 }
-/* edit form */
 
+/* edit form */
 .edit-form {
 	max-width: 26em;
 	background-color: #f6f6f6;
@@ -241,7 +240,34 @@ p.datetime {
 	padding: 4px 10px;
 }
 
+/* Calender TimePicker and DatePicker Widgets */
+.datetimeshortcuts .clock-icon, .datetimeshortcuts .date-icon {
+	position: relative;
+	display: inline-block;
+	vertical-align: middle;
+	height: 16px;
+	width: 16px;
+	overflow: hidden;
+}
 
+.datetimeshortcuts .clock-icon {
+	background: url(../admin/img/icon-clock.svg) 0 0 no-repeat;
+}
+
+.datetimeshortcuts a:focus .clock-icon,
+.datetimeshortcuts a:hover .clock-icon {
+	background-position: 0 -16px;
+}
+
+.datetimeshortcuts .date-icon {
+	background: url(../admin/img/icon-calendar.svg) 0 0 no-repeat;
+	top: -1px;
+}
+
+.datetimeshortcuts a:focus .date-icon,
+.datetimeshortcuts a:hover .date-icon {
+	background-position: 0 -16px;
+}
 
 @media screen and (max-width: 800px)  {
 
