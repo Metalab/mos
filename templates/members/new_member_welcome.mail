@@ -5,17 +5,15 @@ Willkommen im Metalab! Danke für Deine Unterstützung - wir hoffen Du wirst bei
 Wir haben gerade Deine Beitrittserklärung eingegeben und für Dich einen User*innenaccount im Metalab OS (MOS) angelegt. Der Login ins MOS ist rechts oben auf https://metalab.at/ möglich, du findest dein Profil auch unter https://metalab.at/member/{{ user.username }}/. Mit Deinem Account kannst Du Deine User*innendaten ändern sowie Termine in den Metalabkalender  eintragen oder Projekte zur Metalab-Frontpage hinzufügen. Im MOS kannst Du auch einen Avatar für Dich hinzufügen, der dann per Zufallsgenerator auf der Hauptseite angezeigt wird. (Bitte achte darauf, dass das Bild quadratisch ist, da es ansonsten verzerrt dargestellt wird.)
 
 Benutzername: {{ user.username }}
-Password: https://metalab.at/member/password_reset/
+Password: Bitte führe einen Passwort Reset durch -> https://metalab.at/member/password_reset/
 
-Bitte logge Dich gleich ein, ändere Dein temporäres Passwort und überprüfe Deine Daten. Falls wir beim Abtippen einen Fehler gemacht haben, antworte am besten mit der gewünschten Korrektur auf diese e-Mail, damit wir die Daten anpassen können!
+Bitte setze dir ein Passwort mittels Passwort-Reset-Funktion, logge Dich gleich ein und überprüfe Deine Daten. Falls wir beim Abtippen einen Fehler gemacht haben, antworte am besten mit der gewünschten Korrektur auf diese e-Mail, damit wir die Daten anpassen können!
 
 {% if user.paymentinfo.bank_account_mandate_reference %}
 Mit deinem Einverständnis buchen wir unter der Mandats-ID {{ user.paymentinfo.bank_account_mandate_reference }} deinen Mitgliedsbeitrag zur Mitte des Monats von deinem angegebenen Konto ab.{% endif %}
 Falls Du die Checkbox für die Interne Mailingliste angekreuzt hast, wirst Du von uns auf diese Mailingliste subskribiert. Wie der Name schon sagt, werden auf dieser Liste viele Metalab-interne Dinge besprochen. Zusätzlich gibt es noch öffentliche Mailinglisten, zu denen Du hier mehr Infos findest: https://metalab.at/wiki/Mailinglisten
 
 Falls Du das nicht ohnehin bereits getan hast, wäre es schön, wenn Du:
-* Dich am Metalab-Jabber-Server anmeldest
- --> https://metalab.at/wiki/Jabber
 * Deine Interessensgebiete ergänzt
  --> https://metalab.at/wiki/Interessensgebiete
 
