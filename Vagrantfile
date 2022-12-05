@@ -49,8 +49,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "debian/contrib-buster64"
-  config.vm.hostname = "mos"
+  # config.vm.box = "debian/contrib-buster64" # not working anymore due to buster shipping Python 3.7 and mos needs 3.8+
+  config.vm.box = "debian/bullseye64"
+  config.vm.hostname = "mos-dev-vm"
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
