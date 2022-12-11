@@ -36,7 +36,7 @@ def get_wiki_headlines(article):
 
         text = heading["line"]
 
-        if not text.startswith("Thema1") and not text.startswith("Thema2"):
+        if not text.startswith("Thema1") and not text.startswith("Thema2") and heading["toclevel"] == 2:
             text = strip_tags(text)
             results.append(text)
 
