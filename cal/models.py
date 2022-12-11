@@ -175,6 +175,11 @@ class Event(models.Model):
         if self.category:
             rv.add('categories', self.category)
 
+        if self.advertise:
+            rv.add('class', 'PUBLIC')
+        else:
+            rv.add('class', 'PRIVATE')
+
         return rv
 
     def get_icalendar(self):
