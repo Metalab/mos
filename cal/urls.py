@@ -49,7 +49,7 @@ urlpatterns = [
         cal.views.monthly,
     ),
     re_path(
-        r'^special/(?P<typ>\w+)/(?P<name>\w+)/$',
+        r'^special/(?P<typ>\w+)/(?P<name>[\w ]+)/$',
         cal.views.display_special_events,
     ),
     re_path(
