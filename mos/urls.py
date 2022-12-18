@@ -24,6 +24,7 @@ urlpatterns = [
     path('cellardoor/', web.views.display_cellardoor),
     path('spaceapi.json', web.views.spaceapi),
     path('', web.views.display_main_page),
+    path('mos', web.views.display_main_page),
 ]
 
 urlpatterns +=  static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
