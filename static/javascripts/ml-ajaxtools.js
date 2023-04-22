@@ -111,23 +111,16 @@ function enter_pressed(e){
 function submit_event(id) {
     var frm = $('calendar-form-'+id);
     var cnt = $('calendar-edit-'+id);
+    var statusIndicator = frm.getElementsByClassName('status-indicator')[0];
+    statusIndicator.classList.remove('saved');
+    statusIndicator.innerText = 'sending...';
 
     new Ajax.Request(frm.readAttribute('action'), {
       parameters: frm.serialize(true),
       onSuccess: function(r) {
-
-        var notification = document.createElement('div');
-        notification.className = 'notification success';
-        notification.innerHTML = '<h3>Event created or updated!</h3> ' + r.responseText;
-        document.getElementById('calendar-update').parentNode.appendChild(notification);
-
-        new Ajax.Updater('calendar-update', calendarUpdateURL, {
-          method: 'get'
-        });
-
-//        new Notification('success', 'Event created/updated!', r.responseText).show();
-
-
+        statusIndicator.innerText = 'SAVED';
+        statusIndicator.classList.add('saved');
+        window.setTimeout(function() { statusIndicator.classList.remove('saved'); }, 2000);
       },
       onFailure: function(r) {
         cnt.innerHTML = r.responseText;

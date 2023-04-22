@@ -88,7 +88,8 @@
 
 
             <dt style="visibility: hidden">Submit:</dt>
-            <dd style="text-align: right;">
+            <dd class="form-buttons">
+              <div class="status-indicator"></div>
 			{% if not new %}
 
 				<input type="button" value="Update" onclick="submit_event('{{event.id|default_if_none:""}}');">

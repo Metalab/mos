@@ -294,3 +294,25 @@ p.datetime {
 	}
 
 }
+
+.form-buttons {
+	display:flex;
+	align-items: center;
+}
+
+.form-buttons > * {
+	flex-grow: 0;
+	margin-right: 8px;
+}
+
+.form-buttons > .status-indicator {
+	transition: background-color .5s;
+	text-align: center;
+	font-weight: bold;
+	flex-grow: 1;
+	margin-left: 8px;
+}
+
+.status-indicator.saved {
+	background-color: #8f8;
+}
