@@ -8,7 +8,7 @@ import time
 
 from django.db import connection
 from django.utils.deprecation import MiddlewareMixin
-from django.utils.encoding import force_text
+from django.utils.encoding import force_str
 
 from core.utils import human_readable_time
 
@@ -30,7 +30,7 @@ class SetStatFooter(MiddlewareMixin):
         try:
             if 'text/html' not in response['Content-Type']:
                 return response
-            if request.is_ajax():
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
                 return response
             if response.status_code != 200:
                 return response
@@ -41,7 +41,7 @@ class SetStatFooter(MiddlewareMixin):
             stats = FOOTER_STAT_STRING % {'render_time': render_time,
                                           'queries': queries}
             content = response.content
-            response.content = force_text(content).replace(TAG, stats)
+            response.content = force_str(content).replace(TAG, stats)
         except:
             pass
 

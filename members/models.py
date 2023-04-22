@@ -7,7 +7,7 @@ from django.db import models
 from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.utils.encoding import smart_text, force_str
+from django.utils.encoding import smart_str, force_str
 import smtplib
 from django.core.mail import send_mail
 # for iButton regex
@@ -352,7 +352,7 @@ class PaymentManager(models.Manager):
                 print(line)
                 continue
             try:
-                u = User.objects.get(first_name=smart_text(line[0]), last_name=smart_text(line[1]))
+                u = User.objects.get(first_name=smart_str(line[0]), last_name=smart_str(line[1]))
             except User.DoesNotExist:
                 print(line)
                 continue
@@ -367,6 +367,8 @@ class PaymentManager(models.Manager):
             except ValueError:
                 print(line)
 
+        f.close()
+
     # used to import generic payments, including date and payment type (as opposed to import_smallfile)
     def import_generic(self, filename):
         import csv
@@ -379,7 +381,7 @@ class PaymentManager(models.Manager):
                 print('malformed:', repr(line))
                 continue
             try:
-                u = User.objects.get(first_name=smart_text(line[0]), last_name=smart_text(line[1]))
+                u = User.objects.get(first_name=smart_str(line[0]), last_name=smart_str(line[1]))
             except User.DoesNotExist:
                 print('user not found:', repr(line))
                 continue
@@ -394,6 +396,8 @@ class PaymentManager(models.Manager):
                 print('created:', repr(line))
             except ValueError:
                 print('error creating payment:', repr(line))
+
+        f.close()
 
     def import_hugefile(self, filename):
         import csv
@@ -501,7 +505,8 @@ class PaymentManager(models.Manager):
                 else:
                     print('no user found for')
                     print(line)
-
+        
+        f.close()
 
 class PaymentMethod(models.Model):
     name = models.CharField(max_length=50)
