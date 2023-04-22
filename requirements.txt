@@ -1,6 +1,6 @@
-Django>=3.1.9,<4.0
+Django>=3.2.18,<4.0
 Pillow
-icalendar>=4,<4.0.3
+icalendar>=4,<5
 pytz
 Unipath
 django-extensions
