@@ -131,10 +131,8 @@ class ContactInfo(models.Model):
     def get_all_payments(self):
         return Payment.objects.filter(user=self.user).aggregate(Sum('amount'))['amount__sum'] or 0
 
-    def get_date_of_entry(self):
-        # FIXME: the order here is wrong, didn't change it since i don't have time to check all implications
-        #                    sf - 2010 07 27
-        mp = MembershipPeriod.objects.filter(user=self.user).order_by('-begin').first()
+    def get_date_of_first_join(self):
+        mp = MembershipPeriod.objects.filter(user=self.user).order_by('begin').first()
         return mp.begin if mp else None
 
     def get_current_membership_period(self):

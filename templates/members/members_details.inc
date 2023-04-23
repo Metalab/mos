@@ -58,7 +58,7 @@
 
 	<tr>
 		<td>Member since:</td>
-	        <td>{{ item.contactinfo.get_date_of_entry|date }}</td>
+	        <td>{{ item.contactinfo.get_date_of_first_join|date }}</td>
 
     	</tr>
 {% if ea %}

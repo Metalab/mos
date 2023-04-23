@@ -11,7 +11,7 @@
 		</td>
 		<td>
 			<b>{{ item }} <br></b>
-			member since: {{ item.contactinfo.get_date_of_entry|date }} <br>
+			member since: {{ item.contactinfo.get_date_of_first_join|date }} <br>
             {# debts: {{ item.contactinfo.get_debts }} Euro #}
 		</td>
 		<td>
