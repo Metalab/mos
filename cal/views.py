@@ -224,7 +224,7 @@ class SpecialListView(ListView):
 
 def public_upcoming(request):
     events = Event.objects.not_deleted().advertise().filter(
-        startDate__gt=timezone.now().date(),
+        endDate__gte=timezone.now().date(),
     ).order_by("startDate", "pk")[:5]
 
     data = []
