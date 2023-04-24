@@ -113,4 +113,4 @@ span.event_date {
 }
 
 
-#calender_morelink, span.location, span.category, .invisible, a.hoverHidden, div#calendarcontainer {display:none}
+#calender_morelink, span.location, span.category, .invisible, a.hoverHidden, span.hoverHidden, div#calendarcontainer {display:none}
