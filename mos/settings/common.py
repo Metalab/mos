@@ -52,6 +52,9 @@ TEMPLATES = [
 # Local timezone
 TIME_ZONE = 'Europe/Vienna'
 
+# Set first day of week to monday
+FIRST_DAY_OF_WEEK = 1
+
 # Language code for this installation. All choices can be found here:
 # http://www.w3.org/TR/REC-html40/struct/dirlang.html#langcodes
 LANGUAGE_CODE = 'en-us'
