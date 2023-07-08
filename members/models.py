@@ -667,3 +667,14 @@ class MailinglistMail(models.Model):
 
     def __str__(self):
         return self.email
+
+class Locker(models.Model):
+    name = models.CharField(max_length=80)
+    comment = models.TextField(blank=True)
+    price = models.IntegerField()
+    rented_by = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
