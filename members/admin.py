@@ -1,6 +1,8 @@
 from re import template
 from typing import Optional
 from datetime import datetime
+import csv
+
 
 import sepaxml
 from django.forms.models import model_to_dict
@@ -103,6 +105,24 @@ def make_sepa_xml_for_members(modeladmin, request, queryset):
     return response
 
 
+
+@admin.action(description="Export selected Members as csv")
+@transaction.atomic()
+def export_as_csv(self, request, queryset):
+    field_names = ['username', 'email', 'first_name', 'last_name']
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=output.csv'
+    writer = csv.writer(response)
+
+    writer.writerow(field_names)
+    for obj in queryset:
+        row = writer.writerow([getattr(obj, field) for field in field_names])
+
+    return response
+
+
+
 @admin.register(PendingPayment)
 class PendingPaymentAdmin(admin.ModelAdmin):
     date_hierarchy = 'date'
@@ -202,6 +222,7 @@ class MemberAdmin(UserAdmin):
         )
     search_fields = ('username', 'email', 'first_name', 'last_name')
     ordering = ('username',)
-    actions = [send_welcome_mail, make_sepa_xml_for_members]
+    actions = [send_welcome_mail, make_sepa_xml_for_members, export_as_csv]
     # allow to select/deselect for more members during actions
     list_max_show_all = 9999999
+
