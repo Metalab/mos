@@ -60,7 +60,6 @@ class MemberAdmin(admin.ModelAdmin):
         'on_intern_list',
     )
 
-
 admin.site.unregister(User)
 
 
@@ -92,3 +91,5 @@ class MemberAdmin(UserAdmin):
     search_fields = ('username', 'email', 'first_name', 'last_name')
     ordering = ('username',)
     actions = [send_welcome_mail]
+    # allow to select/deselect for more members during actions
+    list_max_show_all = 9999999
