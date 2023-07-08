@@ -678,3 +678,11 @@ class Locker(models.Model):
         null=True,
         blank=True
     )
+class Recievable(models.Model): #Forderungen
+    due_date = models.DateField(default=date.today)
+    amount = models.FloatField()
+    description = models.CharField(max_length=200, null=True)
+    member = models.ForeignKey(User, related_name="recievables", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return "{} - {}: {} {}".format(self.due_date, self.member, self.amount, self.description)

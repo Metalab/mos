@@ -21,7 +21,8 @@ from django.contrib import messages
 
 from .models import BankCollectionMode, ContactInfo, KindOfMembership
 from .models import Locker, MailinglistMail, MembershipFee, MembershipPeriod
-from .models import Payment, PaymentInfo, PendingPayment
+from .models import Payment, PaymentInfo, PendingPayment, Recievable
+
 
 from .views import generate_sepa, SepaException
 
@@ -176,6 +177,7 @@ class MemberAdmin(admin.ModelAdmin):
         'on_intern_list',
     )
 
+admin.site.register(Recievable)
 admin.site.unregister(User)
 
 
@@ -238,6 +240,18 @@ class MembershipPeriodListFilter(admin.SimpleListFilter):
         return qs
 
 
+def generate_membership_recievables(self, request, queryset):
+    for user in queryset.all():
+        if hasattr(user, 'contactinfo'):
+            for debt in user.contactinfo.get_membership_fees():
+                rec = Recievable()
+                rec.due_date = debt[0]
+                rec.amount = debt[1]
+                rec.description = 'Membership Fee'
+                rec.member = user
+                rec.save()
+
+
 @admin.register(User)
 class MemberAdmin(UserAdmin):
     inlines = [ContactInfoInline, PaymentInfoInline, MembershipPeriodInline,
@@ -253,7 +267,7 @@ class MemberAdmin(UserAdmin):
         )
     search_fields = ('username', 'email', 'first_name', 'last_name')
     ordering = ('username',)
-    actions = [send_welcome_mail, make_sepa_xml_for_members, export_as_csv]
+    actions = [send_welcome_mail, make_sepa_xml_for_members, export_as_csv, generate_membership_recievables]
     # allow to select/deselect for more members during actions
     list_max_show_all = 9999999
 
