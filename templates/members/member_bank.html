@@ -1,13 +1,6 @@
 {% extends "base.html" %}
 
 {% block hos_content %}
-    <p>
-        <h1>Payment SEPA-DD Export</h1>
-        <form method="post" action="/member/bankexport/">
-            {% csrf_token %}
-            <button type="submit">Create Payments and export</button>
-        </form>
-    </p>
 {% comment %}
     <p>
         <h1>Erste Bank JSON import</h1>

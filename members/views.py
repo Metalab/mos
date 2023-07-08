@@ -21,7 +21,7 @@ from django.conf import settings
 from .forms import UserEmailForm, UserNameForm, UserAdressForm,\
     UserImageForm, UserInternListForm
 from .models import ContactInfo, get_active_members, \
-    get_active_and_future_members, Payment, PaymentMethod, \
+    get_active_and_future_members, Payment, PendingPayment, PaymentMethod, \
     get_mailinglist_members, get_month_list, KindOfMembership, \
     MembershipPeriod, MembershipFee
 from .util import get_list_of_history_entries
@@ -217,23 +217,12 @@ def members_bank(request):
         return HttpResponseNotAllowed('you are not allowed to use this method')
     return render(request, 'members/member_bank.html')
 
-@login_required
-@transaction.atomic
-def members_bankcollection_sepa(request):
-    if not request.user.is_superuser:
-        return HttpResponseNotAllowed('you are not allowed to use this method')
+class SepaException(Exception):
+    pass
 
-    if request.method != "POST":
-        return redirect("/member/bank/")
-
-    # get members that are active and have monthly collection activated
-    # 4 = monthly
-    members_to_collect_from = get_active_members()\
-        .filter(paymentinfo__bank_collection_allowed=True)\
-        .filter(paymentinfo__bank_collection_mode__id=4)
-
+def generate_sepa(admin_user, members_to_collect_from):
     if len(members_to_collect_from) == 0:
-        return HttpResponse('Error: no members to collect from.')
+        raise SepaException("no members to collect from.")
 
     sepa = SepaDD({
         "name": settings.HOS_SEPA_CREDITOR_NAME,
@@ -246,13 +235,15 @@ def members_bankcollection_sepa(request):
     }, schema=settings.HOS_SEPA_SCHEMA)
 
     sepaxml_filename = f'metalab_sepa_{date.today().year}_{format(date.today().month, "02")}.xml'
-    payment_comment = f'{sepaxml_filename} exported {datetime.now().replace(microsecond=0).isoformat()} by {request.user.username}'
+    payment_comment = f'{sepaxml_filename} exported {datetime.now().replace(microsecond=0).isoformat()} by {admin_user.username}'
     payment_method = PaymentMethod.objects.get(name='bank collection')
+
     if not payment_method:
-        raise ValueError("could not find PaymentMethod 'bank collection'")
+        raise SepaException("could not find PaymentMethod 'bank collection'")
 
     for member in members_to_collect_from:
         debt = member.contactinfo.get_debt_for_month(date.today())
+
         if debt > 0:
             pmi = member.paymentinfo
             # on the first debit initiation, set the mandate signing date
@@ -274,20 +265,19 @@ def members_bankcollection_sepa(request):
                 "collection_date": collection_date,
                 "amount": debt * 100,  # in cents
                 "execution_date": date.today(),
-                "description": 'Mitgliedsbeitrag %d/%d (u%d)'
-                    % (date.today().year, date.today().month, member.id)
-                })
-            Payment.objects.create(
+                "description": f'Mitgliedsbeitrag {date.today().year}/{date.today().month} (u{member.id})',
+            })
+
+            PendingPayment.objects.create(
                 date = collection_date,
                 user = member,
                 amount = debt,
                 method = payment_method,
                 original_file = sepa.msg_id,
-                comment = payment_comment
-                )
-    response = HttpResponse(sepa.export(), content_type='application/xml; charset=utf-8')
-    response['Content-Disposition'] = f'attachment; filename="{sepaxml_filename}"'
-    return response
+                comment = payment_comment,
+            )
+
+    return sepa, sepaxml_filename
 
 @login_required
 def members_bankcollection_importjson(request):
@@ -305,7 +295,6 @@ def members_bankcollection_importjson(request):
 
     # TODO not yet implemented
     return render(request, 'members/member_bank_uploadresults.html')
-
 
 
 def members_key_list(request):
