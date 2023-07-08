@@ -178,13 +178,27 @@ class BankCollectionModeListFilter(admin.SimpleListFilter):
                 qs = qs.filter(paymentinfo__bank_collection_mode__pk=int(self.value()))
         return qs
 
+class HasSpindListFilter(admin.SimpleListFilter):
+    title = "has spind"
+    parameter_name = "has_spind"
+
+    def lookups(self, request, model_admin):
+        return [("yes", "yes"), ("no", "no")]
+
+    def queryset(self, request, qs):
+        if self.value() == "yes":
+            qs = qs.filter(paymentinfo__bank_collection_mode__pk=int(self.value()))
+        if self.value() == "no":
+            pass
+        return qs
+
 
 class MembershipPeriodListFilter(admin.SimpleListFilter):
     title = "active period"
     parameter_name = "period_kind_name"
 
     def lookups(self, request, model_admin):
-        return [("any", "any"), *KindOfMembership.objects.all().values_list("pk", "name")]
+        return [("any", "(ist aktiv)"), ("spind", "(hat spind)"), *KindOfMembership.objects.all().values_list("pk", "name")]
 
     def queryset(self, request, qs):
         if self.value():
@@ -197,6 +211,9 @@ class MembershipPeriodListFilter(admin.SimpleListFilter):
             qs = qs.annotate(active_membershipperiod_pk=Subquery(memberships[:1]))
             if self.value() == "any":
                 qs = qs.filter(active_membershipperiod_pk__isnull=False)
+            elif self.value() == "spind":
+                spind_kinds = KindOfMembership.objects.filter(name__icontains="spind").values_list("pk", flat=True)
+                qs = qs.filter(active_membershipperiod_pk__in=spind_kinds)
             else:
                 qs = qs.filter(active_membershipperiod_pk=int(self.value()))
         return qs
