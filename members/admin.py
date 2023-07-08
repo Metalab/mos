@@ -8,6 +8,8 @@ from django.contrib import admin
 from django.db import transaction
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.db.models import OuterRef
+from django.db.models import Subquery
 from django.http import HttpResponse
 from django.contrib.auth.admin import UserAdmin
 from django.template.loader import get_template
@@ -160,13 +162,39 @@ def send_welcome_mail(modeladmin, request, queryset):
     messages.success(request, 'Welcome mail sent.')
 
 
+class MembershipPeriodListFilter(admin.SimpleListFilter):
+    title = "active period"
+    parameter_name = "period_kind_name"
+
+    def lookups(self, request, model_admin):
+        return KindOfMembership.objects.all().values_list("pk", "name")
+
+    def queryset(self, request, qs):
+        if self.value():
+            dt = datetime.now()
+            memberships = MembershipPeriod.objects\
+                .filter(user=OuterRef('pk'))\
+                .filter(Q(begin__lte=dt), Q(end__isnull=True) | Q(end__gte=dt))\
+                .order_by('-begin')\
+                .values("kind_of_membership__pk")
+            qs = qs.annotate(active_membershipperiod_pk=Subquery(memberships[:1]))
+            qs = qs.filter(active_membershipperiod_pk=int(self.value()))
+        return qs
+
+
 @admin.register(User)
 class MemberAdmin(UserAdmin):
     inlines = [ContactInfoInline, PaymentInfoInline, MembershipPeriodInline,
                PaymentInline]
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff',
                     'is_active')
-    list_filter = ('is_staff', 'is_superuser', 'paymentinfo__bank_collection_mode')
+    list_filter = (
+        'is_staff',
+        'is_superuser',
+        'paymentinfo__bank_collection_mode',
+        'paymentinfo__bank_collection_allowed',
+        MembershipPeriodListFilter,
+        )
     search_fields = ('username', 'email', 'first_name', 'last_name')
     ordering = ('username',)
     actions = [send_welcome_mail, make_sepa_xml_for_members]
