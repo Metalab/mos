@@ -136,27 +136,6 @@ class ContactInfo(models.Model):
         mp = MembershipPeriod.objects.filter(user=self.user).order_by('begin').first()
         return mp.begin if mp else None
 
-    def get_current_membership_period(self):
-        # FIXME: the order here is wrong, didn't change it since i don't have time to check all implications
-        #                    sf - 2010 07 27
-        mp = MembershipPeriod.objects.filter(user=self.user)\
-            .order_by('begin')[0]
-        if mp.end is None:
-            return mp
-        else:
-            return None
-        return mp.begin
-
-    def is_active_key_member(self):
-        # FIXME: the order here is wrong, didn't change it since i don't have time to check all implications
-        #                    sf - 2010 07 27
-        mp = MembershipPeriod.objects.filter(user=self.user)\
-            .order_by('-begin')[0]
-        if mp.end is not None:
-            return False
-
-        return self.key_id is not None and self.has_active_key
-
     def get_wikilink(self):
         wikiname = self.wiki_name or self.user.username
 
