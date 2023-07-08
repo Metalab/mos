@@ -167,7 +167,7 @@ class MembershipPeriodListFilter(admin.SimpleListFilter):
     parameter_name = "period_kind_name"
 
     def lookups(self, request, model_admin):
-        return KindOfMembership.objects.all().values_list("pk", "name")
+        return [("any", "any"), *KindOfMembership.objects.all().values_list("pk", "name")]
 
     def queryset(self, request, qs):
         if self.value():
@@ -178,7 +178,10 @@ class MembershipPeriodListFilter(admin.SimpleListFilter):
                 .order_by('-begin')\
                 .values("kind_of_membership__pk")
             qs = qs.annotate(active_membershipperiod_pk=Subquery(memberships[:1]))
-            qs = qs.filter(active_membershipperiod_pk=int(self.value()))
+            if self.value() == "any":
+                qs = qs.filter(active_membershipperiod_pk__isnull=False)
+            else:
+                qs = qs.filter(active_membershipperiod_pk=int(self.value()))
         return qs
 
 
