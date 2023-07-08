@@ -16,6 +16,139 @@ from django.core.validators import RegexValidator
 
 from easy_thumbnails.fields import ThumbnailerImageField
 
+import string
+from django.core.exceptions import ValidationError
+
+
+country_codes = {
+    "AD": 24,
+    "AE": 23,
+    "AL": 28,
+    "AT": 20,
+    "AX": 18,
+    "AZ": 28,
+    "BA": 20,
+    "BE": 16,
+    "BG": 22,
+    "BH": 22,
+    "BI": 27,
+    "BL": 27,
+    "BR": 29,
+    "BY": 28,
+    "CH": 21,
+    "CR": 22,
+    "CY": 28,
+    "CZ": 24,
+    "DE": 22,
+    "DK": 18,
+    "DO": 28,
+    "EE": 20,
+    "EG": 29,
+    "ES": 24,
+    "FI": 18,
+    "FO": 18,
+    "FR": 27,
+    "GB": 22,
+    "GE": 22,
+    "GF": 27,
+    "GG": 22,
+    "GI": 23,
+    "GL": 18,
+    "GP": 27,
+    "GR": 27,
+    "GT": 28,
+    "HR": 21,
+    "HU": 28,
+    "IE": 22,
+    "IL": 23,
+    "IM": 22,
+    "IQ": 23,
+    "IS": 26,
+    "IT": 27,
+    "JE": 22,
+    "JO": 30,
+    "KW": 30,
+    "KZ": 20,
+    "LB": 28,
+    "LC": 32,
+    "LI": 21,
+    "LT": 20,
+    "LU": 20,
+    "LV": 21,
+    "LY": 25,
+    "MC": 27,
+    "MD": 24,
+    "ME": 22,
+    "MF": 27,
+    "MK": 19,
+    "MQ": 27,
+    "MR": 27,
+    "MT": 31,
+    "MU": 30,
+    "NC": 27,
+    "NL": 18,
+    "NO": 15,
+    "PF": 27,
+    "PK": 24,
+    "PL": 28,
+    "PM": 27,
+    "PS": 29,
+    "PT": 25,
+    "QA": 29,
+    "RE": 27,
+    "RO": 24,
+    "RS": 22,
+    "SA": 24,
+    "SC": 31,
+    "SD": 18,
+    "SE": 24,
+    "SI": 19,
+    "SK": 24,
+    "SM": 27,
+    "ST": 25,
+    "SV": 28,
+    "TF": 27,
+    "TL": 23,
+    "TN": 24,
+    "TR": 26,
+    "UA": 29,
+    "VA": 22,
+    "VG": 24,
+    "WF": 27,
+    "XK": 20,
+    "YT": 27,
+    "YY": 34,
+    "ZZ": 35,
+}
+
+def iban_letters2numbers(iban):
+    """Converts all letters to the number equivalent for the IBAN validation algorithm"""
+    result = []
+    for char in iban:
+        if char.isalpha():
+            final_char = str(string.ascii_uppercase.find(char.upper()) + 10)
+        else:
+            final_char = char
+        result.append(final_char)
+    return "".join(result)
+
+def iban_validate(iban):
+    """Validates a given IBAN"""
+    if not iban.isalnum():
+        raise ValidationError("IBAN can only contain numbers (0-9) and letters (A-Z)!")
+    if len(iban) < 4:
+        raise ValidationError("IBAN must at least 4 characters long!")
+    country_code = iban[:2].upper()
+    country_length = country_codes.get(country_code, False)
+    if not country_length:
+        raise ValidationError(f"IBAN must begin with a valid country code! ({country_code!r} is not known)")
+    if not len(iban) == country_length:
+        raise ValidationError(f"IBAN is not of correct length for country code {country_code!r}!")
+    rearranged_iban = iban[4:] + iban[:4]
+    numerized_iban = iban_letters2numbers(rearranged_iban)
+    checksum = int(numerized_iban) % 97
+    if checksum != 1:
+        raise ValidationError("IBAN is not valid!")
 
 class PaymentInfo(models.Model):
     bank_collection_allowed = models.BooleanField(default=False)
@@ -27,7 +160,7 @@ class PaymentInfo(models.Model):
     bank_account_number = models.CharField(max_length=20, blank=True)
     bank_name = models.CharField(max_length=100, blank=True)
     bank_code = models.CharField(max_length=20, blank=True)
-    bank_account_iban = models.CharField(max_length=34, blank=True)
+    bank_account_iban = models.CharField(max_length=34, blank=True, validators=[iban_validate])
     bank_account_bic = models.CharField(max_length=11, blank=True)
     bank_account_mandate_reference = models.CharField(max_length=35, blank=True)
     bank_account_date_of_signing = models.DateField(null=True, blank=True)
