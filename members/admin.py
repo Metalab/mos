@@ -163,6 +163,21 @@ def send_welcome_mail(modeladmin, request, queryset):
 
     messages.success(request, 'Welcome mail sent.')
 
+class BankCollectionModeListFilter(admin.SimpleListFilter):
+    title = "bank collection mode"
+    parameter_name = "bank collection mode"
+
+    def lookups(self, request, model_admin):
+        return [*BankCollectionMode.objects.all().values_list("pk", "name"), ("not_monthly", "nicht monatlich")]
+
+    def queryset(self, request, qs):
+        if self.value():
+            if self.value() == "not_monthly":
+                qs = qs.exclude(paymentinfo__bank_collection_mode__pk=4)
+            else:
+                qs = qs.filter(paymentinfo__bank_collection_mode__pk=int(self.value()))
+        return qs
+
 
 class MembershipPeriodListFilter(admin.SimpleListFilter):
     title = "active period"
@@ -196,7 +211,7 @@ class MemberAdmin(UserAdmin):
     list_filter = (
         'is_staff',
         'is_superuser',
-        'paymentinfo__bank_collection_mode',
+        BankCollectionModeListFilter,
         'paymentinfo__bank_collection_allowed',
         MembershipPeriodListFilter,
         )
