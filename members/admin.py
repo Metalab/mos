@@ -77,16 +77,14 @@ def make_into_real_payments(modeladmin, request, queryset):
 @admin.action(description="Generate SEPA XML for members (is active & has debt & allows monthly bank collection)")
 @transaction.atomic()
 def make_sepa_xml_for_members(modeladmin, request, queryset):
-    if PendingPayment.objects.exists():
-        messages.error(request, "there are existing PendingPayments. Delete or convert them first.")
-        return
-
     queryset = queryset.filter(paymentinfo__bank_collection_allowed=True)
     queryset = queryset.filter(paymentinfo__bank_collection_mode__id=4)
     dt = datetime.now()
     # active members only
     queryset = queryset.filter(Q(membershipperiod__begin__lte=dt), Q(membershipperiod__end__isnull=True) | Q(membershipperiod__end__gte=dt))
     queryset = queryset.distinct()
+
+    PendingPayment.objects.all().delete()
 
     try:
         sepa, sepaxml_filename = generate_sepa(request.user, queryset)
