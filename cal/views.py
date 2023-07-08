@@ -42,7 +42,9 @@ class EventCalendar(HTMLCalendar):
                 if self.admin:
                     body.append(u'<a href="%s" class="edit" title="edit">✏️</a>' % event.get_absolute_url())
                 body.append('<a href="/wiki/%s">' % event.wikiPage)
-                body.append('<span class="event-time">' + event.startDate.strftime('%H:%M') + '</span> ' + esc(event.name))
+                body.append('<span class="event-time">' + event.startDate.strftime('%H:%M') + '</span>')
+                body.append('<span class="event-name">' + esc(event.name) + '</span>')
+                body.append('<span class="event-location">' + esc(event.location) + '</span>')
                 body.append('</a>')
                 body.append('</li>')
             body.append('</ul>')
