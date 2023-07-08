@@ -217,7 +217,7 @@ class MembershipPeriodListFilter(admin.SimpleListFilter):
     parameter_name = "period_kind_name"
 
     def lookups(self, request, model_admin):
-        return [("any", "(ist aktiv)"), ("spind", "(hat spind)"), *KindOfMembership.objects.all().values_list("pk", "name")]
+        return [("any", "(ist aktiv)"), ("spind", "(zahlt für spind)"), *KindOfMembership.objects.all().values_list("pk", "name")]
 
     def queryset(self, request, qs):
         if self.value():
