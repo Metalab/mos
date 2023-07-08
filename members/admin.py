@@ -2,6 +2,7 @@ from re import template
 from typing import Optional
 from datetime import datetime
 import csv
+from django.http.request import HttpRequest
 
 
 import sepaxml
@@ -18,7 +19,10 @@ from django.template.loader import get_template
 from django.conf import settings
 from django.contrib import messages
 
-from .models import Payment, PendingPayment, PaymentInfo, MembershipPeriod, ContactInfo, KindOfMembership, MembershipFee, BankCollectionMode, MailinglistMail
+from .models import BankCollectionMode, ContactInfo, KindOfMembership
+from .models import Locker, MailinglistMail, MembershipFee, MembershipPeriod
+from .models import Payment, PaymentInfo, PendingPayment
+
 from .views import generate_sepa, SepaException
 
 class ContactInfoInline(admin.StackedInline):
@@ -39,6 +43,17 @@ class PaymentInline(admin.TabularInline):
     model = Payment
     fields = ('date', 'amount', 'method')
     ordering = ('date',)
+
+class LockerInline(admin.TabularInline):
+    model = Locker
+    fields = ('name', 'price', 'comment')
+    readonly_fields = fields
+
+    def has_add_permission(self, request, obj=None):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 @admin.register(Payment)
@@ -223,7 +238,7 @@ class MembershipPeriodListFilter(admin.SimpleListFilter):
 @admin.register(User)
 class MemberAdmin(UserAdmin):
     inlines = [ContactInfoInline, PaymentInfoInline, MembershipPeriodInline,
-               PaymentInline]
+               PaymentInline, LockerInline]
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff',
                     'is_active')
     list_filter = (
@@ -239,3 +254,8 @@ class MemberAdmin(UserAdmin):
     # allow to select/deselect for more members during actions
     list_max_show_all = 9999999
 
+
+@admin.register(Locker)
+class LockerAdmin(admin.ModelAdmin):
+    list_filter = ['rented_by']
+    list_display = ['name', 'rented_by', 'price']
