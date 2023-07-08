@@ -129,6 +129,23 @@ table.month .event-time {
 	  font-weight: bold;
 }
 
+.event .event-name::before {
+	display: inline;
+	content: " ";
+}
+
+.event .event-location {
+	display: none;
+}
+
+.event .event-location::before {
+	content: " | ";
+}
+
+.event:hover .event-location {
+	display: inline;
+}
+
 #calendar-year-list {
 	text-align: right;
 }
