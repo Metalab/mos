@@ -1,4 +1,5 @@
 from datetime import datetime, date
+from operator import mod
 from dateutil.relativedelta import relativedelta
 from decimal import Decimal
 from django.db.models import Sum
@@ -134,27 +135,6 @@ class ContactInfo(models.Model):
     def get_date_of_first_join(self):
         mp = MembershipPeriod.objects.filter(user=self.user).order_by('begin').first()
         return mp.begin if mp else None
-
-    def get_current_membership_period(self):
-        # FIXME: the order here is wrong, didn't change it since i don't have time to check all implications
-        #                    sf - 2010 07 27
-        mp = MembershipPeriod.objects.filter(user=self.user)\
-            .order_by('begin')[0]
-        if mp.end is None:
-            return mp
-        else:
-            return None
-        return mp.begin
-
-    def is_active_key_member(self):
-        # FIXME: the order here is wrong, didn't change it since i don't have time to check all implications
-        #                    sf - 2010 07 27
-        mp = MembershipPeriod.objects.filter(user=self.user)\
-            .order_by('-begin')[0]
-        if mp.end is not None:
-            return False
-
-        return self.key_id is not None and self.has_active_key
 
     def get_wikilink(self):
         wikiname = self.wiki_name or self.user.username
@@ -513,7 +493,7 @@ class PaymentMethod(models.Model):
         return self.name
 
 
-class Payment(models.Model):
+class AbstractPayment(models.Model):
     amount = models.FloatField()
     comment = models.CharField(max_length=200, blank=True)
     date = models.DateField()
@@ -526,17 +506,26 @@ class Payment(models.Model):
         on_delete=models.CASCADE,
         null=True,
     )
-    original_line = models.TextField(blank=True)
     original_file = models.CharField(max_length=200, null=True)
-    original_lineno = models.IntegerField(blank=True, null=True)
-
-    objects = PaymentManager()
 
     def __str__(self):
         return u"%s, %s, %s, %s" % (self.date, self.amount, self.user.username, self.method.name)
 
     class Meta:
         ordering = ['date']
+        abstract = True
+
+
+# created by SEPA XML export and converted to an actual payment manually in admin
+class PendingPayment(AbstractPayment):
+    pass
+
+
+class Payment(AbstractPayment):
+    original_line = models.TextField(blank=True)
+    original_lineno = models.IntegerField(blank=True, null=True)
+
+    objects = PaymentManager()
 
 
 class MailinglistMail(models.Model):

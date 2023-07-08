@@ -1,14 +1,23 @@
 from re import template
+from typing import Optional
+from datetime import datetime
 
+import sepaxml
+from django.forms.models import model_to_dict
 from django.contrib import admin
+from django.db import transaction
 from django.contrib.auth.models import User
+from django.db.models import Q
+from django.db.models import OuterRef
+from django.db.models import Subquery
+from django.http import HttpResponse
 from django.contrib.auth.admin import UserAdmin
 from django.template.loader import get_template
 from django.conf import settings
 from django.contrib import messages
 
-from .models import Payment, PaymentInfo, MembershipPeriod, ContactInfo, KindOfMembership, MembershipFee, BankCollectionMode, MailinglistMail
-
+from .models import Payment, PendingPayment, PaymentInfo, MembershipPeriod, ContactInfo, KindOfMembership, MembershipFee, BankCollectionMode, MailinglistMail
+from .views import generate_sepa, SepaException
 
 class ContactInfoInline(admin.StackedInline):
     model = ContactInfo
@@ -37,6 +46,78 @@ class PaymentAdmin(admin.ModelAdmin):
     list_display = ['date', 'method', 'user', 'amount', 'original_file', 'original_line']
     list_display_links = None
 
+
+@admin.action(description="Make into real payments")
+@transaction.atomic()
+def make_into_real_payments(modeladmin, request, queryset):
+    count = queryset.count()
+    fields = [
+        "amount",
+        "comment",
+        "date",
+        "method_id",
+        "user_id",
+        "original_file",
+    ]
+
+    for pendingpayment in queryset:
+        Payment.objects.create(
+            **{
+                f: getattr(pendingpayment, f)
+                for f in fields
+            }
+        )
+        pendingpayment.delete()
+
+    messages.success(request, f"created {count} payments")
+
+
+@admin.action(description="Generate SEPA XML for members (is active & has debt & allows monthly bank collection)")
+@transaction.atomic()
+def make_sepa_xml_for_members(modeladmin, request, queryset):
+    queryset = queryset.filter(paymentinfo__bank_collection_allowed=True)
+    queryset = queryset.filter(paymentinfo__bank_collection_mode__id=4)
+    dt = datetime.now()
+    # active members only
+    queryset = queryset.filter(Q(membershipperiod__begin__lte=dt), Q(membershipperiod__end__isnull=True) | Q(membershipperiod__end__gte=dt))
+    queryset = queryset.distinct()
+
+    PendingPayment.objects.all().delete()
+
+    try:
+        sepa, sepaxml_filename = generate_sepa(request.user, queryset)
+    except SepaException as ex:
+        messages.error(request, str(ex))
+        return
+
+    try:
+        sepa_export = sepa.export()
+    except sepaxml.validation.ValidationError as ex:
+        messages.error(request, str(ex) + ": " + str(ex.__cause__))
+        return
+
+    response = HttpResponse(sepa_export, content_type='application/xml; charset=utf-8')
+    response['Content-Disposition'] = f'attachment; filename="{sepaxml_filename}"'
+    return response
+
+
+@admin.register(PendingPayment)
+class PendingPaymentAdmin(admin.ModelAdmin):
+    date_hierarchy = 'date'
+    list_filter = ['user']
+    list_display = ['date', 'method', 'user', 'amount']
+    list_display_links = None
+    actions = [
+        make_into_real_payments,
+    ]
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+
 class MembershipFeeInline(admin.TabularInline):
     model = MembershipFee
     ordering = ('start',)
@@ -60,7 +141,6 @@ class MemberAdmin(admin.ModelAdmin):
         'on_intern_list',
     )
 
-
 admin.site.unregister(User)
 
 
@@ -82,13 +162,41 @@ def send_welcome_mail(modeladmin, request, queryset):
     messages.success(request, 'Welcome mail sent.')
 
 
+class MembershipPeriodListFilter(admin.SimpleListFilter):
+    title = "active period"
+    parameter_name = "period_kind_name"
+
+    def lookups(self, request, model_admin):
+        return KindOfMembership.objects.all().values_list("pk", "name")
+
+    def queryset(self, request, qs):
+        if self.value():
+            dt = datetime.now()
+            memberships = MembershipPeriod.objects\
+                .filter(user=OuterRef('pk'))\
+                .filter(Q(begin__lte=dt), Q(end__isnull=True) | Q(end__gte=dt))\
+                .order_by('-begin')\
+                .values("kind_of_membership__pk")
+            qs = qs.annotate(active_membershipperiod_pk=Subquery(memberships[:1]))
+            qs = qs.filter(active_membershipperiod_pk=int(self.value()))
+        return qs
+
+
 @admin.register(User)
 class MemberAdmin(UserAdmin):
     inlines = [ContactInfoInline, PaymentInfoInline, MembershipPeriodInline,
                PaymentInline]
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff',
                     'is_active')
-    list_filter = ('is_staff', 'is_superuser', 'paymentinfo__bank_collection_mode')
+    list_filter = (
+        'is_staff',
+        'is_superuser',
+        'paymentinfo__bank_collection_mode',
+        'paymentinfo__bank_collection_allowed',
+        MembershipPeriodListFilter,
+        )
     search_fields = ('username', 'email', 'first_name', 'last_name')
     ordering = ('username',)
-    actions = [send_welcome_mail]
+    actions = [send_welcome_mail, make_sepa_xml_for_members]
+    # allow to select/deselect for more members during actions
+    list_max_show_all = 9999999
