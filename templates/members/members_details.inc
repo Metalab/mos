@@ -73,6 +73,10 @@
 
 <h3>Contact info</h3>
 
+{% if user.is_superuser %}
+  <a href='{%url 'admin:auth_user_change' item.id%}'>admin view</a>
+{% endif %}
+
 <table id="user_contactinfo">
 	<tr id='member-tr-email'>
 		<td>Email:</td>
