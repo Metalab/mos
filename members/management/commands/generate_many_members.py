@@ -12,7 +12,7 @@ from ...models import MembershipPeriod
 
 class Command(BaseCommand):
     help = 'Generate a lot of members for testing'
-    args = "./manage.py import_payment absolute_filepath date(yyyy-mm-dd)"
+    args = "./manage.py generate_many_members absolute_filepath date(yyyy-mm-dd)"
 
 
     def add_arguments(self, parser):
