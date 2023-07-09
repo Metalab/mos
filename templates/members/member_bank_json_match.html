@@ -29,10 +29,10 @@
         <input name="text[]" value="{{ row.payment.text }}" type="hidden">
         <input name="value[]" value="{{ row.payment.amount.value_full }}" type="hidden">
         <input name="referenceNumber[]" value="{{ row.payment.referenceNumber }}" type="hidden">
-        <tr class="{{ row.marks|join:' ' }}">
+        <tr>
             <td>{{ row.payment.booking|date }}</td>
             <td>{{ row.payment.partnerName }}<br>{{ row.payment.partnerAccount.iban }}</td>
-            <td>{{ row.payment.text }}</td>
+            <td style="background-color: {{ row.color }}">{{ row.payment.text }}</td>
             <td style="text-align: right; color: {% if row.payment.amount.value_full > 0 %}green{% else %}darkred{% endif %};">
                 {{ row.payment.amount.value_full|floatformat:2 }}
             </td>

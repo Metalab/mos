@@ -21,7 +21,7 @@ from django.contrib import messages
 
 from .models import BankCollectionMode, ContactInfo, KindOfMembership
 from .models import Locker, MailinglistMail, MembershipFee, MembershipPeriod
-from .models import Payment, PaymentInfo, PendingPayment
+from .models import Payment, PaymentInfo, PendingPayment, BankImportMatcher
 
 from .views import generate_sepa, SepaException
 
@@ -262,3 +262,9 @@ class MemberAdmin(UserAdmin):
 class LockerAdmin(admin.ModelAdmin):
     list_filter = ['rented_by']
     list_display = ['name', 'rented_by', 'price']
+
+
+@admin.register(BankImportMatcher)
+class BankImportMatcherAdmin(admin.ModelAdmin):
+    list_filter = ['action']
+    list_display = ['matcher', 'comment', 'action']

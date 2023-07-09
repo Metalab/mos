@@ -508,3 +508,17 @@ class Locker(models.Model):
         null=True,
         blank=True
     )
+
+class BankImportMatcher(models.Model):
+    MATCHER_CHOICES = (
+        ('drop', "drop"),
+        ('do_not_match', "do not match"),
+        ('match_to', "match to"),
+        ('color', "color"),
+    )
+
+    matcher = models.CharField(max_length=80, help_text="match in IBAN, sender, text")
+    comment = models.CharField(max_length=200, null=True, blank=True)
+    action = models.CharField(choices=MATCHER_CHOICES, max_length=20)
+    color = models.CharField(max_length=100, null=True, blank=True, help_text="if action=color")
+    member = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, help_text="if action=match_to")
