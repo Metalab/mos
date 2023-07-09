@@ -166,52 +166,6 @@ def members_update(request, user_username, update_type):
 
 
 @login_required
-def members_bankcollection_list(request):
-    if request.user.is_superuser:
-        # get members that are active and have monthly collection activated
-        # 4 = monthly
-        members_to_collect_from = get_active_members()\
-            .filter(paymentinfo__bank_collection_allowed=True)\
-            .filter(paymentinfo__bank_collection_mode__id=4)
-
-        # build a list of collection records with name, bank data, amount
-        # and a description
-        collection_records = []
-
-        for m in members_to_collect_from:
-            debt = m.contactinfo.get_debt_for_month(date.today())
-            if debt != 0:
-                pmi = m.paymentinfo
-                # on the first debit initiation, set the mandate signing date
-                if not pmi.bank_account_date_of_signing:
-                    pmi.bank_account_date_of_signing = date.today()
-                    pmi.save()
-
-                collection_records.append([m.first_name, m.last_name,
-                                           pmi.bank_account_number,
-                                           pmi.bank_code,
-                                           pmi.bank_account_owner,
-                                           str(debt),
-                                           'Mitgliedsbeitrag %d/%d'
-                                           % (date.today().year,
-                                              date.today().month),
-                                           pmi.bank_account_iban or '',
-                                           pmi.bank_account_bic or '',
-                                           pmi.bank_account_mandate_reference or '',
-                                           pmi.bank_account_date_of_signing.isoformat(),
-                                           # FIXME: should be "FRST" on initial run
-                                           'RCUR',
-                                           settings.HOS_SEPA_CREDITOR_ID,
-                                           ])
-
-        # format as csv and return it
-        csv = '\r\n'.join([';'.join(x) for x in collection_records])
-        return HttpResponse(csv, content_type='text/plain; charset=utf-8')
-
-    else:
-        return HttpResponseNotAllowed('you are not allowed to use this method')
-
-@login_required
 def members_bank(request):
     if not request.user.is_superuser:
         return HttpResponseNotAllowed('you are not allowed to use this method')
