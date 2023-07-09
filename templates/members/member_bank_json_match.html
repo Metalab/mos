@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block hos_content %}
+<h1>Erste Bank JSON Import </h1>
+<pre>
+<b>HOWTO</b>
+
+* unten sind alle eingelesenen Buchungen, Buchungen von Wien Energie und co werden ignoriert
+* Member werden anhand ihrer eingetragenen IBAN vorausgewählt
+* Rückläufer sind rot
+* schon gebuchte Zeilen sind grau und nicht vorausgewählt
+
+</pre>
+<form method="POST" action="/member/bank/json/match" enctype="multipart/form-data">
+{% csrf_token %}
+<input name="upload_filename" value="{{ upload_filename }}" type="hidden">
+<table class="jsonimport">
+    <thead>
+        <tr>
+            <th width="100px">Datum</th>
+            <th>Name/IBAN</th>
+            <th>Referenz</th>
+            <th>Betrag</th>
+            <th>Member</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for row in import_rows %}
+        <input name="text[]" value="{{ row.payment.text }}" type="hidden">
+        <input name="value[]" value="{{ row.payment.amount.value_full }}" type="hidden">
+        <input name="referenceNumber[]" value="{{ row.payment.referenceNumber }}" type="hidden">
+        <tr class="{{ row.marks|join:' ' }}">
+            <td>{{ row.payment.booking|date }}</td>
+            <td>{{ row.payment.partnerName }}<br>{{ row.payment.partnerAccount.iban }}</td>
+            <td>{{ row.payment.text }}</td>
+            <td style="text-align: right; color: {% if row.payment.amount.value_full > 0 %}green{% else %}darkred{% endif %};">
+                {{ row.payment.amount.value_full|floatformat:2 }}
+            </td>
+            <td>
+                <select name="member_pk[]">
+                    <option value="">---</option>
+                    {% for member in all_members %}
+                    {% if member in row.matched_members %}
+                    <option selected value="{{ member.pk }}">{{ member }}</option>
+                    {% else %}
+                    <option value="{{ member.pk }}">{{ member }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        {% endfor %}
+</tbody>
+</table>
+<br>
+<input type="submit" style="float: right;">
+<br>
+<br>
+</form>
+{% endblock %}

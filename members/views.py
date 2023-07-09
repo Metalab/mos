@@ -280,7 +280,7 @@ def generate_sepa(admin_user, members_to_collect_from):
     return sepa, sepaxml_filename
 
 @login_required
-def members_bankcollection_importjson(request):
+def members_bank_json_import(request):
     if not request.user.is_superuser:
         return HttpResponseNotAllowed('you are not allowed to use this method')
     if request.method != "POST" or not 'erstejson' in request.FILES:
@@ -293,8 +293,122 @@ def members_bankcollection_importjson(request):
         messages.error(request, 'could not parse JSON data')
         return redirect("/member/bank/")
 
-    # TODO not yet implemented
-    return render(request, 'members/member_bank_uploadresults.html')
+    marks = {
+        "Rückleitung": "red",
+    }
+
+    ignore = [
+        "WIEN ENERGIE",
+        "VERBUND",
+        "MERKUR VERSICHERUNG",
+        "Merkur Direkt",
+        "Sumup",
+        "Eleonore Pablik",  # vermieter
+        "Socher-Wundsam-Pablik",  # vermieter
+        "ARCS Gebäudereinigung",
+        "Juicebrothers",
+        "Finanzamt",
+        "Prusa Research",
+        "MA 6",
+    ]
+
+    import_rows = []
+
+    for payment in payments:
+        if not payment["partnerName"]:
+            continue
+        if payment["amount"]["currency"] != "EUR":
+            continue
+
+        try:
+            iban = payment["partnerAccount"]["iban"]
+        except LookupError:
+            continue
+
+        if any(i in payment["partnerName"] for i in ignore):
+            continue
+
+        payment["amount"]["value_full"] = payment["amount"]["value"] / pow(10, payment["amount"]["precision"])
+        payment["booking"] = datetime.fromisoformat(payment["booking"])
+        payment["text"] = (payment["reference"] + " " + payment["receiverReference"]).strip()
+
+        payment_marks = [
+            v
+            for k, v in marks.items()
+            if k in payment["reference"]
+        ]
+
+        if payment["amount"]["value_full"] > 0 or "Rückleitung" in payment["reference"]:
+            matched_members = User.objects.filter(paymentinfo__bank_account_iban=iban)
+        else:
+            matched_members = []
+
+        if Payment.objects.filter(original_line=payment["referenceNumber"]).exists():
+            payment_marks.append("gray")
+            matched_members = []
+
+        import_rows.append({
+            "payment": payment,
+            "matched_members": matched_members,
+            "marks": payment_marks,
+        })
+
+    all_members = get_active_and_future_members()
+
+    return render(request, 'members/member_bank_json_match.html', context={
+        "import_rows": import_rows,
+        "all_members": all_members,
+        "upload_filename": request.FILES['erstejson'].name,
+    })
+
+
+@login_required
+def members_bank_json_match(request):
+    if not request.user.is_superuser:
+        return HttpResponseNotAllowed('you are not allowed to use this method')
+    if request.method != "POST" or not request.POST:
+        messages.error(request, 'No data found.')
+        return redirect("/member/bank/")
+
+    fields = [
+        "text",
+        "referenceNumber",
+        "member_pk",
+        "value",
+    ]
+
+    lines = [
+        {f: request.POST.getlist(f + "[]")[r] for f in fields}
+        for r in range(len(request.POST.getlist(fields[0] + "[]")))
+    ]
+
+    bank_collection = PaymentMethod.objects.get(name="bank collection")
+    bank_transfer = PaymentMethod.objects.get(name="bank transfer")
+
+    count = 0
+
+    for line in lines:
+        if not line["member_pk"]:
+            continue
+
+        # all of MOS money is in float. don't ask.
+        line["value"] = float(line["value"])
+
+        Payment.objects.create(
+            date=datetime.now(),
+            user_id=line["member_pk"],
+            amount=line["value"],
+            comment=line["text"][:200],
+            # Rückleitungen als BankCollection, alle anderen BankTransfer
+            method=bank_collection if line["value"] < 0 else bank_transfer,
+            original_file=request.POST["upload_filename"],
+            original_line=line["referenceNumber"],
+        )
+        count += 1
+
+    messages.success(request, f"imported {count} payments from {request.POST['upload_filename']}")
+
+    return redirect("/member/bank")
 
 
 def members_key_list(request):

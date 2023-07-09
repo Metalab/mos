@@ -1,14 +1,12 @@
 {% extends "base.html" %}
 
 {% block hos_content %}
-{% comment %}
     <p>
         <h1>Erste Bank JSON import</h1>
-        <form method="post" action="/member/bankimport/" enctype="multipart/form-data">
+        <form method="post" action="/member/bank/json/import" enctype="multipart/form-data">
             {% csrf_token %}
             <input type="file" placeholder="Picture" name="erstejson" /><br />
             <button type="submit">Import JSON</button>
         </form>
     </p>
-{% endcomment %}
 {% endblock %}
