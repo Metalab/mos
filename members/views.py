@@ -23,7 +23,7 @@ from .forms import UserEmailForm, UserNameForm, UserAdressForm,\
 from .models import ContactInfo, get_active_members, \
     get_active_and_future_members, Payment, PendingPayment, PaymentMethod, \
     get_mailinglist_members, get_month_list, KindOfMembership, \
-    MembershipPeriod, MembershipFee
+    MembershipPeriod, MembershipFee, BankImportMatcher
 from .util import get_list_of_history_entries
 
 
@@ -247,24 +247,7 @@ def members_bank_json_import(request):
         messages.error(request, 'could not parse JSON data')
         return redirect("/member/bank/")
 
-    marks = {
-        "Rückleitung": "red",
-    }
-
-    ignore = [
-        "WIEN ENERGIE",
-        "VERBUND",
-        "MERKUR VERSICHERUNG",
-        "Merkur Direkt",
-        "Sumup",
-        "Eleonore Pablik",  # vermieter
-        "Socher-Wundsam-Pablik",  # vermieter
-        "ARCS Gebäudereinigung",
-        "Juicebrothers",
-        "Finanzamt",
-        "Prusa Research",
-        "MA 6",
-    ]
+    matchers = list(BankImportMatcher.objects.all())
 
     import_rows = []
 
@@ -279,32 +262,47 @@ def members_bank_json_import(request):
         except LookupError:
             continue
 
-        if any(i in payment["partnerName"] for i in ignore):
-            continue
-
         payment["amount"]["value_full"] = payment["amount"]["value"] / pow(10, payment["amount"]["precision"])
         payment["booking"] = datetime.fromisoformat(payment["booking"])
         payment["text"] = (payment["reference"] + " " + payment["receiverReference"]).strip()
 
-        payment_marks = [
-            v
-            for k, v in marks.items()
-            if k in payment["reference"]
-        ]
+        should_drop = False
+        should_match = (payment["amount"]["value_full"] > 0 or "Rückleitung" in payment["reference"])
+        color = ""
+        matched_members = []
 
-        if payment["amount"]["value_full"] > 0 or "Rückleitung" in payment["reference"]:
-            matched_members = User.objects.filter(paymentinfo__bank_account_iban=iban)
-        else:
-            matched_members = []
+        for matcher in matchers:
+            fields = [
+                payment["partnerName"],
+                payment["partnerAccount"]["iban"],
+                payment["text"],
+            ]
+
+            if any(matcher.matcher in f for f in fields):
+                if matcher.action == "color" and matcher.color:
+                    color = matcher.color
+                elif matcher.action == "do_not_match":
+                    should_match = False
+                elif matcher.action == "match_to" and matcher.member:
+                    matched_members = [matcher.member]
+                    should_match = False
+                elif matcher.action == "drop":
+                    should_drop = True
+
+        if should_drop:
+            continue
 
         if Payment.objects.filter(original_line=payment["referenceNumber"]).exists():
-            payment_marks.append("gray")
-            matched_members = []
+            color = "rgba(0, 0, 0, 0.2)"
+            should_match = False
+
+        if should_match:
+            matched_members = User.objects.filter(paymentinfo__bank_account_iban=iban)
 
         import_rows.append({
             "payment": payment,
             "matched_members": matched_members,
-            "marks": payment_marks,
+            "color": color,
         })
 
     all_members = get_active_and_future_members()
