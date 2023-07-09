@@ -520,5 +520,5 @@ class BankImportMatcher(models.Model):
     matcher = models.CharField(max_length=80, help_text="match in IBAN, sender, text")
     comment = models.CharField(max_length=200, null=True, blank=True)
     action = models.CharField(choices=MATCHER_CHOICES, max_length=20)
-    color = models.CharField(max_length=100, null=True, blank=True, help_text="if action=color")
+    color = models.CharField(max_length=100, null=True, blank=True, help_text="if action=color, e.g. 'red' or 'rgba(255,0,0,0.1)'")
     member = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE, help_text="if action=match_to")
