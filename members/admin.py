@@ -244,13 +244,13 @@ def generate_membership_recievables(self, request, queryset):
     for user in queryset.all():
         if hasattr(user, 'contactinfo'):
             for debt in user.contactinfo.get_membership_fees():
-                rec = Recievable()
-                rec.due_date = debt[0]
-                rec.amount = debt[1]
-                rec.description = 'Membership Fee'
-                rec.member = user
-                rec.save()
-
+                if not user.recievables.filter(description='Membership Fee', due_date = debt[0]).exists():
+                    rec = Recievable()
+                    rec.due_date = debt[0]
+                    rec.amount = debt[1]
+                    rec.description = 'Membership Fee'
+                    rec.member = user
+                    rec.save()
 
 @admin.register(User)
 class MemberAdmin(UserAdmin):
