@@ -305,7 +305,7 @@ def members_bank_json_import(request):
             "color": color,
         })
 
-    all_members = get_active_and_future_members()
+    all_members = User.objects.filter(Q(membershipperiod__isnull=False)).distinct()
 
     return render(request, 'members/member_bank_json_match.html', context={
         "import_rows": import_rows,
@@ -327,6 +327,7 @@ def members_bank_json_match(request):
         "referenceNumber",
         "member_pk",
         "value",
+        "date",
     ]
 
     lines = [
@@ -347,7 +348,7 @@ def members_bank_json_match(request):
         line["value"] = float(line["value"])
 
         Payment.objects.create(
-            date=datetime.now(),
+            date=datetime.strptime(line["date"], "%Y-%m-%d"),
             user_id=line["member_pk"],
             amount=line["value"],
             comment=line["text"][:200],

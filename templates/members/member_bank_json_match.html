@@ -29,6 +29,7 @@
         <input name="text[]" value="{{ row.payment.text }}" type="hidden">
         <input name="value[]" value="{{ row.payment.amount.value_full }}" type="hidden">
         <input name="referenceNumber[]" value="{{ row.payment.referenceNumber }}" type="hidden">
+        <input name="date[]" value="{{ row.payment.booking|date:'Y-m-d' }}" type="hidden">
         <tr>
             <td>{{ row.payment.booking|date }}</td>
             <td>{{ row.payment.partnerName }}<br>{{ row.payment.partnerAccount.iban }}</td>
