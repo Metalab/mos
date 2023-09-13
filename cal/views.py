@@ -3,7 +3,7 @@ from itertools import groupby
 import json
 import urllib.parse
 
-from calendar import HTMLCalendar
+from calendar import HTMLCalendar, month_name
 from dateutil import relativedelta
 
 from django.contrib.auth.decorators import login_required
@@ -53,15 +53,24 @@ class EventCalendar(HTMLCalendar):
             return self.day_cell(cssclass, day)
         return self.day_cell('noday', '&nbsp;')
 
-    def formatmonth(self, year, month):
-        self.year, self.month = year, month
+    def formatmonthname(self, theyear, themonth, withyear=True):
+        # Adapted from Python's Lib/calendar.py
 
-        d = date(int(year), int(month), 1)
+        if withyear:
+            s = '%s %s' % (month_name[themonth], theyear)
+        else:
+            s = '%s' % month_name[themonth]
+
+        d = date(int(theyear), int(themonth), 1)
         prev = d - relativedelta.relativedelta(months=1)
         next = d + relativedelta.relativedelta(months=1)
-        
-        head = '<a href="/calendar/%04d/%02d/">&lt;</a> <a href="/calendar/%04d/%02d/">&gt;</a>' % (prev.year, prev.month, next.year, next.month)
-        return head + super().formatmonth(year, month)
+
+        return f'''
+        <tr><th colspan="7" class="{self.cssclass_month_head}">
+            <a href="/calendar/{prev.year:04d}/{prev.month:02d}/">&lt;</a>
+            {s}
+            <a href="/calendar/{next.year:04d}/{next.month:02d}/">&gt;</a>
+        </th></tr>'''
 
     def group_by_day(self, events):
         field = lambda event: event.startDate.day

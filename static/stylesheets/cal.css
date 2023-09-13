@@ -80,7 +80,7 @@ table.month th.month {
     font-size: 20pt;
     padding: 4px 0;
     color: #aaa;
-    text-align: right;
+    text-align: center;
 }
 
 table.month td {
