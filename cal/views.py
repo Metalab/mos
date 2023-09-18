@@ -30,14 +30,18 @@ class EventCalendar(HTMLCalendar):
 
     def formatday(self, day, weekday):
         if day != 0:
-            d = date(self.year, self.month, day)
-            d1 = d + relativedelta.relativedelta(days=1)  # next day
+            # self.year and self.month are set as a side-effect of formatmonth()
+            this_day = date(self.year, self.month, day)
+            next_day = this_day + relativedelta.relativedelta(days=1)
             cssclass = self.cssclasses[weekday]
-            if date.today() == date(self.year, self.month, day):
+            if date.today() == this_day:
                 cssclass += ' today'
                 cssclass += ' filled'
             body = ['<ul class="daily-events">']
-            for event in self.events.exclude(startDate__gt=d1).exclude(endDate__lt=d, endDate__isnull=False).exclude(endDate__isnull=True, startDate__lt=d):
+            for event in (self.events
+                          .exclude(startDate__gt=next_day)
+                          .exclude(endDate__lt=this_day, endDate__isnull=False)
+                          .exclude(endDate__isnull=True, startDate__lt=this_day)):
                 body.append('<li class="event">')
                 if self.admin:
                     body.append(u'<a href="%s" class="edit" title="edit">✏️</a>' % event.get_absolute_url())
