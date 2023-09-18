@@ -3,7 +3,7 @@ from itertools import groupby
 import json
 import urllib.parse
 
-from calendar import HTMLCalendar
+from calendar import HTMLCalendar, month_name
 from dateutil import relativedelta
 
 from django.contrib.auth.decorators import login_required
@@ -30,14 +30,18 @@ class EventCalendar(HTMLCalendar):
 
     def formatday(self, day, weekday):
         if day != 0:
-            d = date(self.year, self.month, day)
-            d1 = d + relativedelta.relativedelta(days=1)  # next day
+            # self.year and self.month are set as a side-effect of formatmonth()
+            this_day = date(self.year, self.month, day)
+            next_day = this_day + relativedelta.relativedelta(days=1)
             cssclass = self.cssclasses[weekday]
-            if date.today() == date(self.year, self.month, day):
+            if date.today() == this_day:
                 cssclass += ' today'
                 cssclass += ' filled'
             body = ['<ul class="daily-events">']
-            for event in self.events.exclude(startDate__gt=d1).exclude(endDate__lt=d, endDate__isnull=False).exclude(endDate__isnull=True, startDate__lt=d):
+            for event in (self.events
+                          .exclude(startDate__gt=next_day)
+                          .exclude(endDate__lt=this_day, endDate__isnull=False)
+                          .exclude(endDate__isnull=True, startDate__lt=this_day)):
                 body.append('<li class="event">')
                 if self.admin:
                     body.append(u'<a href="%s" class="edit" title="edit">✏️</a>' % event.get_absolute_url())
@@ -54,14 +58,28 @@ class EventCalendar(HTMLCalendar):
         return self.day_cell('noday', '&nbsp;')
 
     def formatmonth(self, year, month):
+        # Remember year and month for use in formatday()
         self.year, self.month = year, month
+        return super().formatmonth(year, month)
 
-        d = date(int(year), int(month), 1)
+    def formatmonthname(self, theyear, themonth, withyear=True):
+        # Adapted from Python's Lib/calendar.py
+
+        if withyear:
+            s = '%s %s' % (month_name[themonth], theyear)
+        else:
+            s = '%s' % month_name[themonth]
+
+        d = date(int(theyear), int(themonth), 1)
         prev = d - relativedelta.relativedelta(months=1)
         next = d + relativedelta.relativedelta(months=1)
-        
-        head = '<a href="/calendar/%04d/%02d/">&lt;</a> <a href="/calendar/%04d/%02d/">&gt;</a>' % (prev.year, prev.month, next.year, next.month)
-        return head + super().formatmonth(year, month)
+
+        return f'''
+        <tr><th colspan="7" class="{self.cssclass_month_head}">
+            <a href="/calendar/{prev.year:04d}/{prev.month:02d}/">&lt;</a>
+            {s}
+            <a href="/calendar/{next.year:04d}/{next.month:02d}/">&gt;</a>
+        </th></tr>'''
 
     def group_by_day(self, events):
         field = lambda event: event.startDate.day
