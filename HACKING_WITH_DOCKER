@@ -1,0 +1,11 @@
+Install docker and docker-compose on your host OS (example for Debian/Ubuntu):
+
+    sudo apt install docker.io docker-compose
+
+Then, build and run the Docker image:
+
+    docker-compose -f docker/docker-compose.yml run --service-ports mos
+
+After it is up and running, point your web browser to:
+
+    http://localhost:8020/
