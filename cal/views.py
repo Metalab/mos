@@ -53,6 +53,11 @@ class EventCalendar(HTMLCalendar):
             return self.day_cell(cssclass, day)
         return self.day_cell('noday', '&nbsp;')
 
+    def formatmonth(self, year, month):
+        # Remember year and month for use in formatday()
+        self.year, self.month = year, month
+        return super().formatmonth(year, month)
+
     def formatmonthname(self, theyear, themonth, withyear=True):
         # Adapted from Python's Lib/calendar.py
 
