@@ -15,7 +15,7 @@
         Edit
       </a>
     {%endif %}
-      <a class="hoverHidden" href="{{event.get_icalendar_url}}">ical</a>
+      <a class="hoverHidden" href="{{event.get_icalendar_url}}">📅 ical</a>
     {% if user.is_authenticated %}
       <span class="hoverHidden">| created by</span> <a class="hoverHidden" href="/wiki/Benutzer:{{ event.created_by }}">{{ event.created_by }}</a>
     {%endif %}
