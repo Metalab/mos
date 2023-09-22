@@ -81,12 +81,6 @@ class EventCalendar(HTMLCalendar):
             <a href="/calendar/{next.year:04d}/{next.month:02d}/">&gt;</a>
         </th></tr>'''
 
-    def group_by_day(self, events):
-        field = lambda event: event.startDate.day
-        return dict(
-            [(day, list(items)) for day, items in groupby(events, field)]
-        )
-
     def day_cell(self, cssclass, body):
         return '<td class="%s">%s</td>' % (cssclass, body)
 
