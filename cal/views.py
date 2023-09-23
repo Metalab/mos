@@ -43,14 +43,17 @@ class EventCalendar(HTMLCalendar):
                           .exclude(startDate__gt=next_day)
                           .exclude(endDate__lt=this_day, endDate__isnull=False)
                           .exclude(endDate__isnull=True, startDate__lt=this_day)):
+                start_day = event.startDate.date()
+                end_day = (event.endDate or event.startDate).date()
+                              
                 body.append('<li class="event">')
                 if self.admin:
                     body.append(u'<a href="%s" class="edit" title="edit">✏️</a>' % event.get_absolute_url())
                 body.append('<a href="/wiki/%s">' % event.wikiPage)
-                if (this_day == event.startDate.date()):
+                if this_day == start_day:
                     body.append('<span class="event-time">' + event.startDate.strftime('%H:%M') + '</span>')
                 body.append('<span class="event-name">' + esc(event.name) + '</span>')
-                if (event.endDate) and (event.startDate.date() != event.endDate.date()) and (this_day == event.endDate.date()):
+                if start_day != end_day and this_day == end_day:
                     body.append(' <span class="event-time">' + event.endDate.strftime('%H:%M') + '</span>')
                 body.append('<span class="event-location">' + esc(event.location) + '</span>')
                 body.append('</a>')
