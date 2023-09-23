@@ -32,6 +32,7 @@ class EventCalendar(HTMLCalendar):
         if day != 0:
             # self.year and self.month are set as a side-effect of formatmonth()
             this_day = date(self.year, self.month, day)
+
             next_day = this_day + relativedelta.relativedelta(days=1)
             cssclass = self.cssclasses[weekday]
             if date.today() == this_day:
@@ -42,12 +43,18 @@ class EventCalendar(HTMLCalendar):
                           .exclude(startDate__gt=next_day)
                           .exclude(endDate__lt=this_day, endDate__isnull=False)
                           .exclude(endDate__isnull=True, startDate__lt=this_day)):
+                start_day = event.startDate.date()
+                end_day = (event.endDate or event.startDate).date()
+                              
                 body.append('<li class="event">')
                 if self.admin:
                     body.append(u'<a href="%s" class="edit" title="edit">✏️</a>' % event.get_absolute_url())
                 body.append('<a href="/wiki/%s">' % esc(event.wikiPage))
-                body.append('<span class="event-time">' + event.startDate.strftime('%H:%M') + '</span>')
+                if this_day == start_day:
+                    body.append('<span class="event-time">' + event.startDate.strftime('%H:%M') + '</span>')
                 body.append('<span class="event-name">' + esc(event.name) + '</span>')
+                if start_day != end_day and this_day == end_day:
+                    body.append(' <span class="event-time">' + event.endDate.strftime('%H:%M') + '</span>')
                 body.append('<span class="event-location">' + esc(event.location) + '</span>')
                 body.append('</a>')
                 body.append('</li>')
