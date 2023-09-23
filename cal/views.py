@@ -47,10 +47,10 @@ class EventCalendar(HTMLCalendar):
                 if self.admin:
                     body.append(u'<a href="%s" class="edit" title="edit">✏️</a>' % event.get_absolute_url())
                 body.append('<a href="/wiki/%s">' % event.wikiPage)
-                if (this_day == event.startDate.date()):
+                if this_day == event.startDate.date():
                     body.append('<span class="event-time">' + event.startDate.strftime('%H:%M') + '</span>')
                 body.append('<span class="event-name">' + esc(event.name) + '</span>')
-                if (event.endDate) and (event.startDate.date() != event.endDate.date()) and (this_day == event.endDate.date()):
+                if event.endDate and event.startDate.date() != event.endDate.date() and this_day == event.endDate.date():
                     body.append(' <span class="event-time">' + event.endDate.strftime('%H:%M') + '</span>')
                 body.append('<span class="event-location">' + esc(event.location) + '</span>')
                 body.append('</a>')
