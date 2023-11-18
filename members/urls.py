@@ -20,6 +20,7 @@ urlpatterns = [
 
     path('', include('django.contrib.auth.urls')),
 
+    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     re_path(r'^valid_user/?$', members.views.valid_user),
     path('history/', members.views.members_history),
     path('hetti/', members.views.hetti),

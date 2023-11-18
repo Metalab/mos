@@ -14,3 +14,4 @@ sepaxml
 daphne
 requests
 easy-thumbnails
+django-oauth-toolkit
