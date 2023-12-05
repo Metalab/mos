@@ -132,8 +132,9 @@ def iban_letters2numbers(iban):
         result.append(final_char)
     return "".join(result)
 
-def iban_validate(iban):
+def iban_validate(iban: str) -> None:
     """Validates a given IBAN"""
+    iban = iban.replace(" ","")
     if not iban.isalnum():
         raise ValidationError("IBAN can only contain numbers (0-9) and letters (A-Z)!")
     if len(iban) < 4:
