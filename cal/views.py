@@ -78,14 +78,25 @@ class EventCalendar(HTMLCalendar):
             s = '%s' % month_name[themonth]
 
         d = date(int(theyear), int(themonth), 1)
-        prev = d - relativedelta.relativedelta(months=1)
-        next = d + relativedelta.relativedelta(months=1)
+
+        # Any date before 1 or past 9999 crashes. Make sure we don't try to calculate such a date.
+        try:
+            prev = d - relativedelta.relativedelta(months=1)
+            prevLink = f'<a href="/calendar/{prev.year:04d}/{prev.month:02d}/">&lt;</a>'
+        except ValueError:
+            prevLink = ''
+
+        try:
+            next = d + relativedelta.relativedelta(months=1)
+            nextLink = f'<a href="/calendar/{next.year:04d}/{next.month:02d}/">&gt;</a>'
+        except ValueError:
+            nextLink = ''
 
         return f'''
         <tr><th colspan="7" class="{self.cssclass_month_head}">
-            <a href="/calendar/{prev.year:04d}/{prev.month:02d}/">&lt;</a>
+            {prevLink}
             {s}
-            <a href="/calendar/{next.year:04d}/{next.month:02d}/">&gt;</a>
+            {nextLink}
         </th></tr>'''
 
     def day_cell(self, cssclass, body):
