@@ -16,7 +16,7 @@ RUN apt-get update \
     && pip3 install --no-cache-dir -vvv -r /code/requirements.txt \
     && pip3 install --no-cache-dir -vvv -Ur /code/requirements-dev.txt
     
-RUN locale-gen de_DE.UTF-8 && update-locale
+RUN sed -i -e 's/# de_DE.UTF-8 UTF-8/de_DE.UTF-8 UTF-8/' /etc/locale.gen && locale-gen
 
 WORKDIR /code
 ENTRYPOINT ["docker/entrypoint.sh"]
