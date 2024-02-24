@@ -62,7 +62,10 @@
                     | <a href="/member/">Mitglieder</a>
                     | <a href="/announce/">Announce</a>
                 {% endif %}
-                | <a href="{% url 'logout' %}">Logout</a>
+                | <form id="logout-form" method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Logout</button>
+                </form>
             {% endif %}
         </div>
     </div>
