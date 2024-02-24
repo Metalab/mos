@@ -52,6 +52,8 @@ TEMPLATES = [
 # Local timezone
 TIME_ZONE = 'Europe/Vienna'
 
+USE_TZ = False
+
 # Set first day of week to monday
 FIRST_DAY_OF_WEEK = 1
 
