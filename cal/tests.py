@@ -1,6 +1,8 @@
 from datetime import datetime, timedelta
+import unittest
 
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.test.client import Client
 
@@ -16,6 +18,39 @@ correct_data = {'name': 'TestEvent1',
                 'startDate_1': '15:00',
                 'endDate_0': '2009-04-02',
                 'endDate_1': '14:00'}
+
+
+class EventTest(TestCase):
+    fixtures = ['initial_user.json']
+
+    @unittest.skip("not implemented")
+    def testBackwardsDateRange(self):
+        """Creates an event that ends before it starts"""
+        e = Event(
+            name="Clever event name",
+            wikiPage="/wiki/foo",
+            startDate=datetime(2024, 2, 24, 16, 15, 0),
+            endDate=datetime(2024, 2, 23, 16, 15, 0),
+            created_by=User.objects.first(),
+        )
+        with self.assertRaises(
+            ValidationError,
+            msg="Event has to have non-zero duration"
+        ):
+            e.save()
+
+    @unittest.skip("not implemented")
+    def testZeroDateRange(self):
+        """Creates an event that ends immediately"""
+        e = Event(
+            name="Clever event name",
+            wikiPage="/wiki/foo",
+            startDate=datetime(2024, 2, 24, 16, 15, 0),
+            endDate=datetime(2024, 2, 24, 16, 15, 0),
+            created_by=User.objects.first(),
+        )
+        with self.assertRaises(ValidationError, msg="Event has to ha"):
+            e.save()
 
 
 class EventFormTest(TestCase):
@@ -49,6 +84,25 @@ class EventFormTest(TestCase):
         assert f.errors['endDate'] != "", 'Wrong time, but no error raised'
         assert f.errors['wikiPage'] != "", 'Wikipage missing, but no error \
                                             raised'
+
+    def testBackwardsDateRange(self):
+        """Submits an event that ends before it starts"""
+
+        data = correct_data.copy()
+        start, end = data['startDate_0'], data['endDate_0']
+        data['startDate_0'], data['endDate_0'] = end, start
+
+        f = EventForm(data)
+        assert f.has_error('endDate'), "Event can end before it starts"
+
+    def testZeroDateRange(self):
+        """Submits an event that ends immediately."""
+        data = correct_data.copy()
+        data['endDate_0'] = data['startDate_0']
+        data['endDate_1'] = data['startDate_1']
+
+        f = EventForm(data)
+        assert f.is_valid(), "Event has to have a non-zero duration"
 
     def testSaveFromForm(self):
         """Adds  a user with valid information"""
