@@ -22,6 +22,7 @@ from django.contrib import messages
 from .models import BankCollectionMode, ContactInfo, KindOfMembership
 from .models import Locker, MailinglistMail, MembershipFee, MembershipPeriod
 from .models import Payment, PaymentInfo, PendingPayment, BankImportMatcher
+from things.models import ThingUser
 
 from .views import generate_sepa, SepaException
 
@@ -242,10 +243,14 @@ class MembershipPeriodListFilter(admin.SimpleListFilter):
         return qs
 
 
+class ThingUserInline(admin.TabularInline):
+    model = ThingUser
+
+
 @admin.register(User)
 class MemberAdmin(UserAdmin):
     inlines = [ContactInfoInline, PaymentInfoInline, MembershipPeriodInline,
-               PaymentInline, LockerInline]
+               PaymentInline, LockerInline, ThingUserInline]
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff',
                     'is_active')
     list_filter = (
