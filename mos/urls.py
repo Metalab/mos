@@ -21,6 +21,7 @@ urlpatterns = [
     path('project/', include('projects.urls')),
     path('member/', include('members.urls')),
     path('announce/', include('announce.urls')),
+    path('things/', include('things.urls')),
     path('cellardoor/', web.views.display_cellardoor),
     path('spaceapi.json', web.views.spaceapi),
     path('', web.views.display_main_page),

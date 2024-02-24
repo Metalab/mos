@@ -121,6 +121,7 @@ INSTALLED_APPS = (
     'announce',
     'core',
     'channels',
+    'things',
 )
 
 
