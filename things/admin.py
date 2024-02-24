@@ -21,3 +21,15 @@ class ThingAdmin(admin.ModelAdmin):
     inlines = [
         ThingUserInline,
     ]
+
+
+@admin.register(ThingUser)
+class ThingUser(admin.ModelAdmin):
+    list_filter = [
+        'thing',
+        'user',
+    ]
+    list_display = [
+        'thing',
+        'user',
+    ]
