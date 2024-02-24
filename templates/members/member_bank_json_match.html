@@ -41,11 +41,15 @@
                 <select name="member_pk[]">
                     <option value="">---</option>
                     {% for member in all_members %}
-                    {% if member in row.matched_members %}
-                    <option selected value="{{ member.pk }}">{{ member }}</option>
-                    {% else %}
-                    <option value="{{ member.pk }}">{{ member }}</option>
-                    {% endif %}
+                    <option
+                        {% if member in row.matched_members %}
+                        selected
+                        {% endif %}
+                        value="{{ member.pk }}"
+                    >
+                        {{ member.username }}
+                        ({{ member.first_name }} {{ member.last_name }})
+                    </option>
                     {% endfor %}
                 </select>
             </td>
