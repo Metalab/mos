@@ -31,6 +31,7 @@ unsupported.
    OpenSuSE: zypper in -t pattern devel_C_C++ devel_python)
 
 6. Install dev dependencies: pip install -r requirements-dev.txt
+6b. Install pre-commit to ensure linting and code style: pre-commit install
 7. Optional: Install the locale packages for de_DE.UTF-8
 8. Put a temporary key into mos/settings/secret_key.py (SECRET_KEY='bla')
 8a. python manage.py generate_secret_key (optional for development) and then
