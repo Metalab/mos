@@ -269,6 +269,8 @@ class MemberAdmin(UserAdmin):
     list_filter = (
         'is_staff',
         'is_superuser',
+        'contactinfo__has_active_key',
+        'thingusers__thing',
         BankCollectionModeListFilter,
         'paymentinfo__bank_collection_allowed',
         MembershipPeriodListFilter,
