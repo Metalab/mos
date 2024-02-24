@@ -170,6 +170,11 @@ class PaymentInfo(models.Model):
         User,
         on_delete=models.CASCADE,
     )
+    
+    def save(self, *args, **kwargs):
+        if not self.bank_account_mandate_reference:
+            self.bank_account_mandate_reference = self.user.id
+        super().save(*args, **kwargs)
 
 
 def get_image_path(self, filename):
