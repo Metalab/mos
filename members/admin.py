@@ -13,6 +13,7 @@ from django.db import transaction
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.db.models import OuterRef
+from django.contrib.admin.models import LogEntry
 from django.db.models import Subquery
 from django.http import HttpResponse
 from django.contrib.auth.admin import UserAdmin
@@ -297,3 +298,28 @@ class LockerAdmin(admin.ModelAdmin):
 class BankImportMatcherAdmin(admin.ModelAdmin):
     list_filter = ['action']
     list_display = ['matcher', 'comment', 'action']
+
+
+@admin.register(LogEntry)
+class LogEntryAdmin(admin.ModelAdmin):
+    list_filter = [
+        'content_type',
+        'user',
+    ]
+    search_fields = [
+        'object_repr',
+    ]
+    list_display = [
+        'action_time',
+        'user',
+        '__str__',
+    ]
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
+
+    def has_add_permission(self, request, obj=None):
+        return False
