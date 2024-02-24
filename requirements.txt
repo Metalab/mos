@@ -1,7 +1,6 @@
-Django>=3.2.18,<4.0
+Django~=4.0.10
 Pillow
-icalendar>=4,<5
-pytz
+icalendar~=5.0.11
 Unipath
 django-extensions
 python-dateutil
