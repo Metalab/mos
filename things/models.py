@@ -30,3 +30,28 @@ class ThingUser(models.Model):
         null=True,
         blank=True,
     )
+
+
+class ThingEvent(models.Model):
+    class Kind(models.TextChoices):
+        LOGIN = ("LOGIN", "Login")
+        LOGOUT = ("LOGOUT", "Logout")
+        USAGE_MEMBER = ("USAGE_MEMBER", "Zeit (Member)")
+        USAGE_NONMEMBER = ("USAGE_NONMEMBER", "Zeit (Nicht-Member)")
+
+    thing = models.ForeignKey(Thing, on_delete=models.PROTECT)
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="thingevents",
+    )
+    kind = models.CharField(
+        max_length=32,
+        db_index=True,
+        choices=Kind.choices,
+    )
+    usage_seconds = models.PositiveIntegerField(
+        blank=True,
+        null=True,
+    )
+    created_at = models.DateTimeField(auto_now_add=True)

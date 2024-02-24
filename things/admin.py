@@ -2,6 +2,7 @@ from django.contrib import admin
 
 from .models import Thing
 from .models import ThingUser
+from .models import ThingEvent
 
 
 class ThingUserInline(admin.TabularInline):
@@ -32,4 +33,19 @@ class ThingUser(admin.ModelAdmin):
         'user',
         'created_at',
         'best_before',
+    ]
+
+
+@admin.register(ThingEvent)
+class ThingEvent(admin.ModelAdmin):
+    list_filter = [
+        'thing',
+        'user',
+        'kind',
+    ]
+    list_display = [
+        'thing',
+        'user',
+        'kind',
+        'created_at',
     ]
