@@ -111,7 +111,7 @@ def make_sepa_xml_for_members(modeladmin, request, queryset):
     # PendingPayment.objects.all().delete()
 
     if PendingPayment.objects.exists():
-        messages.error(request, "Pending Payments already exist")
+        messages.error(request, "Pending Payments already exist. Please check Pending Payments and convert them into actual payments or delete them as applicable.")
         return
 
     try:
