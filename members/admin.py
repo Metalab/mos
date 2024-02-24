@@ -99,7 +99,11 @@ def make_sepa_xml_for_members(modeladmin, request, queryset):
     queryset = queryset.filter(Q(membershipperiod__begin__lte=dt), Q(membershipperiod__end__isnull=True) | Q(membershipperiod__end__gte=dt))
     queryset = queryset.distinct()
 
-    PendingPayment.objects.all().delete()
+    # PendingPayment.objects.all().delete()
+
+    if PendingPayment.objects.exists():
+        messages.error(request, "Pending Payments already exist")
+        return
 
     try:
         sepa, sepaxml_filename = generate_sepa(request.user, queryset)
