@@ -1,8 +1,8 @@
 Hallo {{ user.first_name }},
 
-Willkommen im Metalab! Danke für Deine Unterstützung - wir hoffen Du wirst bei uns viel Spaß haben, coole Projekte realisieren und neue Freund*innen gewinnen. 
+Willkommen im Metalab! Danke für Deine Unterstützung - wir hoffen Du wirst bei uns viel Spaß haben, coole Projekte realisieren und neue Freund*innen gewinnen.
 
-Wir haben gerade Deine Beitrittserklärung eingegeben und für Dich einen User*innenaccount im Metalab OS (MOS) angelegt. 
+Wir haben gerade Deine Beitrittserklärung eingegeben und für Dich einen User*innenaccount im Metalab OS (MOS) angelegt.
 
 Deine Zugangsdaten sind wie folgt:
 Accountname: {{ user.username }}
@@ -18,7 +18,7 @@ Falls Du die Checkbox für die Interne Mailingliste angekreuzt hast, wirst Du vo
 
 Weiters wäre es schön, wenn Du im Matrix-Channel (https://matrix.to/#/#metalab:matrix.org) vorbei schaust, dort werden regelmäßig Themen aus dem Metalab besprochen.
 
-Falls Du noch keinen Account in unserem Wiki hast, kannst du auf diese Mail antworten und wir legen einen für Dich an. Auf deiner User*innen-Seite kannst du eine ausführlichere Beschreibung von Dir und deiner Interessen hinzufügen. 
+Falls Du noch keinen Account in unserem Wiki hast, kannst du auf diese Mail antworten und wir legen einen für Dich an. Auf deiner User*innen-Seite kannst du eine ausführlichere Beschreibung von Dir und deiner Interessen hinzufügen.
 
 Falls Du Fragen oder Probleme hast, die rein administrative Angelegenheiten betreffen, kannst Du Dich an das Core-Team unter core@metalab.at wenden. Alle anderen Fragen, Ideen etc., die das Metalab betreffen, sind besser auf der Internen Liste aufgehoben.
 

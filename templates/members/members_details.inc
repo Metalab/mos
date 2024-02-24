@@ -35,7 +35,7 @@
 		    <dd>{{ error_form.first_name.errors.0 }}  {{ error_form.first_name }} - {{ error_form.last_name.errors.0 }}  {{ error_form.last_name }}</dd>
 		  {% else %}
 		    <dd>
-                        <input name='first_name' id="member-first_name" type="text" value='{{item.first_name}}'/>  - 
+                        <input name='first_name' id="member-first_name" type="text" value='{{item.first_name}}'/>  -
                         <input name='last_name' id="member-last_name" type="text" value='{{item.last_name}}'/>
                     </dd>
                   {% endifequal %}
@@ -159,11 +159,11 @@
 		  {% else %}
 
                     <dd>
-                        <input name='street' id="member-street" type="text" value='{{ item.contactinfo.street }}'/>  - 
+                        <input name='street' id="member-street" type="text" value='{{ item.contactinfo.street }}'/>  -
                         <input name='postcode' id="member-postcode" size="6" type="text" value=' {{ item.contactinfo.postcode }}'/>
                     </dd>
                     <dt><label>City</label> - <label>Country</label></dt>
-                        <input name='city' id="member-city" type="text" value=' {{ item.contactinfo.city }}'/> - 
+                        <input name='city' id="member-city" type="text" value=' {{ item.contactinfo.city }}'/> -
                         <input name='country' id="member-country" type="text" value=' {{ item.contactinfo.country }}'/>
                     </dd>
 		  {% endifequal %}

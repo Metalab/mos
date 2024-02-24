@@ -3,11 +3,11 @@
   <div id="calendarcontainer{{event.id|default_if_none:""}}">
 
     <div class="event {% if event.past %}past_event{% else %}event{% endif %}" id="calendar-view-{{event.id|default_if_none:""}}">
-      
+
       {% if event.past %}
       <div class="notification warning">Achtung: Event liegt bereits in der Vergangenheit!</div>
       {% endif %}
-      
+
       <h1 id="site-name">Event: <span class="name">{{ event.name }}</span></h1>
       <p>
         {% if event.teaser %}<span class="teaser">Teaser: {{ event.teaser }}</span>{% endif %}
@@ -47,7 +47,7 @@
       <p>
         Das Event wurde am {{ event.created_at|date:"d.m.Y" }} um {{ event.created_at|date:"H:i" }} von <i><a href="/wiki/Benutzer:{{ event.created_by }}">{{ event.created_by }}</a></i> erstellt.</a>
       </p>
-      
+
       {% if not edit_disabled %}
       <p>
         <a class="btn" href='#' onclick="toggleView('calendar', '{{event.id}}', 1); return false;">
@@ -60,9 +60,9 @@
 
       </p>
       {% endif %}
-      
+
       {% endif %}
-      
+
     </div>
 
   	{% if user.is_authenticated %}

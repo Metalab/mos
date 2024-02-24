@@ -29,4 +29,3 @@ been left out unfairly, please contact us.
 - Stefan Kögl <stefan@skoegl.net>
 - Dražen Lučanin <kermit666@gmail.com>
 - Florian Schweikert <kelvan@ist-total.org>
-

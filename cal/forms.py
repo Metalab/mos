@@ -34,7 +34,7 @@ class EventForm(ModelForm):
             self.add_error('wikiPage', 'Userpages don\'t provide adequate information for public Events')
 
         r = requests.get('https://metalab.at/wiki/%s' % wikipage)
-        
+
         if r.status_code == 404:
             self.add_error('wikiPage', 'Wikipage not found: https://metalab.at/wiki/%s' % wikipage) #TODO Figure out how to make clickable
         return cleaned_data

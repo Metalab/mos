@@ -45,7 +45,7 @@ class EventCalendar(HTMLCalendar):
                           .exclude(endDate__isnull=True, startDate__lt=this_day)):
                 start_day = event.startDate.date()
                 end_day = (event.endDate or event.startDate).date()
-                              
+
                 body.append('<li class="event">')
                 if self.admin:
                     body.append(u'<a href="%s" class="edit" title="edit">✏️</a>' % event.get_absolute_url())

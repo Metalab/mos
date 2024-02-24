@@ -48,7 +48,7 @@ font-size:21px;
 
 /* styling */
 
-#calendar-content #calendar-content { 
+#calendar-content #calendar-content {
     background-color: #003151;
     padding:10px 20px 7px 10px;
     -moz-border-radius: 10px;
@@ -92,7 +92,7 @@ font-size:21px;
 }
 #calendar-content li .past_event a { color:#fff; }
 
-#calendar-content .event_date, p.event 
+#calendar-content .event_date, p.event
 {
         font-weight: bold;
         padding-right: 5px;
@@ -102,7 +102,7 @@ font-size:21px;
 
 span.teaser {
 display:block;
-padding-top:2px; 
+padding-top:2px;
 }
 
 span.event_date {

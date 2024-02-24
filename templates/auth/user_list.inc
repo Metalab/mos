@@ -11,4 +11,3 @@
 <ul>{% for item in object_list %}{% if not item.contactinfo.image %}
     <li>{{ item.username }}</li>
 {% endif %}{% endfor %}</ul>{% endif %}
-

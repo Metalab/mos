@@ -1,11 +1,11 @@
-body { 
+body {
  margin:0;
  padding:0;
  width:315px;
  overflow-x: hidden;
 
  /* from global.css */
- font: 76% "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif; 
+ font: 76% "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
  color: #444;
  line-height: 1.3em;
 
@@ -30,18 +30,18 @@ img { border:none;}
 div.imagecontainer { padding-bottom: 5px;}
 
 
-div.post_quote, div.post_regular, div.post_link, div.description { 
- padding: 0 4px 0 4px; 
+div.post_quote, div.post_regular, div.post_link, div.description {
+ padding: 0 4px 0 4px;
 }
 
 
 div.post_quote cite {margin-left:50px}
-div.post_quote span.quote {text-style:italic} 
+div.post_quote span.quote {text-style:italic}
 div.post_quote blockquote {
  font-style: italic;
  font-weight:bold;
  font-size:1.4em;
-} 
+}
 
 
 
@@ -54,7 +54,7 @@ div.meta, #headercontainer {
 
 
 div.post {
-  
+
  border-bottom:4px groove black;
  padding-bottom:15px;
  margin-bottom:45px;

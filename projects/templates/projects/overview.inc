@@ -13,4 +13,3 @@
         <li>{% include "projects/projectinfo.inc" %}</li>
     </ul>
 </div>
-

@@ -15,4 +15,3 @@ class ProjectForm(ModelForm):
         widgets = {
             'teaser': TextInput,
         }
-

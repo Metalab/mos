@@ -27,4 +27,3 @@ class EventsByTypeNode(template.Node):
         obj_sub_list = Event.objects.filter(**filter_arg)
         context['latestevents'] = obj_sub_list
         return ''
-
