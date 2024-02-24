@@ -1,7 +1,3 @@
-{% ifequal error_type "permission" %}
-
-{% endifequal %}
-
 <div id="user_avatar">
 	{% if item.contactinfo.image %}
 		<img class="thumb_with_text" src="{{ item.contactinfo.image.url }}"/>
@@ -20,7 +16,7 @@
     <tr>
          <td colspan="3">
             {% if ea %}
-            <div class="edit {% ifequal error_type "name" %} visible {% else %} invisible {% endifequal %}" id='member-edit-name' style="border: 1px solid black; padding: 5px;">
+            <div class="edit {% if error_type == "name" %} visible {% else %} invisible {% endif %}" id='member-edit-name' style="border: 1px solid black; padding: 5px;">
                 <form id='membmer-form-name' method="post" action="/member/{{user.username}}/update/name/" onsubmit="return false;" onKeyPress="
                 if(enter_pressed(event)) {
                     myform = $('member-form-name');
@@ -31,14 +27,14 @@
                 ">
 		{% csrf_token %}
                     <dt><label>First Name</label> - <label>Last Name</label></dt>
-		  {%  ifequal error_type "name" %}
+		  {%  if error_type == "name" %}
 		    <dd>{{ error_form.first_name.errors.0 }}  {{ error_form.first_name }} - {{ error_form.last_name.errors.0 }}  {{ error_form.last_name }}</dd>
 		  {% else %}
 		    <dd>
                         <input name='first_name' id="member-first_name" type="text" value='{{item.first_name}}'/>  -
                         <input name='last_name' id="member-last_name" type="text" value='{{item.last_name}}'/>
                     </dd>
-                  {% endifequal %}
+                  {% endif %}
                     <dt style="visibility: hidden">Submit:</dt>
                     <dd style="text-align: left">
                         <input type="button" value="Update" class="btn-update" onclick="
@@ -97,7 +93,7 @@
     <tr>
          <td colspan="3">
             {% if ea %}
-            <div class="edit {% ifequal error_type "email" %} visible {% else %} invisible {% endifequal %}" id='member-edit-email' style="border: 1px solid black; padding: 5px; width:100%;">
+            <div class="edit {% if error_type == "email" %} visible {% else %} invisible {% endif %}" id='member-edit-email' style="border: 1px solid black; padding: 5px; width:100%;">
                 <form id='membmer-form-email' method="post" action="/member/{{user.username}}/update/email/" onsubmit="return false;" onKeyPress="
                 if(enter_pressed(event)) {
                     myform = $('member-form-email');
@@ -107,13 +103,13 @@
                 }
                 ">
 		{% csrf_token %}
-		  {% ifequal error_type "email" %}
+		  {% if error_type == "email" %}
 		    <dt>New Email</dt>
 		    <dd>{{ error_form.email.errors.0 }}   {{ error_form.email }} </dd>
 		  {% else %}
                     <dt>New Email </dt>
                     <dd><input name='email' id="member-email" type="text" value='{{item.email}}' size="40"/></dd>
-                  {% endifequal %}
+                  {% endif %}
 
                     <dt style="visibility: hidden">Submit:</dt>
                     <dd style="text-align: left">
@@ -138,7 +134,7 @@
     <tr>
         <td colspan="3">
             {% if ea %}
-            <div class="edit  {% ifequal error_type "adress" %} visible {% else %} invisible {% endifequal %}"  id='member-edit-adress' style="border: 1px solid black; padding: 5px; width:100%;">
+            <div class="edit  {% if error_type == "adress" %} visible {% else %} invisible {% endif %}"  id='member-edit-adress' style="border: 1px solid black; padding: 5px; width:100%;">
                 <form id='membmer-form-adress' method="post" action="/member/{{user.username}}/update/adress/" onsubmit="return false;" onKeyPress="
                 if(enter_pressed(event)) {
                     myform = $('member-form-adress');
@@ -149,7 +145,7 @@
                 ">
 		{% csrf_token %}
                     <dt><label>Street</label> - <label>Postcode</label></dt>
-		  {% ifequal error_type "adress" %}
+		  {% if error_type == "adress" %}
 		    <dd>{{ error_form.street.errors.0 }}  {{ error_form.street }} - {{ error_form.postcode.errors.0 }}  {{ error_form.postcode }}</dd>
 
                     <dt><label>City</label> - <label>Country</label></dt>
@@ -166,7 +162,7 @@
                         <input name='city' id="member-city" type="text" value=' {{ item.contactinfo.city }}'/> -
                         <input name='country' id="member-country" type="text" value=' {{ item.contactinfo.country }}'/>
                     </dd>
-		  {% endifequal %}
+		  {% endif %}
 
                     <dt style="visibility: hidden">Submit:</dt>
                     <dd style="text-align: left">
@@ -196,7 +192,7 @@
     <tr>
          <td colspan="3">
             {% if ea %}
-            <div class="edit {% ifequal error_type "internlist" %} visible {% else %} invisible {% endifequal %}" id='member-edit-intern-list' style="border: 1px solid black; padding: 5px; width:100%;">
+            <div class="edit {% if error_type == "internlist" %} visible {% else %} invisible {% endif %}" id='member-edit-intern-list' style="border: 1px solid black; padding: 5px; width:100%;">
                 <form id='membmer-form-internlist' method="post" action="/member/{{user.username}}/update/internlist/" onsubmit="return false;" onKeyPress="
                 if(enter_pressed(event)) {
                     myform = $('member-form-internlist');
@@ -207,13 +203,13 @@
                 ">
 		{% csrf_token %}
                     <dt>On intern list </dt>
-		  {% ifequal error_type "internlist" %}
+		  {% if error_type == "internlist" %}
 		    <dd>{{ error_form.intern_list_email.errors.0 }}   {{ error_form.intern_list_email }} {{ error_form.on_intern_list }} </dd>
 		  {% else %}
                     <dd><input name='on_intern_list' id="member-on_intern_list" type="checkbox" {% if item.contactinfo.on_intern_list%} checked="checked" {% endif %}  />
                         <input name='intern_list_email' id="member-intern_list_email" type="text" value="{{ item.contactinfo.intern_list_email }}" size="40"/>
                     </dd>
-                  {% endifequal %}
+                  {% endif %}
 
                     <dt style="visibility: hidden">Submit:</dt>
                     <dd style="text-align: left">
