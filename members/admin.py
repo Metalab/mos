@@ -99,7 +99,7 @@ def make_into_real_payments(modeladmin, request, queryset):
     messages.success(request, f"created {count} payments")
 
 
-@admin.action(description="Generate SEPA XML for members (is active & has debt & allows monthly bank collection)")
+@admin.action(description="Generate SEPA XML for members (is active & allows bank collection & is correct month for member)")
 @transaction.atomic()
 def make_sepa_xml_for_members(modeladmin, request, queryset):
     queryset = members_due_for_bank_collection(queryset)
