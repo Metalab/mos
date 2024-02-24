@@ -131,12 +131,15 @@ class Event(models.Model):
     def get_absolute_url(self):
         return reverse('cal_event_detail', args=(self.id,))
 
-    def save(self, editor=False, new=False):
+    def save(self, editor=False, new=False, update_fields=None):
         if new and editor:
             self.created_by = editor
             self.created_by.save()
 
-        super().save()
+            if update_fields is not None and 'created_by' in update_fields:
+                update_fields = {'created_by'}.union(update_fields)
+
+        super().save(update_fields=update_fields)
 
     def start_end_date_eq(self):
         return self.startDate.date() == self.endDate.date()

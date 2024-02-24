@@ -169,10 +169,14 @@ class PaymentInfo(models.Model):
         on_delete=models.CASCADE,
     )
 
-    def save(self, *args, **kwargs):
-        if not self.bank_account_mandate_reference:
-            self.bank_account_mandate_reference = self.user.id
-        super().save(*args, **kwargs)
+    def save(self, *args, update_fields=None, **kwargs):
+        FIELD_NAME = "bank_account_mandate_reference"
+        if not getattr(self, FIELD_NAME):
+            setattr(self, FIELD_NAME, self.user.id)
+            if (update_fields is not None and FIELD_NAME in update_fields):
+                update_fields = {FIELD_NAME}.union(update_fields)
+
+        super().save(*args, update_fields=update_fields, **kwargs)
 
 
 def get_image_path(self, filename):
