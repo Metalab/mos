@@ -305,7 +305,7 @@ def members_bank_json_import(request):
             "color": color,
         })
 
-    all_members = User.objects.filter(Q(membershipperiod__isnull=False)).order_by("username").distinct()
+    all_members = User.objects.order_by("username").distinct()
 
     return render(request, 'members/member_bank_json_match.html', context={
         "import_rows": import_rows,
