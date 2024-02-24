@@ -8,6 +8,7 @@ from django.http.request import HttpRequest
 import sepaxml
 from django.forms.models import model_to_dict
 from django.contrib import admin
+from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -18,6 +19,7 @@ from django.contrib.auth.admin import UserAdmin
 from django.template.loader import get_template
 from django.conf import settings
 from django.contrib import messages
+import django.forms as forms
 
 from .models import BankCollectionMode, ContactInfo, KindOfMembership
 from .models import Locker, MailinglistMail, MembershipFee, MembershipPeriod
@@ -247,6 +249,16 @@ class ThingUserInline(admin.TabularInline):
     model = ThingUser
 
 
+class MemberCreationForm(UserCreationForm):
+    class Meta(UserCreationForm.Meta):
+        fields = (
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+        )
+
+
 @admin.register(User)
 class MemberAdmin(UserAdmin):
     inlines = [ContactInfoInline, PaymentInfoInline, MembershipPeriodInline,
@@ -265,6 +277,14 @@ class MemberAdmin(UserAdmin):
     actions = [send_welcome_mail, make_sepa_xml_for_members, export_as_csv]
     # allow to select/deselect for more members during actions
     list_max_show_all = 9999999
+
+    add_form = MemberCreationForm
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('username', 'first_name', 'last_name', 'email', 'password1', 'password2'),
+        }),
+    )
 
 
 @admin.register(Locker)
