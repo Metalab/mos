@@ -1,6 +1,5 @@
 from collections import defaultdict
 from datetime import date, datetime, timedelta
-from typing import DefaultDict
 from dateutil import relativedelta
 from sepaxml import SepaDD
 import json
@@ -12,7 +11,6 @@ from django.db.models import Sum
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.contrib.auth.decorators import login_required
-from django.db import transaction
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, Http404, HttpResponseNotAllowed, HttpResponseBadRequest
 from django.shortcuts import render, redirect, get_object_or_404
@@ -20,10 +18,10 @@ from django.conf import settings
 
 from .forms import UserEmailForm, UserNameForm, UserAdressForm,\
     UserImageForm, UserInternListForm
-from .models import ContactInfo, get_active_members, \
-    get_active_and_future_members, Payment, PendingPayment, PaymentMethod, \
-    get_mailinglist_members, get_month_list, KindOfMembership, \
-    MembershipPeriod, MembershipFee, BankImportMatcher
+from .models import ContactInfo, get_active_and_future_members, \
+    Payment, PendingPayment, PaymentMethod, get_mailinglist_members, \
+    get_month_list, KindOfMembership, MembershipPeriod, \
+    MembershipFee, BankImportMatcher
 from .util import get_list_of_history_entries
 
 

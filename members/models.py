@@ -1,5 +1,4 @@
 from datetime import datetime, date
-from operator import mod
 from dateutil.relativedelta import relativedelta
 from decimal import Decimal
 from django.db.models import Sum
@@ -8,7 +7,6 @@ from django.db import models
 from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.utils.encoding import smart_str, force_str
 from django.db.models import Q, F, Value
 import smtplib
 from django.core.mail import send_mail

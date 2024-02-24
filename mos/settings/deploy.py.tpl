@@ -1,5 +1,5 @@
 # Django settings for a deployed instance of MOS
-from common import *
+from common import *  # NOQA
 
 DEBUG = False
 

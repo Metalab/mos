@@ -6,12 +6,9 @@ defined in the ASGI_APPLICATION setting.
 import os
 import django
 
-from channels.routing import get_default_application
 from channels.routing import ProtocolTypeRouter, URLRouter
 from channels.auth import AuthMiddlewareStack
 from django.core.asgi import get_asgi_application
-from django.urls import path
-from django.conf.urls import url
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings.devel")
 django.setup()

@@ -1,13 +1,9 @@
-from re import template
-from typing import Optional
 from datetime import datetime
 import csv
-from django.http.request import HttpRequest
 
 
-from django.utils.translation import gettext, gettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 import sepaxml
-from django.forms.models import model_to_dict
 from django.contrib import admin
 from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction
@@ -21,7 +17,6 @@ from django.contrib.auth.admin import UserAdmin
 from django.template.loader import get_template
 from django.conf import settings
 from django.contrib import messages
-import django.forms as forms
 from members.models import members_due_for_bank_collection
 
 from .models import BankCollectionMode, ContactInfo, KindOfMembership

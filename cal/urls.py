@@ -5,7 +5,7 @@ from django.views.generic.dates import YearArchiveView
 from django.views.generic.detail import DetailView
 from functools import partial
 
-from .models import Event, Location, Category
+from .models import Event
 import cal.views
 
 

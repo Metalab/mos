@@ -1,5 +1,4 @@
 from datetime import date
-from itertools import groupby
 import json
 import urllib.parse
 
@@ -8,10 +7,8 @@ from dateutil import relativedelta
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404
-from django.template import RequestContext
 from django.http import HttpResponse, HttpResponseNotAllowed, Http404
 from django.core.exceptions import ObjectDoesNotExist
-from django.views.generic import ListView
 from django.utils import timezone
 from django.utils.html import conditional_escape as esc
 from django.utils.safestring import mark_safe
