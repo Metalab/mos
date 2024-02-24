@@ -107,7 +107,7 @@ class EventCalendar(HTMLCalendar):
         return self.formatmonth(t.year, t.month)
 
 
-def index(request):
+def all(request):
     d = date.today() - relativedelta.relativedelta(days=2)
     cal = EventCalendar(Event.all.order_by('startDate'), request.user.is_authenticated).currentmonth()
     date_list = Event.all.all().datetimes('startDate', 'year')
@@ -119,6 +119,9 @@ def index(request):
         'latestevents': latest_events
     })
 
+def index(request):
+    d = date.today()
+    return monthly(request, d.year, d.month)
 
 def monthly(request, year, month):
     try:
@@ -240,19 +243,6 @@ def complete_ical(request, num, past_duration):
 
     calendar = create_calendar([x.get_icalendar_event() for x in events])
     return HttpResponse(calendar.to_ical(), content_type='text/calendar; charset=utf-8')
-
-
-class SpecialListView(ListView):
-    template_name = "cal/event_special_list.html"
-    events_by = None
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context.update({
-            'events_by': self.events_by,
-        })
-        return context
-
 
 def public_upcoming(request):
     events = Event.objects.not_deleted().advertise().filter(

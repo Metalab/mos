@@ -33,6 +33,12 @@ urlpatterns = [
         {},
         'cal_index',
     ),
+    path(
+        'all/',
+        cal.views.all,
+        {},
+        'cal_all',
+    ),
     re_path(
         r'^(?P<year>\d{4})/$',
         YearArchiveView.as_view(
@@ -106,20 +112,6 @@ urlpatterns = [
         'new/',
         cal.views.update_event,
         { 'new': True },
-    ),
-    path(
-        'locations/',
-        cal.views.SpecialListView.as_view(
-            queryset=Location.objects.all(),
-            events_by="Locations",
-        ),
-    ),
-    path(
-        'categories/',
-        cal.views.SpecialListView.as_view(
-            queryset=Category.objects.all(),
-            events_by="Categories",
-        ),
     ),
     re_path(
         r'^ajax/list/(?P<number>\d*)/?$',
