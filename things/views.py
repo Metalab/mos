@@ -6,6 +6,8 @@ from django.core.exceptions import BadRequest
 from django import forms
 from django.core.exceptions import PermissionDenied
 from .models import Thing
+import datetime
+import json
 from .models import ThingEvent
 from django.contrib.auth.models import User
 from django.views.decorators.csrf import csrf_exempt
@@ -68,3 +70,28 @@ def thingusers_usage(request, thing):
     form.save()
 
     return HttpResponse(status=201)
+
+
+def thing_usage_stats(request, thing):
+    thing = get_object_or_404(Thing, slug=thing)
+
+    try:
+        end = datetime.datetime.strptime(request.GET["end"], "%Y-%m-%d")
+    except LookupError:
+        end = datetime.datetime.now()
+
+    try:
+        start = datetime.datetime.strptime(request.GET["start"], "%Y-%m-%d")
+    except LookupError:
+        start = end - datetime.timedelta(hours=24)
+
+    data = [
+        (t[0].strftime('%Y-%m-%d'), t[1])
+        for t in ThingEvent.objects\
+            .filter(created_at__gte=start)\
+            .filter(created_at__lte=end)\
+            .exclude(usage_seconds__isnull=True)\
+            .values_list("created_at", "usage_seconds")
+    ]
+
+    return HttpResponse(json.dumps(data), content_type='text/plain')
