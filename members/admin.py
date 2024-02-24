@@ -5,6 +5,7 @@ import csv
 from django.http.request import HttpRequest
 
 
+from django.utils.translation import gettext, gettext_lazy as _
 import sepaxml
 from django.forms.models import model_to_dict
 from django.contrib import admin
@@ -262,8 +263,22 @@ class MemberCreationForm(UserCreationForm):
 
 @admin.register(User)
 class MemberAdmin(UserAdmin):
-    inlines = [ContactInfoInline, PaymentInfoInline, MembershipPeriodInline,
-               PaymentInline, LockerInline, ThingUserInline]
+    inlines = [
+        ContactInfoInline,
+        LockerInline,
+        ThingUserInline,
+        PaymentInfoInline,
+        MembershipPeriodInline,
+        PaymentInline,
+    ]
+    fieldsets = (
+        (None, {'fields': ('username', 'password')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
+        (_('Permissions'), {
+            'fields': ('is_active', 'is_superuser'),
+        }),
+        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+    )
     list_display = ('username', 'email', 'first_name', 'last_name', 'is_staff',
                     'is_active')
     list_filter = (
