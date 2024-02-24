@@ -94,7 +94,7 @@ class Event(models.Model):
         on_delete=models.CASCADE,
     )
 
-    advertise = models.BooleanField(default=False)
+    advertise = models.BooleanField(default=True)
 
     deleted = models.BooleanField(default=False)
 
