@@ -204,13 +204,10 @@ class ContactInfo(models.Model):
 
     last_email_ok = models.BooleanField(null=True)
     has_active_key = models.BooleanField(default=False)
-    has_lazzzor_privileges = models.BooleanField(default=False)
 
     iButtonValidator = RegexValidator(r"\b[0-9]{2}-[0-9a-zA-Z]{12}\b", "iButton ID entspricht nicht dem Format [0-9]{2}-[0-9a-zA-Z]{12}")
     key_id = models.CharField(max_length=15, blank=True, null=True, validators=[iButtonValidator])
 
-    lazzzor_rate = models.DecimalField(choices=LAZZZOR_RATE_CHOICES, default='1.00',
-                                       max_digits=3, decimal_places=2)
     remark = models.TextField(null=True, blank=True)
 
     def get_membership_fees(self):

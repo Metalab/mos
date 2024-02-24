@@ -27,7 +27,6 @@ urlpatterns = [
     path('bank/json/import', members.views.members_bank_json_import),
     path('bank/json/match', members.views.members_bank_json_match),
     path('keylist/', members.views.members_key_list),
-    path('lazzzorlist/', members.views.members_lazzzor_list),
     path('internlist/', members.views.members_intern_list),
 
     re_path(r'^(?P<user_username>([\w\-+.@_])+)/', include(username_patterns)),

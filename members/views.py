@@ -373,18 +373,6 @@ def members_key_list(request):
     return HttpResponse(text, content_type='text/plain')
 
 
-def members_lazzzor_list(request):
-    """
-    Returns key ids and usernames of members with lazzzor privileges as
-    comma separated list."""
-    members_with_privs = get_active_and_future_members().filter(
-        contactinfo__has_lazzzor_privileges=True).filter(contactinfo__key_id__isnull=False)
-
-    result = ['%s,%s,%s' % (m.contactinfo.key_id, m.username,
-                            m.contactinfo.lazzzor_rate)
-                  for m in members_with_privs]
-    return HttpResponse('\r\n'.join(result), content_type='text/plain')
-
 def members_intern_list(request):
     members_on_intern = get_mailinglist_members() \
         .filter(contactinfo__on_intern_list = True) \
