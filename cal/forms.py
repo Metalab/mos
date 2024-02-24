@@ -28,7 +28,7 @@ class EventForm(ModelForm):
         end_date = cleaned_data.get('endDate')
         if end_date and end_date < start_date:
             self.add_error('endDate', 'End date must be greater than start date')
-        wikipage = re.subn(r'(^http(s)://metalab.at/wiki/|.| |%|&)', '', 200, cleaned_data.get('wikiPage'))
+        wikipage, _ = re.subn(r'(^http(s)://metalab.at/wiki/|\ |\%|\&)', '', cleaned_data.get('wikiPage'), 200)
         cleaned_data['wikiPage'] = wikipage
         if cleaned_data.get('advertise') and re.match(r'^(Benutzer|User):', wikipage):
             self.add_error('wikiPage', 'Userpages don\'t provide adequate information for public Events')
