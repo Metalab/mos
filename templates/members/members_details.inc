@@ -70,7 +70,19 @@
 {% endif %}
 
 </table>
-
+<h3>Usable Things</h3>
+  {% if item.thingusers.all %}
+    <table>
+	  {% for tu in item.thingusers.all %}
+		  <tr>
+			  <td>{{ tu.thing.slug }}</td>
+			  <td>{% if tu.best_before %}(recertify after {{ tu.best_before|date:"d.m.Y" }}){% endif %}</td>
+		  </tr>
+	  {% endfor %}
+    </table>
+  {% else %}
+    none
+  {% endif %}
 <h3>Contact info</h3>
 
 {% if user.is_superuser %}
