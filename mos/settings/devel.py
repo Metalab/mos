@@ -1,7 +1,5 @@
 # Django settings for a local development instance of MOS
 from .common import *  # NOQA
-
-
 # Make this unique, and don't share it with anybody.
 # ATTENTION - It may trigger an error or overwrite the SECRET_KEY if you develope in a docker environment with DEVEL settings
 from .secret_key import *  # NOQA

@@ -1,13 +1,15 @@
 import datetime
+
+from dateutil.relativedelta import relativedelta
 from django.core.management.base import BaseCommand
 from django.db import transaction
 
-from dateutil.relativedelta import relativedelta
-from ...models import PaymentMethod, User
 from ...models import ContactInfo
 from ...models import KindOfMembership
-from ...models import Payment
 from ...models import MembershipPeriod
+from ...models import Payment
+from ...models import PaymentMethod
+from ...models import User
 
 
 class Command(BaseCommand):

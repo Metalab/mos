@@ -1,8 +1,11 @@
-from django.urls import path, re_path, include
+from django.urls import include
+from django.urls import path
+from django.urls import re_path
 from django.views.generic.list import ListView
 
-from .models import get_active_members
 import members.views
+
+from .models import get_active_members
 
 username_patterns = [
     path(r'update/userpic/', members.views.members_update_userpic),

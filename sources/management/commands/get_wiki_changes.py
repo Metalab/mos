@@ -1,8 +1,9 @@
-import feedparser
 from datetime import datetime
 
-from django.core.management.base import BaseCommand, CommandError
+import feedparser
 from django.conf import settings
+from django.core.management.base import BaseCommand
+from django.core.management.base import CommandError
 
 from ...models import WikiChange
 

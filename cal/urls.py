@@ -1,13 +1,14 @@
 import datetime
-
-from django.urls import path, re_path
-from django.views.generic.dates import YearArchiveView
-from django.views.generic.detail import DetailView
 from functools import partial
 
-from .models import Event
+from django.urls import path
+from django.urls import re_path
+from django.views.generic.dates import YearArchiveView
+from django.views.generic.detail import DetailView
+
 import cal.views
 
+from .models import Event
 
 date_dict = {
     'queryset': Event.all.all(),

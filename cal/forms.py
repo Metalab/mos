@@ -1,11 +1,12 @@
-from django.forms import ModelForm
-import django.forms as forms
-
-from django.forms.fields import SplitDateTimeField
-from django.contrib.admin.widgets import AdminSplitDateTime
-from .models import Event
 import re
+
+import django.forms as forms
 import requests
+from django.contrib.admin.widgets import AdminSplitDateTime
+from django.forms import ModelForm
+from django.forms.fields import SplitDateTimeField
+
+from .models import Event
 
 
 class EventForm(ModelForm):

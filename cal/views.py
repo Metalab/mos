@@ -1,21 +1,26 @@
-from datetime import date
 import json
 import urllib.parse
+from calendar import HTMLCalendar
+from calendar import month_name
+from datetime import date
 
-from calendar import HTMLCalendar, month_name
 from dateutil import relativedelta
-
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseNotAllowed, Http404
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import Http404
+from django.http import HttpResponse
+from django.http import HttpResponseNotAllowed
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 from django.utils import timezone
 from django.utils.html import conditional_escape as esc
 from django.utils.safestring import mark_safe
 
-from .forms import EventForm
-from .models import Event, Category, Location
 from . import create_calendar
+from .forms import EventForm
+from .models import Category
+from .models import Event
+from .models import Location
 
 
 class EventCalendar(HTMLCalendar):

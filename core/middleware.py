@@ -12,7 +12,6 @@ from django.utils.encoding import force_str
 
 from core.utils import human_readable_time
 
-
 TAG = '<!-- footer_stats -->'
 FOOTER_STAT_STRING = 'renderd in %(render_time)s - %(queries)s sql queries'
 

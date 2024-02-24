@@ -1,23 +1,22 @@
-from datetime import datetime, date
-from dateutil.relativedelta import relativedelta
+import smtplib
+import string
+from datetime import date
+from datetime import datetime
 from decimal import Decimal
-from django.db.models import Sum
 
-from django.db import models
-from django.db.models import Q
+from dateutil.relativedelta import relativedelta
 from django.conf import settings
 from django.contrib.auth.models import User
-from django.db.models import Q, F, Value
-import smtplib
+from django.core.exceptions import ValidationError
 from django.core.mail import send_mail
 # for iButton regex
 from django.core.validators import RegexValidator
-
+from django.db import models
+from django.db.models import F
+from django.db.models import Q
+from django.db.models import Sum
+from django.db.models import Value
 from easy_thumbnails.fields import ThumbnailerImageField
-
-import string
-from django.core.exceptions import ValidationError
-
 
 country_codes = {
     "AD": 24,

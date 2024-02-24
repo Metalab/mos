@@ -1,8 +1,8 @@
 from django.contrib import admin
 
 from .models import Thing
-from .models import ThingUser
 from .models import ThingEvent
+from .models import ThingUser
 
 
 class ThingUserInline(admin.TabularInline):

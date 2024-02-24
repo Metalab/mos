@@ -1,11 +1,10 @@
+from collections import defaultdict
+from datetime import date
+
 from django.core.management.base import LabelCommand
 from django.db.models import Q
 
-from datetime import date
-
 from ...models import get_active_members_for
-
-from collections import defaultdict
 
 
 class Command(LabelCommand):

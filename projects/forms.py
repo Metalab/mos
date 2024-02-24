@@ -1,5 +1,5 @@
-from django.forms.models import ModelForm
 from django.forms import TextInput
+from django.forms.models import ModelForm
 
 from .models import Project
 

@@ -1,7 +1,9 @@
-from datetime import date, timedelta
+from datetime import date
+from datetime import timedelta
 
 from dateutil.relativedelta import relativedelta
-from dateutil.rrule import rrule, MONTHLY
+from dateutil.rrule import MONTHLY
+from dateutil.rrule import rrule
 from django.contrib.auth.models import User
 
 from .models import MembershipPeriod

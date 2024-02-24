@@ -1,12 +1,14 @@
-from django.core.management.base import BaseCommand
+import datetime
+
+import requests
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
+from django.core.management.base import BaseCommand
 from django.template.loader import get_template
-from cal.models import Event
-import datetime
 from django.utils.html import strip_tags
-import requests
+
+from cal.models import Event
 
 
 def get_next_jf():

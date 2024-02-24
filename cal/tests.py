@@ -1,15 +1,15 @@
-from datetime import datetime, timedelta
 import unittest
+from datetime import datetime
+from datetime import timedelta
 
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.test import TestCase
 from django.test.client import Client
 
+from .feeds import EventFeed
 from .forms import EventForm
 from .models import Event
-from .feeds import EventFeed
-
 
 correct_data = {'name': 'TestEvent1',
                 'teaser': 'Event des Jahres',

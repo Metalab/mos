@@ -1,7 +1,10 @@
-from django.db import models, migrations
 from decimal import Decimal
-import members.models
+
 from django.conf import settings
+from django.db import migrations
+from django.db import models
+
+import members.models
 
 
 class Migration(migrations.Migration):

@@ -1,7 +1,7 @@
 from django.core.management.base import BaseCommand
 
-from members.models import get_mailinglist_members
 from members.models import MailinglistMail
+from members.models import get_mailinglist_members
 
 
 class Command(BaseCommand):

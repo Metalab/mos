@@ -1,13 +1,13 @@
 import datetime
 import time
+
 import feedparser
-
-from django.test import TestCase
-from django.core.management.base import CommandError
 from django.conf import settings
+from django.core.management.base import CommandError
+from django.test import TestCase
 
-from sources.models import WikiChange
 from sources.management.commands import get_wiki_changes
+from sources.models import WikiChange
 
 
 class FakeFeed:

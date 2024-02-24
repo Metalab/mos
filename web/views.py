@@ -1,6 +1,6 @@
-from django.shortcuts import render
-from django.http import JsonResponse
 from django.conf import settings
+from django.http import JsonResponse
+from django.shortcuts import render
 
 from cal.models import Event
 from core.context_processors import custom_settings_main

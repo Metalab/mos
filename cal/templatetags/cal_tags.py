@@ -3,7 +3,6 @@ from django.template import Variable
 
 from cal.models import Event
 
-
 register = template.Library()
 
 

@@ -1,30 +1,39 @@
-from datetime import datetime
 import csv
+from datetime import datetime
 
-
-from django.utils.translation import gettext_lazy as _
 import sepaxml
+from django.conf import settings
 from django.contrib import admin
-from django.contrib.auth.forms import UserCreationForm
-from django.db import transaction
-from django.contrib.auth.models import User
-from django.db.models import Q
-from django.db.models import OuterRef
+from django.contrib import messages
 from django.contrib.admin.models import LogEntry
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.db import transaction
+from django.db.models import OuterRef
+from django.db.models import Q
 from django.db.models import Subquery
 from django.http import HttpResponse
-from django.contrib.auth.admin import UserAdmin
 from django.template.loader import get_template
-from django.conf import settings
-from django.contrib import messages
-from members.models import members_due_for_bank_collection
+from django.utils.translation import gettext_lazy as _
 
-from .models import BankCollectionMode, ContactInfo, KindOfMembership
-from .models import Locker, MailinglistMail, MembershipFee, MembershipPeriod
-from .models import Payment, PaymentInfo, PendingPayment, BankImportMatcher
+from members.models import members_due_for_bank_collection
 from things.models import ThingUser
 
-from .views import generate_sepa, SepaException
+from .models import BankCollectionMode
+from .models import BankImportMatcher
+from .models import ContactInfo
+from .models import KindOfMembership
+from .models import Locker
+from .models import MailinglistMail
+from .models import MembershipFee
+from .models import MembershipPeriod
+from .models import Payment
+from .models import PaymentInfo
+from .models import PendingPayment
+from .views import SepaException
+from .views import generate_sepa
+
 
 class ContactInfoInline(admin.StackedInline):
     model = ContactInfo

@@ -1,9 +1,11 @@
-from django.urls import path, re_path
-from django.views.generic import ListView, DetailView
+from django.urls import path
+from django.urls import re_path
+from django.views.generic import DetailView
+from django.views.generic import ListView
 
-from .models import Project
 import projects.views
 
+from .models import Project
 
 urlpatterns = [
     path('',

@@ -1,16 +1,20 @@
-from members.models import get_active_and_future_members
-from django.http import HttpResponse, HttpResponseBadRequest
-from django.shortcuts import get_object_or_404
-from django.views.decorators.http import require_POST
-from django.core.exceptions import BadRequest
-from django import forms
-from django.core.exceptions import PermissionDenied
-from .models import Thing
 import datetime
 import json
-from .models import ThingEvent
+
+from django import forms
 from django.contrib.auth.models import User
+from django.core.exceptions import BadRequest
+from django.core.exceptions import PermissionDenied
+from django.http import HttpResponse
+from django.http import HttpResponseBadRequest
+from django.shortcuts import get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+
+from members.models import get_active_and_future_members
+
+from .models import Thing
+from .models import ThingEvent
 
 
 def check_permissions(request, thing_slug):

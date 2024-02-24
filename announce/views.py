@@ -1,16 +1,19 @@
 #
 # Views for issueing announcements to all active members.
 #
+from datetime import date
+from datetime import datetime
 from functools import partial
-from datetime import date, datetime
 
-from django.shortcuts import render
+import django.forms as forms
 from django.conf import settings
 from django.contrib.admin.views.decorators import staff_member_required
-import django.forms as forms
 from django.db.models import Q
+from django.shortcuts import render
 
-from members.models import get_active_members, members_due_for_bank_collection, KindOfMembership
+from members.models import KindOfMembership
+from members.models import get_active_members
+from members.models import members_due_for_bank_collection
 
 
 def _announce_filter_collection(users):

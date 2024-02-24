@@ -1,12 +1,12 @@
+import django.views.i18n
 from django.conf import settings
-
-from django.urls import path, include
 from django.conf.urls.static import static
 from django.contrib import admin
-import django.views.i18n
+from django.urls import include
+from django.urls import path
 
-from cal.feeds import EventFeed
 import web.views
+from cal.feeds import EventFeed
 
 admin.autodiscover()
 

@@ -1,9 +1,10 @@
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from django.shortcuts import render
 from django.views.decorators.http import require_http_methods
-from django.shortcuts import render, get_object_or_404
 
-from .models import Project
 from .forms import ProjectForm
+from .models import Project
 
 
 @login_required

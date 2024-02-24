@@ -1,10 +1,7 @@
-import sys
-import urllib.parse
 import datetime
 import locale
-
-from icalendar import Event as icalEvent
-from icalendar.prop import vDatetime
+import sys
+import urllib.parse
 
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -12,8 +9,12 @@ from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models import Q
 from django.urls import reverse
+from icalendar import Event as icalEvent
+from icalendar.prop import vDatetime
 
-from core.models import Category, Location
+from core.models import Category
+from core.models import Location
+
 from . import create_calendar
 
 # We want our calendar to be displayed using the German locale

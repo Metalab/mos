@@ -1,5 +1,6 @@
 # Django settings for a deployed instance of MOS
 import os
+
 from .common import *  # NOQA
 
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() in ('true', 'yes', '1')
