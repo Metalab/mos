@@ -30,4 +30,6 @@ class ThingUser(admin.ModelAdmin):
     list_display = [
         'thing',
         'user',
+        'created_at',
+        'best_before',
     ]
