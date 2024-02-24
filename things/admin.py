@@ -12,11 +12,9 @@ class ThingUserInline(admin.TabularInline):
 class ThingAdmin(admin.ModelAdmin):
     list_filter = [
         'slug',
-        'name',
     ]
     list_display = [
         'slug',
-        'name',
     ]
     inlines = [
         ThingUserInline,

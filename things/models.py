@@ -10,8 +10,10 @@ def make_token():
 class Thing(models.Model):
     """ Something in the hackspace that people can get permission to use, e.g. the laser or the door """
     slug = models.SlugField(unique=True)
-    name = models.CharField(max_length=64, unique=True)
     token = models.CharField(max_length=128, default=make_token)
+
+    def __str__(self):
+        return "Thing " + self.slug
 
 
 class ThingUser(models.Model):
