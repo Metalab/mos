@@ -4,6 +4,7 @@ import django.forms as forms
 from django.forms.fields import SplitDateTimeField
 from django.contrib.admin.widgets import AdminSplitDateTime
 from .models import Event
+import re  
 
 
 class EventForm(ModelForm):
@@ -26,4 +27,5 @@ class EventForm(ModelForm):
         end_date = cleaned_data.get('endDate')
         if end_date and end_date < start_date:
             self.add_error('endDate', 'End date must be greater than start date')
+        cleaned_data['wikiPage'] = re.sub(r'^http(s)://metalab.at/wiki/', '',cleaned_data.get('wikiPage'))
         return cleaned_data
