@@ -9,6 +9,7 @@ from django.db.models import Q
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.utils.encoding import smart_str, force_str
+from django.db.models import Q, F, Value
 import smtplib
 from django.core.mail import send_mail
 # for iButton regex
@@ -320,6 +321,22 @@ def get_active_and_future_members():
                 Q(membershipperiod__end__isnull=True) |
                 Q(membershipperiod__end__gte=datetime.now()))\
                 .distinct()
+
+
+def members_due_for_bank_collection(users=None):
+    if users is None:
+        users = get_active_members()
+
+    current_month = datetime.now().month
+
+    users = users.filter(paymentinfo__bank_collection_allowed=True)
+    users = users.filter(paymentinfo__bank_collection_mode__num_month__gt=0)
+    users = users.annotate(
+        is_collectable=Value(current_month - 1) % F("paymentinfo__bank_collection_mode__num_month"),
+    )
+    users = users.filter(is_collectable=0)
+
+    return users
 
 
 def get_active_membership_months_until(date):

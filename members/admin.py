@@ -22,6 +22,7 @@ from django.template.loader import get_template
 from django.conf import settings
 from django.contrib import messages
 import django.forms as forms
+from members.models import members_due_for_bank_collection
 
 from .models import BankCollectionMode, ContactInfo, KindOfMembership
 from .models import Locker, MailinglistMail, MembershipFee, MembershipPeriod
@@ -97,8 +98,7 @@ def make_into_real_payments(modeladmin, request, queryset):
 @admin.action(description="Generate SEPA XML for members (is active & has debt & allows monthly bank collection)")
 @transaction.atomic()
 def make_sepa_xml_for_members(modeladmin, request, queryset):
-    queryset = queryset.filter(paymentinfo__bank_collection_allowed=True)
-    queryset = queryset.filter(paymentinfo__bank_collection_mode__id=4)
+    queryset = members_due_for_bank_collection(queryset)
     dt = datetime.now()
     # active members only
     queryset = queryset.filter(Q(membershipperiod__begin__lte=dt), Q(membershipperiod__end__isnull=True) | Q(membershipperiod__end__gte=dt))
@@ -215,7 +215,7 @@ class BankCollectionModeListFilter(admin.SimpleListFilter):
     def queryset(self, request, qs):
         if self.value():
             if self.value() == "not_monthly":
-                qs = qs.exclude(paymentinfo__bank_collection_mode__pk=4)
+                qs = qs.exclude(paymentinfo__bank_collection_mode__num_month=1)
             else:
                 qs = qs.filter(paymentinfo__bank_collection_mode__pk=int(self.value()))
         return qs

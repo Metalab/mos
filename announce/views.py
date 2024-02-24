@@ -10,12 +10,11 @@ from django.contrib.admin.views.decorators import staff_member_required
 import django.forms as forms
 from django.db.models import Q
 
-from members.models import get_active_members, ContactInfo, KindOfMembership
+from members.models import get_active_members, members_due_for_bank_collection, KindOfMembership
 
 
 def _announce_filter_collection(users):
-    users = users.filter(paymentinfo__bank_collection_allowed=True) \
-                    .filter(paymentinfo__bank_collection_mode__id=4)
+    users = members_due_for_bank_collection(users)
     for u in users:
         debt = u.contactinfo.get_debt_for_month(date.today())
         if debt == 0:
