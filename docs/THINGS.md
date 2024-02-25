@@ -24,6 +24,8 @@ $ curl https://metalab.at/things/keys/prusaxl -H "X-TOKEN: XXX"
 $ curl https://metalab.at/things/usage/prusaxl -H "X-TOKEN: XXX" -XPOST -d 'user=luto&kind=LOGIN'
 ```
 
+`user` is a mos user/member, identified by their name, see `/keys/` endpoint.
+
 `kind` may be:
 
 * `LOGIN`, user started using a machine
@@ -31,7 +33,7 @@ $ curl https://metalab.at/things/usage/prusaxl -H "X-TOKEN: XXX" -XPOST -d 'user
 * `USAGE_MEMBER`, user used the machine for X seconds, for a member
 * `USAGE_NONMEMBER`, user used the machine for X seconds, for a non-member
 
-Additionally, supply `usage_seconds=` for `USAGE_` kinds.
+Additionally, supply `usage_seconds=` as an integer for `USAGE_` kinds.
 
 ## Getting stats for a Thing
 
