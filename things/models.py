@@ -38,6 +38,7 @@ class ThingEvent(models.Model):
         LOGOUT = ("LOGOUT", "Logout")
         USAGE_MEMBER = ("USAGE_MEMBER", "Zeit (Member)")
         USAGE_NONMEMBER = ("USAGE_NONMEMBER", "Zeit (Nicht-Member)")
+        USAGE_METALAB = ("USAGE_METALAB", "Zeit (für Metalab)")
 
     thing = models.ForeignKey(Thing, on_delete=models.PROTECT)
     user = models.ForeignKey(

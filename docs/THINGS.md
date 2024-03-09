@@ -32,6 +32,7 @@ $ curl https://metalab.at/things/usage/prusaxl -H "X-TOKEN: XXX" -XPOST -d 'user
 * `LOGOUT`, user stopped using a machine
 * `USAGE_MEMBER`, user used the machine for X seconds, for a member
 * `USAGE_NONMEMBER`, user used the machine for X seconds, for a non-member
+* `USAGE_METALAB`, user used the machine for X seconds, for a metalab infra project
 
 Additionally, supply `usage_seconds=` as an integer for `USAGE_` kinds.
 
