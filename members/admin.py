@@ -279,7 +279,7 @@ class MemberAdmin(UserAdmin):
         (None, {'fields': ('username', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
         (_('Permissions'), {
-            'fields': ('is_active', 'is_superuser'),
+            'fields': ('is_active', 'is_superuser', 'is_staff'),
         }),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
