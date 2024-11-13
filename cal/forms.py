@@ -30,6 +30,8 @@ class EventForm(ModelForm):
         if end_date and end_date < start_date:
             self.add_error('endDate', 'End date must be greater than start date')
 
+        category = cleaned_data.get('category')
+
         if cleaned_data.get('wikiPage'):
             wikipage, _ = re.subn(r'(^http(s)://metalab.at/wiki/|\.\.|\ |\%|\&)', '', cleaned_data.get('wikiPage'), 200)
             cleaned_data['wikiPage'] = wikipage
@@ -38,6 +40,6 @@ class EventForm(ModelForm):
 
             r = requests.get('https://metalab.at/wiki/%s' % wikipage)
             
-            if r.status_code == 404:
+            if r.status_code == 404 and (not category or category.name != "jour fixe"):
                 self.add_error('wikiPage', 'Wikipage not found: https://metalab.at/wiki/%s' % wikipage) #TODO Figure out how to make clickable
         return cleaned_data
