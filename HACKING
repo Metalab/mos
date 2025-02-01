@@ -23,21 +23,21 @@ HOW TO SET UP A LOCAL INSTALLATION OF METALAB OS TO CONTRIBUTE PATCHES
    OpenSuSE: zypper in -t pattern devel_C_C++ devel_python)
 
 6. Install dev dependencies: pip install -r requirements-dev.txt
-6b. Install pre-commit to ensure linting and code style: pre-commit install
-7. Optional: Install the locale packages for de_DE.UTF-8
+6b. Install pre-commit to ensure linting and code style: pre-commit install --install-hooks
+7. Optional: Install the locale packages for de_DE.UTF-8, like so https://unix.stackexchange.com/a/669800
 8. Put a temporary key into mos/settings/secret_key.py (SECRET_KEY='bla')
-8a. python manage.py generate_secret_key (optional for development) and then
+8a. python3 manage.py generate_secret_key (optional for development) and then
 8b. Put output into secret_key.py (SECRET_KEY='<output>') (also optional)
-9. python manage.py migrate
-10. python manage.py createsuperuser
+9. python3 manage.py migrate
+10. python3 manage.py createsuperuser
 
 11. Load example data (optional, but recommended):
-     python manage.py loaddata core/fixtures/default_choices.json
-     python manage.py loaddata members/fixtures/default_choices.json
-     python manage.py loaddata members/fixtures/dummy_members.json
-     python manage.py loaddata cal/fixtures/events_2012-09-20.json
+     python3 manage.py loaddata core/fixtures/default_choices.json
+     python3 manage.py loaddata members/fixtures/default_choices.json
+     python3 manage.py loaddata members/fixtures/dummy_members.json
+     python3 manage.py loaddata cal/fixtures/events_2012-09-20.json
 
-12. python manage.py runserver
+12. python3 manage.py runserver
 13. Point your browser to http://127.0.0.1:8000/
 14. Login with your freshly-created user account
 
