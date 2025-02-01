@@ -204,6 +204,7 @@ def generate_sepa(admin_user, members_to_collect_from):
         "instrument": 'CORE'
     }, schema=settings.HOS_SEPA_SCHEMA)
 
+    current_month = datetime.now().month
     sepaxml_filename = f'metalab_sepa_{date.today().year}_{format(date.today().month, "02")}.xml'
     payment_comment = f'{sepaxml_filename} exported {datetime.now().replace(microsecond=0).isoformat()} by {admin_user.username}'
     payment_method = PaymentMethod.objects.get(name='bank collection')
@@ -227,12 +228,9 @@ def generate_sepa(admin_user, members_to_collect_from):
                 collection_date = date.today() + timedelta(days=+3)
 
             # members_to_collect_from is filtered for member, who need to pay
-            # in the current month:
-            #  * people who pay monthly
-            #  * people who pay yearly, and it's january, etc.
-            # num_month is the number of months they want to pay for (e.g. 12)
-            # so we take the monthly debt and stretch to for the whole period.
-            debt = debt * member.paymentinfo.bank_collection_mode.num_month
+            # in the current month. This includes people whose payment interval
+            # (num_month) aligns with the current month, or they just joined.
+            debt = debt * (member.num_month - (current_month - 1) % member.num_month)
 
             sepa.add_payment({
                 "name": pmi.bank_account_owner,

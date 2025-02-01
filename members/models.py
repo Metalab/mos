@@ -331,9 +331,11 @@ def members_due_for_bank_collection(users=None):
     users = users.filter(paymentinfo__bank_collection_allowed=True)
     users = users.filter(paymentinfo__bank_collection_mode__num_month__gt=0)
     users = users.annotate(
-        is_collectable=Value(current_month - 1) % F("paymentinfo__bank_collection_mode__num_month"),
+        num_month=F("paymentinfo__bank_collection_mode__num_month"),
+        is_collection_month=Value(current_month - 1) % F("num_month"),
+        is_first_month=Q(date_joined__month=current_month),
     )
-    users = users.filter(is_collectable=0)
+    users = users.filter(Q(is_collection_month=0) | Q(is_first_month=True))
 
     return users
 
