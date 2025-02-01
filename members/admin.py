@@ -308,6 +308,9 @@ class MemberAdmin(UserAdmin):
         }),
     )
 
+    def view_on_site(self, obj):
+        return f"/member/{obj.username}"
+
 
 @admin.register(Locker)
 class LockerAdmin(admin.ModelAdmin):
