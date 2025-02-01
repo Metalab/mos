@@ -226,6 +226,14 @@ def generate_sepa(admin_user, members_to_collect_from):
                 payment_type = "RCUR"
                 collection_date = date.today() + timedelta(days=+3)
 
+            # members_to_collect_from is filtered for member, who need to pay
+            # in the current month:
+            #  * people who pay monthly
+            #  * people who pay yearly, and it's january, etc.
+            # num_month is the number of months they want to pay for (e.g. 12)
+            # so we take the monthly debt and stretch to for the whole period.
+            debt = debt * member.paymentinfo.bank_collection_mode.num_month
+
             sepa.add_payment({
                 "name": pmi.bank_account_owner,
                 "IBAN": pmi.bank_account_iban.replace(' ', ''),
