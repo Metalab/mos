@@ -68,6 +68,5 @@
             {% endif %}
         </dd>
         </dl>
-    <a style="padding:0.5em; border:1px solid red; background:#ffbbbb; display:inline-block; margin: .5em 0;" href="http://metalab.at/wiki/Kalender">Terminkonflikt?</a>
     </form>
 </div>
