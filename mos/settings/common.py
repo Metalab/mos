@@ -105,6 +105,7 @@ ROOT_URLCONF = 'mos.urls'
 
 INSTALLED_APPS = (
     'django_extensions',
+    'members',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -118,7 +119,6 @@ INSTALLED_APPS = (
     'web',
     'projects',
     'cal',
-    'members',
     'sources',
     'announce',
     'core',
