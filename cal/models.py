@@ -58,9 +58,9 @@ class FutureEventFixedNumberManager(EventManager):
             return all
 
         future = all.filter(
-            (Q(endDate__gte=datetime.datetime.now())) |
+            (Q(endDate__gte=datetime.datetime.now() - past_duration)) |
             (Q(endDate__isnull=True) &
-             Q(startDate__gte=datetime.datetime.now() - past_duration))
+             Q(startDate__gte=datetime.datetime.now()))
         ).order_by('startDate')  # event visible X hours/days/weeks/... after it started
 
         if(future.count() < num):
