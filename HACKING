@@ -3,27 +3,19 @@
 HOW TO SET UP A LOCAL INSTALLATION OF METALAB OS TO CONTRIBUTE PATCHES
 ======================================================================
 
-Please note: In case your python-2.7 specific tools have a "2" or "27" suffix,
-you need to ensure to call the correct version of your tools in order to avoid
-accidentally trying to run the MOS in python 3.x, which is currently
-unsupported.
-
-1. git clone git://github.com/Metalab/mos.git
+1. git clone git@github.com:Metalab/mos.git
 
 2. On a Debian-based system:
-     apt-get install python-virtualenv
+     apt-get install python3-venv
 
    On OpenSuSE:
-     zypper install python-virtualenv
+     zypper install python-venv
 
    On any other system:
      easy_install pip
-     pip install virtualenv
+     pip install venv
 
-     Alternatively, you can install the python2.7-virtualenv package for your
-     distribution, in case one exists.
-
-3. Create the virtualenv (call it "devel"): virtualenv devel
+3. Create the virtualenv (call it "devel"): python -m venv devel
 4. Acivate the "devel" virtualenv: source devel/bin/activate
 5. Install dependencies: pip install -r requirements.txt
    (Note: Requires a C compiler and the python development headers.
@@ -65,6 +57,6 @@ faster. E.g. if you have an error somewhere inside the cal package, do:
 Further Reading
 ===============
 
-Virtualenv/Pip Basics: http://jontourage.com/2011/02/09/virtualenv-pip-basics/
-Python 2.x Docs: https://docs.python.org/2/
-Django 1.8.x Docs: https://docs.djangoproject.com/en/1.8/
+Virtualenv/Pip Basics: https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/
+Python Docs: https://docs.python.org/
+Django Docs: https://docs.djangoproject.com/
