@@ -149,6 +149,28 @@ def export_as_csv(self, request, queryset):
 
 
 
+@admin.action(description="Export selected members with monthly and active fees as CSV.")
+@transaction.atomic()
+def export_member_csv_with_fees(self, request, queryset):
+    field_names = ['username', 'email', 'first_name', 'last_name']
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename=output.csv'
+    writer = csv.writer(response)
+
+    column_names = field_names + ['monthly_fees', 'outstanding_fees']
+    writer.writerow(column_names)
+
+    for obj in queryset:
+        cols = [getattr(obj, field) for field in field_names]
+        cols.append(obj.contactinfo.get_debt_for_this_month())
+        cols.append(obj.contactinfo.get_debts())
+        row = writer.writerow(cols)
+
+    return response
+
+
+
 @admin.register(PendingPayment)
 class PendingPaymentAdmin(admin.ModelAdmin):
     date_hierarchy = 'date'
@@ -305,7 +327,7 @@ class MemberAdmin(UserAdmin):
         )
     search_fields = ('username', 'email', 'first_name', 'last_name')
     ordering = ('username',)
-    actions = [send_welcome_mail, make_sepa_xml_for_members, export_as_csv]
+    actions = [send_welcome_mail, make_sepa_xml_for_members, export_as_csv, export_member_csv_with_fees]
     # allow to select/deselect for more members during actions
     list_max_show_all = 9999999
 
