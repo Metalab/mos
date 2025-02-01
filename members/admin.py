@@ -256,6 +256,15 @@ class ThingUserInline(admin.TabularInline):
 
 
 class MemberCreationForm(UserCreationForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["password1"].required = False
+        self.fields["password2"].required = False
+
+    def save(self, commit=True):
+        self.cleaned_data["password1"] = None
+        return super().save(commit)
+
     class Meta(UserCreationForm.Meta):
         fields = (
             "username",
