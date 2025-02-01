@@ -258,20 +258,12 @@
 		<td>{{ item.paymentinfo.bank_account_owner }}</td>
 	</tr>
 
-    <tr>
-		<td>Bank account number:</td>
-		<td>{{ item.paymentinfo.bank_account_number }}</td>
-	</tr>
 
 	<tr>
 		<td>Bank name:</td>
 		<td>{{ item.paymentinfo.bank_name }}</td>
 	</tr>
 
-	<tr>
-		<td>Bank code:</td>
-		<td>{{ item.paymentinfo.bank_code }}</td>
-	</tr>
 
 	<tr>
 		<td>Bank IBAN:</td>
