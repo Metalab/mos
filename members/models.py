@@ -377,6 +377,24 @@ def get_month_list(cur, end):
         cur = cur + relativedelta(months=1)
 
 
+class CommunicationRecord(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+    )
+    contacted_on = models.DateField()
+    outstanding_fees_at_contact = models.IntegerField(null=True)
+    monthly_fee_at_contact = models.IntegerField(null=True)
+    initial_contact = models.BooleanField(default=False)
+    contacted_by = models.CharField(max_length=100, null=True, blank=True)
+    contact_resolved = models.BooleanField(default=False)
+    comment = models.CharField(max_length=1000, null=True, blank=True)
+
+
+
+
+
+
 class MembershipPeriod(models.Model):
     begin = models.DateField()
     end = models.DateField(null=True, blank=True)

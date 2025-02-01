@@ -22,6 +22,7 @@ from things.models import ThingUser
 
 from .models import BankCollectionMode
 from .models import BankImportMatcher
+from .models import CommunicationRecord
 from .models import ContactInfo
 from .models import KindOfMembership
 from .models import Locker
@@ -48,11 +49,15 @@ class PaymentInfoInline(admin.StackedInline):
 class MembershipPeriodInline(admin.TabularInline):
     model = MembershipPeriod
 
+class CommunicationRecordInline(admin.TabularInline):
+    model = CommunicationRecord
+
 
 class PaymentInline(admin.TabularInline):
     model = Payment
     fields = ('date', 'amount', 'method')
     ordering = ('date',)
+
 
 class LockerInline(admin.TabularInline):
     model = Locker
@@ -201,6 +206,7 @@ class BankCollectionModeAdmin(admin.ModelAdmin):
     pass
 
 
+
 @admin.register(MailinglistMail)
 class MemberAdmin(admin.ModelAdmin):
     search_fields = (
@@ -304,6 +310,7 @@ class MemberAdmin(UserAdmin):
         ThingUserInline,
         PaymentInfoInline,
         MembershipPeriodInline,
+        CommunicationRecordInline,
         PaymentInline,
     ]
     fieldsets = (
@@ -347,6 +354,7 @@ class MemberAdmin(UserAdmin):
 class LockerAdmin(admin.ModelAdmin):
     list_filter = ['rented_by']
     list_display = ['name', 'rented_by', 'price']
+
 
 
 @admin.register(BankImportMatcher)
