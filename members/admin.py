@@ -153,7 +153,7 @@ def export_as_csv(self, request, queryset):
 class PendingPaymentAdmin(admin.ModelAdmin):
     date_hierarchy = 'date'
     list_filter = ['user']
-    list_display = ['date', 'method', 'user', 'amount']
+    list_display = ['date', 'method', 'user', 'creator', 'amount']
     list_display_links = None
     actions = [
         make_into_real_payments,

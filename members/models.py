@@ -505,7 +505,12 @@ class AbstractPayment(models.Model):
 
 # created by SEPA XML export and converted to an actual payment manually in admin
 class PendingPayment(AbstractPayment):
-    pass
+    creator = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        null=True,
+        related_name="created_pending_payments",
+    )
 
 
 class Payment(AbstractPayment):

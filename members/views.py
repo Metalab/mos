@@ -247,6 +247,7 @@ def generate_sepa(admin_user, members_to_collect_from):
             PendingPayment.objects.create(
                 date = collection_date,
                 user = member,
+                creator = admin_user,
                 amount = debt,
                 method = payment_method,
                 original_file = sepa.msg_id,
