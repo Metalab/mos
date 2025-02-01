@@ -46,7 +46,6 @@
   {
     "fields":{
       "bank_name":"",
-      "bank_code":"",
       "bank_account_iban":"",
       "bank_collection_allowed":false,
       "bank_collection_mode":5,
@@ -54,7 +53,6 @@
       "bank_account_bic":"",
       "bank_account_date_of_signing":null,
       "bank_account_owner":"",
-      "bank_account_number":"",
       "user":2
     },
     "model":"members.paymentinfo",
@@ -363,7 +361,6 @@
   {
     "fields":{
       "bank_name":"",
-      "bank_code":"",
       "bank_account_iban":"",
       "bank_collection_allowed":false,
       "bank_collection_mode":5,
@@ -371,7 +368,6 @@
       "bank_account_bic":"",
       "bank_account_date_of_signing":null,
       "bank_account_owner":"",
-      "bank_account_number":"",
       "user":2
     },
     "model":"members.paymentinfo",
@@ -380,7 +376,6 @@
   {
     "fields":{
       "bank_name":"",
-      "bank_code":"",
       "bank_account_iban":"",
       "bank_collection_allowed":false,
       "bank_collection_mode":4,
@@ -388,7 +383,6 @@
       "bank_account_bic":"",
       "bank_account_date_of_signing":null,
       "bank_account_owner":"",
-      "bank_account_number":"",
       "user":3
     },
     "model":"members.paymentinfo",
