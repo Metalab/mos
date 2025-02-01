@@ -1,46 +1,48 @@
 import datetime
 
 import requests
+from bs4 import BeautifulSoup
 from django.conf import settings
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.mail import send_mail
 from django.core.management.base import BaseCommand
 from django.template.loader import get_template
-from django.utils.html import strip_tags
 
 from cal.models import Event
 
 
 def get_next_jf():
+    return Event.objects.filter(pk=2317).first()
     when = datetime.date.today() + datetime.timedelta(days=settings.MOS_JF_DAYS_IN_ADVANCE)
     try:
         return Event.objects.filter(category_id = settings.MOS_JF_DB_ID, startDate__date=when).first()
     except ObjectDoesNotExist:
         return None
 
-def get_wiki_article(article):
-    query = {"action": "parse", "page": article, "format": "json"}
-    return requests.get(settings.MEDIAWIKI_API, params = query).json()
-
 def get_wiki_headlines(article):
-    article = get_wiki_article(article)
-    if article.get("error", False):
+    response = requests.get(settings.HOS_WIKI_FULL_URL + article)
+
+    if not response.ok:
         return {"article_missing": True, "error": True, "headlines": []}
 
+    article = BeautifulSoup(response.content, 'html.parser')
+    in_themen_heading = False
     results = []
-    skip = True
-    for heading in article["parse"]["sections"]:
-        if heading["toclevel"] == 1:
-            skip = heading["anchor"] != "Themen"
-            continue
-        if skip:
+
+    for heading in article.select("h1,h2"):
+        try:
+            headline = heading.select(".mw-headline")[0].get_text()
+        except IndexError:
             continue
 
-        text = heading["line"]
-
-        if not text.startswith("Thema1") and not text.startswith("Thema2") and heading["toclevel"] == 2:
-            text = strip_tags(text)
-            results.append(text)
+        if heading.name == "h1":
+            if in_themen_heading:
+                break
+            if headline == "Themen":
+                in_themen_heading = True
+                continue
+        elif in_themen_heading and not headline.startswith("Thema1") and not headline.startswith("Thema2"):
+            results.append(headline)
 
     return {"article_missing": False, "error": len(results) == 0, "headlines": results}
 
