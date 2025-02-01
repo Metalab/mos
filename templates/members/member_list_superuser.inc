@@ -23,7 +23,7 @@
 			<b>{{ item }} <br></b>
         </td>
         <td>
-			{{ item.contactinfo.get_date_of_first_join|date }} <br>
+			{{ item.contactinfo.get_date_of_first_join|date:"Y-m-d" }} <br>
 		</td>
 		<td>
 			{% if item.contactinfo.get_wikilink %}
