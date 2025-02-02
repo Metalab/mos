@@ -219,6 +219,8 @@ class ContactInfo(models.Model):
 
     remark = models.TextField(null=True, blank=True)
 
+    gdpr_wiped_on = models.DateField(null=True, blank=True)
+
     def get_membership_fees(self):
         mp_list = MembershipPeriod.objects.filter(user=self.user)
         fees = list(MembershipFee.objects.all())

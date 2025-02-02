@@ -1,4 +1,5 @@
 import csv
+from datetime import date
 from datetime import datetime
 from secrets import token_urlsafe
 
@@ -247,14 +248,51 @@ def send_welcome_mail(modeladmin, request, queryset):
 @admin.action(description='DSGVO-Wipe Members')
 def wipe_members(modeladmin, request, queryset):
     if request.POST.get('post'):
-        print("Performing action")
+        for user in queryset.all():
+            gdpr_wipe(user)
         messages.success(request, f"Es wurden {len(queryset)} Member ge-DSGVOwipe-d.")
-        # action code here
         return None
     else:
         return render(request, "admin/wipe_members.html", context={
             "queryset": queryset,
         })
+
+def gdpr_wipe(user):
+    user.password = ''
+    user.contactinfo.image.delete(False)
+    user.email = ''
+    user.first_name = ''
+    user.last_name = ''
+    user.save()
+
+    user.contactinfo.on_intern_list = False
+    user.contactinfo.intern_list_email = ''
+    user.contactinfo.street = ''
+    user.contactinfo.postcode = ''
+    user.contactinfo.city = ''
+    user.contactinfo.country = ''
+    user.contactinfo.country = ''
+    user.contactinfo.phone_number = ''
+    user.contactinfo.birthday = None
+    user.contactinfo.has_active_key = False
+    user.contactinfo.key_id = ''
+    user.contactinfo.remark = ''
+    user.contactinfo.wiki_name = ''
+    user.contactinfo.gdpr_wiped_on = date.today()
+    user.contactinfo.save()
+
+    if hasattr(user, 'paymentinfo'):
+        user.paymentinfo.bank_collection_allowed = False
+        user.paymentinfo.bank_account_iban = ''
+        user.paymentinfo.bank_account_bic = ''
+        user.paymentinfo.bank_name = ''
+        user.paymentinfo.bank_account_data_of_signing = None
+        user.paymentinfo.save()
+
+    for cr in CommunicationRecord.objects.all().filter(user=user):
+        cr.delete()
+
+    user.save()
 
 
 class BankCollectionModeListFilter(admin.SimpleListFilter):
