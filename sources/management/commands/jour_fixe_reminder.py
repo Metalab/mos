@@ -12,7 +12,6 @@ from cal.models import Event
 
 
 def get_next_jf():
-    return Event.objects.filter(pk=2317).first()
     when = datetime.date.today() + datetime.timedelta(days=settings.MOS_JF_DAYS_IN_ADVANCE)
     try:
         return Event.objects.filter(category_id = settings.MOS_JF_DB_ID, startDate__date=when).first()
