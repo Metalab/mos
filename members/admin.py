@@ -16,6 +16,7 @@ from django.db.models import OuterRef
 from django.db.models import Q
 from django.db.models import Subquery
 from django.http import HttpResponse
+from django.shortcuts import render
 from django.template.loader import get_template
 from django.utils.translation import gettext_lazy as _
 from import_export import resources
@@ -242,6 +243,20 @@ def send_welcome_mail(modeladmin, request, queryset):
 
     messages.success(request, 'Welcome mail sent.')
 
+
+@admin.action(description='DSGVO-Wipe Members')
+def wipe_members(modeladmin, request, queryset):
+    if request.POST.get('post'):
+        print("Performing action")
+        messages.success(request, f"Es wurden {len(queryset)} Member ge-DSGVOwipe-d.")
+        # action code here
+        return None
+    else:
+        return render(request, "admin/wipe_members.html", context={
+            "queryset": queryset,
+        })
+
+
 class BankCollectionModeListFilter(admin.SimpleListFilter):
     title = "bank collection mode"
     parameter_name = "bank collection mode"
@@ -415,7 +430,7 @@ class MemberAdmin(ImportExportMixin, UserAdmin):
         "paymentinfo__bank_account_mandate_reference",
     )
     ordering = ('username',)
-    actions = [send_welcome_mail, make_sepa_xml_for_members, export_as_csv, export_member_csv_with_fees]
+    actions = [send_welcome_mail, make_sepa_xml_for_members, export_as_csv, export_member_csv_with_fees, wipe_members]
     # allow to select/deselect for more members during actions
     list_max_show_all = 9999999
     resource_classes = [MemberResource]
