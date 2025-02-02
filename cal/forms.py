@@ -29,13 +29,22 @@ class EventForm(ModelForm):
         end_date = cleaned_data.get('endDate')
         if end_date and end_date < start_date:
             self.add_error('endDate', 'End date must be greater than start date')
-
+        
+        loc = cleaned_data.get('location').name
+        if loc not in ('any rooom', 'online', 'Woanders'): #
+            if Event.objects.exclude(id=self.instance.id).filter(location__name=loc, startDate__lte=end_date, endDate__gte=start_date).count() != 0 or \
+               Event.objects.exclude(id=self.instance.id).filter(location__name='all rooms', startDate__lte=end_date, endDate__gte=start_date).count() != 0:
+                self.add_error('location', 'This location is already in use during the selected time')
+        if loc == 'all rooms' and Event.objects.exclude(id=self.instance.id).exclude(location__name__in=('any rooom', 'online', 'Woanders')) \
+                .filter(startDate__lte=end_date, endDate__gte=start_date).count() != 0:
+            self.add_error('location', 'This location is already in use during the selected time')      
+        
         category = cleaned_data.get('category')
 
         if cleaned_data.get('wikiPage'):
             wikipage, _ = re.subn(r'(^http(s)://metalab.at/wiki/|\.\.|\ |\%|\&)', '', cleaned_data.get('wikiPage'), 200)
             cleaned_data['wikiPage'] = wikipage
-            if cleaned_data.get('advertise') and re.match(r'^(Benutzer(in)|User|Benutzer):', wikipage):
+            if cleaned_data.get('advertise') and re.match(r'^(Benutzer(in)|User):', wikipage):
                 self.add_error('wikiPage', 'Userpages don\'t provide adequate information for public Events')
 
             r = requests.get('https://metalab.at/wiki/%s' % wikipage)
