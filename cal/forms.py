@@ -44,7 +44,7 @@ class EventForm(ModelForm):
         if cleaned_data.get('wikiPage'):
             wikipage, _ = re.subn(r'(^http(s)://metalab.at/wiki/|\.\.|\ |\%|\&)', '', cleaned_data.get('wikiPage'), 200)
             cleaned_data['wikiPage'] = wikipage
-            if cleaned_data.get('advertise') and re.match(r'^(Benutzer(in)|User):', wikipage):
+            if cleaned_data.get('advertise') and re.match(r'^(Benutzer(in)?|User):', wikipage):
                 self.add_error('wikiPage', 'Userpages don\'t provide adequate information for public Events')
 
             r = requests.get('https://metalab.at/wiki/%s' % wikipage)
