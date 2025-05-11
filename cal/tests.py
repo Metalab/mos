@@ -52,6 +52,31 @@ class EventTest(TestCase):
         with self.assertRaises(ValidationError, msg="Event has to ha"):
             e.save()
 
+    @unittest.skip("not implemented")
+    def testDeletedCollisionCheck(self):
+        """Create aand delete an event 
+        then try creating another in the same room and time"""
+        e = Event(
+            name="Ghost Event",
+            wikiPage="/wiki/foo",
+            startDate=datetime(2024, 2, 24, 16, 15, 0),
+            endDate=datetime(2024, 2, 24, 16, 15, 0),
+            created_by=User.objects.first(),
+            deleted=True,
+            where="Bibliothek",
+        )
+        e.save()
+
+        e = Event(
+            name="Real Event",
+            wikiPage="/wiki/foo",
+            startDate=datetime(2024, 2, 24, 16, 15, 0),
+            endDate=datetime(2024, 2, 24, 16, 15, 0),
+            created_by=User.objects.first(),
+            where="Bibliothek",
+        )
+        e.save()
+
 
 class EventFormTest(TestCase):
     fixtures = ['initial_user.json']
