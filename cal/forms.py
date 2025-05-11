@@ -32,11 +32,11 @@ class EventForm(ModelForm):
         
         loc = cleaned_data.get('location').name
         if loc not in ('any rooom', 'online', 'Woanders'): #
-            if Event.objects.exclude(id=self.instance.id).filter(location__name=loc, startDate__lte=end_date, endDate__gte=start_date).count() != 0 or \
-               Event.objects.exclude(id=self.instance.id).filter(location__name='all rooms', startDate__lte=end_date, endDate__gte=start_date).count() != 0:
+            if Event.objects.exclude(id=self.instance.id).filter(deleted=False, location__name=loc, startDate__lte=end_date, endDate__gte=start_date).count() != 0 or \
+               Event.objects.exclude(id=self.instance.id).filter(deleted=False, location__name='all rooms', startDate__lte=end_date, endDate__gte=start_date).count() != 0:
                 self.add_error('location', 'This location is already in use during the selected time')
         if loc == 'all rooms' and Event.objects.exclude(id=self.instance.id).exclude(location__name__in=('any rooom', 'online', 'Woanders')) \
-                .filter(startDate__lte=end_date, endDate__gte=start_date).count() != 0:
+                .filter(deleted=False, startDate__lte=end_date, endDate__gte=start_date).count() != 0:
             self.add_error('location', 'This location is already in use during the selected time')      
         
         category = cleaned_data.get('category')
