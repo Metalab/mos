@@ -1,5 +1,6 @@
 import csv
 from datetime import datetime
+from secrets import token_urlsafe
 
 import sepaxml
 from django.conf import settings
@@ -9,6 +10,7 @@ from django.contrib.admin.models import LogEntry
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import transaction
 from django.db.models import OuterRef
 from django.db.models import Q
@@ -289,8 +291,19 @@ class MemberCreationForm(UserCreationForm):
         self.fields["password1"].required = False
         self.fields["password2"].required = False
 
+    def clean_password2(self):
+        password1 = self.cleaned_data.get("password1")
+        password2 = self.cleaned_data.get("password2")
+        if (password1 or password2) and password1 != password2:
+            raise ValidationError(
+                self.error_messages["password_mismatch"],
+                code="password_mismatch",
+            )
+        return password2
+
     def save(self, commit=True):
-        self.cleaned_data["password1"] = None
+        if self.cleaned_data["password1"] == '':
+            self.cleaned_data["password1"] = token_urlsafe(32)
         return super().save(commit)
 
     class Meta(UserCreationForm.Meta):
