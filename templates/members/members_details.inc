@@ -226,6 +226,53 @@
             {% endif %}
         </td>
     </tr>
+	<tr>
+		<td>In intern matrix room</td>
+		{% if item.contactinfo.in_intern_matrix_room %}
+			<td>yes ( {{ item.contactinfo.matrix_handle }} )</td>
+		{% else %}
+			<td>no</td>
+		{% endif %}
+                <td> {% if ea%}<a href='#'  onclick="set_visible($('member-edit-intern-matrix')); return false;">Edit</a>{% endif %}</td>
+
+	</tr>
+    <tr>
+         <td colspan="3">
+            {% if ea %}
+            <div class="edit {% if error_type == "internmatrix" %} visible {% else %} invisible {% endif %}" id='member-edit-intern-matrix' style="border: 1px solid black; padding: 5px; width:100%;">
+                <form id='membmer-form-internmatrix' method="post" action="/member/{{user.username}}/update/internmatrix/" onsubmit="return false;" onKeyPress="
+                if(enter_pressed(event)) {
+                    myform = $('member-form-internmatrix');
+                    new Ajax.Updater( $('container'), myform.readAttribute('action'), {
+                      parameters: myform.serialize(true),
+                    });
+                }
+                ">
+		{% csrf_token %}
+                    <dt>In intern matrix room</dt>
+		  {% if error_type == "internmatrix" %}
+		    <dd>{{ error_form.matrix_handle.errors.0 }}   {{ error_form.matrix_handle }} {{ error_form.in_intern_matrix_room }} </dd>
+		  {% else %}
+                    <dd><input name='in_intern_matrix_room' id="member-in_intern_matrix_room" type="checkbox" {% if item.contactinfo.in_intern_matrix_room%} checked="checked" {% endif %}  />
+                        <input name='matrix_handle' id="member-matrix_handle" type="text" value="{{ item.contactinfo.intern_list_email }}" size="40"/>
+                    </dd>
+                  {% endif %}
+
+                    <dt style="visibility: hidden">Submit:</dt>
+                    <dd style="text-align: left">
+                        <input type="button" value="Update" class="btn-update" onclick="
+                        new Ajax.Updater( $('container'), $('membmer-form-internmatrix').readAttribute('action'), {
+                          parameters: $('membmer-form-internmatrix').serialize(true),
+                        });
+                        "/>
+
+                        <a href="#" class="toggled btn-cancel" onclick="set_invisible($('member-edit-internmatrix')); return false;">Cancel</a>
+
+                </form>
+            </div>
+            {% endif %}
+        </td>
+    </tr>
 
     <tr>
 		<td>Wiki name:</td>
