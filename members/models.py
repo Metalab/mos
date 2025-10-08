@@ -191,6 +191,10 @@ class ContactInfo(models.Model):
     on_intern_list = models.BooleanField(default=True)
     intern_list_email = models.EmailField(blank=True)
 
+    in_intern_matrix_room = models.BooleanField(default=False)
+    matrix_handle = models.CharField(max_length=255, blank=True)
+
+
     street = models.CharField(max_length=200)
     postcode = models.CharField(max_length=10)
     city = models.CharField(max_length=100)

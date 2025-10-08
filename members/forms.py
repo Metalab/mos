@@ -17,6 +17,12 @@ class UserInternListForm(ModelForm):
         fields = ('on_intern_list', 'intern_list_email')
 
 
+class UserInternMatrixForm(ModelForm):
+    class Meta:
+        model = ContactInfo
+        fields = ('in_intern_matrix_room', 'matrix_handle')
+
+
 class UserEmailForm(ModelForm):
     email = forms.EmailField(required=True)
 

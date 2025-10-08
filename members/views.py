@@ -28,6 +28,7 @@ from .forms import UserAdressForm
 from .forms import UserEmailForm
 from .forms import UserImageForm
 from .forms import UserInternListForm
+from .forms import UserInternMatrixForm
 from .forms import UserNameForm
 from .models import BankImportMatcher
 from .models import ContactInfo
@@ -171,6 +172,10 @@ def members_update(request, user_username, update_type):
     elif update_type == "internlist" and request.method == "POST":
         contact_info = get_object_or_404(ContactInfo, user=user)
         update_form = UserInternListForm(request.POST, instance=contact_info)
+
+    elif update_type == "internmatrix" and request.method == "POST":
+        contact_info = get_object_or_404(ContactInfo, user=user)
+        update_form = UserInternMatrixForm(request.POST, instance=contact_info)
 
     if update_form.is_valid():
         update_form.save()
