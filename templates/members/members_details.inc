@@ -254,7 +254,7 @@
 		    <dd>{{ error_form.matrix_handle.errors.0 }}   {{ error_form.matrix_handle }} {{ error_form.in_intern_matrix_room }} </dd>
 		  {% else %}
                     <dd><input name='in_intern_matrix_room' id="member-in_intern_matrix_room" type="checkbox" {% if item.contactinfo.in_intern_matrix_room%} checked="checked" {% endif %}  />
-                        <input name='matrix_handle' id="member-matrix_handle" type="text" value="{{ item.contactinfo.intern_list_email }}" size="40"/>
+                        <input name='matrix_handle' id="member-matrix_handle" type="text" value="{{ item.contactinfo.matrix_handle }}" size="40"/>
                     </dd>
                   {% endif %}
 
