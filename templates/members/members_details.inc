@@ -17,7 +17,7 @@
          <td colspan="3">
             {% if ea %}
             <div class="edit {% if error_type == "name" %} visible {% else %} invisible {% endif %}" id='member-edit-name' style="border: 1px solid black; padding: 5px;">
-                <form id='membmer-form-name' method="post" action="/member/{{user.username}}/update/name/" onsubmit="return false;" onKeyPress="
+                <form id='member-form-name' method="post" action="/member/{{user.username}}/update/name/" onsubmit="return false;" onKeyPress="
                 if(enter_pressed(event)) {
                     myform = $('member-form-name');
                     new Ajax.Updater( $('container'), myform.readAttribute('action'), {
@@ -38,8 +38,8 @@
                     <dt style="visibility: hidden">Submit:</dt>
                     <dd style="text-align: left">
                         <input type="button" value="Update" class="btn-update" onclick="
-                        new Ajax.Updater( $('container'), $('membmer-form-name').readAttribute('action'), {
-                          parameters: $('membmer-form-name').serialize(true),
+                        new Ajax.Updater( $('container'), $('member-form-name').readAttribute('action'), {
+                          parameters: $('member-form-name').serialize(true),
                         });
                         "/>
 
@@ -94,7 +94,7 @@
          <td colspan="3">
             {% if ea %}
             <div class="edit {% if error_type == "email" %} visible {% else %} invisible {% endif %}" id='member-edit-email' style="border: 1px solid black; padding: 5px; width:100%;">
-                <form id='membmer-form-email' method="post" action="/member/{{user.username}}/update/email/" onsubmit="return false;" onKeyPress="
+                <form id='member-form-email' method="post" action="/member/{{user.username}}/update/email/" onsubmit="return false;" onKeyPress="
                 if(enter_pressed(event)) {
                     myform = $('member-form-email');
                     new Ajax.Updater( $('container'), myform.readAttribute('action'), {
@@ -114,8 +114,8 @@
                     <dt style="visibility: hidden">Submit:</dt>
                     <dd style="text-align: left">
                         <input type="button" value="Update" class="btn-update" onclick="
-                        new Ajax.Updater( $('container'), $('membmer-form-email').readAttribute('action'), {
-                          parameters: $('membmer-form-email').serialize(true),
+                        new Ajax.Updater( $('container'), $('member-form-email').readAttribute('action'), {
+                          parameters: $('member-form-email').serialize(true),
                         });
                         "/>
 
@@ -135,7 +135,7 @@
         <td colspan="3">
             {% if ea %}
             <div class="edit  {% if error_type == "adress" %} visible {% else %} invisible {% endif %}"  id='member-edit-adress' style="border: 1px solid black; padding: 5px; width:100%;">
-                <form id='membmer-form-adress' method="post" action="/member/{{user.username}}/update/adress/" onsubmit="return false;" onKeyPress="
+                <form id='member-form-adress' method="post" action="/member/{{user.username}}/update/adress/" onsubmit="return false;" onKeyPress="
                 if(enter_pressed(event)) {
                     myform = $('member-form-adress');
                     new Ajax.Updater( $('container'), myform.readAttribute('action'), {
@@ -167,8 +167,8 @@
                     <dt style="visibility: hidden">Submit:</dt>
                     <dd style="text-align: left">
                         <input type="button" value="Update" class="btn-update" onclick="
-                        new Ajax.Updater( $('container'), $('membmer-form-adress').readAttribute('action'), {
-                          parameters: $('membmer-form-adress').serialize(true),
+                        new Ajax.Updater( $('container'), $('member-form-adress').readAttribute('action'), {
+                          parameters: $('member-form-adress').serialize(true),
                         });
                         "/>
 
@@ -193,7 +193,7 @@
          <td colspan="3">
             {% if ea %}
             <div class="edit {% if error_type == "internlist" %} visible {% else %} invisible {% endif %}" id='member-edit-intern-list' style="border: 1px solid black; padding: 5px; width:100%;">
-                <form id='membmer-form-internlist' method="post" action="/member/{{user.username}}/update/internlist/" onsubmit="return false;" onKeyPress="
+                <form id='member-form-internlist' method="post" action="/member/{{user.username}}/update/internlist/" onsubmit="return false;" onKeyPress="
                 if(enter_pressed(event)) {
                     myform = $('member-form-internlist');
                     new Ajax.Updater( $('container'), myform.readAttribute('action'), {
@@ -214,8 +214,8 @@
                     <dt style="visibility: hidden">Submit:</dt>
                     <dd style="text-align: left">
                         <input type="button" value="Update" class="btn-update" onclick="
-                        new Ajax.Updater( $('container'), $('membmer-form-internlist').readAttribute('action'), {
-                          parameters: $('membmer-form-internlist').serialize(true),
+                        new Ajax.Updater( $('container'), $('member-form-internlist').readAttribute('action'), {
+                          parameters: $('member-form-internlist').serialize(true),
                         });
                         "/>
 
@@ -240,7 +240,7 @@
          <td colspan="3">
             {% if ea %}
             <div class="edit {% if error_type == "internmatrix" %} visible {% else %} invisible {% endif %}" id='member-edit-intern-matrix' style="border: 1px solid black; padding: 5px; width:100%;">
-                <form id='membmer-form-internmatrix' method="post" action="/member/{{user.username}}/update/internmatrix/" onsubmit="return false;" onKeyPress="
+                <form id='member-form-internmatrix' method="post" action="/member/{{user.username}}/update/internmatrix/" onsubmit="return false;" onKeyPress="
                 if(enter_pressed(event)) {
                     myform = $('member-form-internmatrix');
                     new Ajax.Updater( $('container'), myform.readAttribute('action'), {
@@ -261,8 +261,8 @@
                     <dt style="visibility: hidden">Submit:</dt>
                     <dd style="text-align: left">
                         <input type="button" value="Update" class="btn-update" onclick="
-                        new Ajax.Updater( $('container'), $('membmer-form-internmatrix').readAttribute('action'), {
-                          parameters: $('membmer-form-internmatrix').serialize(true),
+                        new Ajax.Updater( $('container'), $('member-form-internmatrix').readAttribute('action'), {
+                          parameters: $('member-form-internmatrix').serialize(true),
                         });
                         "/>
 
