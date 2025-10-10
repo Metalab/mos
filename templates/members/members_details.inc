@@ -219,7 +219,7 @@
                         });
                         "/>
 
-                        <a href="#" class="toggled btn-cancel" onclick="set_invisible($('member-edit-internlist')); return false;">Cancel</a>
+                        <a href="#" class="toggled btn-cancel" onclick="set_invisible($('member-edit-intern-list')); return false;">Cancel</a>
 
                 </form>
             </div>
@@ -266,7 +266,7 @@
                         });
                         "/>
 
-                        <a href="#" class="toggled btn-cancel" onclick="set_invisible($('member-edit-internmatrix')); return false;">Cancel</a>
+                        <a href="#" class="toggled btn-cancel" onclick="set_invisible($('member-edit-intern-matrix')); return false;">Cancel</a>
 
                 </form>
             </div>
