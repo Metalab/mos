@@ -1,9 +1,11 @@
 
 
-
 Hallo {{ user.username }},
 
-HIER KÖNNTE IHRE KEY EXPIRATION NACHRICHT STEHEN
+Dein Zugang zur Nutzung von {{thing}} im metalab läuft am {{expiry_date}} ab, danach deaktiviert sich dein Zugang automatisch.
+
+Um deinen Zugang zu behalten, beachte bitte folgendes:
+{{expiry_notice}}
 
 
 Mit lieben Grüßen,
