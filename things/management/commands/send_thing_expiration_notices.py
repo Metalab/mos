@@ -12,7 +12,9 @@ def mail(template, ctx_vars, recipient):
     tpl = get_template(template)
     body = tpl.render(ctx_vars)
     subject = get_template(template + ".subject").render(ctx_vars).strip()
-    send_mail(subject, body, settings.HOS_ANNOUNCE_FROM, recipient, fail_silently=False)
+    send_mail(
+        subject, body, settings.HOS_ANNOUNCE_FROM, [recipient], fail_silently=False
+    )
 
 
 class Command(BaseCommand):
@@ -29,6 +31,6 @@ class Command(BaseCommand):
                 "user": expiring_thing.user,
                 "thing": expiring_thing.thing,
                 "expiry_date": expiring_thing.best_before,
-                "expiry_notice": expiring_thing.expiry_notice,
+                "expiry_notice": expiring_thing.thing.expiry_notice,
             }
-            mail("thing_expiration_notice.mail", ctx, expiring_thing.user.email)
+            mail("things/thing_expiration_notice.mail", ctx, expiring_thing.user.email)
