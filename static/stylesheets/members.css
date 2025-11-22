@@ -46,6 +46,14 @@ img.thumb_with_text { max-width:96px; max-height:96px; }
 	margin: 0 1em 1em 0;
 }
 
+#user_avatar {
+    text-align: center;
+}
+
+#user_avatar > img {
+    width: 80px;
+}
+
 #user_paymenthistory tr:first-child td {
     font-weight: bold;
     text-align: center;

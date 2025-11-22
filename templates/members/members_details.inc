@@ -4,7 +4,8 @@
 	{% else %}
 		<img src="{{ STATIC_URL }}images/default_avatar.png"/>
 	{% endif %}
-	<a href="/member/{{user.username}}/update/userpic/" title="Change Userpic">Change Userpic</a>
+	<br>
+	<a href="/member/{{user.username}}/update/userpic/" title="Change">Change</a>
 </div>
 
 <h3>Info</h3>
