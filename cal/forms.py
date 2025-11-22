@@ -29,12 +29,12 @@ class EventForm(ModelForm):
         end_date = cleaned_data.get('endDate')
         if end_date and end_date < start_date:
             self.add_error('endDate', 'End date must be greater than start date')
-        
-        loc = cleaned_data.get('location').name
-        if loc not in ('any rooom', 'online', 'Woanders'): #
-            if Event.objects.exclude(id=self.instance.id).filter(deleted=False, location__name=loc, startDate__lt=end_date, endDate__gt=start_date).count() != 0:
+
+        loc = cleaned_data.get('location')
+        if loc and loc.name not in ('any rooom', 'online', 'Woanders'): #
+            if Event.objects.exclude(id=self.instance.id).filter(deleted=False, location__name=loc.name, startDate__lt=end_date, endDate__gt=start_date).count() != 0:
                 self.add_error('location', 'This location is already in use during the selected time')
-        
+
         category = cleaned_data.get('category')
 
         if cleaned_data.get('wikiPage'):
