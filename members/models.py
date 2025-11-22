@@ -336,6 +336,7 @@ def members_due_for_bank_collection(users=None):
     if users is None:
         users = get_active_members()
 
+    current_year = datetime.now().year
     current_month = datetime.now().month
 
     users = users.filter(paymentinfo__bank_collection_allowed=True)
@@ -343,7 +344,7 @@ def members_due_for_bank_collection(users=None):
     users = users.annotate(
         num_month=F("paymentinfo__bank_collection_mode__num_month"),
         is_collection_month=Value(current_month - 1) % F("num_month"),
-        is_first_month=Q(date_joined__month=current_month),
+        is_first_month=(Q(date_joined__month=current_month) & Q(date_joined__year=current_year)),
     )
     users = users.filter(Q(is_collection_month=0) | Q(is_first_month=True))
 
