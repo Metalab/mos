@@ -6,6 +6,7 @@ class Category(models.Model):
     represents a Category (name, description)
     used in cal.models.Event
     """
+    slug = models.SlugField(null=True)
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=200)
 
