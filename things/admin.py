@@ -1,4 +1,6 @@
 from django.contrib import admin
+from import_export import resources
+from import_export.admin import ImportExportModelAdmin
 
 from .models import Thing
 from .models import ThingEvent
@@ -9,8 +11,18 @@ class ThingUserInline(admin.TabularInline):
     model = ThingUser
 
 
+class ThingResource(resources.ModelResource):
+
+    class Meta:
+        model = Thing
+        fields = (
+            "slug",
+            "token",
+        )
+
+
 @admin.register(Thing)
-class ThingAdmin(admin.ModelAdmin):
+class ThingAdmin(ImportExportModelAdmin):
     list_filter = [
         'slug',
     ]
@@ -20,10 +32,23 @@ class ThingAdmin(admin.ModelAdmin):
     inlines = [
         ThingUserInline,
     ]
+    resource_classes = [ThingResource]
+
+
+class ThingUserResource(resources.ModelResource):
+
+    class Meta:
+        model = ThingUser
+        fields = (
+            'thing__slug',
+            'user__username',
+            'created_at',
+            'best_before',
+        )
 
 
 @admin.register(ThingUser)
-class ThingUser(admin.ModelAdmin):
+class ThingUserAdmin(ImportExportModelAdmin):
     list_filter = [
         'thing',
         'user',
@@ -34,10 +59,24 @@ class ThingUser(admin.ModelAdmin):
         'created_at',
         'best_before',
     ]
+    resource_classes = [ThingUserResource]
+
+
+class ThingEventResource(resources.ModelResource):
+
+    class Meta:
+        model = ThingEvent
+        fields = (
+            'thing__slug',
+            'user__username',
+            'kind',
+            'created_at',
+            'usage_seconds',
+        )
 
 
 @admin.register(ThingEvent)
-class ThingEvent(admin.ModelAdmin):
+class ThingEventAdmin(ImportExportModelAdmin):
     list_filter = [
         'thing',
         'user',
@@ -49,3 +88,4 @@ class ThingEvent(admin.ModelAdmin):
         'kind',
         'created_at',
     ]
+    resource_classes = [ThingEventResource]

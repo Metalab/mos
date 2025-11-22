@@ -18,6 +18,9 @@ from django.db.models import Subquery
 from django.http import HttpResponse
 from django.template.loader import get_template
 from django.utils.translation import gettext_lazy as _
+from import_export import resources
+from import_export.admin import ImportExportMixin
+from import_export.admin import ImportExportModelAdmin
 
 from members.models import members_due_for_bank_collection
 from things.models import ThingUser
@@ -315,8 +318,54 @@ class MemberCreationForm(UserCreationForm):
         )
 
 
+class MemberResource(resources.ModelResource):
+
+    class Meta:
+        model = User
+        fields = (
+            # User fields
+            "id",
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "is_staff",
+            "is_active",
+            "is_superuser",
+            "last_login",
+            "date_joined",
+            "groups",
+            "user_permissions",
+            # ContactInfo fields
+            "contactinfo__on_intern_list",
+            "contactinfo__intern_list_email",
+            "contactinfo__in_intern_matrix_room",
+            "contactinfo__matrix_handle",
+            "contactinfo__street",
+            "contactinfo__postcode",
+            "contactinfo__city",
+            "contactinfo__country",
+            "contactinfo__phone_number",
+            "contactinfo__birthday",
+            "contactinfo__wiki_name",
+            "contactinfo__image",
+            "contactinfo__last_email_ok",
+            "contactinfo__remark",
+            "contactinfo__key_id",
+            # PaymentInfo fields
+            "paymentinfo__bank_collection_allowed",
+            "paymentinfo__bank_collection_mode",
+            "paymentinfo__bank_account_owner",
+            "paymentinfo__bank_account_iban",
+            "paymentinfo__bank_account_bic",
+            "paymentinfo__bank_name",
+            "paymentinfo__bank_account_mandate_reference",
+            "paymentinfo__bank_account_date_of_signing",
+        )
+
+
 @admin.register(User)
-class MemberAdmin(UserAdmin):
+class MemberAdmin(ImportExportMixin, UserAdmin):
     inlines = [
         ContactInfoInline,
         LockerInline,
@@ -350,6 +399,7 @@ class MemberAdmin(UserAdmin):
     actions = [send_welcome_mail, make_sepa_xml_for_members, export_as_csv, export_member_csv_with_fees]
     # allow to select/deselect for more members during actions
     list_max_show_all = 9999999
+    resource_classes = [MemberResource]
 
     add_form = MemberCreationForm
     add_fieldsets = (
@@ -363,10 +413,23 @@ class MemberAdmin(UserAdmin):
         return f"/member/{obj.username}"
 
 
+class LockerResource(resources.ModelResource):
+
+    class Meta:
+        model = Locker
+        fields = (
+            "name",
+            "rented_by__username",
+            "price",
+            "comment",
+        )
+
+
 @admin.register(Locker)
-class LockerAdmin(admin.ModelAdmin):
+class LockerAdmin(ImportExportModelAdmin):
     list_filter = ['rented_by']
     list_display = ['name', 'rented_by', 'price']
+    resource_classes = [LockerResource]
 
 
 

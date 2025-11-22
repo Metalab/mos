@@ -116,6 +116,7 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
     'django.contrib.messages',
     'easy_thumbnails',
+    'import_export',
     'web',
     'projects',
     'cal',
