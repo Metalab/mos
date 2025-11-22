@@ -1,8 +1,10 @@
+See below for English version.
+
 Hallo {{ user.first_name }},
 
 Willkommen im Metalab! Danke für Deine Unterstützung - wir hoffen Du wirst bei uns viel Spaß haben, coole Projekte realisieren und neue Freund*innen gewinnen.
 
-Wir haben gerade Deine Beitrittserklärung eingegeben und für Dich einen User*innenaccount im Metalab OS (MOS) angelegt.
+Wir haben Deine Beitrittserklärung angenommen und für Dich einen User*innenaccount im Metalab OS (MOS) angelegt.
 
 Deine Zugangsdaten sind wie folgt:
 Accountname: {{ user.username }}
@@ -10,33 +12,35 @@ Wir haben für dich ein temporäres Passwort gesetzt, bitte führe so bald wie m
 
 Wenn du den Passwort gesetzt hast, logge Dich bitte gleich ein und überprüfe Deine Daten. Falls wir beim Abtippen einen Fehler gemacht haben, antworte am besten mit der gewünschten Korrektur auf diese e-Mail, damit wir die Daten anpassen können!
 
-Der Login ins MOS ist rechts oben auf https://metalab.at/ möglich, du findest dein Profil auch unter https://metalab.at/member/{{ user.username }}/. Mit Deinem Account kannst Du Deine User*innendaten ändern sowie Termine im Kalender des Metalabs eintragen oder Projekte zur Metalab-Frontpage hinzufügen. Im MOS kannst Du auch einen Avatar für Dich hinzufügen, der dann per Zufallsgenerator auf der Hauptseite angezeigt wird. (Bitte achte darauf, dass das Bild nicht zu groß und quadratisch ist, da es ansonsten verzerrt dargestellt wird.)
+Der Login ins MOS ist rechts oben auf https://metalab.at/mos möglich, du findest dein Profil auch unter https://metalab.at/member/{{ user.username }}/. Mit Deinem Account kannst Du Deine User*innendaten ändern sowie Termine im Kalender des Metalabs eintragen. Im MOS kannst Du auch einen Avatar für Dich hinzufügen, der dann per Zufallsgenerator auf der Hauptseite angezeigt wird. (Bitte achte darauf, dass das Bild nicht zu groß und quadratisch ist, da es ansonsten verzerrt dargestellt wird.)
 
 {% if user.paymentinfo.bank_account_mandate_reference %}
 Mit deinem Einverständnis buchen wir unter der Mandats-ID {{ user.paymentinfo.bank_account_mandate_reference }} deinen Mitgliedsbeitrag zur Mitte des Monats von deinem angegebenen Konto ab.{% endif %}
 Falls Du die Checkbox für die Interne Mailingliste angekreuzt hast, wirst Du von uns auf diese Mailingliste subskribiert. Wie der Name schon sagt, werden auf dieser Liste viele Metalab-interne Dinge besprochen. Zusätzlich gibt es noch öffentliche Mailinglisten, zu denen Du hier mehr Infos findest: https://metalab.at/wiki/Mailinglisten
 
-Weiters wäre es schön, wenn Du im Matrix-Channel (https://matrix.to/#/#metalab:matrix.org) vorbei schaust, dort werden regelmäßig Themen aus dem Metalab besprochen.
+Falls Du die Checkbox für den internen Matrix-Channel gesetzt hast, wirst du automatisch in den Raum eingeladen, dieser ist als Chat-Äquivalent zur Internen Mailingliste gedacht.
+Weiters wäre es schön, wenn Du auch im öffentlichen Matrix-Space (https://matrix.to/#/#metalab-space:matrix.org) vorbei schaust, dort werden in verschiedenen Räumen regelmäßig Themen aus dem Metalab besprochen.
 
-Falls Du noch keinen Account in unserem Wiki hast, kannst du auf diese Mail antworten und wir legen einen für Dich an. Auf deiner User*innen-Seite kannst du eine ausführlichere Beschreibung von Dir und deiner Interessen hinzufügen.
+Falls Du einen Account in unserem Wiki (https://metalab.at/wiki/) möchtest, antworte auf diese Mail und wir legen einen für Dich an. Auf deiner User*innen-Seite kannst du eine ausführlichere Beschreibung von Dir und deiner Interessen hinzufügen.
 
-Falls Du Fragen oder Probleme hast, die rein administrative Angelegenheiten betreffen, kannst Du Dich an das Core-Team unter core@metalab.at wenden. Alle anderen Fragen, Ideen etc., die das Metalab betreffen, sind besser auf der Internen Liste aufgehoben.
+Falls Du Fragen oder Probleme hast, die rein administrative Angelegenheiten betreffen, kannst Du Dich an das Core-Team unter core@metalab.at wenden. Alle anderen Fragen, Ideen etc., die das Metalab betreffen, sind besser auf den Internen Kanälen aufgehoben.
 
 Als Mitglied des Vereins hast Du übrigens auch Pflichten und Rechte. Vieles davon sollte eigentlich selbstverständlich sein, trotzdem haben wir diese Pflichten und Rechte noch einmal zusammengefasst.
 
 Rechte:
 * Benutzung der Infrastruktur (bei Maschinen und Werkzeugen bitte nur bei entsprechendem handwerklichen Wissen und Geschick bzw. nach Einschulung)
-* Netzwerkzugriff (https://metalab.at/wiki/Wlan)
 * Küchenbenutzung (mit besonderem Augenmerk auf das Wegräumen von Geschirr und generellem Sauberhalten; Lebensmittel werden beim täglichen Cleanup um 20:00 Uhr entsorgt)
 * Mitspracherecht beim alle zwei Wochen stattfindenden Jour Fixe (https://metalab.at/wiki/Jour_Fixe)
+* Teilnahme am Sozialplenum (https://metalab.at/wiki/Sozialplenum) um alle Themen die das Miteinander im Metalab betreffen zu diskutieren (Themen nur nach Wiki-Login sichtbar)
 * Wahlrecht bei der jährlichen ordentlichen Generalversammlung sowie allen etwaigen außerordentlichen GVs
-* Reservierung der Metalab-Räumlichkeiten für kostenlose und themennahe Workshops oder Vorträge (bitte Termine im vorhinein im Kalender reservieren: https://metalab.at/calendar/ bzw. bei Unsicherheiten bei Core nachfragen)
+* Reservierung der Metalab-Räumlichkeiten für kostenlose und themennahe Workshops oder Vorträge durch Eintragen im Kalender: https://metalab.at/calendar/ (bei Unsicherheiten bitte bei Core nachfragen)
 
-Wenn wir Dich ein bisschen besser kennengelernt haben und Du Dich aktiv und positiv am Vereinsgeschehen beteiligst, hast Du auch die Möglichkeit, einen Schlüssel (iButton) zu bekommen, um völlig unabhängigen Zugang zum Lab zu erhalten.
+Wenn wir Dich ein bisschen besser kennengelernt haben und Du Dich aktiv und positiv am Vereinsgeschehen beteiligst, hast Du auch die Möglichkeit, einen Schlüssel (iButton) zu bekommen, um völlig unabhängigen Zugang zum Lab zu erhalten. Dafür besuche bitte erst einen Keymember-Workshop (https://metalab.at/wiki/Keymember_Workshop) und beantrage den Schlüssel dann bei einem Sozialplenum.
 
 Pflichten:
 * Pünktliche Entrichtung Deines Mitgliedsbeitrags
 * Einhaltung der Hausordnung (Code of Conduct, https://metalab.at/wiki/Code_of_Conduct)
+* Einhaltung der exklusiven Tage (https://metalab.at/wiki/Exklusive_Tage)
 * Mithilfe beim Sauber- und Ordentlichhalten des Labs
 * Dass Hinterlassen Deines Arbeitsplatzes in sauberem und aufgeräumten Zustand
 * Selbständige Versorgung und Reinigung gemeinschaftlich genutzter Bereiche, auch wenn Du nicht Urheber*in einer Verschmutzung o.ä. bist (z.B. Geschirrspüler ein-/ausräumen, leere Getränkeflaschen wegräumen, Kühlschrank auffüllen, Müllsäcke zum Müllraum bringen, siehe http://metalab.at/wiki/Umgebung, generelle Mithilfe beim 10-Minuten-Cleanup um 20:00 Uhr etc.)
@@ -48,6 +52,60 @@ Falls Du weitere Informationen brauchst, kannst Du einerseits andere Mitglieder 
 Mit lieben Grüßen,
 Dein Metalab.
 
+------ English version ------
+
+Hello {{ user.first_name }},
+
+Welcome to Metalab! Thank you for your support – we hope you will have a lot of fun, realise cool projects and make new friends.
+
+We have accepted your membership application and created a user account for you in Metalab OS (MOS).
+
+Your login details are as follows:
+Account name: {{ user.username }}
+We have set a temporary password for you. Please reset your password as soon as possible: https://metalab.at/member/password_reset/
+
+Once you have set your password, please log in immediately and check your details. If we made a mistake when copying from the membership form, please reply to this email with the correction so that we can adjust the data!
+
+You can log in to MOS at the top right of https://metalab.at/mos. You can also find your profile at https://metalab.at/member/{{ user.username }}/. With your account, you can change your user data and create events at the Metalab calendar. In MOS, you can also add an avatar for yourself, which will then be displayed on the main page via a random generator. (Please make sure that the image is not too large and square, otherwise it will be distorted.)
+
+{% if user.paymentinfo.bank_account_mandate_reference %}
+With your consent, we will debit your membership fee from your specified account in the middle of the month under the mandate ID {{ user.paymentinfo.bank_account_mandate_reference }}.{% endif %}
+If you have ticked the checkbox for the internal mailing list, you will be subscribed. As the name suggests, many Metalab internal matters are discussed on this list. In addition, there are public mailing lists, find out more about other lists here: https://metalab.at/wiki/Mailinglisten
+
+If you have checked the box for the internal Matrix channel, you will be invited to the room automatically, which is intended as a chat equivalent to the internal mailing list.
+It would also be great if you could drop by the public Matrix space (https://matrix.to/#/#metalab-space:matrix.org), where topics from Metalab are regularly discussed in various rooms.
+
+If you would like an account on our wiki (https://metalab.at/wiki/), reply to this email and we will create one for you. On your user page, you can add a more detailed description of yourself and your interests.
+
+If you have any questions or problems concerning purely administrative matters, you can contact the core team at core@metalab.at. All other questions, ideas, etc. concerning Metalab are better addressed on the internal channels.
+
+As a member of Metalab, you have responsibilities and rights. Much of this might be self-evident, but we have summarised these responsibilities and rights here:
+
+Rights:
+* Use of the infrastructure (in the case of machines and tools, please only if you have the appropriate technical knowledge and skills or after training)
+* Use of the kitchen (with special attention to clearing away dishes and keeping the kitchen clean in general; food is disposed of during the daily clean-up at 8 p.m.)
+* Right to have a say at the fortnightly Jour Fixe (https://metalab.at/wiki/Jour_Fixe)
+* Participation in the social plenum (https://metalab.at/wiki/Sozialplenum) to discuss all community related topics at Metalab (topics only visible after Wiki login)
+* Voting rights at the annual general meeting and any extraordinary general meetings
+* Reservation of Metalab rooms for free and topic-related workshops or lectures by entering them in the calendar: https://metalab.at/calendar/ (if you are unsure, please ask Core)
+
+Once we have got to know you a little better and you have actively and positively participated in activities at Metalab, you will also have the opportunity to obtain a key (iButton) for completely independent access to the lab. To do so, please first attend a Keymember workshop (https://metalab.at/wiki/Keymember_Workshop) and then apply for the key at a social plenum meeting.
+
+Responsibilities:
+* Paying your membership fee on time
+* Complying with the house rules (Code of Conduct, https://metalab.at/wiki/Code_of_Conduct/en)
+* Complying with the exclusive days (https://metalab.at/wiki/Exklusive_Tage)
+* Helping to keep the lab clean and tidy
+* Leaving your workspace clean and tidy
+* Independently maintaining and cleaning shared areas, even if you are not responsible for the mess (e.g. loading/unloading the dishwasher, clearing away empty drinks bottles, restocking the fridge, taking bin bags to the bin room, see http://metalab.at/wiki/Umgebung, general assistance with the 10-minute clean-up at 8 p.m., etc.)
+
+It is also appreciated if you participate in the communal life at Metalab and show commitment.
+
+If you need further information, you can either speak to other members directly and/or search the Metalab wiki: https://metalab.at/wiki/
+
+With kind regards,
+Your Metalab.
+
 --
 Verein Metalab
 Rathausstraße 6
@@ -58,7 +116,3 @@ core@metalab.at
 
 https://metalab.at  - 222m² Raum im Herzen Wiens für technologisch-kreative
 Projekte, Veranstaltungen, Software, Hardware,Essen & mehr...
-
-Schnappschüsse aus dem täglichen Leben rund ums Lab auf:
-Mastodon: https://chaos.social/@metalab
-Twitter: https://twitter.com/MetalabVie/
