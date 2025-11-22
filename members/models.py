@@ -326,6 +326,12 @@ def get_active_and_future_members():
                 .distinct()
 
 
+def get_intern_matrix_members():
+    return get_active_and_future_members().filter(
+        contactinfo__in_intern_matrix_room=True,
+    ).exclude(contactinfo__matrix_handle__exact='')
+
+
 def members_due_for_bank_collection(users=None):
     if users is None:
         users = get_active_members()

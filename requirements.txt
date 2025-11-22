@@ -14,3 +14,4 @@ daphne
 requests
 easy-thumbnails
 beautifulsoup4==4.12.3
+matrix-commander==7.6.1

@@ -175,3 +175,8 @@ THUMBNAIL_ALIASES = {
         'avatar': {'size': (120, 120), 'crop': False},
     },
 }
+
+# ------------- Matrix Intern Inviter -------------
+MATRIX_USERNAME = "@metalab_room_inviter_bot:matrix.org"
+MATRIX_PASSWORD = None
+MATRIX_ROOM = "!dkGntdBEyOLRtXeTup:matrix.org"

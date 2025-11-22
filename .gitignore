@@ -12,3 +12,5 @@ media/
 
 .vagrant
 /docker/volume-*
+
+matrix_client_store/
