@@ -121,6 +121,31 @@ table.month td.today {
     font-weight:bold;
 }
 
+table.month td.exklusiver_tag {
+    color:white;
+    font-weight:bold;
+    background: linear-gradient(90deg,
+    red, orange, yellow, green, cyan, blue, violet,
+    red, orange, yellow, green, cyan, blue, violet,
+    red, orange, yellow, green, cyan, blue, violet,
+    red, orange, yellow, green, cyan, blue, violet,
+    red, orange, yellow, green, cyan, blue, violet,
+    red, orange, yellow, green, cyan, blue, violet,
+    red, orange, yellow, green, cyan, blue, violet
+    );
+    background-size: 4000% 100%;
+    animation: rainbowShift 600s linear infinite;
+}
+
+@keyframes rainbowShift {
+    0%   { background-position: 20% 0; }
+    100% { background-position: -300% 0; }
+}
+
+table.month td.exklusiver_tag a {
+    color:white;
+}
+
 table.month .day-nr {
 		text-align: right;
 		line-height: 1em;

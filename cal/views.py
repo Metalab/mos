@@ -36,15 +36,20 @@ class EventCalendar(HTMLCalendar):
             this_day = date(self.year, self.month, day)
 
             next_day = this_day + relativedelta.relativedelta(days=1)
+            day_events = (
+                self.events
+                .exclude(startDate__gt=next_day)
+                .exclude(endDate__lt=this_day, endDate__isnull=False)
+                .exclude(endDate__isnull=True, startDate__lt=this_day)
+            )
             cssclass = self.cssclasses[weekday]
             if date.today() == this_day:
                 cssclass += ' today'
                 cssclass += ' filled'
+            if day_events.filter(category__slug="exklusiver_tag").exists():
+                cssclass += ' exklusiver_tag'
             body = ['<ul class="daily-events">']
-            for event in (self.events
-                          .exclude(startDate__gt=next_day)
-                          .exclude(endDate__lt=this_day, endDate__isnull=False)
-                          .exclude(endDate__isnull=True, startDate__lt=this_day)):
+            for event in day_events:
                 start_day = event.startDate.date()
                 end_day = (event.endDate or event.startDate).date()
 
