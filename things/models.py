@@ -22,7 +22,7 @@ class ThingUser(models.Model):
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
-        related_name="thingusers",
+        related_name="thingtoucher",
     )
     created_at = models.DateField(auto_now_add=True)
     best_before = models.DateField(
