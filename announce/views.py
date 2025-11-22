@@ -48,7 +48,7 @@ ANNOUNCE_TARGETS = {
 }
 
 class AnnouncementForm(forms.Form):
-    subject = forms.CharField(required=True, label="Thema", max_length=40)
+    subject = forms.CharField(required=True, label="Thema", max_length=120)
     body = forms.CharField(required=True, label="Mitteilung",
                            widget=forms.Textarea)
     to = forms.ChoiceField(required=True, label="An", choices=((k, v[0]) for k, v in ANNOUNCE_TARGETS.items()))
