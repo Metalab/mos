@@ -394,7 +394,26 @@ class MemberAdmin(ImportExportMixin, UserAdmin):
         'paymentinfo__bank_collection_allowed',
         MembershipPeriodListFilter,
         )
-    search_fields = ('username', 'email', 'first_name', 'last_name')
+    search_fields = (
+        "username",
+        "first_name",
+        "last_name",
+        "email",
+        "contactinfo__intern_list_email",
+        "contactinfo__matrix_handle",
+        "contactinfo__street",
+        "contactinfo__postcode",
+        "contactinfo__city",
+        "contactinfo__country",
+        "contactinfo__phone_number",
+        "contactinfo__birthday",
+        "contactinfo__wiki_name",
+        "contactinfo__remark",
+        "contactinfo__key_id",
+        "paymentinfo__bank_account_owner",
+        "paymentinfo__bank_account_iban",
+        "paymentinfo__bank_account_mandate_reference",
+    )
     ordering = ('username',)
     actions = [send_welcome_mail, make_sepa_xml_for_members, export_as_csv, export_member_csv_with_fees]
     # allow to select/deselect for more members during actions
