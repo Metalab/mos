@@ -20,7 +20,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         expiring_thing_users = ThingUser.objects.filter(
-            best_before__lt=datetime.date.today() + datetime.timedelta(days=31),
+            best_before__lte=datetime.date.today() + datetime.timedelta(days=31),
             best_before__gt=datetime.date.today() + datetime.timedelta(days=30),
         )
 
