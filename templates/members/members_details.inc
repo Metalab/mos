@@ -72,7 +72,7 @@
 	  {% for tu in item.thingusers.all %}
 		  <tr>
 			  <td>{{ tu.thing.slug }}</td>
-			  <td>{% if tu.best_before %}(recertify after {{ tu.best_before|date:"d.m.Y" }}){% endif %}</td>
+			  <td>{% if tu.best_before %}(recertify before {{ tu.best_before|date:"d.m.Y" }}){% endif %}</td>
 		  </tr>
 	  {% endfor %}
     </table>
