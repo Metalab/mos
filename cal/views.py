@@ -38,7 +38,7 @@ class EventCalendar(HTMLCalendar):
             next_day = this_day + relativedelta.relativedelta(days=1)
             day_events = (
                 self.events
-                .exclude(startDate__gt=next_day)
+                .exclude(startDate__gte=next_day)
                 .exclude(endDate__lt=this_day, endDate__isnull=False)
                 .exclude(endDate__isnull=True, startDate__lt=this_day)
             )
