@@ -8,16 +8,25 @@ def make_token():
 
 
 class Thing(models.Model):
-    """ Something in the hackspace that people can get permission to use, e.g. the laser or the door """
+    """Something in the hackspace that people can get permission to use, e.g. the laser or the door"""
+
     slug = models.SlugField(unique=True, help_text="Name of the thing, e.g. 'laser'")
-    token = models.CharField(max_length=128, default=make_token, help_text="auto generated, allows the machine to get the key IDs, KEEP SECRET")
+    token = models.CharField(
+        max_length=128,
+        default=make_token,
+        help_text="auto generated, allows the machine to get the key IDs, KEEP SECRET",
+    )
+    expiry_notice = models.TextField(
+        default="", help_text="Expiry notice text sent with the expiry notice email"
+    )
 
     def __str__(self):
         return "Thing " + self.slug
 
 
 class ThingUser(models.Model):
-    """ Allows a user to use a thing, e.g. user ripper has permission to use the laser """
+    """Allows a user to use a thing, e.g. user ripper has permission to use the laser"""
+
     thing = models.ForeignKey(Thing, on_delete=models.PROTECT)
     user = models.ForeignKey(
         User,
