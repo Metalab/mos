@@ -22,7 +22,7 @@ class EventForm(ModelForm):
         model = Event
         exclude = ('where', 'created_at', 'created_by', 'deleted', 'who')
 
-    def clean_wiki_url_fields(self, cleaned_data, category, field):
+    def clean_wiki_url_fields(self, cleaned_data, field):
         if cleaned_data.get(field):
             category = cleaned_data.get('category')
             wikipage, _ = re.subn(r'(^http(s)://metalab.at/wiki/|\.\.|\ |\%|\&)', '', cleaned_data.get(field), 200)
