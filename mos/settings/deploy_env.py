@@ -31,6 +31,10 @@ DATABASES = {
         'USER': os.environ.get('MYSQL_USER', 'mos'),
         'PASSWORD': os.environ.get('MYSQL_PASSWORD', 'mos'),
         'HOST': os.environ.get('MYSQL_HOST', 'db'),
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+            'use_unicode': True,
+        },
     }
 }
 
