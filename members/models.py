@@ -197,7 +197,11 @@ class ContactInfo(models.Model):
     intern_list_email = models.EmailField(blank=True)
 
     in_intern_matrix_room = models.BooleanField(default=False)
-    matrix_handle = models.CharField(max_length=255, blank=True)
+    matrix_handle = models.CharField(
+        max_length=255,
+        blank=True,
+        validators=[RegexValidator(r"\A@[a-z0-9_.-]+:[a-z0-9_.-]+\Z")],
+    )
 
 
     street = models.CharField(max_length=200)
