@@ -380,6 +380,35 @@ class MembershipPeriodListFilter(admin.SimpleListFilter):
         return qs
 
 
+class NoMemberForOver10YearsFilter(admin.SimpleListFilter):
+    title = "Kein Mitglied für >10J"
+    parameter_name = "no_member_10y"
+
+    def lookups(self, request, model_admin):
+        return [("yes", "Ja")]
+
+    def queryset(self, request, qs):
+        if self.value() == "yes":
+            from datetime import timedelta
+            ten_years_ago = date.today() - timedelta(days=10*365)
+
+            # at least one closed membership period
+            users_with_closed_periods = MembershipPeriod.objects.filter(
+                end__isnull=False
+            ).values_list('user_id', flat=True).distinct()
+
+            # any active or recent membership periods (within last 10 years)
+            users_with_recent_periods = MembershipPeriod.objects.filter(
+                Q(end__isnull=True) | Q(end__gte=ten_years_ago)
+            ).values_list('user_id', flat=True).distinct()
+
+            # closed periods but no recent/active periods
+            users_only_old_closed = set(users_with_closed_periods) - set(users_with_recent_periods)
+
+            qs = qs.filter(pk__in=users_only_old_closed)
+        return qs
+
+
 class ThingUserInline(admin.TabularInline):
     model = ThingUser
 
@@ -490,6 +519,7 @@ class MemberAdmin(ImportExportMixin, UserAdmin):
         'paymentinfo__bank_collection_allowed',
         MembershipPeriodListFilter,
         MembershipPeriodListFilter,
+        NoMemberForOver10YearsFilter,
         )
     search_fields = (
         "username",
