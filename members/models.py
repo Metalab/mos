@@ -531,6 +531,9 @@ class KindOfMembership(models.Model):
 
     objects = KindOfMembershipManager()
 
+    class Meta:
+        ordering = ['name']
+
     @property
     def spind_fee(self):
         return self.SPIND_FEES[self.spind]
