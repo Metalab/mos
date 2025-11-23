@@ -3,6 +3,8 @@ import urllib.parse
 from calendar import HTMLCalendar
 from calendar import month_name
 from datetime import date
+from datetime import time
+from datetime import timedelta
 
 from dateutil import relativedelta
 from django.contrib.auth.decorators import login_required
@@ -42,22 +44,34 @@ class EventCalendar(HTMLCalendar):
                 .exclude(endDate__lt=this_day, endDate__isnull=False)
                 .exclude(endDate__isnull=True, startDate__lt=this_day)
             )
+            is_exklusiver_tag = False
             cssclass = self.cssclasses[weekday]
             if date.today() == this_day:
                 cssclass += ' today'
                 cssclass += ' filled'
-            if day_events.filter(category__slug="exklusiver_tag").exists():
-                cssclass += ' exklusiver_tag'
             body = ['<ul class="daily-events">']
             for event in day_events:
                 start_day = event.startDate.date()
                 end_day = (event.endDate or event.startDate).date()
+                starts_today = (this_day == start_day)
+                ends_today = (this_day == end_day)
+                is_middle_of_multiday = (start_day + timedelta(days=1) != end_day) and not ends_today
+
+                if (
+                    event.category
+                    and event.category.slug == "exklusiver_tag"
+                    and (
+                        starts_today or is_middle_of_multiday
+                        or (ends_today and event.endDate.time() > time(hour=4))
+                    )
+                ):
+                    is_exklusiver_tag = True
 
                 body.append('<li class="event">')
                 if self.admin:
                     body.append(u'<a href="%s" class="edit" title="edit">✏️</a>' % event.get_absolute_url())
                 body.append('<a href="/wiki/%s">' % esc(event.wikiPage))
-                if this_day == start_day:
+                if starts_today:
                     body.append('<span class="event-time">' + event.startDate.strftime('%H:%M') + '</span>')
                 body.append('<span class="event-name">' + esc(event.name) + '</span>')
                 if start_day != end_day and this_day == end_day:
@@ -66,6 +80,8 @@ class EventCalendar(HTMLCalendar):
                 body.append('</a>')
                 body.append('</li>')
             body.append('</ul>')
+            if is_exklusiver_tag:
+                cssclass += ' exklusiver_tag'
             return self.day_cell(cssclass, '%d %s' % (day, (''.join(body))))
 
             return self.day_cell(cssclass, day)
