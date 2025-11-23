@@ -61,6 +61,7 @@ class Command(BaseCommand):
 
         members_should = set(get_intern_matrix_members().values_list("contactinfo__matrix_handle", flat=True))
         members_should.add("@metalab_room_inviter_bot:matrix.org")
+        members_should.add("@metalab_room_owner_bot:matrix.org")
         members_is = get_channel_members()
 
         members_kick = (members_is - members_should)
