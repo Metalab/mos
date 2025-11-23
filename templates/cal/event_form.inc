@@ -18,6 +18,12 @@
             <dd> {{ event_form.wikiPage.errors }} </dd>
         {% endif %}
 
+        <dt><label><b>Wiki Image Page</b>:</label></dt>
+        <dd>  {{ event_form.wikiImagePage }} </dd>
+        {% if event_form.wikiImagePage.errors %}
+            <dd> {{ event_form.wikiImagePage.errors }} </dd>
+        {% endif %}
+
         <dt><label><b>Start</b>:*</label></dt>
         <dd> {{ event_form.startDate }} </dd>
         {% if event_form.startDate.errors %}

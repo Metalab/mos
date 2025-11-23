@@ -82,6 +82,7 @@ class Event(models.Model):
     name = models.CharField(max_length=200)
     teaser = models.TextField(max_length=200, blank=True, null=True)
     wikiPage = models.CharField(max_length=200)
+    wikiImagePage = models.CharField(max_length=200, blank=True)
 
     startDate = models.DateTimeField()
     endDate = models.DateTimeField(blank=True, null=True)

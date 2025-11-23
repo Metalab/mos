@@ -22,6 +22,18 @@ class EventForm(ModelForm):
         model = Event
         exclude = ('where', 'created_at', 'created_by', 'deleted', 'who')
 
+    def clean_wiki_url_fields(self, cleaned_data, field):
+        if cleaned_data.get(field):
+            wikipage, _ = re.subn(r'(^http(s)://metalab.at/wiki/|\.\.|\ |\%|\&)', '', cleaned_data.get(field), 200)
+            cleaned_data[field] = wikipage
+            if cleaned_data.get('advertise') and re.match(r'^(Benutzer(in)?|User):', wikipage):
+                self.add_error(field, 'Userpages don\'t provide adequate information for public Events')
+
+            r = requests.get('https://metalab.at/wiki/%s' % wikipage)
+
+            if r.status_code == 404 and (not category or category.name != "jour fixe"):
+                self.add_error(field, 'Wikipage not found: https://metalab.at/wiki/%s' % wikipage) #TODO Figure out how to make clickable
+
     def clean(self):
         cleaned_data = super().clean()
 
@@ -37,14 +49,7 @@ class EventForm(ModelForm):
 
         category = cleaned_data.get('category')
 
-        if cleaned_data.get('wikiPage'):
-            wikipage, _ = re.subn(r'(^http(s)://metalab.at/wiki/|\.\.|\ |\%|\&)', '', cleaned_data.get('wikiPage'), 200)
-            cleaned_data['wikiPage'] = wikipage
-            if cleaned_data.get('advertise') and re.match(r'^(Benutzer(in)?|User):', wikipage):
-                self.add_error('wikiPage', 'Userpages don\'t provide adequate information for public Events')
+        self.clean_wiki_url_fields(cleaned_data, "wikiPage")
+        self.clean_wiki_url_fields(cleaned_data, "wikiImagePage")
 
-            r = requests.get('https://metalab.at/wiki/%s' % wikipage)
-
-            if r.status_code == 404 and (not category or category.name != "jour fixe"):
-                self.add_error('wikiPage', 'Wikipage not found: https://metalab.at/wiki/%s' % wikipage) #TODO Figure out how to make clickable
         return cleaned_data
