@@ -204,9 +204,25 @@ class MembershipFeeInline(admin.TabularInline):
     model = MembershipFee
     ordering = ('start',)
 
+
 @admin.register(KindOfMembership)
 class KindOfMembershipAdmin(admin.ModelAdmin):
     inlines = [MembershipFeeInline]
+    list_display = [
+        "name",
+        "spind",
+        "fee_category",
+        "newest_membership_fee_amount",
+    ]
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.with_newest_fee_amount()
+
+    @admin.display(description="Newest Fee Amount", ordering="total_fee_amount")
+    def newest_membership_fee_amount(self, obj):
+        return obj.total_newest_fee_amount
+
 
 @admin.register(BankCollectionMode)
 class BankCollectionModeAdmin(admin.ModelAdmin):

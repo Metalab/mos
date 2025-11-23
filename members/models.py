@@ -12,10 +12,15 @@ from django.core.mail import send_mail
 # for iButton regex
 from django.core.validators import RegexValidator
 from django.db import models
+from django.db.models import Case
 from django.db.models import F
+from django.db.models import IntegerField
+from django.db.models import OuterRef
 from django.db.models import Q
+from django.db.models import Subquery
 from django.db.models import Sum
 from django.db.models import Value
+from django.db.models import When
 from easy_thumbnails.fields import ThumbnailerImageField
 
 country_codes = {
@@ -476,6 +481,34 @@ class MembershipFee(models.Model):
         return "%s - %d" % (self.kind_of_membership, self.amount)
 
 
+class KindOfMembershipQuerySet(models.QuerySet):
+    def with_newest_fee_amount(self):
+        from django.db.models.functions import Coalesce
+        newest_fee_subquery = MembershipFee.objects.filter(
+            kind_of_membership=OuterRef('pk')
+        ).order_by('-start').values('amount')[:1]
+
+        spind_fee_cases = Case(
+            *[When(spind=choice[0], then=Value(choice[2]))
+              for choice in KindOfMembership.FULL_SPIND_CHOICES],
+            default=Value(0),
+            output_field=IntegerField()
+        )
+
+        return self.annotate(
+            newest_fee_amount=Subquery(newest_fee_subquery),
+            total_fee_amount=Coalesce(Subquery(newest_fee_subquery), Value(0)) + spind_fee_cases
+        )
+
+
+class KindOfMembershipManager(models.Manager):
+    def get_queryset(self):
+        return KindOfMembershipQuerySet(self.model, using=self._db)
+
+    def with_newest_fee_amount(self):
+        return self.get_queryset().with_newest_fee_amount()
+
+
 class KindOfMembership(models.Model):
     FULL_SPIND_CHOICES = (
         ('no', "0 Spind", 0),
@@ -496,9 +529,15 @@ class KindOfMembership(models.Model):
     spind = models.CharField(choices=SPIND_CHOICES, max_length=7, default="no")
     fee_category = models.CharField(choices=FEE_CATEGORY, max_length=9, default="standard")
 
+    objects = KindOfMembershipManager()
+
     @property
     def spind_fee(self):
         return self.SPIND_FEES[self.spind]
+
+    @property
+    def total_newest_fee_amount(self):
+        return self.total_fee_amount
 
     def __str__(self):
         return self.name
