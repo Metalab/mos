@@ -22,8 +22,9 @@ class EventForm(ModelForm):
         model = Event
         exclude = ('where', 'created_at', 'created_by', 'deleted', 'who')
 
-    def clean_wiki_url_fields(self, cleaned_data, field):
+    def clean_wiki_url_fields(self, cleaned_data, category, field):
         if cleaned_data.get(field):
+            category = cleaned_data.get('category')
             wikipage, _ = re.subn(r'(^http(s)://metalab.at/wiki/|\.\.|\ |\%|\&)', '', cleaned_data.get(field), 200)
             cleaned_data[field] = wikipage
             if cleaned_data.get('advertise') and re.match(r'^(Benutzer(in)?|User):', wikipage):
@@ -46,8 +47,6 @@ class EventForm(ModelForm):
         if loc and loc.name not in ('any rooom', 'online', 'Woanders'): #
             if Event.objects.exclude(id=self.instance.id).filter(deleted=False, location__name=loc.name, startDate__lt=end_date, endDate__gt=start_date).count() != 0:
                 self.add_error('location', 'This location is already in use during the selected time')
-
-        category = cleaned_data.get('category')
 
         self.clean_wiki_url_fields(cleaned_data, "wikiPage")
         self.clean_wiki_url_fields(cleaned_data, "wikiImagePage")
