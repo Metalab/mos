@@ -11,7 +11,7 @@
     {% endfor %}
     </ul>
     <input type="hidden" name="post" value="yes" />
-    <input type="hidden" name="action" value="wipe_members" />
+    <input type="hidden" name="action" value="{{ form_action }}" />
     <input type="submit" value="Confirm" />
 </form>
 {% endblock %}

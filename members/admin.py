@@ -271,38 +271,65 @@ def wipe_members(modeladmin, request, queryset):
     else:
         return render(request, "admin/wipe_members.html", context={
             "queryset": queryset,
+            "form_action": "wipe_members",
         })
 
-def gdpr_wipe(user):
+
+@admin.action(description='DSGVO-Wipe Members deeply')
+def wipe_members_deep(modeladmin, request, queryset):
+    if request.POST.get('post'):
+        for user in queryset.all():
+            gdpr_wipe(user, True)
+        messages.success(request, f"Es wurden {len(queryset)} Member deeply ge-DSGVOwipe-d.")
+        return None
+    else:
+        return render(request, "admin/wipe_members.html", context={
+            "queryset": queryset,
+            "form_action": "wipe_members_deep",
+        })
+
+
+def gdpr_wipe(user, deep_wipe=False):
     user.password = ''
-    user.contactinfo.image.delete(False)
     user.email = ''
     user.first_name = ''
     user.last_name = ''
+    user.is_active = False
+    user.is_superuser = False
+    user.is_staff = False
+    if deep_wipe:
+        user.username = f"past_member{user.pk}"
+        user.date_joined = date(1970, 1, 1)
+        user.last_login = date(1970, 1, 1)
     user.save()
 
-    user.contactinfo.on_intern_list = False
-    user.contactinfo.intern_list_email = ''
-    user.contactinfo.street = ''
-    user.contactinfo.postcode = ''
-    user.contactinfo.city = ''
-    user.contactinfo.country = ''
-    user.contactinfo.country = ''
-    user.contactinfo.phone_number = ''
-    user.contactinfo.birthday = None
-    user.contactinfo.has_active_key = False
-    user.contactinfo.key_id = ''
-    user.contactinfo.remark = ''
-    user.contactinfo.wiki_name = ''
-    user.contactinfo.gdpr_wiped_on = date.today()
-    user.contactinfo.save()
+    if hasattr(user, 'contactinfo'):
+        user.contactinfo.image.delete(False)
+        user.contactinfo.on_intern_list = False
+        user.contactinfo.intern_list_email = ''
+        user.contactinfo.street = ''
+        user.contactinfo.postcode = ''
+        user.contactinfo.city = ''
+        user.contactinfo.country = ''
+        user.contactinfo.country = ''
+        user.contactinfo.phone_number = ''
+        user.contactinfo.birthday = None
+        user.contactinfo.has_active_key = False
+        user.contactinfo.key_id = ''
+        user.contactinfo.remark = ''
+        user.contactinfo.wiki_name = ''
+        user.contactinfo.gdpr_wiped_on = date.today()
+        user.contactinfo.save()
 
     if hasattr(user, 'paymentinfo'):
         user.paymentinfo.bank_collection_allowed = False
         user.paymentinfo.bank_account_iban = ''
         user.paymentinfo.bank_account_bic = ''
         user.paymentinfo.bank_name = ''
-        user.paymentinfo.bank_account_data_of_signing = None
+        if deep_wipe:
+            user.paymentinfo.bank_account_owner = ''
+            user.paymentinfo.bank_account_mandate_reference = ''
+            user.paymentinfo.bank_account_date_of_signing = None
         user.paymentinfo.save()
 
     for cr in CommunicationRecord.objects.all().filter(user=user):
@@ -462,6 +489,7 @@ class MemberAdmin(ImportExportMixin, UserAdmin):
         BankCollectionModeListFilter,
         'paymentinfo__bank_collection_allowed',
         MembershipPeriodListFilter,
+        MembershipPeriodListFilter,
         )
     search_fields = (
         "username",
@@ -484,7 +512,7 @@ class MemberAdmin(ImportExportMixin, UserAdmin):
         "paymentinfo__bank_account_mandate_reference",
     )
     ordering = ('username',)
-    actions = [send_welcome_mail, make_sepa_xml_for_members, export_as_csv, export_member_csv_with_fees, wipe_members]
+    actions = [send_welcome_mail, make_sepa_xml_for_members, export_as_csv, export_member_csv_with_fees, wipe_members, wipe_members_deep]
     # allow to select/deselect for more members during actions
     list_max_show_all = 9999999
     resource_classes = [MemberResource]
