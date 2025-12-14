@@ -25,23 +25,23 @@ def matrix_login():
         "--password", settings.MATRIX_PASSWORD,
         "--login", "password",
         "--device", "device",
-        "--room-default", settings.MATRIX_ROOM,
+        "--room-default", settings.MATRIX_ROOM_NAME,
     )
 
 
 def matrix_invite(handles):
     for matrix_handle in handles:
-        call_matrix_commander("--room-invite", settings.MATRIX_ROOM, "--user", matrix_handle)
+        call_matrix_commander("--room-invite", settings.MATRIX_ROOM_NAME, "--user", matrix_handle)
 
 
 def matrix_kick(handles):
     for matrix_handle in handles:
-        call_matrix_commander("--room-kick", settings.MATRIX_ROOM, "--user", matrix_handle)
+        call_matrix_commander("--room-kick", settings.MATRIX_ROOM_NAME, "--user", matrix_handle)
 
 
 def get_channel_members():
     with redirect_stdout(StringIO()) as buffer:
-        call_matrix_commander("--joined-members", settings.MATRIX_ROOM)
+        call_matrix_commander("--joined-members", settings.MATRIX_ROOM_ID)
     current_members_output = buffer.getvalue()
     current_members_output = [m.strip().partition(" ")[0] for m in current_members_output.splitlines()]
     return set(
@@ -53,7 +53,7 @@ def get_channel_members():
 
 class Command(BaseCommand):
     def handle(self, *args, **kwargs):
-        if not settings.MATRIX_ROOM or not settings.MATRIX_USERNAME or not settings.MATRIX_PASSWORD:
+        if not settings.MATRIX_ROOM_ID or not settings.MATRIX_ROOM_NAME or not settings.MATRIX_USERNAME or not settings.MATRIX_PASSWORD:
             print("Missing MATRIX_* config, check settings and try again.")
             sys.exit(1)
 
