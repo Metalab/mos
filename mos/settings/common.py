@@ -185,4 +185,4 @@ THUMBNAIL_ALIASES = {
 # ------------- Matrix Intern Inviter -------------
 MATRIX_USERNAME = "@metalab_room_inviter_bot:matrix.org"
 MATRIX_PASSWORD = None
-MATRIX_ROOM = "#metalab-intern:matrix.org"
+MATRIX_ROOM = None # Is setup in Environment Variables
