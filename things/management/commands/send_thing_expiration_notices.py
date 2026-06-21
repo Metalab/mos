@@ -18,12 +18,15 @@ def mail(template, ctx_vars, recipient):
 
 
 class Command(BaseCommand):
-    help = "Send thing expiration reminder to all members whose thing expires 1 month from now"
+    help = "Send thing expiration reminder to all members whose thing expires 90 days or 1 month from now"
 
     def handle(self, *args, **options):
         expiring_thing_users = ThingUser.objects.filter(
             best_before__lte=datetime.date.today() + datetime.timedelta(days=31),
             best_before__gt=datetime.date.today() + datetime.timedelta(days=30),
+        ) | ThingUser.objects.filter(
+            best_before__lte=datetime.date.today() + datetime.timedelta(days=91),
+            best_before__gt=datetime.date.today() + datetime.timedelta(days=90),
         )
 
         for expiring_thing in expiring_thing_users:
