@@ -197,10 +197,15 @@ class ContactInfo(models.Model):
     intern_list_email = models.EmailField(blank=True)
 
     in_intern_matrix_room = models.BooleanField(default=False)
+    # see https://spec.matrix.org/v1.18/appendices/#user-identifiers
+    # and https://spec.matrix.org/v1.18/appendices/#server-name
+    # for the spec as of this change. historical user ids can contain
+    # almost any character and server name may be IPv6 address, are allowed
+    # to contains ports and allow uppercase character
     matrix_handle = models.CharField(
         max_length=255,
         blank=True,
-        validators=[RegexValidator(r"\A@[a-z0-9_.-]+:[a-z0-9_.-]+\Z")],
+        validators=[RegexValidator(r"\A@[^:\x00]+:[a-zA-Z0-9_.-[\]:]+\Z")],
     )
 
 
