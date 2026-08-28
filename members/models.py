@@ -172,6 +172,34 @@ class PaymentInfo(models.Model):
         on_delete=models.CASCADE,
     )
 
+    def clean(self):
+        """Require bank account details when bank collection is enabled."""
+        if not self.bank_collection_allowed:
+            return
+        missing = [
+            field_name
+            for field_name, value in (
+                ("bank_account_owner", self.bank_account_owner),
+                ("bank_account_iban", self.bank_account_iban),
+                (
+                    "bank_account_mandate_reference",
+                    self.bank_account_mandate_reference,
+                ),
+                (
+                    "bank_account_date_of_signing",
+                    self.bank_account_date_of_signing,
+                ),
+            )
+            if not value
+        ]
+        if missing:
+            raise ValidationError(
+                {
+                    field_name: "Required when bank collection is allowed."
+                    for field_name in missing
+                }
+            )
+
     def save(self, *args, update_fields=None, **kwargs):
         FIELD_NAME = "bank_account_mandate_reference"
         if not getattr(self, FIELD_NAME):
