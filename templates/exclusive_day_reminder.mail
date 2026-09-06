@@ -1,0 +1,11 @@
+{% load i18n %}{% language 'de' %}Liebe Leute,
+
+Am {{ ed.startDate | date:"l" }} den {{ ed.startDate | date:"Y-m-d" }} von {{ ed.startDate | date:"H:i" }} bis {{ ed.endDate | date:"H:i" }} findet der nächste exklusive Tag im Metalab statt.
+
+{% if ed.name.startswith("ÖGS") %}
+Das heißt für 24h ist das Metalab ein Space für Österreichische Gebärdensprache ONLY. Mit diesem Tag wollen wir eine Pause von Audismus & mehr Gehörlose und gebärdensprachkompetente Menschen ins Metalab locken. 🙌🦦. Mehr Details unter https://metalab.at/wiki/{{ ed.wikiPage }}.
+{% elif ed.name.startswith("MetaInvasionDay")}
+Das Metalab wird an diesem Tag *nur* für Frauen, agender, inter, nicht-binäre und trans Personen, und alle, die ihr Geschlecht (noch) in Frage stellen, offen sein. Alle Infos und Programm siehe https://metalab.at/wiki/{{ ed.wikiPage }}.
+{% endif %}
+
+<3 dein MOS{% endlanguage %}
