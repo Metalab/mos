@@ -1,0 +1,4 @@
+{% load i18n %}
+{% language 'de' %}
+[REMINDER] Exklusiver Tag am {{ ed.startDate | date:"l, Y-m-d" }}
+{% endlanguage %}

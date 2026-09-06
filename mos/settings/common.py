@@ -175,6 +175,12 @@ MOS_JF_DB_ID = 2 # id of events of type "Jour Fixe" in the database
 MOS_JF_SENDER = 'jf-reminder@metalab.at'
 MOS_JF_RECIPIENTS = ['intern@lists.metalab.at']
 
+# ----------------- exclusive day reminder --------
+MOS_EXCLUSIVE_DAYS_SENDER = 'ed-reminder@metalab.at'
+MOS_EXCLUSIVE_DAYS_RECIPIENTS = ['intern@lists.metalab.at']
+MOS_EXCLUSIVE_DAYS_DAYS_IN_ADVANCE = 14
+MOS_EXCLUSIVE_DAYS_DB_ID = 11  # id of events of type "Exklusivtag" in the database
+
 # ----------------- Thumbnail Settings ------------
 THUMBNAIL_ALIASES = {
     '': {
