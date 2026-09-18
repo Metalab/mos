@@ -187,3 +187,4 @@ MATRIX_USERNAME = "@metalab_room_inviter_bot:matrix.org"
 MATRIX_PASSWORD = None # Is setup in environment variables
 MATRIX_ROOM_NAME = "#metalab-intern:matrix.org"
 MATRIX_ROOM_ID = None # Is setup in environment variables
+MATRIX_ADDITIONAL_INVITED_USERS = None # Is setup in environment variables, a list of matrix handles which should not be kicked e.g. for service users
