@@ -292,7 +292,7 @@ def members_bank_json_import(request):
 
         payment["amount"]["value_full"] = payment["amount"]["value"] / pow(10, payment["amount"]["precision"])
         payment["booking"] = datetime.fromisoformat(payment["booking"])
-        payment["text"] = (payment["reference"] + " " + payment["receiverReference"]).strip()
+        payment["text"] = (payment["reference"] + " " + (payment["receiverReference"] or "")).strip()
 
         should_drop = False
         should_match = (payment["amount"]["value_full"] > 0 or "Rückleitung" in payment["reference"])
