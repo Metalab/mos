@@ -206,6 +206,7 @@ def generate_sepa(admin_user, members_to_collect_from):
         "batch": settings.HOS_SEPA_BATCH,
         "creditor_id": settings.HOS_SEPA_CREDITOR_ID,
         "currency": settings.HOS_SEPA_CURRENCY,
+        "address": settings.HOS_SEPA_CREDITOR_ADDRESS,
         "instrument": 'CORE'
     }, schema=settings.HOS_SEPA_SCHEMA)
 

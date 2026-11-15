@@ -150,7 +150,14 @@ HOS_SEPA_CREDITOR_ID = 'AT12ZZZ00000000001'
 HOS_SEPA_CREDITOR_NAME = 'Verein Metalab'
 HOS_SEPA_CREDITOR_IBAN = 'AT483200000012345864'
 HOS_SEPA_CREDITOR_BIC = 'GIBAATWWXXX'
-HOS_SEPA_SCHEMA = 'pain.008.001.02'
+HOS_SEPA_CREDITOR_ADDRESS = {
+    'street_name': 'Rathausstrasse',
+    'building_number': '6',
+    'postcode': '1010',
+    'town': 'Wien',
+    'country': 'AT',
+}
+HOS_SEPA_SCHEMA = 'pain.008.001.08'
 HOS_SEPA_CURRENCY = 'EUR' # ISO 4217
 HOS_SEPA_BATCH = True
 

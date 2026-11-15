@@ -9,7 +9,7 @@ feedparser
 mysqlclient
 channels
 websockets
-sepaxml
+sepaxml>=2.7.0
 daphne
 requests
 easy-thumbnails
