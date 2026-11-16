@@ -1,5 +1,6 @@
 # Django settings for a deployed instance of MOS
 import os
+import json
 
 from .common import *  # NOQA
 
@@ -59,3 +60,4 @@ HOS_SEPA_CREDITOR_BIC = os.environ.get('HOS_SEPA_CREDITOR_BIC', 'GIBAATWWXXX')
 
 MATRIX_PASSWORD = os.environ.get('MATRIX_PASSWORD', None)
 MATRIX_ROOM_ID = os.environ.get('MATRIX_ROOM_ID', None)
+MATRIX_ADDITIONAL_INVITED_USERS = json.loads(os.environ.get('MATRIX_ADDITIONAL_INVITED_USERS', '[]'))
