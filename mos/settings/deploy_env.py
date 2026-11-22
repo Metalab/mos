@@ -45,7 +45,12 @@ MEDIA_ROOT = os.environ.get('DJANGO_MEDIA_ROOT', 'media')
 
 EMAIL_HOST = os.environ.get('DJANGO_EMAIL_HOST', 'localhost')
 EMAIL_PORT = os.environ.get('DJANGO_EMAIL_PORT', 25)
-EMAIL_USE_TLS = os.environ.get('DJANGO_EMAIL_USE_TLS', 'False').lower() in ('true', 'yes', '1')
+
+if os.environ.get('DJANGO_EMAIL_USE_TLS', 'False').lower() in ('true', 'yes', '1'):
+    EMAIL_USE_TLS = True
+if os.environ.get('DJANGO_EMAIL_USE_SSL', 'False').lower() in ('true', 'yes', '1'):
+    EMAIL_USE_SSL = True
+
 EMAIL_HOST_USER = os.environ.get('DJANGO_EMAIL_HOST_USER', '')
 EMAIL_HOST_PASSWORD = os.environ.get('DJANGO_EMAIL_HOST_PASSWORD', '')
 EMAIL_SUBJECT_PREFIX = os.environ.get('DJANGO_EMAIL_SUBJECT_PREFIX', '[MOS] ')
