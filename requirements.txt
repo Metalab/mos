@@ -14,5 +14,5 @@ daphne
 requests
 easy-thumbnails
 beautifulsoup4==4.12.3
-matrix-commander==7.6.1
+matrix-commander==8.0.6
 django-import-export==4.3.14
