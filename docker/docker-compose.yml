@@ -31,7 +31,7 @@ services:
     ports:
     - "127.0.0.1:8020:8020"
   db:
-    image: mariadb:10.5
+    image: mariadb:12.3
     environment:
       MYSQL_DATABASE: 'mos'
       MYSQL_USER: 'mos'
