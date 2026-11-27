@@ -1,4 +1,4 @@
-Django~=4.2.10
+Django~=5.2.19
 Pillow
 icalendar~=5.0.11
 Unipath
